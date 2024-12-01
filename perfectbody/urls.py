@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from users.views import register
 from viewer.views import home, products, services, trainers
 
 urlpatterns = [
@@ -25,4 +26,5 @@ urlpatterns = [
     path('products/', products, name='products'),
     path('services/', services, name='services'),
     path('trainers/', trainers, name='trainers'),
+    path('register/', register, name='register'),
 ]

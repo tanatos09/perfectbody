@@ -16,15 +16,15 @@ Online store with admin panel.
   - [ ] phone_number
   - [ ] email
   - [ ] preferred_communication_channel
-  - [ ] user_creation_time
+  - [ ] user_creation_datetime
 - [ ] address
   - [ ] id
+  - [ ] user_id (1:n -> user)
+  - [ ] address_type
   - [ ] street
   - [ ] town
   - [ ] postal_code
   - [ ] country
-  - [ ] user_id (1:n -> user)
-  - [ ] order_id (1:n -> order)
 - [ ] product
   - [ ] id
   - [ ] product_type
@@ -47,8 +47,8 @@ Online store with admin panel.
 - [ ] order
   - [ ] id
   - [ ] user_id (1:n -> user)
-  - [ ] state
-  - [ ] order_creation_time
+  - [ ] order_state
+  - [ ] order_creation_datetime
   - [ ] total_price
   - [ ] billing_address_id (1:n -> address)
   - [ ] shipping_address_id (1:n -> address)
@@ -57,14 +57,15 @@ Online store with admin panel.
   - [ ] orders (n:m -> order)
   - [ ] products (n:m -> product)
   - [ ] quantity
-  - [ ] price_per_piece
+  - [ ] price_per_item
 - [ ] producer
   - [ ] id
   - [ ] producer_name
 - [ ] review
   - [ ] id
   - [ ] product_id (1:n -> product)
-  - [ ] reviewer (1:n -> user)
+  - [ ] trainer_id (1:n -> user)
+  - [ ] reviewer_id (1:n -> user)
   - [ ] rating
   - [ ] comment
-  - [ ] time
+  - [ ] review_creation_datetime

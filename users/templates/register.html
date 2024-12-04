@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+<title>Registrace uživatele</title>
+
+{% block content %}
+
+<h1>Registrace uživatele</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Registrovat</button>
+    </form>
+
+{% endblock %}

@@ -1,7 +1,8 @@
+from django.contrib.auth.models import AbstractUser
 from django.db.models import Model, DateTimeField, CharField, EmailField, URLField
 
 
-class User(Model):
+class User(AbstractUser):
     ACCOUNT_TYPE = [('REGISTERED', 'Registrovaný'), ('UNREGISTERED', 'Neregistrovaný')]
     ROLE = [('ADMIN', 'Administrator'), ('MANAGER', 'Manager'), ('COACH', 'Trenér'), ('CUSTOMER', 'Zákazník')]
     PREFERRED_CHANNEL = [('PHONE', 'Telefón'), ('EMAIL', 'Email'), ('POST', 'Pošta')]
@@ -15,5 +16,5 @@ class User(Model):
     last_name = CharField(max_length=50)  # prijmeni
     phone = CharField(max_length=15, blank=True, null=True)  # telefon
     email = EmailField(unique=True)  # email
-    preferred_channel = CharField(max_length=10, choices=PREFERRED_CHANNEL)  # prefer. kom. kanal, vyber z PREFERRED_CHANNEL
+    preferred_channel = CharField(max_length=10, choices=PREFERRED_CHANNEL, default='EMAIL')  # prefer. kom. kanal, vyber z PREFERRED_CHANNEL
     created_at = DateTimeField(auto_now_add=True) # datum vytvoreni uctu

@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 
 from perfectbody.settings import DEBUG
-from users.forms import RegistrationForm, LoginForm
+from accounts.forms import RegistrationForm, LoginForm
 
 
 def register(request):

@@ -1,20 +1,20 @@
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm, CharField, Form, PasswordInput
 from django import forms
-from users.models import User
+from accounts.models import UserProfile
 
 
 class RegistrationForm(ModelForm):
     password_confirm = CharField(widget=PasswordInput, max_length=128, label='Potvrzení hesla')
 
     class Meta:
-        model = User
+        model = UserProfile
         fields =  ['first_name', 'last_name', 'email', 'phone', 'login', 'password']
         widgets = {'password': forms.PasswordInput()} #skryje heslo pri zadavani
 
         def clean_email(self):
             email = self.cleaned_data.get('email')
-            if User.objects.filter(email=email).exists():
+            if UserProfile.objects.filter(email=email).exists():
                 raise ValidationError('Tento e-mail již existuje.')
             return email
 

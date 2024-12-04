@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from users.views import register, login_view
+from accounts.views import register, login_view
 from viewer.views import home, products, services, trainers
 
 urlpatterns = [

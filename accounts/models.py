@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models import Model, DateTimeField, CharField, EmailField, URLField
 
 
-class User(AbstractUser):
+class UserProfile(AbstractUser):
     ACCOUNT_TYPE = [('REGISTERED', 'Registrovaný'), ('UNREGISTERED', 'Neregistrovaný')]
     ROLE = [('ADMIN', 'Administrator'), ('MANAGER', 'Manager'), ('COACH', 'Trenér'), ('CUSTOMER', 'Zákazník')]
     PREFERRED_CHANNEL = [('PHONE', 'Telefón'), ('EMAIL', 'Email'), ('POST', 'Pošta')]

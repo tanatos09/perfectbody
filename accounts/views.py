@@ -1,3 +1,5 @@
+from sqlite3 import IntegrityError
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
@@ -10,8 +12,13 @@ def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('home')
+            try:
+                form.save()
+                return redirect('home')
+            except IntegrityError:
+                form.add_error(None, 'Došlo k chybě. Zkontrolujte zadaná data')
+        else:
+            form.add_error(None, 'Ověřte správnost údajů')
     else:
         form = RegistrationForm()
     return render(request, 'register.html', {"form": form})

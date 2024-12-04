@@ -9,38 +9,45 @@ class RegistrationForm(ModelForm):
 
     class Meta:
         model = UserProfile
-        fields =  ['first_name', 'last_name', 'email', 'phone', 'login', 'password']
+        fields =  ['first_name', 'last_name', 'email', 'phone', 'username', 'password']
         widgets = {'password': forms.PasswordInput()} #skryje heslo pri zadavani
 
-        def clean_email(self):
-            email = self.cleaned_data.get('email')
-            if UserProfile.objects.filter(email=email).exists():
-                raise ValidationError('Tento e-mail již existuje.')
-            return email
+    def clean_login(self):
+        username = self.cleaned_data.get('username')
+        if UserProfile.objects.filter(username=username).exists():
+            raise ValidationError('Toto uživatelské jméno již existuje')
+        return username
 
-        def clean_phone(self):
-            phone = self.cleaned_data.get('phone')
-            if phone and not phone.isdigit():
-                raise  ValidationError('Telefoní číslo může obsahovat pouze číslice.')
-            return phone
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if UserProfile.objects.filter(email=email).exists():
+            raise ValidationError('Tento e-mail již existuje.')
+        return email
 
-        def clean(self):
-            cleaned_data = super().clean()
-            password = cleaned_data.get('password')
-            password_confirm = cleaned_data.get('password_confirm')
+    def clean_phone(self):
+        phone = self.cleaned_data.get('phone')
+        if phone and not phone.isdigit():
+            raise  ValidationError('Telefoní číslo může obsahovat pouze číslice.')
+        return phone
 
-            if password != password_confirm:
-                raise ValidationError('Hesla se neshodují.')
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        password_confirm = cleaned_data.get('password_confirm')
 
-            return cleaned_data
+        if password != password_confirm:
+            raise ValidationError('Hesla se neshodují.')
 
-        def save(self, commit=True):
-            user = super().save(commit=False) # zabrani ulozeni
-            user.role = 'CUSTOMER' # nastavi zakaznika jako vychozi hodnotu
-            user.account_type = 'REGISTRED' # nastavi zakaznikovi ze je registrovany
-            if commit:
-                user.save()
-            return user
+        return cleaned_data
+
+    def save(self, commit=True):
+        user = super().save(commit=False) # zabrani ulozeni
+        user.role = 'CUSTOMER' # nastavi zakaznika jako vychozi hodnotu
+        user.account_type = 'REGISTRED' # nastavi zakaznikovi ze je registrovany
+        user.set_password(self.cleaned_data['password'])
+        if commit:
+            user.save()
+        return user
 
 class LoginForm(Form):
     username = CharField(max_length=50, label='Uživatelské jméno') # pole pro prihlasovaci jmeno uzivatele

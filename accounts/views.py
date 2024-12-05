@@ -1,7 +1,7 @@
 from sqlite3 import IntegrityError
 
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 
 from perfectbody.settings import DEBUG
@@ -41,4 +41,8 @@ def login_view(request):
         form = LoginForm()
     return render(request, 'login.html', {"form": form})
 
+def logout_view(request):
+    logout(request)
+    messages.success(request, 'Byl(a) jste úspěšně odhlášen(a)')
+    return redirect('home')
 

@@ -3,7 +3,6 @@ import logging
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.messages import get_messages
-from django.core.exceptions import ValidationError
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 
@@ -66,4 +65,4 @@ def logout_view(request: HttpRequest) -> HttpResponse:
     clear_messages(request)
     logout(request)
     messages.success(request, "Byl(a) jste úspěšně odhlášen(a).")
-    return redirect('home')
+    return redirect('login')

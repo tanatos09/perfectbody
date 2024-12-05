@@ -46,12 +46,14 @@ class RegistrationForm(ModelForm):
         password = cleaned_data.get('password')
         password_confirm = cleaned_data.get('password_confirm')
 
-        # Validace hesla pomocí vestavěných validátorů
-        if password:
-            validate_password(password)
+        try:
+            if password:
+                validate_password(password)
+        except ValidationError as e:
+            self.add_error('password', e)
 
         if password != password_confirm:
-            raise ValidationError('Hesla se neshodují.')
+            self.add_error('password_confirm', 'Hesla se neshodují.')
 
         return cleaned_data
 

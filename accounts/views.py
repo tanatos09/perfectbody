@@ -1,48 +1,69 @@
-from sqlite3 import IntegrityError
+import logging
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.messages import get_messages
+from django.core.exceptions import ValidationError
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 
-from perfectbody.settings import DEBUG
 from accounts.forms import RegistrationForm, LoginForm
 
+logger = logging.getLogger(__name__)
 
-def register(request):
+def clear_messages(request: HttpRequest):
+    storage = get_messages(request)
+    for _ in storage:
+        pass
+
+def register(request: HttpRequest) -> HttpResponse:
+    clear_messages(request)
+
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
             try:
                 form.save()
-                return redirect('home')
-            except IntegrityError:
-                form.add_error(None, 'Došlo k chybě. Zkontrolujte zadaná data')
+                messages.success(request, "Registrace proběhla úspěšně. Nyní se můžete přihlásit.")
+                return redirect('login')
+            except Exception as e:
+                logger.error(f"Neočekávaná chyba při registraci: {e}", exc_info=True)
+                messages.error(request, "Došlo k neočekávané chybě. Zkuste to znovu.")
         else:
-            form.add_error(None, 'Ověřte správnost údajů')
+            messages.warning(request, "Údaje nejsou platné. Zkontrolujte a zkuste znovu.")
     else:
         form = RegistrationForm()
+
     return render(request, 'register.html', {"form": form})
 
-def login_view(request):
+
+def login_view(request: HttpRequest) -> HttpResponse:
+    clear_messages(request)
+
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             user = authenticate(request, username=username, password=password)
-            if user is not None:
+            if user:
                 login(request, user)
-                if DEBUG:
-                    print('Uspesne prihlaseni')
-                return redirect('home')
+                messages.success(request, f"Vítejte, {username}!")
+                redirect_to = request.GET.get('next', 'home')
+                return redirect(redirect_to)
             else:
-                messages.error(request, 'Neplatné uživatelské jméno nebo heslo.')
+                logger.warning(f"Neplatné přihlašovací údaje pro uživatele: {form.cleaned_data.get('username')}")
+                messages.error(request, "Neplatné uživatelské jméno nebo heslo.")
+        else:
+            messages.warning(request, "Zadané údaje nejsou platné.")
     else:
         form = LoginForm()
+
     return render(request, 'login.html', {"form": form})
 
-def logout_view(request):
-    logout(request)
-    messages.success(request, 'Byl(a) jste úspěšně odhlášen(a)')
-    return redirect('home')
 
+def logout_view(request: HttpRequest) -> HttpResponse:
+    clear_messages(request)
+    logout(request)
+    messages.success(request, "Byl(a) jste úspěšně odhlášen(a).")
+    return redirect('home')

@@ -5,7 +5,7 @@
     {% if LANGUAGE_CODE %}
         lang="{{ LANGUAGE_CODE }}"
     {% else %}
-        lang="en"
+        lang="cs"
     {% endif %}
 >
 
@@ -18,12 +18,22 @@
 </head>
 
 <body>
-    <!-- Navbar -->
+  <!-- Navbar -->
     {% include "navbar.html" %}
 
-
     <div class="container">
+
+        <!-- Zprávy -->
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
         <div class="jumbotron">
+
             {% block content %}
 
             {% endblock %}

@@ -25,21 +25,21 @@ Online store with admin panel.
   - [ ] town
   - [ ] postal_code
   - [ ] country
-- [ ] product
-  - [ ] id
-  - [ ] product_type
-  - [ ] product_name
-  - [ ] product_description
-  - [ ] product_view
-  - [ ] category_id (1:n -> category)
-  - [ ] price
-  - [ ] producer_id (1:n -> producer)
-  - [ ] stock_availability
-- [ ] category
-  - [ ] id
-  - [ ] category_name
-  - [ ] category_description
-  - [ ] category_parent_id (1:n -> category)
+- [x] product
+  - [x] id
+  - [x] product_type
+  - [x] product_name
+  - [x] product_description
+  - [x] product_view
+  - [x] category_id (1:n -> category)
+  - [x] price
+  - [x] producer_id (1:n -> producer)
+  - [x] stock_availability
+- [x] category
+  - [x] id
+  - [x] category_name
+  - [x] category_description
+  - [x] category_parent_id (1:n -> category)
 - [ ] trainers_services
   - [ ] id
   - [ ] description
@@ -59,9 +59,9 @@ Online store with admin panel.
   - [ ] product_id (1:n -> product)
   - [ ] quantity
   - [ ] price_per_item
-- [ ] producer
-  - [ ] id
-  - [ ] producer_name
+- [x] producer
+  - [x] id
+  - [x] producer_name
 - [ ] product_review
   - [ ] id
   - [ ] product_id (1:n -> product)
@@ -69,6 +69,7 @@ Online store with admin panel.
   - [ ] rating
   - [ ] comment
   - [ ] review_creation_datetime
+  - [ ] review_update_datetime
 - [ ] trainer_review
   - [ ] id
   - [ ] trainer_id (1:n -> user)
@@ -76,3 +77,4 @@ Online store with admin panel.
   - [ ] rating
   - [ ] comment
   - [ ] review_creation_datetime
+  - [ ] review_update_datetime

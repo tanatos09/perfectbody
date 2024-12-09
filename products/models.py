@@ -1,5 +1,7 @@
 from django.db.models import Model, CharField, TextField, URLField, ForeignKey, DecimalField, IntegerField, DateTimeField, PositiveIntegerField, SET_NULL, CASCADE
-# from accounts.models import UserProfile
+
+from accounts.models import UserProfile
+
 
 class Category(Model):
     category_name = CharField(max_length=50, null=False, blank=False, unique=True)
@@ -56,20 +58,20 @@ class Product(Model):
         return f"{self.product_name} ({self.price} Kč)"
 
 
-# class ProductReview(Model):
-#     product = ForeignKey(Product, on_delete=CASCADE, null=False, blank=False, related_name='reviews')
-#     reviewer = ForeignKey(UserProfile, on_delete=SET_NULL, null=True, blank=True, related_name="reviews")
-#     rating = IntegerField(null=True, blank=True)
-#     comment = TextField(null=True, blank=True)
-#     review_creation_datetime = DateTimeField(auto_now_add=True)
-#     review_updated_datetime = DateTimeField(auto_now=True)
-#
-#     class Meta:
-#         ordering = ['-review_updated_datetime']
-#
-#     def __repr__(self):
-#         return (f"ProductReview(product={self.product}, reviewer={self.reviewer}, "
-#                 f"rating={self.rating}, comment={self.comment})")
-#
-#     def __str__(self):
-#         return f"Review for {self.product.product_name} by {self.reviewer.username}"
+class ProductReview(Model):
+    product = ForeignKey(Product, on_delete=CASCADE, null=False, blank=False, related_name='reviews')
+    reviewer = ForeignKey(UserProfile, on_delete=SET_NULL, null=True, blank=True, related_name="reviews")
+    rating = IntegerField(null=True, blank=True)
+    comment = TextField(null=True, blank=True)
+    review_creation_datetime = DateTimeField(auto_now_add=True)
+    review_updated_datetime = DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-review_updated_datetime']
+
+    def __repr__(self):
+        return (f"ProductReview(product={self.product}, reviewer={self.reviewer}, "
+                f"rating={self.rating}, comment={self.comment})")
+
+    def __str__(self):
+        return f"Review for {self.product.product_name} by {self.reviewer.username}"

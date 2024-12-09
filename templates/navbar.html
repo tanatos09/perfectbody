@@ -1,0 +1,19 @@
+<nav class="navbar">
+    <div class="navbar-container">
+        <a class="navbar-brand" href="/">PerfectBody</a>
+
+        <div class="navbar-links">
+            <a class="nav-link active" href="/">Domů</a>
+            <a class="nav-link" href="/products/">Produkty</a>
+            <a class="nav-link" href="/services/">Služby</a>
+            <a class="nav-link" href="/trainers/">Trenéři</a>
+            {% if user.is_authenticated %}
+                <span class="nav-link">{{ user.username }}</span>
+                <a class="nav-link" href="{% url 'logout' %}">Odhlásit se</a>
+            {% else %}
+                <a class="nav-link" href="/login/">Přihlásit se</a>
+                <a class="nav-link" href="/register/">Registrovat</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>

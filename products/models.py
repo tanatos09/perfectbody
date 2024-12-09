@@ -58,7 +58,7 @@ class Product(Model):
 
 # class ProductReview(Model):
 #     product = ForeignKey(Product, on_delete=CASCADE, null=False, blank=False, related_name='reviews')
-#     reviewer = ForeignKey(accounts.UserProfile, on_delete=SET_NULL, null=False, blank=False, related_name="reviews")
+#     reviewer = ForeignKey(UserProfile, on_delete=SET_NULL, null=True, blank=True, related_name="reviews")
 #     rating = IntegerField(null=True, blank=True)
 #     comment = TextField(null=True, blank=True)
 #     review_creation_datetime = DateTimeField(auto_now_add=True)
@@ -72,4 +72,4 @@ class Product(Model):
 #                 f"rating={self.rating}, comment={self.comment})")
 #
 #     def __str__(self):
-#         return f"Review for {self.product.product_name} by {self.reviewer.userprofile.login}"
+#         return f"Review for {self.product.product_name} by {self.reviewer.username}"

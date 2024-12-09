@@ -48,6 +48,12 @@ class RegistrationForm(ModelForm):
             raise  ValidationError('Telefoní číslo může obsahovat pouze číslice.')
         return phone
 
+    def clean_postal_code(self):
+        postal_code = self.cleaned_data.get('postal_code')
+        if postal_code and not postal_code.isdigit():
+            raise ValidationError('PSČ musi obsahovat pouze číslice')
+        return postal_code
+
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get('password')

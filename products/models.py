@@ -73,5 +73,5 @@ class ProductReview(Model):
         return (f"ProductReview(product={self.product}, reviewer={self.reviewer}, "
                 f"rating={self.rating}, comment={self.comment})")
 
-    # def __str__(self):
-    #     return f"Review for {self.product.product_name} by {self.reviewer.UserProfile.login}"
+    def __str__(self):
+        return f"Review for {self.product.product_name} by {self.reviewer.username}"

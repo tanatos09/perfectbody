@@ -1,0 +1,347 @@
+[
+  {
+    "model": "products.category",
+    "pk": 1,
+    "fields": {
+      "category_name": "Sportovní výživa",
+      "category_description": "Výživa pro sportovce.",
+      "category_parent": null
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 2,
+    "fields": {
+      "category_name": "Proteiny",
+      "category_description": "Syrovátkové a rostlinné proteiny.",
+      "category_parent": 1
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 3,
+    "fields": {
+      "category_name": "Vitamíny",
+      "category_description": "Multivitaminy a doplňky stravy.",
+      "category_parent": 1
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 4,
+    "fields": {
+      "category_name": "Energetické tyčinky",
+      "category_description": "Tyčinky pro rychlou energii.",
+      "category_parent": 1
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 5,
+    "fields": {
+      "category_name": "Fitness vybavení",
+      "category_description": "Pomůcky na cvičení.",
+      "category_parent": null
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 6,
+    "fields": {
+      "category_name": "Činky",
+      "category_description": "Činky pro domácí i profesionální cvičení.",
+      "category_parent": 5
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 7,
+    "fields": {
+      "category_name": "Podložky na cvičení",
+      "category_description": "Jóga a fitness podložky.",
+      "category_parent": 5
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 8,
+    "fields": {
+      "category_name": "Elastické gumy",
+      "category_description": "Odporové gumy pro různé úrovně cvičení.",
+      "category_parent": 5
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 9,
+    "fields": {
+      "category_name": "Sportovní láhve",
+      "category_description": "Láhve na vodu a proteiny.",
+      "category_parent": 5
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 10,
+    "fields": {
+      "category_name": "Švihadla",
+      "category_description": "Švihadla pro kardio trénink.",
+      "category_parent": 5
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 11,
+    "fields": {
+      "category_name": "Sportovní oblečení",
+      "category_description": "Oblečení na sport.",
+      "category_parent": null
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 12,
+    "fields": {
+      "category_name": "Trička",
+      "category_description": "Sportovní trička.",
+      "category_parent": 11
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 13,
+    "fields": {
+      "category_name": "Legíny",
+      "category_description": "Kompresní a běžecké legíny.",
+      "category_parent": 11
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 14,
+    "fields": {
+      "category_name": "Kraťasy",
+      "category_description": "Sportovní kraťasy pro muže i ženy.",
+      "category_parent": 11
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 15,
+    "fields": {
+      "category_name": "Obuv",
+      "category_description": "Boty na fitness a běh.",
+      "category_parent": 11
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 16,
+    "fields": {
+      "category_name": "Služby",
+      "category_description": "Tréninkové služby a kurzy.",
+      "category_parent": null
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 17,
+    "fields": {
+      "category_name": "Videokurzy",
+      "category_description": "Kurzy na téma fitness a jóga.",
+      "category_parent": 16
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 18,
+    "fields": {
+      "category_name": "Fitness",
+      "category_description": "Fitness videokurzy.",
+      "category_parent": 17
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 19,
+    "fields": {
+      "category_name": "Jóga",
+      "category_description": "Kurzy jógy pro všechny úrovně.",
+      "category_parent": 17
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 20,
+    "fields": {
+      "category_name": "Osobní tréninkové plány",
+      "category_description": "Individuální tréninkové plány.",
+      "category_parent": 16
+    }
+  },
+  {
+    "model": "products.producer",
+    "pk": 1,
+    "fields": {
+      "producer_name": "GymPro"
+    }
+  },
+  {
+    "model": "products.producer",
+    "pk": 2,
+    "fields": {
+      "producer_name": "NutriFit"
+    }
+  },
+  {
+    "model": "products.producer",
+    "pk": 3,
+    "fields": {
+      "producer_name": "ActiveWear"
+    }
+  },
+  {
+    "model": "products.producer",
+    "pk": 4,
+    "fields": {
+      "producer_name": "StrongTools"
+    }
+  },
+  {
+    "model": "products.producer",
+    "pk": 5,
+    "fields": {
+      "producer_name": "HealthyLife"
+    }
+  },
+    {
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Syrovátkový protein 1 kg",
+      "product_description": "Vysoce kvalitní syrovátkový protein, vhodný pro budování svalové hmoty.",
+      "price": 799.00,
+      "category": 2,
+      "producer": 2,
+      "stock_availability": 50
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Hrachový protein 1 kg",
+      "product_description": "Rostlinný protein vhodný pro vegany a vegetariány.",
+      "price": 699.00,
+      "category": 2,
+      "producer": 5,
+      "stock_availability": 40
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Multivitaminový komplex",
+      "product_description": "Komplexní směs vitamínů pro podporu imunity.",
+      "price": 499.00,
+      "category": 3,
+      "producer": 5,
+      "stock_availability": 100
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Omega 3 kapsle",
+      "product_description": "Zdroj esenciálních mastných kyselin pro zdraví srdce.",
+      "price": 299.00,
+      "category": 3,
+      "producer": 2,
+      "stock_availability": 80
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 5,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Sada činek 2x5 kg",
+      "product_description": "Ideální pro domácí trénink.",
+      "price": 1499.00,
+      "category": 6,
+      "producer": 4,
+      "stock_availability": 30
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 6,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Nakládací činka 10 kg",
+      "product_description": "Univerzální činka s možností přidání závaží.",
+      "price": 1999.00,
+      "category": 6,
+      "producer": 4,
+      "stock_availability": 20
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 7,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Prodyšné tričko pánské",
+      "product_description": "Lehké a prodyšné tričko vhodné pro fitness.",
+      "price": 399.00,
+      "category": 12,
+      "producer": 3,
+      "stock_availability": 50
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 8,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Prodyšné tričko dámské",
+      "product_description": "Elegantní dámské tričko pro aktivní životní styl.",
+      "price": 399.00,
+      "category": 12,
+      "producer": 3,
+      "stock_availability": 60
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 9,
+    "fields": {
+      "product_type": "service",
+      "product_name": "Hatha jóga",
+      "product_description": "Kurz zaměřený na základní techniky jógy a uvolnění.",
+      "price": 499.00,
+      "category": 19,
+      "producer": null,
+      "stock_availability": 0
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 10,
+    "fields": {
+      "product_type": "service",
+      "product_name": "HIIT trénink",
+      "product_description": "Intenzivní intervalový trénink pro spalování tuků.",
+      "price": 699.00,
+      "category": 18,
+      "producer": null,
+      "stock_availability": 0
+    }
+  }
+]

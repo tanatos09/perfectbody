@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html
+    {% if LANGUAGE_CODE %}
+        lang="{{ LANGUAGE_CODE }}"
+    {% else %}
+        lang="cs"
+    {% endif %}
+>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PerfectBody</title>
+
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+
+<body>
+  <!-- Navbar -->
+    {% include "navbar.html" %}
+
+    <div class="container">
+
+        <!-- Zprávy -->
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <div class="jumbotron">
+
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    {% include "footer.html" %}
+</body>
+
+</html>

@@ -2,25 +2,32 @@ import logging
 
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-from django.forms import ModelForm, CharField, Form, PasswordInput
-from django import forms
-from accounts.models import UserProfile
+from django.db import transaction
+from django.forms import ModelForm, CharField, Form, PasswordInput, BooleanField, TextInput, EmailInput
+
+from accounts.models import UserProfile, Address
 
 logger = logging.getLogger(__name__)
 
 class RegistrationForm(ModelForm):
     password_confirm = CharField(widget=PasswordInput, max_length=128, label='Potvrzení hesla')
+    add_address = BooleanField(required=False, label='Chci zadat adresu pro budoucí nákup')
+    street = CharField(max_length=255, required=False, label='Ulice')
+    street_number = CharField(max_length=255, required=False, label='Číslo ulice')
+    city = CharField(max_length=255, required=False, label='Město')
+    postal_code = CharField(max_length=255, required=False, label='PSČ')
+    country = CharField(max_length=255, required=False, label='Země', initial='Česká republika')
 
     class Meta:
         model = UserProfile
         fields = ['first_name', 'last_name', 'email', 'phone', 'username', 'password']
         widgets = {
-            'password': forms.PasswordInput(attrs={'placeholder': 'Zadejte heslo'}),
-            'first_name': forms.TextInput(attrs={'placeholder': 'Jméno'}),
-            'last_name': forms.TextInput(attrs={'placeholder': 'Příjmení'}),
-            'email': forms.EmailInput(attrs={'placeholder': 'E-mail'}),
-            'phone': forms.TextInput(attrs={'placeholder': 'Telefon'}),
-            'username': forms.TextInput(attrs={'placeholder': 'Uživatelské jméno'}),
+            'password': PasswordInput(attrs={'placeholder': 'Zadejte heslo'}),
+            'first_name': TextInput(attrs={'placeholder': 'Jméno'}),
+            'last_name': TextInput(attrs={'placeholder': 'Příjmení'}),
+            'email': EmailInput(attrs={'placeholder': 'E-mail'}),
+            'phone': TextInput(attrs={'placeholder': 'Telefon'}),
+            'username': TextInput(attrs={'placeholder': 'Uživatelské jméno'}),
         }
 
     def clean_username(self):
@@ -55,16 +62,39 @@ class RegistrationForm(ModelForm):
         if password != password_confirm:
             self.add_error('password_confirm', 'Hesla se neshodují.')
 
+        if cleaned_data.get('add_address'):
+            for field, label in [
+                ('street', 'Ulice'),
+                ('street_number', 'Číslo ulice'),
+                ('city', 'Město'),
+                ('postal_code', 'PSČ'),
+                ('country', 'Země')
+            ]:
+                if not cleaned_data.get(field):
+                    self.add_error(field, f'Pole {label} je povinné, pokud zadáváte adresu')
         return cleaned_data
 
     def save(self, commit=True):
-        user = super().save(commit=False) # zabrani ulozeni
-        user.role = 'CUSTOMER' # nastavi zakaznika jako vychozi hodnotu
-        user.account_type = 'REGISTRED' # nastavi zakaznikovi ze je registrovany
-        user.set_password(self.cleaned_data['password'])
-        if commit:
-            user.save()
-            logger.info(f"Uživatel {user.username} byl úspěšně registrován.")
+        with transaction.atomic():
+            user = super().save(commit=False) # zabrani ulozeni
+            user.account_type = 'registered' # nastavi zakaznikovi ze je registrovany
+            user.set_password(self.cleaned_data['password'])
+            if commit:
+                user.save()
+                logger.info(f"Uživatel {user.username} byl úspěšně registrován.")
+                if self.cleaned_data.get('add_address'):
+                    Address.objects.create(
+                        user=user,
+                        first_name=user.first_name,
+                        last_name=user.last_name,
+                        street=self.cleaned_data['street'],
+                        street_number=self.cleaned_data['street_number'],
+                        city=self.cleaned_data['city'],
+                        postal_code=self.cleaned_data['postal_code'],
+                        country=self.cleaned_data['country'],
+                        email=self.cleaned_data['email'],
+                    )
+        return user
 
 
 class LoginForm(Form):

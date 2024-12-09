@@ -7,8 +7,48 @@
 <h1>Registrace uživatele</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Registrovat</button>
+
+        {{ form.first_name.label_tag }} {{ form.first_name }}<br>
+        {{ form.last_name.label_tag }} {{ form.last_name }}<br>
+        {{ form.email.label_tag }} {{ form.email }}<br>
+        {{ form.phone.label_tag }} {{ form.phone }}<br>
+        {{ form.username.label_tag }} {{ form.username }}<br>
+        {{ form.password.label_tag }} {{ form.password }}<br>
+        {{ form.password_confirm.label_tag }} {{ form.password_confirm }}<br>
+        <hr>
+        <div>
+            {{ form.add_address.label_tag }} {{ form.add_address }}
+        </div>
+        <div id="addressFields" style="display: none;">
+        {{ form.street.label_tag }} {{ form.street }}<br>
+        {{ form.street_number.label_tag }} {{ form.street_number }}<br>
+        {{ form.city.label_tag }} {{ form.city }}<br>
+        {{ form.postal_code.label_tag }} {{ form.postal_code }}<br>
+        {{ form.country.label_tag }} {{ form.country }}
+    </div><hr>
+
+            <button type="submit">Registrovat</button>
     </form>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    const addAddressCheckbox = document.getElementById("id_add_address");
+    const addressFields = document.getElementById("addressFields");
+
+
+    function toggleAddressFields() {
+        if (addAddressCheckbox.checked) {
+            addressFields.style.display = "block";
+        } else {
+            addressFields.style.display = "none";
+        }
+    }
+
+    addAddressCheckbox.addEventListener("change", toggleAddressFields);
+
+    toggleAddressFields();
+});
+</script>
 
 {% endblock %}

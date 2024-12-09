@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     'viewer',
     'accounts',
+    'products',
 ]
 
 MIDDLEWARE = [

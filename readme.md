@@ -2,6 +2,11 @@
 
 Online store with admin panel.
 
+## Functionalities
+
+- [x] products list
+- [x] services list
+
 ## Database
 
 - [ ] user_profile

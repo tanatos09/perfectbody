@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Naše produkty</h1>
-<p>Zde bude nabídka produktů.</p>
+
+<h1>Seznam produktů</h1>
+    <ul>
+        {% for product in products %}
+            <li>{{ product.product_name }}</li>
+        {% empty %}
+            <li>Produkty nejsou k dispozici.</li>
+        {% endfor %}
+    </ul>
 
 {% endblock %}

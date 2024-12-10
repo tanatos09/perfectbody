@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Naše služby trenérů</h1>
-<p>Zde bude nabídka služeb.</p>
+
+<h1>Seznam služeb</h1>
+    <ul>
+        {% for service in services %}
+            <li>{{ service.product_name }}</li>
+        {% empty %}
+            <li>Služby nejsou k dispozici.</li>
+        {% endfor %}
+    </ul>
 
 {% endblock %}

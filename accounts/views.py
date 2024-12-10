@@ -2,11 +2,12 @@ import logging
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.messages import get_messages
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 
-from accounts.forms import RegistrationForm, LoginForm
+from accounts.forms import RegistrationForm, LoginForm, UserEditForm
 
 logger = logging.getLogger(__name__)
 
@@ -66,3 +67,20 @@ def logout_view(request: HttpRequest) -> HttpResponse:
     logout(request)
     messages.success(request, "Byl(a) jste úspěšně odhlášen(a).")
     return redirect('login')
+
+def profile_view(request: HttpRequest) -> HttpResponse:
+    return render(request, 'profile.html', {'user': request.user})
+
+@login_required
+def edit_profile(request: HttpRequest) -> HttpResponse:
+    user = request.user
+    if request.method == 'POST':
+        form = UserEditForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Vaše údaje byly úspěšně aktualizovány')
+            return redirect('profile')
+        else: messages.error(request, 'Údaje nejsou platne, zkuste to znovu')
+    else:
+        form = UserEditForm(instance=user)
+    return render(request, 'edit_profile.html', {"form": form})

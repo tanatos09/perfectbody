@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Váš profil</h2>
+
+<div>
+    <h3>Osobní informace</h3>
+    <p><strong>Uživatelské jméno:</strong> {{ user.username }}</p>
+    <p><strong>Jméno:</strong> {{ user.first_name }}</p>
+    <p><strong>Příjmení:</strong> {{ user.last_name }}</p>
+    <p><strong>E-mail:</strong> {{ user.email }}</p>
+    <p><strong>Telefon:</strong> {{ user.phone }}</p>
+    <p><strong>Avatar:</strong></p>
+    {% if user.avatar %}
+        <img src="{{ user.avatar }}" alt="Avatar" style="max-width: 150px; height: auto;">
+    {% else %}
+        <p>Nemáte nahrán žádný avatar.</p>
+    {% endif %}
+    <p><strong>Preferovaný komunikační kanál:</strong> {{ user.get_preferred_channel_display }}</p>
+    <p><strong>Typ účtu:</strong> {{ user.get_account_type_display }}</p>
+</div>
+
+<hr>
+
+<div>
+    <h3>Adresy</h3>
+    {% if user.addresses.exists %}
+        <ul>
+            {% for address in user.addresses.all %}
+                <li>
+                    {{ address.first_name }} {{ address.last_name }},
+                    {{ address.street }} {{ address.street_number }},
+                    {{ address.city }}, {{ address.postal_code }},
+                    {{ address.country }},
+                    <strong>E-mail:</strong> {{ address.email }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nemáte žádné uložené adresy.</p>
+    {% endif %}
+</div>
+
+<hr>
+
+<div>
+    <a href="{% url 'edit_profile' %}">Upravit profil</a>
+    <a href="{% url 'logout' %}">Odhlásit se</a>
+</div>
+
+{% endblock %}

@@ -1,5 +1,6 @@
 import logging
 
+from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.db import transaction
@@ -110,3 +111,23 @@ class LoginForm(Form):
         widget=PasswordInput,
         label='Heslo'
     ) # pole pro skryte heslo
+
+class UserEditForm(UserChangeForm):
+    password = None
+
+    class Meta:
+        model = UserProfile
+        fields = ['username', 'first_name', 'last_name', 'email', 'phone', 'avatar', 'preferred_channel']
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if UserProfile.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
+            raise ValidationError('Tento email již existuje.')
+        return email
+
+    def clean_phone(self):
+        phone = self.cleaned_data.get('phone')
+        if phone and not phone.isdigit():
+            raise ValidationError('Telefoní číslo může obsahovat pouze číslice.')
+        return phone
+

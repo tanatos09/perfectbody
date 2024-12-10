@@ -2,6 +2,15 @@
 
 {% block content %}
 <h1>Naše služby trenérů</h1>
-<p>Zde bude nabídka služeb.</p>
+<ul>
+    {% for product in products %}
+        <li>
+            <h2>{{ product.product_name }}</h2> - {{ product.price }} Kč
+            <p>{{ product.product_description }}</p>
+        </li>
+    {% empty %}
+        <li>Žádné služby k dispozici.</li>
+    {% endfor %}
+</ul>
 
 {% endblock %}

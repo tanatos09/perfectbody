@@ -2,6 +2,14 @@
 
 {% block content %}
 <h1>Naše produkty</h1>
-<p>Zde bude nabídka produktů.</p>
-
+<ul>
+    {% for product in products %}
+        <li>
+            <h2>{{ product.product_name }}</h2> - {{ product.price }} Kč
+            <p>{{ product.product_description }}</p>
+        </li>
+    {% empty %}
+        <li>Žádné produkty k dispozici.</li>
+    {% endfor %}
+</ul>
 {% endblock %}

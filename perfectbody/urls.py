@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 
 from accounts.views import register, login_view, logout_view
-from viewer.views import home, products, services, trainers
+from viewer.views import home, products, services, trainers, view_cart, add_to_cart, remove_from_cart, update_cart
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,4 +29,8 @@ urlpatterns = [
     path('register/', register, name='register'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
+    path('cart/', view_cart, name='cart'),
+    path('cart/add/<int:product_id>/', add_to_cart, name='add_to_cart'),
+    path('cart/remove/<int:product_id>/', remove_from_cart, name='remove_from_cart'),
+    path('card/update/<int:product_id>/', update_cart, name='update_cart'),
 ]

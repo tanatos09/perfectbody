@@ -67,20 +67,21 @@ def logout_view(request: HttpRequest) -> HttpResponse:
     logout(request)
     messages.success(request, "Byl(a) jste úspěšně odhlášen(a).")
     return redirect('login')
-
+@login_required
 def profile_view(request: HttpRequest) -> HttpResponse:
     return render(request, 'profile.html', {'user': request.user})
 
 @login_required
-def edit_profile(request: HttpRequest) -> HttpResponse:
+def edit_profile(request):
     user = request.user
     if request.method == 'POST':
-        form = UserEditForm(request.POST, request.FILES, instance=user)
+        form = UserEditForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
             messages.success(request, 'Vaše údaje byly úspěšně aktualizovány')
             return redirect('profile')
-        else: messages.error(request, 'Údaje nejsou platne, zkuste to znovu')
+        else:
+            messages.error(request, 'Údaje nejsou platné, zkuste to znovu')
     else:
         form = UserEditForm(instance=user)
     return render(request, 'edit_profile.html', {"form": form})

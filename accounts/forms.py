@@ -1,5 +1,6 @@
 import logging
 
+from django.contrib.auth import user_logged_in
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
@@ -130,4 +131,7 @@ class UserEditForm(UserChangeForm):
         if phone and not phone.isdigit():
             raise ValidationError('Telefoní číslo může obsahovat pouze číslice.')
         return phone
+
+
+
 

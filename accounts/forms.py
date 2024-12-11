@@ -132,6 +132,33 @@ class UserEditForm(UserChangeForm):
             raise ValidationError('Telefoní číslo může obsahovat pouze číslice.')
         return phone
 
+class PasswordChangeForm(Form):
+    old_password = CharField(widget=PasswordInput, required=True, label='Současné heslo')
+    new_password = CharField(widget=PasswordInput, required=True, label='Nové heslo')
+    confirm_password = CharField(widget=PasswordInput, required=True, label='Potvrzení nového hesla')
 
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super().__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        new_password = cleaned_data.get('new_password')
+        confirm_password = cleaned_data.get('confirm_password')
+
+        if new_password != confirm_password:
+            raise ValidationError('Hesla se neshodují!')
+
+        try:
+            validate_password(new_password, user=self.user)
+        except ValidationError as e:
+            self.add_error('new_password', e)
+
+        return cleaned_data
+
+    def save(self):
+        new_password = self.cleaned_data.get('new_password')
+        self.user.set_password(new_password)
+        self.user.save()
 
 

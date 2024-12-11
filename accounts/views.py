@@ -1,13 +1,13 @@
 import logging
 
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages import get_messages
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 
-from accounts.forms import RegistrationForm, LoginForm, UserEditForm
+from accounts.forms import RegistrationForm, LoginForm, UserEditForm, PasswordChangeForm
 
 logger = logging.getLogger(__name__)
 
@@ -84,4 +84,20 @@ def edit_profile(request):
             messages.error(request, 'Údaje nejsou platné, zkuste to znovu')
     else:
         form = UserEditForm(instance=user)
+
     return render(request, 'edit_profile.html', {"form": form})
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, request.user)
+            messages.success(request, 'Vaše heslo bylo změněno')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Heslo nebylo změněno. Opravte chyby a zkuste to znovu')
+    else: form = PasswordChangeForm(request.user)
+
+    return render(request, 'change_password.html', {'form': form})

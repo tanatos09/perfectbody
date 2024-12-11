@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from accounts.views import register, login_view, logout_view, edit_profile, profile_view
+from accounts.views import register, login_view, logout_view, edit_profile, profile_view, change_password
 from viewer.views import home, products, services, trainers, view_cart, add_to_cart, remove_from_cart, update_cart
 
 urlpatterns = [
@@ -35,4 +35,5 @@ urlpatterns = [
     path('cart/add/<int:product_id>/', add_to_cart, name='add_to_cart'),
     path('cart/remove/<int:product_id>/', remove_from_cart, name='remove_from_cart'),
     path('card/update/<int:product_id>/', update_cart, name='update_cart'),
+    path('change_password/', change_password, name='change_password'),
 ]

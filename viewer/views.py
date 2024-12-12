@@ -11,7 +11,7 @@ def products(request):
     return render(request, "products.html", context)
 
 def product(request, pk):
-    if Product.objects.filter(id=pk) and Product.objects.filter(product_type="merchantdise"):
+    if Product.objects.filter(id=pk):
         product_detail = Product.objects.get(id=pk)
         context = {'product': product_detail}
         return render(request, "product.html", context)
@@ -23,11 +23,11 @@ def services(request):
     return render(request, "services.html", context)
 
 def service(request, pk):
-    if Product.objects.filter(id=pk) and Product.objects.filter(product_type="service"):
+    if Product.objects.filter(id=pk):
         service_detail = Product.objects.get(id=pk)
         context = {'service': service_detail}
         return render(request, "service.html", context)
-    return products(request)
+    return services(request)
 
 def trainers(request):
     return render(request, 'trainers.html')

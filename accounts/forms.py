@@ -143,8 +143,12 @@ class PasswordChangeForm(Form):
 
     def clean(self):
         cleaned_data = super().clean()
+        old_password = cleaned_data.get('old_password')
         new_password = cleaned_data.get('new_password')
         confirm_password = cleaned_data.get('confirm_password')
+
+        if not self.user.check_password(old_password):
+            raise ValidationError('Původní heslo není správné')
 
         if new_password != confirm_password:
             raise ValidationError('Hesla se neshodují!')

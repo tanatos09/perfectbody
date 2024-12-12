@@ -7,9 +7,7 @@ from accounts.models import UserProfile
 
 class RegisterViewTest(TestCase):
     def test_register_user(self):
-        """Test uspesne registrace.
-        """
-        # vytvoreni uzivatele pro vyplneni formulare
+        """sucessful registration"""
         registration_data = {
             'first_name': 'Honza',
             'last_name': 'Novák',
@@ -21,24 +19,15 @@ class RegisterViewTest(TestCase):
             'add_address': False,
         }
 
-        # simulace pozadavku pro registraci
         response = self.client.post(reverse('register'), data=registration_data)
-
-        # kontrola presmerovani na stranku login
         self.assertRedirects(response, reverse('login'))
-
-        # overovani jestli byl uzivatel v databazi
         self.assertTrue(UserProfile.objects.filter(username='jendajeborec').exists())
-
-        # pristup ke zpravam, kontola ze byla pridana, kontrola obsahu
         messages = list(response.wsgi_request._messages)
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), "Registrace proběhla úspěšně. Nyní se můžete přihlásit.")
 
     def test_register_user_invalid_passwords(self):
-        """Test selhání registrace při ruznych heslech.
-        """
-        # vytvoreni uzivatele s rozdilnymi hesly
+        """failure registration with different passwords"""
         invalid_data = {
             'first_name': 'Honza',
             'last_name': 'Novák',
@@ -50,23 +39,13 @@ class RegisterViewTest(TestCase):
             'add_address': False,
         }
 
-        # vytvoreni pozadavku pro registraci
         response = self.client.post(reverse('register'), data=invalid_data)
-
-        # overeni ze byl vracen kod 200 - 'chybova hlaska' uspesna
         self.assertEqual(response.status_code, 200)
-
-        # zobrazeni chybove hlasky
         self.assertContains(response, 'Hesla se neshodují')
-
-        # kontrola ze ucet nebyl vytvoren
         self.assertFalse(UserProfile.objects.filter(username='jendajeborec').exists())
 
     def test_register_user_duplicate_username(self):
-        """Test selhání registrace při duplicitním uživatelském jménu.
-        """
-
-        # vytvoreni uuzivatele s duplicitnim uzivatelskym jmenem
+        """registration failure - duplicite username"""
         UserProfile.objects.create(username='jendajeborec', email='JenadaNovak@seznam.cz')
 
         duplicate_user_data = {
@@ -80,21 +59,13 @@ class RegisterViewTest(TestCase):
             'add_address': False,
         }
 
-        # pozadavek POST pro registraci
         response = self.client.post(reverse('register'), data=duplicate_user_data)
-
-        # overeni ze byl vracen kod 200 - 'chybova hlaska' uspesna
         self.assertEqual(response.status_code, 200)
-
-        # kontrola chybove hlasky
         self.assertContains(response, 'Toto uživatelské jméno již existuje')
-
-        # kontrola ze nebyl vytvoren novy uzivatel
         self.assertEqual(UserProfile.objects.filter(username='jendajeborec').count(), 1)
 
     def test_register_user_with_adress(self):
-        '''Test uspesne registrace s vyplnenou adresou
-        '''
+        '''registration sucessful - with completed address'''
         registration_data = {
         'first_name': 'Pavel',
         'last_name': 'Novotný',
@@ -123,6 +94,7 @@ class RegisterViewTest(TestCase):
         self.assertTrue(address.postal_code, '11000')
 
     def test_register_user_with_missing_address_data(self):
+        '''registration failure - with non - completed address '''
         registration_data = {
             'first_name': 'Pavel',
             'last_name': 'Novotný',
@@ -147,7 +119,8 @@ class RegisterViewTest(TestCase):
         self.assertContains(response, 'Pole PSČ je povinné, pokud zadáváte adresu')
         self.assertContains(response, 'Pole Země je povinné, pokud zadáváte adresu')
 
-    def test_register_user_with_missing_postal_code(self):
+    def test_register_user_with_invalid_postal_code(self):
+        '''ceck postal code if is number'''
         registration_data = {
             'first_name': 'Pavel',
             'last_name': 'Novotný',

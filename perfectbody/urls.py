@@ -17,11 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from accounts.views import register, login_view, logout_view, edit_profile, profile_view, change_password, \
-    trainer_register
-from viewer.views import home, products, services, trainers, view_cart, add_to_cart, remove_from_cart, update_cart
-from accounts.views import register, login_view, logout_view
-from viewer.views import home, products, product, services, service, trainers
+from accounts.views import edit_profile, profile_view, change_password, trainer_register, register, login_view, logout_view
+from viewer.views import view_cart, add_to_cart, remove_from_cart, update_cart, home, products, product, services, service, trainers
 
 urlpatterns = [
     path('admin/', admin.site.urls),

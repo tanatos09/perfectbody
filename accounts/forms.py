@@ -1,7 +1,8 @@
 import logging
 
 from django.contrib.auth import user_logged_in
-from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+from django.contrib.auth.models import Group
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.db import transaction
@@ -102,6 +103,59 @@ class RegistrationForm(ModelForm):
                         country=self.cleaned_data['country'],
                         email=self.cleaned_data['email'],
                     )
+        return user
+
+class TrainerRegistrationForm(RegistrationForm):
+    trainer_description = CharField(
+        max_length=500,
+        required=True,
+        widget=TextInput(attrs={'placeholder': "Popište v krátkosti své zkušenosti, dovednosti nebo nab(dky"}),
+        label='Popis trenéra'
+    )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        # Pole, která musí být vždy vyplněna
+        required_fields = [
+            ('first_name', 'Jméno'),
+            ('last_name', 'Příjmení'),
+            ('email', 'Email'),
+            ('phone', 'Telefon'),
+            ('username', 'Uživatelské jméno'),
+            ('street', 'Ulice'),
+            ('street_number', 'Číslo ulice'),
+            ('city', 'Město'),
+            ('postal_code', 'PSČ'),
+            ('country', 'Země'),
+        ]
+        for field, label in required_fields:
+            if not cleaned_data.get(field):
+                self.add_error(field, f'Pole {label} je povinné.')
+
+        return cleaned_data
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.account_type = 'registered'
+        if commit:
+            user.save()
+            trainer_group, created = Group.objects.get_or_create(name='trainer')
+            user.groups.add(trainer_group)
+
+            user.profile_description = self.cleaned_data.get('trainer_description')
+            user.save()
+
+            if self.cleaned_data.get('add_address'):
+                Address.objects.create(
+                    user=user,
+                    first_name=user.first_name,
+                    street=self.cleaned_data['street'],
+                    street_number=self.cleaned_data['street_number'],
+                    city=self.cleaned_data['city'],
+                    postal_code=self.cleaned_data['postal_code'],
+                    country=self.cleaned_data['country'],
+                    email=self.cleaned_data['email'],
+                )
         return user
 
 

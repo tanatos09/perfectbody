@@ -7,7 +7,7 @@ from django.contrib.messages import get_messages
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 
-from accounts.forms import RegistrationForm, LoginForm, UserEditForm, PasswordChangeForm
+from accounts.forms import RegistrationForm, LoginForm, UserEditForm, PasswordChangeForm, TrainerRegistrationForm
 
 logger = logging.getLogger(__name__)
 
@@ -35,6 +35,17 @@ def register(request: HttpRequest) -> HttpResponse:
         form = RegistrationForm()
 
     return render(request, 'register.html', {"form": form})
+
+def trainer_register(request):
+    if request.method == 'POST':
+        form = TrainerRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Registrace trenéra proběhla úspěšně. Nyní se můžete přihlásit')
+            return redirect('login')
+    else:
+        form = TrainerRegistrationForm
+    return render(request, 'trainer_register.html', {'form': form})
 
 
 def login_view(request: HttpRequest) -> HttpResponse:

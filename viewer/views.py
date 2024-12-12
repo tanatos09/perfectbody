@@ -1,5 +1,8 @@
+from lib2to3.fixes.fix_input import context
+
 from django.shortcuts import render, get_object_or_404, redirect
 
+from accounts.models import UserProfile
 from products.models import Product
 
 
@@ -63,4 +66,9 @@ def update_cart(request, product_id):
     request.session['cart'] = cart
     return redirect('cart')
 
-
+def user_profile_view(request, username):
+    user = get_object_or_404(UserProfile, username=username)
+    is_trainer = user.groups.filter(name='trainer').exists()
+    if request.user.is_authenticated and request.user == user:
+        return redirect('profile')
+    return render(request, 'user_profile.html', {'user': user, 'is_trainer': is_trainer})

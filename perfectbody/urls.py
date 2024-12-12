@@ -17,8 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from accounts.views import register, login_view, logout_view
-from viewer.views import home, products, product, services, service, trainers
+from accounts.views import edit_profile, profile_view, change_password, trainer_register, register, login_view, logout_view
+from viewer.views import view_cart, add_to_cart, remove_from_cart, update_cart, home, products, product, services, service, trainers
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,4 +31,12 @@ urlpatterns = [
     path('register/', register, name='register'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
+    path('profile/', profile_view, name='profile'),
+    path('edit_profile/', edit_profile, name='edit_profile'),
+    path('cart/', view_cart, name='cart'),
+    path('cart/add/<int:product_id>/', add_to_cart, name='add_to_cart'),
+    path('cart/remove/<int:product_id>/', remove_from_cart, name='remove_from_cart'),
+    path('card/update/<int:product_id>/', update_cart, name='update_cart'),
+    path('change_password/', change_password, name='change_password'),
+    path('trainer_register', trainer_register, name='trainer_register')
 ]

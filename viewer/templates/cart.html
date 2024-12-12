@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Košík</h1>
+
+{% if cart %}
+    <table>
+        <thead>
+            <tr>
+                <th>Produkt</th>
+                <th>Množství</th>
+                <th>Cena</th>
+                <th>Celkem</th>
+                <th>Akce</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product_id, item in cart.items %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>
+                        <!-- Formulář pro aktualizaci množství -->
+                        <form action="{% url 'update_cart' product_id=product_id %}" method="POST">
+                            {% csrf_token %}
+                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                            <button type="submit">Aktualizovat</button>
+                        </form>
+                    </td>
+                    <td>{{ item.price }} Kč</td>
+                    <td>{{ item.price|floatformat:2|add:item.quantity }} Kč</td>
+                    <td>
+                        <a href="{% url 'remove_from_cart' product_id=product_id %}">Odstranit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p><strong>Celková cena: {{ total }} Kč</strong></p>
+{% else %}
+    <p>Košík je prázdný.</p>
+{% endif %}
+
+<a href="/">Pokračovat v nákupu</a>
+{% endblock %}

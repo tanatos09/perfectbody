@@ -1,12 +1,13 @@
 import logging
 
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth.decorators import login_required
 from django.contrib.messages import get_messages
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 
-from accounts.forms import RegistrationForm, LoginForm
+from accounts.forms import RegistrationForm, LoginForm, UserEditForm, PasswordChangeForm, TrainerRegistrationForm
 
 logger = logging.getLogger(__name__)
 
@@ -35,10 +36,22 @@ def register(request: HttpRequest) -> HttpResponse:
 
     return render(request, 'register.html', {"form": form})
 
+def trainer_register(request):
+    if request.method == 'POST':
+        form = TrainerRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Registrace trenéra proběhla úspěšně. Nyní se můžete přihlásit')
+            return redirect('login')
+    else:
+        form = TrainerRegistrationForm
+    return render(request, 'trainer_register.html', {'form': form})
+
 
 def login_view(request: HttpRequest) -> HttpResponse:
     clear_messages(request)
-
+    if request.user.is_authenticated:
+        return redirect('home')
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -66,3 +79,37 @@ def logout_view(request: HttpRequest) -> HttpResponse:
     logout(request)
     messages.success(request, "Byl(a) jste úspěšně odhlášen(a).")
     return redirect('login')
+@login_required
+def profile_view(request: HttpRequest) -> HttpResponse:
+    return render(request, 'profile.html', {'user': request.user})
+
+@login_required
+def edit_profile(request):
+    user = request.user
+    if request.method == 'POST':
+        form = UserEditForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Vaše údaje byly úspěšně aktualizovány')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Údaje nejsou platné, zkuste to znovu')
+    else:
+        form = UserEditForm(instance=user)
+
+    return render(request, 'edit_profile.html', {"form": form})
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, request.user)
+            messages.success(request, 'Vaše heslo bylo změněno')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Heslo nebylo změněno. Opravte chyby a zkuste to znovu')
+    else: form = PasswordChangeForm(request.user)
+
+    return render(request, 'change_password.html', {'form': form})

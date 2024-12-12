@@ -5,10 +5,139 @@
 {% block content %}
 
 <h1>Registrace uživatele</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Registrovat</button>
-    </form>
+<form method="post">
+    {% csrf_token %}
+
+    <!-- Osobní údaje -->
+    <div class="form-row">
+        {{ form.first_name.label_tag }}
+        {{ form.first_name }}
+        {% if form.first_name.errors %}
+            <div class="error">{{ form.first_name.errors }}</div>
+        {% endif %}
+    </div>
+
+    <div class="form-row">
+        {{ form.last_name.label_tag }}
+        {{ form.last_name }}
+        {% if form.last_name.errors %}
+            <div class="error">{{ form.last_name.errors }}</div>
+        {% endif %}
+    </div>
+
+    <div class="form-row">
+        {{ form.email.label_tag }}
+        {{ form.email }}
+        {% if form.email.errors %}
+            <div class="error">{{ form.email.errors }}</div>
+        {% endif %}
+    </div>
+
+    <!-- Přihlašovací údaje -->
+    <div class="form-row">
+        {{ form.username.label_tag }}
+        {{ form.username }}
+        {% if form.username.errors %}
+            <div class="error">{{ form.username.errors }}</div>
+        {% endif %}
+    </div>
+
+    <div class="form-row">
+        {{ form.password.label_tag }}
+        {{ form.password }}
+        {% if form.password.errors %}
+            <div class="error">{{ form.password.errors }}</div>
+        {% endif %}
+    </div>
+
+    <div class="form-row">
+        {{ form.password_confirm.label_tag }}
+        {{ form.password_confirm }}
+        {% if form.password_confirm.errors %}
+            <div class="error">{{ form.password_confirm.errors }}</div>
+        {% endif %}
+    </div>
+
+    <hr>
+
+    <!-- Zaškrtávací pole -->
+    <div class="form-row">
+        {{ form.add_address.label_tag }}
+        {{ form.add_address }}
+        {% if form.add_address.errors %}
+            <div class="error">{{ form.add_address.errors }}</div>
+        {% endif %}
+    </div>
+
+    <!-- Adresní údaje -->
+    <div id="addressFields" style="display: none;">
+        <div class="form-row">
+            {{ form.phone.label_tag }}
+            {{ form.phone }}
+            {% if form.phone.errors %}
+                <div class="error">{{ form.phone.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-row">
+            {{ form.street.label_tag }}
+            {{ form.street }}
+            {% if form.street.errors %}
+                <div class="error">{{ form.street.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-row">
+            {{ form.street_number.label_tag }}
+            {{ form.street_number }}
+            {% if form.street_number.errors %}
+                <div class="error">{{ form.street_number.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-row">
+            {{ form.city.label_tag }}
+            {{ form.city }}
+            {% if form.city.errors %}
+                <div class="error">{{ form.city.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-row">
+            {{ form.postal_code.label_tag }}
+            {{ form.postal_code }}
+            {% if form.postal_code.errors %}
+                <div class="error">{{ form.postal_code.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-row">
+            {{ form.country.label_tag }}
+            {{ form.country }}
+            {% if form.country.errors %}
+                <div class="error">{{ form.country.errors }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <hr>
+
+    <button type="submit">Registrovat</button>
+</form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const addAddressCheckbox = document.getElementById("id_add_address");
+        const addressFields = document.getElementById("addressFields");
+
+        function toggleAddressFields() {
+            addressFields.style.display = addAddressCheckbox.checked ? "block" : "none";
+        }
+
+        addAddressCheckbox.addEventListener("change", toggleAddressFields);
+        toggleAddressFields();
+    });
+</script>
+            <hr><hr><a href="{% url 'trainer_register' %}">Registrovat se jako trenér</a>
 
 {% endblock %}

@@ -2,6 +2,11 @@
 
 Online store with admin panel.
 
+## Functionalities
+
+- [x] products/services list (products-list)
+- [ ] product/service information (product-detail)
+
 ## Database
 
 - [ ] user_profile
@@ -39,6 +44,7 @@ Online store with admin panel.
   - [x] id
   - [x] category_name
   - [x] category_description
+  - [ ] category_view
   - [x] category_parent_id (1:n -> category)
 - [ ] trainers_services
   - [ ] id

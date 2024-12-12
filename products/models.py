@@ -6,6 +6,7 @@ from accounts.models import UserProfile
 class Category(Model):
     category_name = CharField(max_length=50, null=False, blank=False, unique=True)
     category_description = TextField(null=True, blank=True)
+    # category_view = URLField(null=True, blank=True)
     category_parent = ForeignKey('self', on_delete=SET_NULL, null=True, blank=True, related_name='subcategories')
 
     class Meta:

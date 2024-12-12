@@ -20,12 +20,16 @@ from django.urls import path
 from accounts.views import register, login_view, logout_view, edit_profile, profile_view, change_password, \
     trainer_register
 from viewer.views import home, products, services, trainers, view_cart, add_to_cart, remove_from_cart, update_cart
+from accounts.views import register, login_view, logout_view
+from viewer.views import home, products, product, services, service, trainers
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
     path('products/', products, name='products'),
+    path('product/<pk>', product, name='product'),
     path('services/', services, name='services'),
+    path('service/<pk>', service, name='service'),
     path('trainers/', trainers, name='trainers'),
     path('register/', register, name='register'),
     path('login/', login_view, name='login'),

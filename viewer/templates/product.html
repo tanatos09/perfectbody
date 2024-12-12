@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{ product.product_name }}</h1>
+    {#<div class="product-view">{{ product.product_view }}</div>#}
+    <div class="product-description"><b>Popis zboží:</b> {{ product.product_description }}</div>
+    <br>
+    <div class="product-category"><b>Kategorie:</b> {{ product.category }}</div>
+    <div class="product-producer"><b>Výrobce:</b> {{ product.producer }}</div>
+    <div class="product-price"><b>Cena:</b> {{ product.price }} Kč</div>
+    <div class="product-stock-availability"><b>Skladová dostupnost:</b> {{ product.stock_availability }}</div>
+
+{% endblock %}

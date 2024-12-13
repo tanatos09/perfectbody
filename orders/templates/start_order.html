@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Zadat údaje pro doručení</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {% if guest_form %}
+        <h3>Zadat e-mail</h3>
+        {{ guest_form.as_p }}
+    {% endif %}
+    <h3>Adresa</h3>
+    {{ address_form.as_p }}
+    <button type="submit" class="btn btn-primary">Pokračovat</button>
+</form>
+
+<div>
+    <a href="{% url 'cart' %}" class="btn btn-secondary">Zpět do košíku</a>
+</div>
+{% endblock %}

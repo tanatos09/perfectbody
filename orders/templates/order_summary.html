@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Shrnutí objednávky</h2>
+
+<div>
+    <h3>Adresa doručení</h3>
+    <p>{{ address.first_name }} {{ address.last_name }}</p>
+    <p>{{ address.street }} {{ address.street_number }}</p>
+    <p>{{ address.city }}, {{ address.postal_code }}</p>
+    <p>{{ address.country }}</p>
+    <p><strong>E-mail:</strong> {{ address.email }}</p>
+</div>
+
+<hr>
+
+<div>
+    <h3>Obsah objednávky</h3>
+    <ul>
+        {% for product_id, item in cart.items %}
+            <li>
+                <strong>{{ item.name }}</strong> (x{{ item.quantity }}) 
+                - {{ item.price }} Kč/ks
+            </li>
+        {% endfor %}
+    </ul>
+    <p><strong>Celková cena:</strong> {{ total_price }} Kč</p>
+</div>
+
+<hr>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success">Potvrdit objednávku</button>
+</form>
+
+<div>
+    <a href="{% url 'start_order' %}" class="btn btn-secondary">Zpět</a>
+</div>
+{% endblock %}

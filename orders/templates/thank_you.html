@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Děkujeme za objednávku!</h2>
+
+<p>Vaše objednávka byla úspěšně vytvořena. Číslo objednávky: <strong>#{{ order.id }}</strong></p>
+
+<div>
+    <a href="{% url 'products' %}" class="btn btn-primary">Pokračovat v nakupování</a>
+</div>
+{% endblock %}

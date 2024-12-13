@@ -1,4 +1,5 @@
-from django.db.models import Model, ForeignKey, SET_NULL, DateTimeField, DecimalField, PositiveIntegerField, CASCADE, CharField
+from django.db.models import Model, ForeignKey, SET_NULL, DateTimeField, DecimalField, PositiveIntegerField, CASCADE, \
+    CharField, EmailField
 from accounts.models import UserProfile, Address
 from products.models import Product
 
@@ -11,7 +12,8 @@ class Order(Model):
         ('CANCELED', 'Zrušeno'),
     ]
 
-    customer = ForeignKey(UserProfile, on_delete=SET_NULL, null=True, blank=True, related_name='orders'    )
+    customer = ForeignKey(UserProfile, on_delete=SET_NULL, null=True, blank=True, related_name='orders')
+    guest_email = EmailField(null=True, blank=True)
     order_state = CharField(max_length=20, choices=ORDER_STATES, default='PENDING')
     order_creation_datetime = DateTimeField(auto_now_add=True)
     total_price = DecimalField(max_digits=10, decimal_places=2)

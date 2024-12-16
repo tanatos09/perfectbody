@@ -4,10 +4,13 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages import get_messages
+from django.forms import modelformset_factory
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 
-from accounts.forms import RegistrationForm, LoginForm, UserEditForm, PasswordChangeForm, TrainerRegistrationForm
+from accounts.forms import RegistrationForm, LoginForm, UserEditForm, PasswordChangeForm, TrainerRegistrationForm, \
+    AddressForm
+from accounts.models import Address
 
 logger = logging.getLogger(__name__)
 
@@ -81,23 +84,53 @@ def logout_view(request: HttpRequest) -> HttpResponse:
     return redirect('login')
 @login_required
 def profile_view(request: HttpRequest) -> HttpResponse:
-    return render(request, 'profile.html', {'user': request.user})
+    primary_address = None
+    if hasattr(request.user, 'addresses') and request.user.addresses.exists():
+        primary_address = request.user.addresses.order_by('-id').first()
+    return render(request, 'profile.html', {'user': request.user, 'primary_address': primary_address})
 
 @login_required
 def edit_profile(request):
     user = request.user
+
+    AddressFormSet = modelformset_factory(Address, form=AddressForm, extra=0, can_delete=True)
+
     if request.method == 'POST':
-        form = UserEditForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Vaše údaje byly úspěšně aktualizovány')
+        user_form = UserEditForm(request.POST, instance=user)
+        address_formset = AddressFormSet(
+            request.POST,
+            queryset=Address.objects.filter(user=user),
+            prefix='addresses'
+        )
+
+        if user_form.is_valid() and address_formset.is_valid():
+            user_form.save()
+
+            for form in address_formset:
+                if form.cleaned_data and not form.cleaned_data.get('DELETE'):
+                    address = form.save(commit=False)
+                    address.user = user
+                    address.save()
+                elif form.cleaned_data.get('DELETE'):
+                    form.instance.delete()
+
+            messages.success(request, 'Vaše údaje byly úspěšně aktualizovány.')
             return redirect('profile')
         else:
-            messages.error(request, 'Údaje nejsou platné, zkuste to znovu')
+            messages.error(request, 'Došlo k chybě při aktualizaci profilu.')
     else:
-        form = UserEditForm(instance=user)
+        queryset = Address.objects.filter(user=user)
+        if not queryset.exists():
+            AddressFormSet.extra = 1
+        address_formset = AddressFormSet(queryset=queryset, prefix='addresses')
+        user_form = UserEditForm(instance=user)
 
-    return render(request, 'edit_profile.html', {"form": form})
+    return render(request, 'edit_profile.html', {
+        "form": user_form,
+        'address_formset': address_formset
+    })
+
+
 
 @login_required
 def change_password(request):

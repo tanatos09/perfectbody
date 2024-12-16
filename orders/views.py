@@ -1,12 +1,14 @@
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import get_object_or_404
 
-from accounts.models import Address
-from orders.forms import OrderAddressForm, GuestOrderForm
+from orders.forms import GuestOrderForm
 from orders.models import Order, OrderProduct
 
+from django.forms import modelform_factory
+from django.shortcuts import redirect, render
+from django.contrib import messages
+from accounts.models import Address
 
 def start_order(request):
     cart = request.session.get('cart', {})
@@ -14,39 +16,61 @@ def start_order(request):
         messages.error(request, 'Váš vozík je prázdný')
         return redirect('view_cart')
 
+    AddressForm = modelform_factory(Address, fields=['first_name', 'last_name', 'street', 'street_number', 'city', 'postal_code', 'country', 'email'])
+
     if request.method == 'POST':
-        if request.user.is_authenticated:
-            address_form = OrderAddressForm(request.POST)
-            if address_form.is_valid():
-                address = address_form.save(commit=False)
-                address.user = request.user
-                address.save()
+        different_billing = 'different_billing' in request.POST
 
-                request.session['cart_order'] = {
-                    'address_id': address.id,
-                    'cart': cart,
-                }
-                return redirect('order_summary')
-        else:
-            guest_form = GuestOrderForm(request.POST)
-            address_form = OrderAddressForm(request.POST)
-            if guest_form.is_valid() and address_form.is_valid():
-                guest_email = guest_form.cleaned_data['email']
-                address = address_form.save(commit=False)
-                address.save()
+        shipping_address_form = AddressForm(request.POST, prefix='shipping')
 
-                request.session['cart_order'] = {
-                    'address_id': address.id,
-                    'cart': cart,
-                    'guest_email': guest_email,
-                }
-                request.session['guest_email'] = guest_email
-                return redirect('order_summary')
+        billing_address_form = AddressForm(request.POST, prefix='billing') if different_billing else shipping_address_form
+
+        if shipping_address_form.is_valid() and (not different_billing or billing_address_form.is_valid()):
+            shipping_address = shipping_address_form.save(commit=False)
+            shipping_address.user = request.user if request.user.is_authenticated else None
+            shipping_address.save()
+
+            if different_billing:
+                billing_address = billing_address_form.save(commit=False)
+                billing_address.user = request.user if request.user.is_authenticated else None
+                billing_address.save()
+            else:
+                billing_address = shipping_address
+
+            request.session['cart_order'] = {
+                'shipping_address_id': shipping_address.id,
+                'billing_address_id': billing_address.id,
+                'cart': cart,
+            }
+            messages.success(request, 'Adresa byla úspěšně uložena. Pokračujte k souhrnu objednávky.')
+            return redirect('order_summary')
+
+        messages.error(request, 'Prosím, opravte chyby ve formulářích.')
     else:
-        guest_form = GuestOrderForm() if not request.user.is_authenticated else None
-        address_form = OrderAddressForm()
+        if request.user.is_authenticated:
+            primary_address = request.user.addresses.order_by('-id').first()
+            initial_shipping = {
+                'first_name': primary_address.first_name if primary_address else request.user.first_name,
+                'last_name': primary_address.last_name if primary_address else request.user.last_name,
+                'street': primary_address.street if primary_address else '',
+                'street_number': primary_address.street_number if primary_address else '',
+                'city': primary_address.city if primary_address else '',
+                'postal_code': primary_address.postal_code if primary_address else '',
+                'country': primary_address.country if primary_address else 'Česká republika',
+                'email': primary_address.email if primary_address else request.user.email,
+            }
+            shipping_address_form = AddressForm(initial=initial_shipping, prefix='shipping')
 
-    return render(request, 'start_order.html', {'address_form': address_form, 'guest_form': guest_form})
+            billing_address_form = AddressForm(initial=initial_shipping, prefix='billing')
+        else:
+            shipping_address_form = AddressForm(prefix='shipping')
+            billing_address_form = AddressForm(prefix='billing')
+
+    return render(request, 'start_order.html', {
+        'shipping_address_form': shipping_address_form,
+        'billing_address_form': billing_address_form,
+        'guest_form': None if request.user.is_authenticated else GuestOrderForm(),
+    })
 
 
 def order_summary(request):
@@ -55,7 +79,8 @@ def order_summary(request):
         messages.error(request, 'Objednávka nemůže být provedena, protože není připravena')
         return redirect('view_cart')
 
-    address = Address.objects.get(id=cart_order['address_id'])
+    shipping_address = Address.objects.get(id=cart_order['shipping_address_id'])
+    billing_address = Address.objects.get(id=cart_order['billing_address_id'])
     cart = cart_order['cart']
     guest_email = cart_order.get('guest_email', None)
     total_price = sum(item['quantity'] * item['price'] for item in cart.values())
@@ -63,7 +88,14 @@ def order_summary(request):
     if request.method == 'POST':
         return redirect('confirm_order')
 
-    return render(request, 'order_summary.html', {'address': address, 'cart': cart, 'total_price': total_price, 'guest_email': guest_email})
+    return render(request, 'order_summary.html', {
+        'shipping_address': shipping_address,
+        'billing_address': billing_address,
+        'cart': cart,
+        'total_price': total_price,
+        'guest_email': guest_email
+    })
+
 
 def confirm_order(request):
     cart_order = request.session.get('cart_order', {})
@@ -108,11 +140,12 @@ def thank_you(request, order_id):
 
     return render(request, 'thank_you.html', {'order': order})
 
-#TODO - neni nikde prirazeno zobrazeni mych objednavek a detail objednavky
+@login_required
 def my_orders(request):
     orders = Order.objects.filter(customer=request.user).order_by('-order_creation_datetime')
     return render(request, 'my_orders.html', {'orders': orders})
 
+@login_required
 def order_detail(request, order_id):
     order = get_object_or_404(Order, id=order_id, customer=request.user)
     return render(request, 'order_detail.html', {'order': order})

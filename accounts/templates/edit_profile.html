@@ -1,25 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% if user.is_authenticated %}
-        <h2>Upravit uživatelský profil</h2>
+    <h2>Upravit uživatelský profil</h2>
 
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <hr>
-        <a href="{% url 'change_password' %}">Změnit heslo</a>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
 
-        <hr><br>
-            <button type="submit">Uložit změny</button>
-        </form>
+        <h3>Osobní údaje</h3>
+        {{ form.as_p }}
 
+        <h3>Adresa</h3>
+        {{ address_formset.management_form }}
+        {% for form in address_formset %}
+            <div>
+                {{ form.as_p }}
+            </div>
+        {% endfor %}
 
-        <a href="{% url 'profile' %}">Zpět na profil</a>
-    {% else %}
-        <p>Pro přístup na tuto stránku se musíte <a href="{% url 'login' %}">přihlásit</a>.</p>
-    {% endif %}
+        <button type="submit">Uložit změny</button>
+    </form>
 
-
-
+    <a href="{% url 'profile' %}">Zpět na profil</a>
 {% endblock %}

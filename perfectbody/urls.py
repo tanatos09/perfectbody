@@ -45,7 +45,7 @@ urlpatterns = [
     path('summary/', order_summary, name='order_summary'),
     path('confirm/', confirm_order, name='confirm_order'),
     path('thank-you/<int:order_id>/', thank_you, name='thank_you'),
-    path('my-orders/', my_orders, name='my_orders'),
+    path('my_orders/', my_orders, name='my_orders'),
     path('detail/<int:order_id>/', order_detail, name='order_detail'),
 
 ]

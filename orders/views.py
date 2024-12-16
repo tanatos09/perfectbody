@@ -16,7 +16,6 @@ def start_order(request):
 
     if request.method == 'POST':
         if request.user.is_authenticated:
-            # Formulář pro registrovaného uživatele
             address_form = OrderAddressForm(request.POST)
             if address_form.is_valid():
                 address = address_form.save(commit=False)
@@ -29,7 +28,6 @@ def start_order(request):
                 }
                 return redirect('order_summary')
         else:
-            # Formuláře pro neregistrovaného uživatele
             guest_form = GuestOrderForm(request.POST)
             address_form = OrderAddressForm(request.POST)
             if guest_form.is_valid() and address_form.is_valid():
@@ -42,9 +40,9 @@ def start_order(request):
                     'cart': cart,
                     'guest_email': guest_email,
                 }
+                request.session['guest_email'] = guest_email
                 return redirect('order_summary')
     else:
-        # Inicializace formulářů pro GET požadavek
         guest_form = GuestOrderForm() if not request.user.is_authenticated else None
         address_form = OrderAddressForm()
 
@@ -95,7 +93,6 @@ def confirm_order(request):
     messages.success(request, f'Děkujeme za objednávku #{order.id}')
     return redirect('thank_you', order_id=order.id)
 
-#FIXME - nelze dokoncit objednavku neprihlasenemu uzivateli
 def thank_you(request, order_id):
     if request.user.is_authenticated:
         try:

@@ -1,40 +1,64 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Shrnutí objednávky</h2>
+<h2>Souhrn objednávky</h2>
 
-<div>
-    <h3>Adresa doručení</h3>
-    <p>{{ address.first_name }} {{ address.last_name }}</p>
-    <p>{{ address.street }} {{ address.street_number }}</p>
-    <p>{{ address.city }}, {{ address.postal_code }}</p>
-    <p>{{ address.country }}</p>
-    <p><strong>E-mail:</strong> {{ address.email }}</p>
-</div>
 
-<hr>
 
+<!-- Produkty -->
 <div>
     <h3>Obsah objednávky</h3>
-    <ul>
-        {% for product_id, item in cart.items %}
-            <li>
-                <strong>{{ item.name }}</strong> (x{{ item.quantity }}) 
-                - {{ item.price }} Kč/ks
-            </li>
-        {% endfor %}
-    </ul>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Produkt</th>
+                <th>Množství</th>
+                <th>Cena za kus</th>
+                <th>Celkem</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr>
+                <td>{{ item.product_name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.price_per_item }} Kč</td>
+                <td>{{ item.total_price }} Kč</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     <p><strong>Celková cena:</strong> {{ total_price }} Kč</p>
 </div>
 
 <hr>
-
-<form method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-success">Potvrdit objednávku</button>
-</form>
-
+    <!-- Adresy -->
 <div>
-    <a href="{% url 'start_order' %}" class="btn btn-secondary">Zpět</a>
+    <h3>Adresa doručení</h3>
+    <p>{{ shipping_address.first_name }} {{ shipping_address.last_name }}</p>
+    <p>{{ shipping_address.street }} {{ shipping_address.street_number }}</p>
+    <p>{{ shipping_address.city }}, {{ shipping_address.postal_code }}</p>
+    <p>{{ shipping_address.country }}</p>
+    <p><strong>E-mail:</strong> {{ shipping_address.email }}</p>
+</div>
+
+{% if billing_address.id != shipping_address.id %}
+    <hr>
+    <div>
+        <h3>Fakturační adresa</h3>
+        <p>{{ billing_address.first_name }} {{ billing_address.last_name }}</p>
+        <p>{{ billing_address.street }} {{ billing_address.street_number }}</p>
+        <p>{{ billing_address.city }}, {{ billing_address.postal_code }}</p>
+        <p>{{ billing_address.country }}</p>
+        <p><strong>E-mail:</strong> {{ billing_address.email }}</p>
+    </div>
+{% endif %}
+
+<hr>
+
+<!-- Akce -->
+<div>
+    <a href="{% url 'confirm_order' %}" class="btn btn-primary">Potvrdit objednávku</a>
+    <a href="{% url 'start_order' %}" class="btn btn-secondary">Zpět na úpravu objednávky</a>
 </div>
 {% endblock %}

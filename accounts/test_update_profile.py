@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.messages import get_messages
 from django.test import TestCase
 from django.urls import reverse
 
@@ -30,6 +31,8 @@ class EditProfileTest(TestCase):
             'first_name': 'Upraveny',
             'last_name': 'Uzivatel',
             'preferred_channel': 'PHONE',
+            'addresses-TOTAL_FORMS': 0,  # Povinné skryté pole pro formset
+            'addresses-INITIAL_FORMS': 0,  # Povinné skryté pole pro formset
         }
         response = self.client.post(self.edit_profile_url, updated_data)
         self.assertRedirects(response, reverse('profile'))
@@ -52,7 +55,7 @@ class EditProfileTest(TestCase):
         response = self.client.post(self.edit_profile_url, invalid_data)
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Údaje nejsou platné, zkuste to znovu')
+        self.assertContains(response, 'Došlo k chybě při aktualizaci profilu')
         self.assertIn('email', response.context['form'].errors)
         self.assertEqual(response.context['form'].errors['email'], ['Zadejte platnou e-mailovou adresu.'])
 

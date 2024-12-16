@@ -1,11 +1,57 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Děkujeme za objednávku!</h2>
+<h2>Děkujeme za vaši objednávku!</h2>
+<p>Vaše objednávka byla úspěšně dokončena. Detaily objednávky jsou níže:</p>
 
-<p>Vaše objednávka byla úspěšně vytvořena. Číslo objednávky: <strong>#{{ order.id }}</strong></p>
-
+<!-- Objednávka -->
 <div>
-    <a href="{% url 'products' %}" class="btn btn-primary">Pokračovat v nakupování</a>
+    <h3>Objednávka #{{ order.id }}</h3>
+    <p><strong>Celková cena:</strong> {{ order.total_price }} Kč</p>
+    <p><strong>Stav objednávky:</strong> {{ order.get_order_state_display }}</p>
 </div>
+
+<hr>
+
+<!-- Obsah objednávky -->
+<div>
+    <h3>Obsah objednávky</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Produkt</th>
+                <th>Množství</th>
+                <th>Cena za kus</th>
+                <th>Celkem</th>
+            </tr>
+        </thead>
+<tbody>
+    {% for item in items_with_totals %}
+    <tr>
+        <td>{{ item.product_name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.price_per_item }} Kč</td>
+        <td>{{ item.total_price }} Kč</td>
+    </tr>
+    {% endfor %}
+</tbody>
+
+    </table>
+</div>
+
+<hr>
+
+<!-- Pokyny pro platbu -->
+<div>
+    <h3>Pokyny pro platbu převodem</h3>
+    <p>Pro dokončení objednávky prosím proveďte platbu na níže uvedené údaje:</p>
+    <ul>
+        <li><strong>Číslo účtu:</strong> {{ payment_details.bank_account }}</li>
+        <li><strong>Variabilní symbol:</strong> {{ payment_details.variable_symbol }}</li>
+        <li><strong>Částka k úhradě:</strong> {{ payment_details.total_price }} Kč</li>
+    </ul>
+    <p>Po přijetí platby bude vaše objednávka zpracována. Děkujeme za pochopení!</p>
+</div>
+
+<a href="{% url 'home' %}" class="btn btn-primary">Zpět na úvodní stránku</a>
 {% endblock %}

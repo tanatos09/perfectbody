@@ -92,7 +92,6 @@ def profile_view(request: HttpRequest) -> HttpResponse:
 @login_required
 def edit_profile(request):
     user = request.user
-
     AddressFormSet = modelformset_factory(Address, form=AddressForm, extra=0, can_delete=True)
 
     if request.method == 'POST':
@@ -102,6 +101,7 @@ def edit_profile(request):
             queryset=Address.objects.filter(user=user),
             prefix='addresses'
         )
+
 
         if user_form.is_valid() and address_formset.is_valid():
             user_form.save()

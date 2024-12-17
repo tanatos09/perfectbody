@@ -173,6 +173,15 @@ class UserEditForm(UserChangeForm):
     class Meta:
         model = UserProfile
         fields = ['username', 'first_name', 'last_name', 'email', 'phone', 'avatar', 'preferred_channel']
+        labels = {
+            'username': 'Uživatelské jméno',
+            'first_name': 'Jméno',
+            'last_name': 'Příjmení',
+            'email': 'E-mail',
+            'phone': 'Telefon',
+            'avatar': 'Avatar',
+            'preferred_channel': 'Preferovaný komunikační kanál',
+        }
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -219,4 +228,14 @@ class PasswordChangeForm(Form):
         self.user.set_password(new_password)
         self.user.save()
 
-
+class AddressForm(ModelForm):
+    class Meta:
+        model = Address
+        fields = ['street', 'street_number', 'city', 'postal_code', 'country']
+        labels = {
+            'street': 'Ulice',
+            'street_number': 'Číslo ulice',
+            'city': 'Město',
+            'postal_code': 'PSČ',
+            'country': 'Země',
+        }

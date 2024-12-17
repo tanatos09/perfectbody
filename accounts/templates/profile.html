@@ -23,19 +23,35 @@
 <hr>
 
 <div>
-    <h3>Adresy</h3>
-    {% if user.addresses.exists %}
-        <ul>
-            {% for address in user.addresses.all %}
-                <li>
-                    {{ address.first_name }} {{ address.last_name }},
-                    {{ address.street }} {{ address.street_number }},
-                    {{ address.city }}, {{ address.postal_code }},
-                    {{ address.country }},
-                    <strong>E-mail:</strong> {{ address.email }}
-                </li>
-            {% endfor %}
-        </ul>
+<div>
+    <h3>Moje objednávky</h3>
+    {% with user.orders.all|slice:':5' as recent_orders %}
+         {%  if recent_orders %}
+            <ul>
+            {% for order in recent_orders %}
+            <li>
+                <a href="{% url 'order_detail' order.id %}">
+                    Objednávka #{{ order.id }} - {{ order.get_order_state_display }}
+                </a> ({{ order.order_creation_datetime|date:"d.m.Y H:i" }})
+            </li>
+                {% endfor %}
+                </ul>
+             <a href="{% url 'my_orders' %}">Zobrazit všechny objednávky</a>
+        {% else %}
+            <p>Nemáte žádné objednávky.</p>
+        {% endif %}
+    {% endwith %}
+
+</div>
+    <h3>Používaná adresa</h3>
+    {% if primary_address %}
+        <p>
+                    {{ primary_address.first_name }} {{ primary_address.last_name }}<br>
+                    {{ primary_address.street }} {{ primary_address.street_number }}<br>
+                    {{ primary_address.city }}, {{ primary_address.postal_code }}<br>
+                    {{ primary_address.country }}<br>
+                    <strong>E-mail:</strong> {{ primary_address.email }}
+        </p>
     {% else %}
         <p>Nemáte žádné uložené adresy.</p>
     {% endif %}
@@ -44,7 +60,8 @@
 <hr>
 
 <div>
-    <a href="{% url 'edit_profile' %}">Upravit profil</a>
+    <a href="{% url 'edit_profile' %}">Upravit profil</a> |
+    <a href="{% url 'change_password' %}">Změnit heslo</a> |
     <a href="{% url 'logout' %}">Odhlásit se</a>
 </div>
 

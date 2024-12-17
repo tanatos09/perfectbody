@@ -9,7 +9,7 @@
             <tr>
                 <th>Produkt</th>
                 <th>Množství</th>
-                <th>Cena</th>
+                <th>Cena za kus</th>
                 <th>Celkem</th>
                 <th>Akce</th>
             </tr>
@@ -35,10 +35,12 @@
             {% endfor %}
         </tbody>
     </table>
-    <p><strong>Celková cena: {{ total }} Kč</strong></p>
+    <div>
+        <p><strong>Celková cena: {{ total }} Kč</strong></p>
+        <a href="{% url 'start_order' %}">Pokračovat k objednávce</a>
+    </div>
 {% else %}
     <p>Košík je prázdný.</p>
+    <a href="{% url 'products' %}">Pokračovat v nákupu</a>
 {% endif %}
-
-<a href="/">Pokračovat v nákupu</a>
 {% endblock %}

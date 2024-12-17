@@ -4,10 +4,13 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages import get_messages
+from django.forms import modelformset_factory, modelform_factory
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 
-from accounts.forms import RegistrationForm, LoginForm, UserEditForm, PasswordChangeForm, TrainerRegistrationForm
+from accounts.forms import RegistrationForm, LoginForm, UserEditForm, PasswordChangeForm, TrainerRegistrationForm, \
+    AddressForm
+from accounts.models import Address
 
 logger = logging.getLogger(__name__)
 
@@ -81,23 +84,50 @@ def logout_view(request: HttpRequest) -> HttpResponse:
     return redirect('login')
 @login_required
 def profile_view(request: HttpRequest) -> HttpResponse:
-    return render(request, 'profile.html', {'user': request.user})
+    primary_address = None
+    if hasattr(request.user, 'addresses') and request.user.addresses.exists():
+        primary_address = request.user.addresses.order_by('-id').first()
+    return render(request, 'profile.html', {'user': request.user, 'primary_address': primary_address})
+
 
 @login_required
 def edit_profile(request):
     user = request.user
+
+    # Formuláře pro uživatele a adresy
+    UserForm = UserEditForm
+    AddressForm = modelform_factory(Address, fields=['first_name', 'last_name', 'street', 'street_number', 'city', 'postal_code', 'country', 'email'])
+
+    # Získání poslední doručovací a fakturační adresy
+    last_shipping_address = user.addresses.order_by('-id').first()  # nebo jiné kritérium
+    last_billing_address = None  # Pokud chcete fakturační adresu přidat, přidejte logiku zde
+
     if request.method == 'POST':
-        form = UserEditForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Vaše údaje byly úspěšně aktualizovány')
+        user_form = UserForm(request.POST, instance=user)
+        shipping_form = AddressForm(request.POST, instance=last_shipping_address, prefix='shipping')
+        billing_form = AddressForm(request.POST, instance=last_billing_address, prefix='billing') if last_billing_address else None
+
+        if user_form.is_valid() and shipping_form.is_valid() and (billing_form is None or billing_form.is_valid()):
+            user_form.save()
+            shipping_form.save()
+            if billing_form:
+                billing_form.save()
+            messages.success(request, 'Profil byl úspěšně aktualizován.')
             return redirect('profile')
         else:
-            messages.error(request, 'Údaje nejsou platné, zkuste to znovu')
+            messages.error(request, 'Došlo k chybě při aktualizaci profilu. Zkontrolujte zadané údaje.')
     else:
-        form = UserEditForm(instance=user)
+        user_form = UserForm(instance=user)
+        shipping_form = AddressForm(instance=last_shipping_address, prefix='shipping')
+        billing_form = AddressForm(instance=last_billing_address, prefix='billing') if last_billing_address else None
 
-    return render(request, 'edit_profile.html', {"form": form})
+    return render(request, 'edit_profile.html', {
+        'user_form': user_form,
+        'shipping_form': shipping_form,
+        'billing_form': billing_form,
+    })
+
+
 
 @login_required
 def change_password(request):

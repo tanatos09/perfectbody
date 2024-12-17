@@ -9,27 +9,27 @@ Online store with admin panel.
 
 ## Database
 
-- [ ] user_profile
-  - [ ] id
-  - [ ] account_type
-  - [ ] role
-  - [ ] login
-  - [ ] password
-  - [ ] avatar
-  - [ ] first_name
-  - [ ] last_name
-  - [ ] phone_number
-  - [ ] email
-  - [ ] preferred_communication_channel
-  - [ ] user_creation_datetime
-- [ ] address
-  - [ ] id
-  - [ ] user_id (1:n -> user)
-  - [ ] address_type
-  - [ ] street
-  - [ ] town
-  - [ ] postal_code
-  - [ ] country
+- [x] user_profile
+  - [x] id
+  - [x] account_type
+  - [x] role
+  - [x] login
+  - [x] password
+  - [x] avatar
+  - [x] first_name
+  - [x] last_name
+  - [x] phone_number
+  - [x] email
+  - [x] preferred_communication_channel
+  - [x] user_creation_datetime
+- [x] address
+  - [x] id
+  - [x] user_id (1:n -> user)
+  - [x] address_type
+  - [x] street
+  - [x] town
+  - [x] postal_code
+  - [x] country
 - [x] product
   - [x] id
   - [x] product_type

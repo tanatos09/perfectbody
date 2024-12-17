@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Zadat údaje pro doručení</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    <h3>Doručovací adresa</h3>
+    {{ shipping_address_form.as_p }}
+
+    <label>
+        <input type="checkbox" id="differentBilling" name="different_billing">
+        Fakturační adresa je jiná než doručovací
+    </label>
+
+    <div id="billingForm" style="display: none;">
+        <h3>Fakturační adresa</h3>
+        {{ billing_address_form.as_p }}
+    </div>
+
+    {% if not user.is_authenticated %}
+    <h3>Hostující e-mail</h3>
+    <p>
+        <label for="guest_email">E-mail:</label>
+        <input type="email" name="guest_email" id="guest_email" value="{{ guest_email }}" required>
+    </p>
+    {% endif %}
+
+    <button type="submit" class="btn btn-primary">Pokračovat</button>
+</form>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const differentBillingCheckbox = document.getElementById('differentBilling');
+        const billingForm = document.getElementById('billingForm');
+        const shippingFields = document.querySelectorAll('[name^="shipping-"]');
+        const billingFields = document.querySelectorAll('[name^="billing-"]');
+
+        function toggleBillingForm() {
+            if (differentBillingCheckbox.checked) {
+                billingForm.style.display = 'block';
+            } else {
+                billingForm.style.display = 'none';
+                // Copy values from shipping to billing
+                shippingFields.forEach((field, index) => {
+                    if (billingFields[index]) {
+                        billingFields[index].value = field.value;
+                    }
+                });
+            }
+        }
+
+        // Initialize the visibility on page load
+        toggleBillingForm();
+
+        // Attach event listener to handle checkbox changes
+        differentBillingCheckbox.addEventListener('change', toggleBillingForm);
+
+        // Keep billing fields synced with shipping fields
+        shippingFields.forEach((field, index) => {
+            field.addEventListener('input', () => {
+                if (!differentBillingCheckbox.checked && billingFields[index]) {
+                    billingFields[index].value = field.value;
+                }
+            });
+        });
+    });
+</script>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Profil uživatele {{ user.username }}</h1>
+<ul>
+    {% if is_trainer %}
+        <li><strong>Jméno trenéra:</strong> {{ user.first_name }}</li>
+        <li><strong>Popis trenéra:</strong> {{ user.trainer_description }}</li>
+    {% endif %}
+    <li>Datum připojení: {{ user.date_joined|date:"d.m.Y" }}</li>
+</ul>
+<a href="{% url 'home' %}">Zpět na hlavní stránku</a>
+{% endblock %}

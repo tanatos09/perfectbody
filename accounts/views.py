@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages import get_messages
-from django.forms import modelformset_factory
+from django.forms import modelformset_factory, modelform_factory
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 
@@ -89,45 +89,42 @@ def profile_view(request: HttpRequest) -> HttpResponse:
         primary_address = request.user.addresses.order_by('-id').first()
     return render(request, 'profile.html', {'user': request.user, 'primary_address': primary_address})
 
+
 @login_required
 def edit_profile(request):
     user = request.user
-    AddressFormSet = modelformset_factory(Address, form=AddressForm, extra=0, can_delete=True)
+
+    # Formuláře pro uživatele a adresy
+    UserForm = UserEditForm
+    AddressForm = modelform_factory(Address, fields=['first_name', 'last_name', 'street', 'street_number', 'city', 'postal_code', 'country', 'email'])
+
+    # Získání poslední doručovací a fakturační adresy
+    last_shipping_address = user.addresses.order_by('-id').first()  # nebo jiné kritérium
+    last_billing_address = None  # Pokud chcete fakturační adresu přidat, přidejte logiku zde
 
     if request.method == 'POST':
-        user_form = UserEditForm(request.POST, instance=user)
-        address_formset = AddressFormSet(
-            request.POST,
-            queryset=Address.objects.filter(user=user),
-            prefix='addresses'
-        )
+        user_form = UserForm(request.POST, instance=user)
+        shipping_form = AddressForm(request.POST, instance=last_shipping_address, prefix='shipping')
+        billing_form = AddressForm(request.POST, instance=last_billing_address, prefix='billing') if last_billing_address else None
 
-
-        if user_form.is_valid() and address_formset.is_valid():
+        if user_form.is_valid() and shipping_form.is_valid() and (billing_form is None or billing_form.is_valid()):
             user_form.save()
-
-            for form in address_formset:
-                if form.cleaned_data and not form.cleaned_data.get('DELETE'):
-                    address = form.save(commit=False)
-                    address.user = user
-                    address.save()
-                elif form.cleaned_data.get('DELETE'):
-                    form.instance.delete()
-
-            messages.success(request, 'Vaše údaje byly úspěšně aktualizovány.')
+            shipping_form.save()
+            if billing_form:
+                billing_form.save()
+            messages.success(request, 'Profil byl úspěšně aktualizován.')
             return redirect('profile')
         else:
-            messages.error(request, 'Došlo k chybě při aktualizaci profilu.')
+            messages.error(request, 'Došlo k chybě při aktualizaci profilu. Zkontrolujte zadané údaje.')
     else:
-        queryset = Address.objects.filter(user=user)
-        if not queryset.exists():
-            AddressFormSet.extra = 1
-        address_formset = AddressFormSet(queryset=queryset, prefix='addresses')
-        user_form = UserEditForm(instance=user)
+        user_form = UserForm(instance=user)
+        shipping_form = AddressForm(instance=last_shipping_address, prefix='shipping')
+        billing_form = AddressForm(instance=last_billing_address, prefix='billing') if last_billing_address else None
 
     return render(request, 'edit_profile.html', {
-        "form": user_form,
-        'address_formset': address_formset
+        'user_form': user_form,
+        'shipping_form': shipping_form,
+        'billing_form': billing_form,
     })
 
 

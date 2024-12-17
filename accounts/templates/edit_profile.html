@@ -1,32 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Upravit uživatelský profil</h2>
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li class="{{ message.tags }}">{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
+<h2>Upravit profil</h2>
 
+<form method="post">
+    {% csrf_token %}
 
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+    <h3>Osobní údaje</h3>
+    {{ user_form.as_p }}
 
-        <h3>Osobní údaje</h3>
-        {{ form.as_p }}
+    <h3>Doručovací adresa</h3>
+    {{ shipping_form.as_p }}
 
-        <h3>Adresa</h3>
-        {{ address_formset.management_form }}
-        {% for form in address_formset %}
-            <div>
-                {{ form.as_p }}
-            </div>
-        {% endfor %}
+    {% if billing_form %}
+    <h3>Fakturační adresa</h3>
+    {{ billing_form.as_p }}
+    {% endif %}
 
-        <button type="submit">Uložit změny</button>
-    </form>
+    <button type="submit" class="btn btn-primary">Uložit změny</button>
+</form>
 
-    <a href="{% url 'profile' %}">Zpět na profil</a>
+<a href="{% url 'profile' %}" class="btn btn-secondary mt-3">Zpět na profil</a>
 {% endblock %}

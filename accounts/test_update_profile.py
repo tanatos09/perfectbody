@@ -31,8 +31,16 @@ class EditProfileTest(TestCase):
             'first_name': 'Upraveny',
             'last_name': 'Uzivatel',
             'preferred_channel': 'PHONE',
-            'addresses-TOTAL_FORMS': 0,  # Povinné skryté pole pro formset
-            'addresses-INITIAL_FORMS': 0,  # Povinné skryté pole pro formset
+            'addresses-TOTAL_FORMS': 1,  # Počet formulářů v formsetu
+            'addresses-INITIAL_FORMS': 0,  # Žádná existující instance
+            'shipping-first_name': 'Upraveny',
+            'shipping-last_name': 'Uzivatel',
+            'shipping-street': 'Hlavni',
+            'shipping-street_number': '123',
+            'shipping-city': 'Brno',
+            'shipping-postal_code': '123456',
+            'shipping-country': 'Czech Republic',
+            'shipping-email': 'updated.email@seznam.cz',
         }
         response = self.client.post(self.edit_profile_url, updated_data)
         self.assertRedirects(response, reverse('profile'))

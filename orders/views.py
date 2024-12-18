@@ -16,9 +16,6 @@ def normalize_address_data(address_data):
 
 
 def get_or_create_address(user, **address_data):
-    """
-    Najde existující adresu konkrétního uživatele nebo vytvoří novou.
-    """
     normalized_data = normalize_address_data(address_data)
 
     address = Address.objects.filter(
@@ -76,7 +73,6 @@ def start_order(request):
         shipping_address_form = AddressForm(request.POST, prefix='shipping')
         billing_address_form = AddressForm(request.POST, prefix='billing') if 'different_billing' in request.POST else None
 
-        # Získání hostujícího e-mailu z POST dat
         guest_email = request.POST.get('guest_email')
 
         shipping_valid = shipping_address_form.is_valid()
@@ -91,7 +87,6 @@ def start_order(request):
             })
 
         if shipping_valid and billing_valid:
-            # Uložení adresy a e-mailu do session
             shipping_address = shipping_address_form.save(commit=False)
             shipping_address.user = request.user if request.user.is_authenticated else None
             shipping_address.save()
@@ -104,7 +99,6 @@ def start_order(request):
                 billing_address.user = request.user if request.user.is_authenticated else None
                 billing_address.save()
 
-            # Uložení dat do session
             request.session['cart_order'] = {
                 'shipping_address_id': shipping_address.id,
                 'billing_address_id': billing_address.id,
@@ -125,6 +119,7 @@ def start_order(request):
                 'last_name': request.user.last_name,
                 'email': request.user.email,
             }
+        initial_data = get_initial_data(request.user) if request.user.is_authenticated else {}
         shipping_address_form = AddressForm(initial=initial_data, prefix='shipping')
         billing_address_form = AddressForm(prefix='billing')
 
@@ -256,3 +251,15 @@ def my_orders(request):
 def order_detail(request, order_id):
     order = get_object_or_404(Order, id=order_id, customer=request.user)
     return render(request, 'order_detail.html', {'order': order})
+
+@login_required
+def cancel_order(request, order_id):
+    order = get_object_or_404(Order, id=order_id, customer=request.user)
+    if order.order_state != 'PENDING':
+        messages.error(request, 'Tuto objedávku nelze zrušit')
+        return redirect('my_orders')
+
+    order.order_state = 'CANCELLED'
+    order.save()
+    messages.success(request, f'Objednávka #{order.id} byla zrušena')
+    return redirect('my_orders')

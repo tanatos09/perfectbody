@@ -94,13 +94,11 @@ def profile_view(request: HttpRequest) -> HttpResponse:
 def edit_profile(request):
     user = request.user
 
-    # Formuláře pro uživatele a adresy
     UserForm = UserEditForm
     AddressForm = modelform_factory(Address, fields=['first_name', 'last_name', 'street', 'street_number', 'city', 'postal_code', 'country', 'email'])
 
-    # Získání poslední doručovací a fakturační adresy
-    last_shipping_address = user.addresses.order_by('-id').first()  # nebo jiné kritérium
-    last_billing_address = None  # Pokud chcete fakturační adresu přidat, přidejte logiku zde
+    last_shipping_address = user.addresses.order_by('-id').first()
+    last_billing_address = None
 
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=user)

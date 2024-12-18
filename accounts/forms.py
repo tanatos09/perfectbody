@@ -231,11 +231,14 @@ class PasswordChangeForm(Form):
 class AddressForm(ModelForm):
     class Meta:
         model = Address
-        fields = ['street', 'street_number', 'city', 'postal_code', 'country']
+        fields = ['first_name', 'last_name', 'street', 'street_number', 'city', 'postal_code', 'country', 'email']
         labels = {
+            'first_name': 'Jméno',
+            'last_name': 'Příjmení',
             'street': 'Ulice',
-            'street_number': 'Číslo ulice',
+            'street_number': 'Číslo domu',
             'city': 'Město',
             'postal_code': 'PSČ',
             'country': 'Země',
+            'email': 'E-mail',
         }

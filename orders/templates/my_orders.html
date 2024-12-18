@@ -12,6 +12,17 @@
                 </a>
                 - <strong>Celková cena:</strong> {{ order.total_price }} Kč
                 - <strong>Datum vytvoření:</strong> {{ order.order_creation_datetime|date:"d.m.Y H:i" }}
+
+                {% if order.order_state == 'PENDING' %}
+                    <form method="post" action="{% url 'cancel_order' order.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Opravdu chcete zrušit tuto objednávku?');">
+                            Zrušit objednávku
+                        </button>
+                    </form>
+                {% else %}
+                    - <span class="text-muted">Nelze zrušit</span>
+                {% endif %}
             </li>
         {% endfor %}
     </ul>

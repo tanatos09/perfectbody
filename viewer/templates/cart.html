@@ -35,10 +35,18 @@
             {% endfor %}
         </tbody>
     </table>
-    <p><strong>Celková cena: {{ total }} Kč</strong></p>
+    <p><strong>Celková cena: {{ total|floatformat:2 }} Kč</strong></p>
+
+    <!-- "Continue shopping" button -->
+    <div class="continue-shopping">
+        <a href="/" class="btn btn-primary">Pokračovat v nákupu</a>
+    </div>
+
+    <!-- "Complete order" button -->
+    <div class="order-actions">
+        <a href="{% url 'complete_order' %}" class="btn btn-success">Dokončit objednávku</a>
+    </div>
 {% else %}
     <p>Košík je prázdný.</p>
 {% endif %}
-
-<a href="/">Pokračovat v nákupu</a>
 {% endblock %}

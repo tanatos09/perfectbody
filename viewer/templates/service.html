@@ -2,8 +2,18 @@
 
 {% block content %}
 
-<h1>{{ product.product_name }}</h1>
-    {#<div class="product-view">{{ product.product_view }}</div>#}
-    Popis služby.
+    <h1>{{ service.product_name }}</h1>
+    <div class="service-description"><b>Popis služby:</b> {{ service.product_long_description }}</div>
+
+    <br>
+    <div class="service-category"><b>Kategorie:</b> {{ service.category }}</div>
+    <div class="service-price"><b>Trenéři:</b> Zde bude seznam trenérů poskytujících službu. </div>
+    <div class="service-price"><b>Cena:</b> {{ service.price }} Kč</div>
+
+    <br>
+    <!-- Adding to cart -->
+    <div class="add-to-cart">
+        <a href="{% url 'add_to_cart' service.id %}">➕ Přidat do košíku</a>
+    </div>
 
 {% endblock %}

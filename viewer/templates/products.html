@@ -1,16 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Naše produkty</h1>
-<ul>
-    {% for product in products %}
-        <li>
-            <h2>{{ product.product_name }}</h2> - {{ product.price }} Kč
-            <p>{{ product.product_description }}</p>
-            <a href="{% url 'add_to_cart' product.id %}">➕ Přidat do košíku</a>
-        </li>
-    {% empty %}
-        <li>Žádné produkty k dispozici.</li>
-    {% endfor %}
-</ul>
+    <h1>Seznam všech dostupných produktů</h1>
+    <ul>
+        {% for product in products %}
+            <li>
+                <a href="{% url 'product' product.id %}">
+                    <h2>{{ product.product_name }}</h2>
+                </a> - {{ product.price }} Kč
+                <p>{{ product.product_short_description }}</p>
+                {% if product.available_stock > 0 %}
+                    <p>Dostupné množství: {{ product.available_stock }} kusů</p>
+                    <a href="{% url 'add_to_cart' product.id %}">➕ Přidat do košíku</a>
+                {% else %}
+                    <p style="color: red;">Není skladem</p>
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>Žádné produkty k dispozici.</li>
+        {% endfor %}
+    </ul>
 {% endblock %}

@@ -1,4 +1,5 @@
-from django.db.models import Model, CharField, TextField, URLField, ForeignKey, DecimalField, IntegerField, DateTimeField, PositiveIntegerField, SET_NULL, CASCADE
+from django.db.models import Model, CharField, TextField, URLField, ForeignKey, DecimalField, IntegerField, \
+    DateTimeField, PositiveIntegerField, SET_NULL, CASCADE, SET_DEFAULT
 
 from accounts.models import UserProfile
 
@@ -6,7 +7,7 @@ from accounts.models import UserProfile
 class Category(Model):
     category_name = CharField(max_length=50, null=False, blank=False, unique=True)
     category_description = TextField(null=True, blank=True)
-    # category_view = URLField(null=True, blank=True)
+    category_view = URLField(null=True, blank=True)
     category_parent = ForeignKey('self', on_delete=SET_NULL, null=True, blank=True, related_name='subcategories')
 
     class Meta:
@@ -42,12 +43,14 @@ class Product(Model):
 
     product_type = CharField(max_length=12, null=False, blank=False, choices=PRODUCT_TYPES) # max_length == Merchantdise
     product_name = CharField(max_length=100, null=False, blank=False)
-    product_description = TextField(null=True, blank=True)
+    product_short_description = TextField(null=False, blank=False)
+    product_long_description = TextField(null=False, blank=False)
     product_view = URLField(null=True, blank=True)
-    category = ForeignKey(Category, on_delete=SET_NULL, null=True, blank=True, related_name='categories')
+    category = ForeignKey(Category, default=0, on_delete=SET_DEFAULT, null=False, blank=False, related_name='categories')
     price = DecimalField(max_digits=10, decimal_places=2, null=False, blank=False)
-    producer = ForeignKey(Producer, on_delete=SET_NULL, null=True, blank=True, related_name='producers') # producer is filled only for merchantdise product_type
+    producer = ForeignKey(Producer, default=0, on_delete=SET_DEFAULT, null=True, blank=True, related_name='producers') # producer is filled only for merchantdise product_type
     stock_availability = PositiveIntegerField(default=0, null=False, blank=True) # a value will always be a number (never NULL)
+    reserved_stock = PositiveIntegerField(default=0, null=False, blank=True) # a value will always be a number (never NULL)
 
     class Meta:
         ordering = ['product_name']
@@ -57,6 +60,9 @@ class Product(Model):
 
     def __str__(self):
         return f"{self.product_name} ({self.price} Kč)"
+
+    def available_stock(self):
+        return max(self.stock_availability - self.reserved_stock, 0)
 
 
 class ProductReview(Model):

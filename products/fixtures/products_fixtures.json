@@ -220,7 +220,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Syrovátkový protein 1 kg",
-      "product_description": "Vysoce kvalitní syrovátkový protein, vhodný pro budování svalové hmoty.",
+      "product_short_description": "Prémiový syrovátkový protein s 80% obsahem bílkovin pro efektivní regeneraci a růst svalové hmoty.",
+      "product_long_description": "Syrovátkový protein 1 kg je prvotřídní výživový doplněk navržený pro sportovce a aktivní jedince, kteří chtějí podpořit růst svalové hmoty a urychlit regeneraci. Obsahuje 80% čistých bílkovin z vysoce kvalitního syrovátkového koncentrátu, který je snadno stravitelný a rychle vstřebatelný. Produkt je obohacen o esenciální aminokyseliny, včetně BCAA, které podporují regeneraci svalů a snižují jejich únavu po intenzivním tréninku. Syrovátkový protein je ideální pro přípravu lahodných proteinových koktejlů, lze ho přidat do smoothies nebo pečení. Neobsahuje přidané cukry, umělá barviva ani konzervanty. Doporučené použití: Smíchejte 30 g prášku s 250 ml vody nebo mléka a konzumujte po tréninku nebo jako zdravou svačinu během dne. Vhodné pro všechny, kdo chtějí dosáhnout svých fitness cílů.",
       "price": 799.00,
       "category": 2,
       "producer": 2,
@@ -233,7 +234,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Hrachový protein 1 kg",
-      "product_description": "Rostlinný protein vhodný pro vegany a vegetariány.",
+      "product_short_description": "Vysoce kvalitní veganský protein s bohatým obsahem esenciálních aminokyselin pro podporu regenerace a růstu svalů.",
+      "product_long_description": "Hrachový protein 1 kg je ideální volbou pro všechny, kdo hledají kvalitní a čistý rostlinný zdroj bílkovin. Tento veganský protein obsahuje vysoké množství esenciálních aminokyselin, včetně BCAA (větvených aminokyselin), které podporují regeneraci svalů, růst svalové hmoty a celkovou výkonnost. Produkt je 100% přírodní, bez přidaných cukrů, umělých barviv a konzervantů. Díky své snadné rozpustnosti a jemné chuti je skvělý pro přípravu proteinových koktejlů, smoothies nebo jako přísada do pečení. Hrachový protein je hypoalergenní, neobsahuje lepek ani laktózu, což ho činí vhodným pro osoby s potravinovými intolerancemi. Doporučené dávkování: 30 g prášku smíchejte s 250 ml vody nebo rostlinného mléka. Ideální po tréninku nebo jako svačina během dne.",
       "price": 699.00,
       "category": 2,
       "producer": 5,
@@ -246,7 +248,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Multivitaminový komplex",
-      "product_description": "Komplexní směs vitamínů pro podporu imunity.",
+      "product_short_description": "Vyvážený komplex vitamínů a minerálů pro podporu imunity a zdraví.",
+      "product_long_description": "Multivitaminový komplex je ideální volbou pro každého, kdo chce podpořit své celkové zdraví a vitalitu. Obsahuje vyváženou směs klíčových vitamínů, jako jsou vitamíny A, C, D a E, které přispívají k ochraně buněk před oxidačním stresem, podporují imunitní systém a zdraví pokožky. Navíc obsahuje důležité minerály, jako je zinek a selen, které hrají klíčovou roli ve správné funkci imunitního systému a udržování zdravých vlasů, nehtů a pokožky. Každá tableta je formulována tak, aby pokryla denní potřebu základních živin a byla snadno stravitelná. Doporučené dávkování: 1 tableta denně, ideálně s jídlem. Tento produkt je vhodný pro dospělé všech věkových kategorií a je nepostradatelnou součástí zdravého životního stylu.",
       "price": 499.00,
       "category": 3,
       "producer": 5,
@@ -259,7 +262,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Omega 3 kapsle",
-      "product_description": "Zdroj esenciálních mastných kyselin pro zdraví srdce.",
+      "product_short_description": "Kapsle s vysokým obsahem EPA a DHA pro podporu zdraví.",
+      "product_long_description": "Omega 3 kapsle jsou ideálním doplňkem stravy pro podporu zdraví srdce, mozku a imunitního systému. Každá kapsle obsahuje vysoce kvalitní rybí olej s vysokým obsahem esenciálních mastných kyselin EPA (kyselina eikosapentaenová) a DHA (kyselina dokosahexaenová). Tyto látky přispívají ke správné funkci kardiovaskulárního systému, pomáhají snižovat zánětlivé procesy v těle a podporují kognitivní schopnosti. Produkt je balen v praktické formě snadno polykatelných kapslí, které neobsahují umělé konzervanty ani barviva. Doporučené dávkování: 1-2 kapsle denně s jídlem. Omega 3 kapsle jsou skvělou volbou pro každého, kdo chce podpořit své zdraví přírodní cestou.",
       "price": 299.00,
       "category": 3,
       "producer": 2,
@@ -272,7 +276,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Sada činek 2x5 kg",
-      "product_description": "Ideální pro domácí trénink.",
+      "product_short_description": "Vyvážená sada činek pro efektivní domácí trénink.",
+      "product_long_description": "Tato sada činek o celkové hmotnosti 10 kg (2x5 kg) je perfektní volbou pro začátečníky i pokročilé sportovce. Činky mají ergonomicky tvarované úchopy s protiskluzovou texturou, což zajišťuje bezpečné a pohodlné držení během cvičení. Vyrobeny z kvalitního litinového materiálu, který je odolný vůči opotřebení a zaručuje dlouhou životnost. Díky univerzálnímu designu jsou činky vhodné pro různé typy cvičení, jako je posilování horních končetin, rehabilitace či zlepšení fyzické kondice. Kompaktní velikost činek umožňuje snadné skladování a manipulaci, což z nich činí ideální doplněk pro domácí posilovnu.",
       "price": 1499.00,
       "category": 6,
       "producer": 4,
@@ -285,7 +290,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Nakládací činka 10 kg",
-      "product_description": "Univerzální činka s možností přidání závaží.",
+      "product_short_description": "Odolná a přizpůsobitelná činka pro různé typy tréninku.",
+      "product_long_description": "Nakládací činka s hmotností 10 kg je ideální volbou pro domácí i profesionální trénink. Činka je vyrobena z odolného ocelového materiálu s antikorozní úpravou, což zajišťuje dlouhou životnost a bezpečnost při používání. Díky možnosti přidání či odebrání závaží si můžete snadno přizpůsobit hmotnost podle svých potřeb a fitness cílů. Ergonomický úchop je opatřen protiskluzovým povrchem pro pevné držení během cvičení. Tento produkt je vhodný pro různé typy posilování, včetně silového tréninku, rehabilitace nebo kondičních cvičení. Součástí balení je sada závaží a zajišťovacích matic, které zajišťují stabilitu při cvičení.",
       "price": 1999.00,
       "category": 6,
       "producer": 4,
@@ -298,7 +304,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Prodyšné tričko pánské",
-      "product_description": "Lehké a prodyšné tričko vhodné pro fitness.",
+      "product_short_description": "Pohodlné tričko navržené pro sportovní výkon i volný čas.",
+      "product_long_description": "Prodyšné a lehké tričko pánské, ideální pro fitness, běh a další sportovní aktivity. Vyrobeno z 100% polyesteru, který je známý svou odolností a schopností efektivně odvádět pot, takže zůstáváte v suchu i během náročných tréninků. Ergonomický střih zajišťuje maximální pohodlí a volnost pohybu, zatímco materiál se snadno udržuje a rychle schne. Tričko je k dispozici v několika barevných variantách, aby splňovalo vaše stylové preference, a jeho univerzální design ho činí vhodným i pro každodenní nošení. Perfektní volba pro aktivní muže, kteří hledají kvalitní a funkční sportovní oblečení.",
       "price": 399.00,
       "category": 12,
       "producer": 3,
@@ -311,7 +318,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Prodyšné tričko dámské",
-      "product_description": "Elegantní dámské tričko pro aktivní životní styl.",
+      "product_short_description": "Stylové dámské tričko pro maximální pohodlí při cvičení.",
+      "product_long_description": "Elegantní a funkční dámské tričko, navržené pro aktivní životní styl. Vyrobeno z kvalitního prodyšného materiálu (85% nylon, 15% elastan), který zajišťuje optimální cirkulaci vzduchu a odvádí vlhkost, což vám umožní zůstat v suchu a pohodlí i během náročných tréninků. Tričko má ergonomický střih, který přirozeně kopíruje křivky těla, a poskytuje tak maximální volnost pohybu. Díky stylovému designu a jemnému elastanu je ideální nejen na fitness nebo jógu, ale také pro volnočasové nošení. K dispozici ve více velikostech, aby perfektně padlo každé postavě.",
       "price": 399.00,
       "category": 12,
       "producer": 3,
@@ -324,7 +332,8 @@
     "fields": {
       "product_type": "service",
       "product_name": "Hatha jóga",
-      "product_description": "Kurz zaměřený na základní techniky jógy a uvolnění.",
+      "product_short_description": "Objevte klid a rovnováhu prostřednictvím tradiční Hatha jógy.",
+      "product_long_description": "Hatha jóga je ideálním vstupem do světa jógy, zaměřená na nalezení harmonie mezi tělem a myslí. Tento kurz je navržen tak, aby vás prováděl klidným tempem, během kterého se naučíte správné držení těla, hluboké techniky dýchání a metody relaxace. Zkušený instruktor vás povede jednotlivými pozicemi (ásanami) s důrazem na techniku a bezpečnost, aby byl kurz vhodný jak pro začátečníky, tak i pro pokročilé jogíny. Hatha jóga vám pomůže zlepšit flexibilitu, posílit svaly a podpořit vnitřní klid. Kurz je perfektní volbou pro ty, kteří hledají účinný způsob, jak se zbavit stresu a dosáhnout fyzické i duševní pohody.",
       "price": 499.00,
       "category": 19,
       "producer": null,
@@ -337,7 +346,92 @@
     "fields": {
       "product_type": "service",
       "product_name": "HIIT trénink",
-      "product_description": "Intenzivní intervalový trénink pro spalování tuků.",
+      "product_short_description": "Vysoce intenzivní trénink pro efektivní spalování tuků a zlepšení kondice.",
+      "product_long_description": "HIIT (High-Intensity Interval Training) je vysoce intenzivní tréninkový program zaměřený na efektivní spalování kalorií a zlepšení fyzické kondice. Tento kurz vás provede sérií dynamických cvičení kombinujících krátké, intenzivní intervaly s odpočinkovými fázemi. Program je navržen tak, aby zvýšil váš metabolismus, podpořil zpevnění svalů a zvýšil celkovou vytrvalost. Lekce jsou vedeny zkušenými trenéry, kteří vás budou motivovat k dosažení vašich cílů. HIIT je ideální pro ty, kteří chtějí rychlé výsledky, zlepšit svou fyzičku a posunout své hranice. Vhodné pro všechny úrovně zkušeností.",
+      "price": 699.00,
+      "category": 18,
+      "producer": null,
+      "stock_availability": 0
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 11,
+    "fields": {
+      "product_type": "service",
+      "product_name": "Vinyasa jóga",
+      "product_short_description": "Dynamická jóga s plynulými přechody pro flexibilitu a posílení těla.",
+      "product_long_description": "Vinyasa jóga je jedinečný a dynamický styl jógy, který propojuje jednotlivé pozice plynulými přechody synchronizovanými s vaším dechem. Tento kurz je navržen pro zlepšení flexibility, síly a celkové koordinace těla, a zároveň poskytuje uvolnění od stresu. Při lekcích se zaměříte na plynulý pohyb, který harmonizuje tělo i mysl. Kurz je vhodný pro všechny úrovně od začátečníků po pokročilé a přináší komplexní fyzický i mentální trénink. Vinyasa jóga vám pomůže objevit nové možnosti vašeho těla a navodí pozitivní energii a vnitřní klid.",
+      "price": 599.00,
+      "category": 19,
+      "producer": null,
+      "stock_availability": 0
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 12,
+    "fields": {
+      "product_type": "service",
+      "product_name": "Restorativní jóga",
+      "product_short_description": "Hluboce relaxační jóga pro obnovení energie a rovnováhy.",
+      "product_long_description": "Restorativní jóga je klidná a regenerující praxe, navržená pro hlubokou relaxaci a obnovení vnitřní rovnováhy. Tento kurz je ideální pro ty, kteří chtějí zmírnit stres, uvolnit napětí a obnovit svou energii po náročném dni. Lekce zahrnují jemné pozice, které jsou podporovány polštářky, přikrývkami a dalšími pomůckami, což umožňuje hluboké uvolnění těla bez fyzického vypětí. Restorativní jóga je vhodná pro všechny úrovně, od začátečníků po pokročilé, a nabízí příležitost k propojení těla a mysli. Přihlaste se a dopřejte si chvíli klidu, kterou si zasloužíte – ideální pro navrácení harmonie do vašeho života.",
+      "price": 499.00,
+      "category": 19,
+      "producer": null,
+      "stock_availability": 0
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 13,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Komplexní multivitamin",
+      "product_short_description": "Široké spektrum vitamínů a minerálů pro podporu imunity a celkového zdraví.",
+      "product_long_description": "Komplexní multivitamin nabízí vyvážené složení 25 klíčových vitamínů a minerálů, které podporují vaše zdraví každý den. Obsahuje důležité složky, jako jsou vitamíny C, D, E, zinek a selen, které přispívají k normální funkci imunitního systému, zdraví kostí, pleti a metabolických procesů. Tento doplněk stravy je ideální pro ty, kteří hledají komplexní řešení pro každodenní péči o své tělo. Tablety jsou snadno polykatelné a vhodné pro všechny věkové skupiny. Multivitamin je bez obsahu lepku, laktózy a umělých konzervantů, což z něj činí skvělou volbu i pro osoby s citlivostí na určité složky. Přidejte tento multivitamin do své denní rutiny a podpořte své zdraví s lehkostí.",
+      "price": 399.00,
+      "category": 3,
+      "producer": 2,
+      "stock_availability": 100
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 14,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Sportovní láhev 1 litr",
+      "product_short_description": "Lehká, ekologická láhev bez BPA s objemem 1 litr, ideální na cvičení i každodenní použití.",
+      "product_long_description": "Sportovní láhev s objemem 1 litr je navržena pro aktivní životní styl. Je vyrobena z vysoce kvalitního, ekologického materiálu bez BPA, což zaručuje bezpečnost a zdravotní nezávadnost. Díky lehké konstrukci a ergonomickému designu se pohodlně drží a snadno používá během tréninků, outdoorových aktivit i běžného dne. Láhev je vybavena nepropustným víčkem, které zabraňuje úniku tekutiny, a širokým hrdlem pro snadné čištění i plnění. Skvělá volba pro sportovce i každodenní uživatele, kteří hledají kombinaci funkčnosti, stylu a udržitelnosti.",
+      "price": 199.00,
+      "category": 9,
+      "producer": 3,
+      "stock_availability": 0
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 15,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Proteinová tyčinka s příchutí vanilky",
+      "product_short_description": "Lahodná a výživná tyčinka s 20 g proteinu a nízkým obsahem cukru, ideální pro doplnění energie po tréninku.",
+      "product_long_description": "Proteinová tyčinka s příchutí vanilky nabízí skvělou kombinaci chuti a výživy. Obsahuje 20 g kvalitního syrovátkového proteinu pro podporu regenerace svalů po cvičení. Nízký obsah cukru (méně než 2 g) ji činí vhodnou volbou i pro ty, kteří sledují svůj příjem kalorií. Tyčinka je obohacena o vlákninu, která přispívá ke zdravému trávení, a je bez umělých barviv a konzervantů. Praktické balení umožňuje snadné použití kdykoliv a kdekoliv, ať už potřebujete doplnit energii po tréninku, nebo hledáte zdravou svačinu během dne.",
+      "price": 49.00,
+      "category": 4,
+      "producer": 1,
+      "stock_availability": 200
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 16,
+    "fields": {
+      "product_type": "service",
+      "product_name": "Intervalový trénink",
+      "product_short_description": "Efektivní cvičení kombinující intenzivní intervaly a odpočinek pro zlepšení kondice.",
+      "product_long_description": "Intervalový trénink je navržen tak, aby maximalizoval váš výkon a výsledky. Tento kurz kombinuje krátké, intenzivní intervaly fyzické aktivity, jako jsou sprinty nebo dynamické cviky, s fázemi aktivního odpočinku, což umožňuje optimální regeneraci mezi cvičeními. Kurz je vhodný pro všechny úrovně fitness - od začátečníků po pokročilé sportovce. Poskytuje přizpůsobitelný program zahrnující kardio, posilování a flexibilitu. Díky odbornému vedení a strukturovaným lekcím vám pomůže zlepšit výdrž, spálit kalorie efektivněji a vybudovat pevné tělo. Tento online kurz nabízí flexibilitu tréninku podle vašeho tempa, a zároveň je plný inspirace a motivace pro dosažení vašich cílů.",
       "price": 699.00,
       "category": 18,
       "producer": null,

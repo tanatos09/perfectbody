@@ -47,7 +47,7 @@ def check_cart_inactivity(request):
     last_activity = request.session.get('cart_last_activity')
 
     last_activity_time = validate_last_activity(last_activity)
-    if last_activity_time and datetime.now() - last_activity_time > timedelta(minutes=1):
+    if last_activity_time and datetime.now() - last_activity_time > timedelta(minutes=15):
         # Emptying the cart and releasing the reservation.
         for product_id_str, item in cart.items():
             product = get_object_or_404(Product, id=int(product_id_str))

@@ -4,8 +4,9 @@ Online store with admin panel.
 
 ## Functionalities
 
-- [x] products/services list (products-list)
-- [ ] product/service information (product-detail)
+- [x] products/services list
+- [ ] product/service information
+- [x] time validation in cart
 
 ## Database
 
@@ -40,11 +41,12 @@ Online store with admin panel.
   - [x] price
   - [x] producer_id (1:n -> producer)
   - [x] stock_availability
+  - [x] reserved_stock
 - [x] category
   - [x] id
   - [x] category_name
   - [x] category_description
-  - [ ] category_view
+  - [x] category_view
   - [x] category_parent_id (1:n -> category)
 - [ ] trainers_services
   - [ ] id

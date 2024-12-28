@@ -1,13 +1,84 @@
-from lib2to3.fixes.fix_input import context
-
+import requests
 from django.shortcuts import render, get_object_or_404, redirect
 
-from accounts.models import UserProfile
+from accounts.models import UserProfile, Address
 from products.models import Product
 
 
+def clean_city_name(city):
+    return ''.join(c for c in city if not c.isdigit()).strip()
+
+def translate_weather_description(description):
+    translations = {
+        "Sunny": "Slunečno",
+        "Cloudy": "Zataženo",
+        "Partly cloudy": "Částečně zataženo",
+        "Mist": "Mlha",
+        "Rain": "Déšť",
+        "Snow": "Sníh",
+        "Thunderstorm": "Bouřka",
+        "Fog": "Mlha",
+        "Clear": "Jasno",
+        "Overcast": "Převážně zataženo",
+    }
+    return translations.get(description, description)
+
+def get_weather(city):
+    url = f"https://wttr.in/{city}?format=j1"
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            data = response.json()
+            current_condition = data['current_condition'][0]
+            return {
+                'city': city,
+                'temperature': current_condition['temp_C'],
+                'description': translate_weather_description(current_condition['weatherDesc'][0]['value']),
+                'humidity': current_condition['humidity'],
+            }
+        else:
+            print(f"Chyba API Wttr.in: {response.status_code}")
+    except Exception as e:
+        print(f"Chyba při získávání počasí: {e}")
+    return None
+
 def home(request):
-    return render(request, 'home.html')
+    name_day = get_name_day()
+
+    default_cities = ['Brno', 'Praha', 'Ostrava']
+    weather_data = []
+
+    if request.user.is_authenticated:
+        address = Address.objects.filter(user=request.user).order_by('-id').first()
+        if address:
+            user_city = clean_city_name(address.city)
+            weather = get_weather(user_city)
+            if weather:
+                weather_data.append(weather)
+
+    if not weather_data:
+        for city in default_cities:
+            weather = get_weather(city)
+            if weather:
+                weather_data.append(weather)
+
+    return render(request, 'home.html', {'name_day': name_day, 'weather_data': weather_data})
+
+def get_name_day():
+    try:
+        response = requests.get('https://nameday.abalin.net/api/V1/today?country=cz')
+        if response.status_code == 200:
+            data = response.json()
+            if 'nameday' in data and 'cz' in data['nameday']:
+                return data['nameday']['cz']
+            else:
+                return "Není dostupné"
+        else:
+            return "API nedostupné"
+    except Exception as e:
+        print(f"Chyba při získávání jmenin: {e}")
+        return "Chyba"
+
 
 def products(request):
     products = Product.objects.filter(product_type='merchantdise')
@@ -86,3 +157,18 @@ def user_profile_view(request, username):
     if request.user.is_authenticated and request.user == user:
         return redirect('profile')
     return render(request, 'user_profile.html', {'user': user, 'is_trainer': is_trainer})
+
+def get_name_day():
+    try:
+        response = requests.get('https://nameday.abalin.net/api/V1/today?country=cz')
+        if response.status_code == 200:
+            data = response.json()
+            if 'nameday' in data and 'cz' in data['nameday']:
+                return data['nameday']['cz']
+            else:
+                return "Není dostupné"
+        else:
+            return "API nedostupné"
+    except Exception as e:
+        return f"Chyba: {e}"
+

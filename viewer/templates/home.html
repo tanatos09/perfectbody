@@ -2,6 +2,26 @@
 
 {% block content %}
 <h1>Vítejte v PerfectBody</h1>
-<p>Toto je úvodní stránka.</p>
-    <p>Zde bude nějaká reklama na produkty, služby, trenéry...</p>
+<div>
+    <p>Dnes má svátek: <strong>{{ name_day }}</strong></p>
+</div>
+<div>
+    <h3>Aktuální počasí</h3>
+    {% if weather_data %}
+        <ul>
+        {% for weather in weather_data %}
+            <li>
+                <strong>{{ weather.city|default:"Neznámé město" }}:</strong>
+                {{ weather.temperature }}°C, {{ weather.description|default:"Neznámý popis" }},
+                Vlhkost: {{ weather.humidity|default:"?" }}%
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Počasí není dostupné.</p>
+    {% endif %}
+</div>
+
+
+
 {% endblock %}

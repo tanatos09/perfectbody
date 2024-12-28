@@ -1,6 +1,6 @@
 import requests
+from unidecode import unidecode
 from django.contrib.auth.models import Group
-from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 
 from accounts.models import UserProfile, Address
@@ -174,33 +174,43 @@ def get_name_day():
     except Exception as e:
         return f"Chyba: {e}"
 
+
+def normalize_for_search(text):
+    return unidecode(text).lower()
+
+#FIXME - pri vyhledani sluzby se nalezne sluzba ale zaroven i produkt - opravit, zkus vyhledat HIIT a pochopis
 def search(request):
     query = request.GET.get('q', '').strip()
+    normalized_query = normalize_for_search(query)
     products = []
     services = []
     trainers = []
 
     if query:
-        # Hledání produktů podle názvu a popisu
-        products = Product.objects.filter(
-            Q(product_name__icontains=query) | Q(product_description__icontains=query)
-        )
+        all_products = Product.objects.all()
+        products = [
+            product for product in all_products
+            if normalized_query in normalize_for_search(product.product_name)
+            or normalized_query in normalize_for_search(product.product_description or "")
+        ]
 
-        # Hledání služeb podle názvu a popisu (pokud jsou označeny jako služba)
-        services = Product.objects.filter(
-            Q(product_name__icontains=query) | Q(product_description__icontains=query),
-            product_type='service'
-        )
+        all_services = Product.objects.filter(product_type='service')
+        services = [
+            service for service in all_services
+            if normalized_query in normalize_for_search(service.product_name)
+            or normalized_query in normalize_for_search(service.product_description or "")
+        ]
 
-        # Hledání trenérů pouze ve skupině "trainer"
         try:
             trainers_group = Group.objects.get(name='trainer')
-            trainers = UserProfile.objects.filter(
-                Q(first_name__icontains=query) | Q(last_name__icontains=query),
-                groups__in=[trainers_group]  # Omezíme na skupinu "trainer"
-            )
+            all_trainers = UserProfile.objects.filter(groups__in=[trainers_group])
+            trainers = [
+                trainer for trainer in all_trainers
+                if normalized_query in normalize_for_search(trainer.first_name)
+                or normalized_query in normalize_for_search(trainer.last_name)
+            ]
         except Group.DoesNotExist:
-            trainers = []  # Pokud skupina neexistuje, nevrátíme žádné trenéry
+            trainers = []
 
     return render(request, 'search_results.html', {
         'query': query,

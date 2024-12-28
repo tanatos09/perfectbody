@@ -1,59 +1,52 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Výsledky vyhledávání pro "{{ query }}"</h2>
+<h1>Výsledky hledání pro "{{ query }}"</h1>
 
-{% if products or services or trainers %}
-    <div>
-        <h3>Produkty</h3>
-        {% if products %}
-            <ul>
-                {% for product in products %}
-                    <li>
-                        <a href="{% url 'product' product.id %}">{{ product.product_name }}</a> 
-                        - {{ product.product_description|truncatewords:15 }}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>Žádné produkty nebyly nalezeny.</p>
-        {% endif %}
-    </div>
-
-    <div>
-        <h3>Služby</h3>
-        {% if services %}
-            <ul>
-                {% for service in services %}
-                    <li>
-                        <a href="{% url 'service' service.id %}">{{ service.product_name }}</a>
-                        - {{ service.product_description|truncatewords:15 }}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>Žádné služby nebyly nalezeny.</p>
-        {% endif %}
-    </div>
-
-    <div>
-        <h3>Trenéři</h3>
-        {% if trainers %}
-            <ul>
-                {% for trainer in trainers %}
-                    <li>
-                        <a href="{% url 'user_profile' trainer.username %}">
-                            {{ trainer.first_name }} {{ trainer.last_name }}
-                        </a>
-
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>Žádní trenéři nebyli nalezeni.</p>
-        {% endif %}
-    </div>
+<h2>Produkty</h2>
+{% if products %}
+    <ul>
+        {% for product in products %}
+            <li>
+                <a href="{% url 'product' product.id %}">
+                    {{ product.product_name }}
+                </a>
+                - {{ product.product_description }}
+            </li>
+        {% endfor %}
+    </ul>
 {% else %}
-    <p>Nebyly nalezeny žádné výsledky pro "{{ query }}".</p>
+    <p>Žádné produkty nebyly nalezeny.</p>
+{% endif %}
+
+<h2>Služby</h2>
+{% if services %}
+    <ul>
+        {% for service in services %}
+            <li>
+                <a href="{% url 'service' service.id %}">
+                    {{ service.product_name }}
+                </a>
+                - {{ service.product_description }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Žádné služby nebyly nalezeny.</p>
+{% endif %}
+
+<h2>Trenéři</h2>
+{% if trainers %}
+    <ul>
+        {% for trainer in trainers %}
+            <li>
+                <a href="{% url 'user_profile' trainer.username %}">
+                    {{ trainer.first_name }} {{ trainer.last_name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Žádní trenéři nebyli nalezeni.</p>
 {% endif %}
 {% endblock %}

@@ -144,24 +144,26 @@ class TrainerRegistrationForm(RegistrationForm):
         return cleaned_data
 
     def save(self, commit=True):
-        user = super().save(commit=False)
-        user.account_type = 'registered'
-        if commit:
-            user.save()
-            trainer_group, created = Group.objects.get_or_create(name='trainer')
-            user.groups.add(trainer_group)
+        with transaction.atomic():
+            user = super().save(commit=False)
+            user.account_type = 'registered'
+            if commit:
+                user.save()
 
-            user.profile_description = self.cleaned_data.get('trainer_description')
-            user.save()
+                trainer_group, created = Group.objects.get_or_create(name='trainer')
+                user.groups.add(trainer_group)
 
-            if self.cleaned_data.get('add_address'):
+                user.profile_description = self.cleaned_data.get('trainer_description')
+                user.save()
+
                 Address.objects.create(
                     user=user,
                     first_name=user.first_name,
+                    last_name=user.last_name,
                     street=self.cleaned_data['street'],
                     street_number=self.cleaned_data['street_number'],
                     city=self.cleaned_data['city'],
-                    postal_code=self.cleaned_data['postal_code'],
+                    postal_code=self.cleaned_data['postal_code'].replace(' ', ''),
                     country=self.cleaned_data['country'],
                     email=self.cleaned_data['email'],
                 )

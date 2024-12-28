@@ -85,12 +85,13 @@ def logout_view(request: HttpRequest) -> HttpResponse:
 @login_required
 def profile_view(request: HttpRequest) -> HttpResponse:
     user = request.user
+    primary_address = None
+
+    if hasattr(user, 'addresses') and user.addresses.exists():
+        primary_address = user.addresses.order_by('-id').first()
 
     recent_orders = user.orders.all().order_by('-order_creation_datetime')[:5]
 
-    primary_address = None
-    if hasattr(user, 'addresses') and user.addresses.exists():
-        primary_address = user.addresses.order_by('-id').first()
 
     return render(request, 'profile.html', {
         'user': user,

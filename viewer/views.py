@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from products.models import Product
+from accounts.models import UserProfile
 from datetime import datetime, timedelta
 
 
@@ -31,6 +32,13 @@ def service(request, pk):
 
 def trainers(request):
     return render(request, 'trainers.html')
+
+def trainer(request, pk):
+    if UserProfile.objects.filter(id=pk):
+        trainer_detail = UserProfile.objects.get(id=pk)
+        context = {'trainer': trainer_detail}
+        return render(request, "trainer.html", context)
+    return trainers(request)
 
 def validate_last_activity(last_activity):
     try:

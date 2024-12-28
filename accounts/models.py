@@ -21,6 +21,10 @@ class UserProfile(AbstractUser):
     def __repr__(self):
         return f'username={self.username},last_login={self.last_login}, is_superuser={self.is_superuser}, is_staff={self.is_staff}'
 
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
+
 class Address(Model):
 
     user = ForeignKey(AUTH_USER_MODEL, on_delete=SET_NULL, null=True, blank=True, related_name='addresses')

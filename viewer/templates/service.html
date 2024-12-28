@@ -7,7 +7,11 @@
 
     <br>
     <div class="service-category"><b>Kategorie:</b> {{ service.category }}</div>
-    <div class="service-trainers"><b>Trenéři:</b> Zde bude seznam všech trenérů.</div>
+    <div class="service-trainers"><b>Trenéři:</b>
+        {% for trainer in trainer_detail.last_name.all %}
+            {{ trainer.full_name }}
+        {% endfor %}
+        Zde bude seznam všech trenérů.</div>
     <div class="service-price"><b>Cena:</b> {{ service.price }} Kč</div>
 
     <br>

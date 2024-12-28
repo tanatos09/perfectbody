@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Detail objednávky #{{ order.id }}</h2>
+<h2>Detail objednávky #{{ order.id|stringformat:"08d" }}</h2>
+
 
 <div>
     <h3>Adresa doručení</h3>

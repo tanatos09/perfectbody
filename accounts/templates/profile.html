@@ -24,23 +24,24 @@
 
 <div>
 <div>
-    <h3>Moje objednávky</h3>
-    {% with user.orders.all|slice:':5' as recent_orders %}
-         {%  if recent_orders %}
-            <ul>
-            {% for order in recent_orders %}
-            <li>
-                <a href="{% url 'order_detail' order.id %}">
-                    Objednávka #{{ order.id }} - {{ order.get_order_state_display }}
-                </a> ({{ order.order_creation_datetime|date:"d.m.Y H:i" }})
-            </li>
-                {% endfor %}
-                </ul>
-             <a href="{% url 'my_orders' %}">Zobrazit všechny objednávky</a>
-        {% else %}
-            <p>Nemáte žádné objednávky.</p>
-        {% endif %}
-    {% endwith %}
+<h3>Moje objednávky</h3>
+{% if recent_orders %}
+    <ul>
+    {% for order in recent_orders %}
+        <li>
+            <a href="{% url 'order_detail' order.id %}">
+                {% with order.id|stringformat:"08d" as formatted_id %}
+                    Objednávka #{{ formatted_id }} - {{ order.get_order_state_display }}
+                {% endwith %}
+            </a> ({{ order.order_creation_datetime|date:"d.m.Y H:i" }})
+        </li>
+    {% endfor %}
+    </ul>
+    <a href="{% url 'my_orders' %}">Zobrazit všechny objednávky</a>
+{% else %}
+    <p>Nemáte žádné objednávky.</p>
+{% endif %}
+
 
 </div>
     <h3>Používaná adresa</h3>

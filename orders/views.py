@@ -59,7 +59,7 @@ def get_initial_data(user):
 def start_order(request):
     cart = request.session.get('cart', {})
     if not cart:
-        messages.error(request, 'Váš vozík je prázdný.')
+        messages.error(request, 'Váš košík je prázdný.')
         return redirect('cart')
 
     AddressForm = modelform_factory(
@@ -112,13 +112,6 @@ def start_order(request):
 
         messages.error(request, 'Vyplňte všechna povinná pole správně.')
     else:
-        initial_data = {}
-        if request.user.is_authenticated:
-            initial_data = {
-                'first_name': request.user.first_name,
-                'last_name': request.user.last_name,
-                'email': request.user.email,
-            }
         initial_data = get_initial_data(request.user) if request.user.is_authenticated else {}
         shipping_address_form = AddressForm(initial=initial_data, prefix='shipping')
         billing_address_form = AddressForm(prefix='billing')
@@ -128,7 +121,6 @@ def start_order(request):
         'billing_address_form': billing_address_form,
         'guest_email': guest_email,
     })
-
 
 
 def order_summary(request):
@@ -165,12 +157,13 @@ def order_summary(request):
     })
 
 
+
 def confirm_order(request):
     cart_order = request.session.get('cart_order', None)
 
     if not cart_order:
         messages.error(request, 'Objednávka nemůže být provedena, protože není připravena.')
-        return redirect('cart')
+        return redirect('start_order')
 
     try:
         shipping_address = Address.objects.get(id=cart_order['shipping_address_id'])
@@ -184,12 +177,12 @@ def confirm_order(request):
         messages.error(request, 'Košík je prázdný. Nelze potvrdit objednávku.')
         return redirect('cart')
 
-    guest_email = request.POST.get('guest_email')
+    guest_email = request.session.get('guest_email')
     if not guest_email and not request.user.is_authenticated:
-        messages.error(request, 'Email je povinný pro neregistrované uživatele')
+        messages.error(request, 'Email je povinný pro neregistrované uživatele.')
         return redirect('start_order')
 
-    if not request.user.is_authenticated:
+    if not request.user.is_authenticated and guest_email:
         request.session['guest_email'] = guest_email
 
     order = Order.objects.create(
@@ -210,6 +203,7 @@ def confirm_order(request):
 
     request.session.pop('cart_order', None)
     request.session.pop('cart', None)
+
     messages.success(request, f'Děkujeme za objednávku #{order.id}!')
     return redirect('thank_you', order_id=order.id)
 

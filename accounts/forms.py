@@ -113,6 +113,15 @@ class TrainerRegistrationForm(RegistrationForm):
         label='Popis trenéra'
     )
 
+    def clean_postal_code(self):
+        postal_code = self.cleaned_data.get('postal_code')
+        if postal_code:
+            if ' ' in postal_code:
+                raise ValidationError('PSČ nesmí obsahovat mezery')
+            if not postal_code.isdigit():
+                raise ValidationError('PSČ musí obsahovat pouze číslice')
+        return postal_code
+
     def clean(self):
         cleaned_data = super().clean()
         # Pole, která musí být vždy vyplněna

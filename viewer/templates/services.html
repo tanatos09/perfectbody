@@ -11,7 +11,7 @@
                 <a href="{% url 'add_to_cart' service.id %}">➕ Přidat do košíku</a>
             </li>
         {% empty %}
-            <li>Žádné služby k dispozici.</li>
+            <li>Služby nejsou k dispozici.</li>
         {% endfor %}
     </ul>
 {% endblock %}

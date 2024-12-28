@@ -1,4 +1,6 @@
 import requests
+from django.contrib.auth.models import Group
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 
 from accounts.models import UserProfile, Address
@@ -172,3 +174,37 @@ def get_name_day():
     except Exception as e:
         return f"Chyba: {e}"
 
+def search(request):
+    query = request.GET.get('q', '').strip()
+    products = []
+    services = []
+    trainers = []
+
+    if query:
+        # Hledání produktů podle názvu a popisu
+        products = Product.objects.filter(
+            Q(product_name__icontains=query) | Q(product_description__icontains=query)
+        )
+
+        # Hledání služeb podle názvu a popisu (pokud jsou označeny jako služba)
+        services = Product.objects.filter(
+            Q(product_name__icontains=query) | Q(product_description__icontains=query),
+            product_type='service'
+        )
+
+        # Hledání trenérů pouze ve skupině "trainer"
+        try:
+            trainers_group = Group.objects.get(name='trainer')
+            trainers = UserProfile.objects.filter(
+                Q(first_name__icontains=query) | Q(last_name__icontains=query),
+                groups__in=[trainers_group]  # Omezíme na skupinu "trainer"
+            )
+        except Group.DoesNotExist:
+            trainers = []  # Pokud skupina neexistuje, nevrátíme žádné trenéry
+
+    return render(request, 'search_results.html', {
+        'query': query,
+        'products': products,
+        'services': services,
+        'trainers': trainers,
+    })

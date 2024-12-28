@@ -6,11 +6,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.messages import get_messages
 from django.forms import modelformset_factory, modelform_factory
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from accounts.forms import RegistrationForm, LoginForm, UserEditForm, PasswordChangeForm, TrainerRegistrationForm, \
     AddressForm
-from accounts.models import Address
+from accounts.models import Address, UserProfile
 
 logger = logging.getLogger(__name__)
 

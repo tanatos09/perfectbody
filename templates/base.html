@@ -20,6 +20,11 @@
 <body>
   <!-- Navbar -->
     {% include "navbar.html" %}
+    <form method="get" action="{% url 'search' %}" style="position: absolute; left: 50%; transform: translate(-50%);">
+        <input type="text" name="q" placeholder="Hledat..." required>
+        <button type="submit">Vyhledat</button>
+    </form>
+
 
     <div class="container">
 

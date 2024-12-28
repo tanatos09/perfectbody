@@ -1,7 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Naši trenéři</h1>
-<p>Zde bude přehled trenérů.</p>
+
+    <h1>Naši trenéři</h1>
+
+    {% if trainers %}
+        <ul>
+            {% for trainer in trainers %}
+                <li>
+                    <a href="{% url 'trainer' trainer.id %}">{{ trainer.full_name }}</a>
+                    <p>Email: {{ trainer.email }}</p>
+                    <p>Telefon: {{ trainer.phone }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Trenéři nejsou momentálně k dispozici.</p>
+    {% endif %}
 
 {% endblock %}

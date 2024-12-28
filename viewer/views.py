@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.contrib.auth.models import Group
 from products.models import Product
 from accounts.models import UserProfile
 from datetime import datetime, timedelta
@@ -31,7 +32,9 @@ def service(request, pk):
     return services(request)
 
 def trainers(request):
-    return render(request, 'trainers.html')
+    trainer_group = Group.objects.get(name='trainer')
+    trainers = trainer_group.user_set.all()
+    return render(request, 'trainers.html', {'trainers': trainers})
 
 def trainer(request, pk):
     if UserProfile.objects.filter(id=pk):

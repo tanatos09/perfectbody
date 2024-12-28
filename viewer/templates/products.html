@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Seznam všech dostupných produktů</h1>
+
+    <h1>Seznam všech našich produktů</h1>
     <ul>
         {% for product in products %}
             <li>
@@ -20,4 +21,5 @@
             <li>Produkty nejsou k dispozici.</li>
         {% endfor %}
     </ul>
+
 {% endblock %}

@@ -18,9 +18,10 @@
         <h3>Fakturační adresa</h3>
         {{ billing_address_form.as_p }}
     </div>
+    <hr>
 
     {% if not user.is_authenticated %}
-    <h3>Hostující e-mail</h3>
+    <h6>Zopakujte jeden z emailu pro potvrzení</h6>
     <p>
         <label for="guest_email">E-mail:</label>
         <input type="email" name="guest_email" id="guest_email" value="{{ guest_email }}" required>

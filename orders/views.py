@@ -219,6 +219,16 @@ def thank_you(request, order_id):
 
         order = get_object_or_404(Order, id=order_id, guest_email=guest_email)
 
+    formatted_order_id = str(order.id).zfill(8)
+
+    variabile_symbol = formatted_order_id
+
+    payment_details = {
+        'bank_account': '123456789/0123',
+        'variable_symbol': variabile_symbol,
+        'total_price': order.total_price,
+    }
+
     items_with_totals = [
         {
             'product_name': item.product.product_name,
@@ -231,7 +241,9 @@ def thank_you(request, order_id):
 
     return render(request, 'thank_you.html', {
         'order': order,
+        'formatted_order_id': formatted_order_id,
         'items_with_totals': items_with_totals,
+        'payment_details': payment_details,
     })
 
 

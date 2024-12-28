@@ -6,7 +6,7 @@
 
 <!-- Objednávka -->
 <div>
-    <h3>Objednávka #{{ order.id }}</h3>
+    <h3>Objednávka #{{ formatted_order_id }}</h3>
     <p><strong>Celková cena:</strong> {{ order.total_price }} Kč</p>
     <p><strong>Stav objednávky:</strong> {{ order.get_order_state_display }}</p>
 </div>
@@ -52,6 +52,7 @@
     </ul>
     <p>Po přijetí platby bude vaše objednávka zpracována. Děkujeme za pochopení!</p>
 </div>
+
 
 <a href="{% url 'home' %}" class="btn btn-primary">Zpět na úvodní stránku</a>
 {% endblock %}

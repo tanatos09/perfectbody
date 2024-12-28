@@ -51,7 +51,12 @@
         <li><strong>Částka k úhradě:</strong> {{ payment_details.total_price }} Kč</li>
     </ul>
     <p>Po přijetí platby bude vaše objednávka zpracována. Děkujeme za pochopení!</p>
+
+    <!-- QR kód -->
+    <h4>QR kód pro platbu</h4>
+    <img src="data:image/png;base64,{{ qr_code_base64 }}" alt="QR kód pro platbu">
 </div>
+
 
 
 <a href="{% url 'home' %}" class="btn btn-primary">Zpět na úvodní stránku</a>

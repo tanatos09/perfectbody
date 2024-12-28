@@ -1,3 +1,6 @@
+import qrcode
+import base64
+from io import BytesIO
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
@@ -221,13 +224,25 @@ def thank_you(request, order_id):
 
     formatted_order_id = str(order.id).zfill(8)
 
-    variabile_symbol = formatted_order_id
+    bank_account = '123456789/0123'
+    total_price = order.total_price
+    variable_symbol = formatted_order_id
 
     payment_details = {
-        'bank_account': '123456789/0123',
-        'variable_symbol': variabile_symbol,
+        'bank_account': bank_account,
+        'variable_symbol': variable_symbol,
         'total_price': order.total_price,
     }
+
+    #QRs
+    qr_data = f"SPD*1.0*ACC:{bank_account}*AM:{total_price:.2f}*CC:CZK*X-VS:{variable_symbol}"
+    qr_code_img = qrcode.make(qr_data)
+
+    buffer = BytesIO()
+    qr_code_img.save(buffer, format='PNG')
+    buffer.seek(0)
+    qr_code_base64 = base64.b64encode(buffer.read()).decode('utf-8')
+
 
     items_with_totals = [
         {
@@ -244,6 +259,7 @@ def thank_you(request, order_id):
         'formatted_order_id': formatted_order_id,
         'items_with_totals': items_with_totals,
         'payment_details': payment_details,
+        'qr_code_base64': qr_code_base64,
     })
 
 

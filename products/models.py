@@ -1,5 +1,6 @@
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models import Model, CharField, TextField, URLField, ForeignKey, DecimalField, IntegerField, \
-    DateTimeField, PositiveIntegerField, SET_NULL, CASCADE, SET_DEFAULT
+    DateTimeField, PositiveIntegerField, BooleanField, UniqueConstraint, SET_NULL, CASCADE, SET_DEFAULT
 
 from accounts.models import UserProfile
 
@@ -65,10 +66,26 @@ class Product(Model):
         return max(self.stock_availability - self.reserved_stock, 0)
 
 
+class TrainersServices(Model):
+    trainer = ForeignKey(UserProfile, on_delete=CASCADE, related_name="services")
+    service = ForeignKey(Product, on_delete=CASCADE, related_name="trainers")
+    trainers_service_description = TextField(blank=False, null=False)
+    is_approved = BooleanField(default=False) # The trainer has to be approved by an employee before including in the trainer list.
+
+    class Meta:
+        constraints = [UniqueConstraint(fields=['trainer', 'service'], name='unique_trainer_service')]
+
+    def __repr__(self):
+        return f"Trainer(full_name={self.trainer.full_name()}, service={self.service.product_name}, is_approved={self.is_approved})"
+
+    def __str__(self):
+        return f"{self.trainer.full_name()} - {self.service.product_name} (Schválen: {self.is_approved})"
+
+
 class ProductReview(Model):
-    product = ForeignKey(Product, on_delete=CASCADE, null=False, blank=False, related_name='reviews')
-    reviewer = ForeignKey(UserProfile, on_delete=SET_NULL, null=True, blank=True, related_name="reviews")
-    rating = IntegerField(null=True, blank=True)
+    product = ForeignKey(Product, on_delete=CASCADE, null=False, blank=False, related_name='product_reviews')
+    reviewer = ForeignKey(UserProfile, on_delete=SET_NULL, null=True, blank=True, related_name="product_reviews_reviewer")
+    rating = IntegerField(null=True, blank=True, validators=[MinValueValidator(1), MaxValueValidator(5)])
     comment = TextField(null=True, blank=True)
     review_creation_datetime = DateTimeField(auto_now_add=True)
     review_updated_datetime = DateTimeField(auto_now=True)
@@ -77,8 +94,31 @@ class ProductReview(Model):
         ordering = ['-review_updated_datetime']
 
     def __repr__(self):
-        return (f"ProductReview(product={self.product}, reviewer={self.reviewer}, "
+        reviewer_name = self.reviewer.username if self.reviewer else "Unknown"
+        return (f"ProductReview(product={self.product.product_name}, reviewer={reviewer_name}, "
                 f"rating={self.rating}, comment={self.comment})")
 
     def __str__(self):
-        return f"Review for {self.product.product_name} by {self.reviewer.username}"
+        reviewer_name = self.reviewer.username if self.reviewer else "Unknown"
+        return f"Review for {self.product.product_name} by {reviewer_name}"
+
+
+class TrainerReview(Model):
+    trainer = ForeignKey(UserProfile, on_delete=CASCADE, null=False, blank=False, related_name='trainer_reviews')
+    reviewer = ForeignKey(UserProfile, on_delete=SET_NULL, null=True, blank=True, related_name="trainer_reviews_reviewer")
+    rating = IntegerField(null=True, blank=True, validators=[MinValueValidator(1), MaxValueValidator(5)])
+    comment = TextField(null=True, blank=True)
+    review_creation_datetime = DateTimeField(auto_now_add=True)
+    review_updated_datetime = DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-review_updated_datetime']
+
+    def __repr__(self):
+        reviewer_name = self.reviewer.username if self.reviewer else "Unknown"
+        return (f"TrainerReview(trainer={self.trainer.full_name()}, reviewer={reviewer_name}, "
+                f"rating={self.rating}, comment={self.comment})")
+
+    def __str__(self):
+        reviewer_name = self.reviewer.username if self.reviewer else "Unknown"
+        return f"Review for {self.trainer.full_name()} by {reviewer_name}"

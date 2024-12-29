@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.models import Group
-from products.models import Product
+from products.models import Product, TrainersServices
 from accounts.models import UserProfile
 from datetime import datetime, timedelta
 
@@ -32,9 +32,18 @@ def service(request, pk):
     return services(request)
 
 def trainers(request):
-    trainer_group = Group.objects.get(name='trainer')
-    trainers = trainer_group.user_set.all()
-    return render(request, 'trainers.html', {'trainers': trainers})
+    trainer_group = Group.objects.filter(name='trainer').first()
+    if trainer_group:
+        # Get all users in the "trainer" group.
+        trainers_in_group = trainer_group.user_set.all()
+        # Filter only those who are approved in TrainersServices
+        approved_trainers_services = TrainersServices.objects.filter(
+            trainer__in=trainers_in_group,
+            is_approved=True
+        ).select_related('trainer', 'service')
+    else:
+        approved_trainers_services = []  # If the group does not exist, the list is empty.
+    return render(request, 'trainers.html', {'approved_trainers_services': approved_trainers_services})
 
 def trainer(request, pk):
     if UserProfile.objects.filter(id=pk):

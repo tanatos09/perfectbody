@@ -35,7 +35,8 @@ Online store with admin panel.
   - [x] id
   - [x] product_type
   - [x] product_name
-  - [x] product_description
+  - [x] product_short_description
+  - [x] product_long_description
   - [x] product_view
   - [x] category_id (1:n -> category)
   - [x] price
@@ -50,9 +51,11 @@ Online store with admin panel.
   - [x] category_parent_id (1:n -> category)
 - [ ] trainers_services
   - [ ] id
-  - [ ] description
   - [ ] trainers (n:m -> user)
   - [ ] services (n:m -> product)
+  - [ ] trainer_short_description
+  - [ ] trainer_long_description
+  - [ ] is_approved
 - [ ] order
   - [ ] id
   - [ ] user_id (1:n -> user)

@@ -4,16 +4,12 @@
 
     <h1>Naši trenéři</h1>
 
-    {% if approved_trainers_services %}
+    {% if approved_trainers %}
         <ul>
-            {% for trainer_service in approved_trainers_services %}
+            {% for trainer in approved_trainers %}
                 <li>
-                    <a href="{% url 'trainer' trainer_service.trainer.id %}">
-                        {{ trainer_service.trainer.full_name }}
-                    </a>
-                    <p>E-mail: {{ trainer_service.trainer.email }}</p>
-                    <p>Telefon: {{ trainer_service.trainer.phone }}</p>
-                    <p>Popis: {{ trainer_service.trainers_service_description }}</p>
+                    <a href="{% url 'trainer' trainer.id %}"><h2>{{ trainer.full_name }}</h2></a>
+                    <p>Představení trenéra: {{ trainer.trainer_short_description }}</p>
                 </li>
             {% endfor %}
         </ul>

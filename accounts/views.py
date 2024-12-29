@@ -36,15 +36,23 @@ def register(request: HttpRequest) -> HttpResponse:
 
     return render(request, 'register.html', {"form": form})
 
-def trainer_register(request):
+
+def trainer_register(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':
         form = TrainerRegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Registrace trenéra proběhla úspěšně. Nyní se můžete přihlásit')
-            return redirect('login')
+            try:
+                form.save()
+                messages.success(request, "Registrace trenéra proběhla úspěšně. Žádost bude schválena administrátorem v nejbližším možném termínu.")
+                return redirect('homepage')  # Přesměrování na hlavní stránku
+            except Exception as e:
+                logger.error(f"Neočekávaná chyba při registraci trenéra: {e}", exc_info=True)
+                messages.error(request, "Došlo k neočekávané chybě. Zkuste to prosím znovu.")
+        else:
+            messages.warning(request, "Údaje nejsou platné. Zkontrolujte a zkuste znovu.")
     else:
-        form = TrainerRegistrationForm
+        form = TrainerRegistrationForm()
+
     return render(request, 'trainer_register.html', {'form': form})
 
 

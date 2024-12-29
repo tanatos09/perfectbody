@@ -4,4 +4,33 @@
 
     <h1>{{ trainer.full_name }}</h1>
 
+    <!-- Kontaktní údaje -->
+    <div>
+        <p><strong>E-mail:</strong> {{ trainer.email }}</p>
+        <p><strong>Telefon:</strong> {{ trainer.phone }}</p>
+    </div>
+
+    <!-- Dlouhý popis trenéra -->
+    <div>
+        <h2>O mně</h2>
+        <p>{{ trainer.trainer_long_description }}</p>
+    </div>
+
+    <!-- Služby trenéra -->
+    <div>
+        <h2>Nabízené služby</h2>
+        {% if trainer.services.all %}
+            <ul>
+                {% for service in trainer.services.all %}
+                    <li>
+                        <h3>{{ service.service.product_name }}</h3>
+                        <p>{{ service.trainers_service_description }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Tento trenér zatím nenabízí žádné služby.</p>
+        {% endif %}
+    </div>
+
 {% endblock %}

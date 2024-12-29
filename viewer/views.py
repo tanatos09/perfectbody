@@ -31,19 +31,19 @@ def service(request, pk):
         return render(request, "service.html", context)
     return services(request)
 
+
 def trainers(request):
     trainer_group = Group.objects.filter(name='trainer').first()
     if trainer_group:
-        # Get all users in the "trainer" group.
-        trainers_in_group = trainer_group.user_set.all()
-        # Filter only those who are approved in TrainersServices
-        approved_trainers_services = TrainersServices.objects.filter(
-            trainer__in=trainers_in_group,
-            is_approved=True
-        ).select_related('trainer', 'service')
+        # Získání trenérů v této skupině, kteří jsou schváleni
+        approved_trainers = UserProfile.objects.filter(
+            groups=trainer_group,
+            services__is_approved=True  # Kontrola, zda trenér má alespoň jednu schválenou službu
+        ).distinct()
     else:
-        approved_trainers_services = []  # If the group does not exist, the list is empty.
-    return render(request, 'trainers.html', {'approved_trainers_services': approved_trainers_services})
+        approved_trainers = []  # Pokud skupina neexistuje, seznam bude prázdný.
+
+    return render(request, 'trainers.html', {'approved_trainers': approved_trainers})
 
 def trainer(request, pk):
     if UserProfile.objects.filter(id=pk):

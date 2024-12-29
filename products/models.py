@@ -79,7 +79,7 @@ class TrainersServices(Model):
         return f"Trainer(full_name={self.trainer.full_name()}, service={self.service.product_name}, is_approved={self.is_approved})"
 
     def __str__(self):
-        return f"{self.trainer.full_name()} - {self.service.product_name} (Schválen: {self.is_approved})"
+        return f"{self.trainer.full_name()} - {self.service.product_name} (Approved: {self.is_approved})"
 
 
 class ProductReview(Model):

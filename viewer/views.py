@@ -20,37 +20,43 @@ def product(request, pk):
         return render(request, "product.html", context)
     return products(request)
 
+
 def services(request):
     services = Product.objects.filter(product_type='service').order_by('category__category_name', 'product_name')
+    for service in services:
+        service.has_approved_trainers = TrainersServices.objects.filter(service=service, is_approved=True).exists()
     return render(request, 'services.html', {"services": services})
 
+
 def service(request, pk):
-    if Product.objects.filter(id=pk):
-        service_detail = Product.objects.get(id=pk)
-        context = {'service': service_detail}
-        return render(request, "service.html", context)
-    return services(request)
+    # Find the service by primary key or return 404.
+    service_detail = get_object_or_404(Product, id=pk)
+
+    # Getting approved trainers for that service.
+    approved_trainers_services = TrainersServices.objects.filter(service=service_detail, is_approved=True).select_related('trainer')
+    approved_trainers = [ts.trainer for ts in approved_trainers_services]
+    context = {'service': service_detail, 'approved_trainers': approved_trainers}
+    return render(request, "service.html", context)
 
 
 def trainers(request):
     trainer_group = Group.objects.filter(name='trainer').first()
     if trainer_group:
-        # Získání trenérů v této skupině, kteří jsou schváleni
-        approved_trainers = UserProfile.objects.filter(
-            groups=trainer_group,
-            services__is_approved=True  # Kontrola, zda trenér má alespoň jednu schválenou službu
-        ).distinct()
+        # Checking whether the user from trainer group has at least one approved service.
+        approved_trainers = UserProfile.objects.filter(groups=trainer_group, services__is_approved=True).distinct()
     else:
-        approved_trainers = []  # Pokud skupina neexistuje, seznam bude prázdný.
-
+        approved_trainers = [] # If the group does not exist, the list will be empty.
     return render(request, 'trainers.html', {'approved_trainers': approved_trainers})
 
+
 def trainer(request, pk):
-    if UserProfile.objects.filter(id=pk):
-        trainer_detail = UserProfile.objects.get(id=pk)
-        context = {'trainer': trainer_detail}
-        return render(request, "trainer.html", context)
-    return trainers(request)
+    # Find the trainer by primary key or return 404.
+    trainer_detail = get_object_or_404(UserProfile, id=pk)
+    # Get approved trainer services.
+    approved_services = TrainersServices.objects.filter(trainer=trainer_detail, is_approved=True).select_related('service')
+    # Forward approved services only.
+    context = {'trainer': trainer_detail, 'approved_services': approved_services}
+    return render(request, "trainer.html", context)
 
 def validate_last_activity(last_activity):
     try:
@@ -80,9 +86,9 @@ def check_cart_inactivity(request):
     return False  # Indicates that the cart is still active.
 
 def add_to_cart(request, product_id):
-    # Checking cart inactivity.
+    # Cart inactivity checking.
     if check_cart_inactivity(request):
-        # If inactivity has been detected and the cart has been emptied, the user is redirected back to the cart.
+        # If inactivity is detected, the cart will be emptied.
         return redirect('cart')
 
     cart = request.session.get('cart', {})
@@ -91,11 +97,17 @@ def add_to_cart(request, product_id):
 
     if product.available_stock() <= 0:
         messages.error(request, "Produkt není skladem.")
+        # Redirect to the product detail page.
+        if product.product_type == 'service':
+            return redirect('service', pk=product_id)
         return redirect('product', product_id=product_id)
 
     if product_id_str in cart:
         if cart[product_id_str]['quantity'] >= product.available_stock():
             messages.error(request, "Nelze přidat více, než je dostupné množství.")
+            # Redirect to the product detail page.
+            if product.product_type == 'service':
+                return redirect('service', pk=product_id)
             return redirect('product', product_id=product_id)
         cart[product_id_str]['quantity'] += 1
     else:
@@ -111,17 +123,22 @@ def add_to_cart(request, product_id):
         product.save()
     else:
         messages.error(request, "Nelze přidat více produktů do košíku, než je dostupné množství.")
+        # Redirect to the product detail page.
+        if product.product_type == 'service':
+            return redirect('service', pk=product_id)
         return redirect('product', product_id=product_id)
 
     request.session['cart_last_activity'] = datetime.now().isoformat()
     request.session['cart'] = cart
-    messages.success(request, "Produkt byl přidán do košíku.")
+    messages.success(request, f"{product.product_name} přidáno do košíku.")
+
+    # Redirect to cart for all product types.
     return redirect('cart')
 
 def view_cart(request):
-    # Checking cart inactivity.
+    # Cart inactivity checking.
     if check_cart_inactivity(request):
-        # If inactivity has been detected and the cart has been emptied, the user is redirected back to the cart.
+        # If inactivity is detected, the cart will be emptied.
         return redirect('cart')
 
     cart = request.session.get('cart', {})
@@ -129,9 +146,9 @@ def view_cart(request):
     return render(request, 'cart.html', {"cart": cart, "total": total})
 
 def remove_from_cart(request, product_id):
-    # Checking cart inactivity.
+    # Cart inactivity checking.
     if check_cart_inactivity(request):
-        # If inactivity has been detected and the cart has been emptied, the user is redirected back to the cart.
+        # If inactivity is detected, the cart will be emptied.
         return redirect('cart')
 
     cart = request.session.get('cart', {})
@@ -139,19 +156,22 @@ def remove_from_cart(request, product_id):
 
     if product_id_str in cart:
         product = get_object_or_404(Product, id=product_id)
-        quantity = cart[product_id_str]['quantity']
+        removed_quantity = cart[product_id_str]['quantity']
 
-        if product.reserved_stock >= quantity:
-            product.reserved_stock -= quantity
-            product.save()
-        else:
-            messages.error(request, "Nelze odstranit více položek, než je rezervováno.")
-            return redirect('cart')
+        # Product type checking.
+        if product.product_type != 'service': # It is necessary to update the stock availability for products.
+            if product.reserved_stock >= removed_quantity:
+                product.reserved_stock -= removed_quantity
+                product.save()
+            else:
+                messages.error(request, "Nelze odstranit více položek, než je rezervováno.")
+                return redirect('cart')
 
+        # Removing an item from the cart.
         del cart[product_id_str]
         request.session['cart'] = cart
-
         request.session['cart_last_activity'] = datetime.now().isoformat()
+
         messages.success(request, f"Produkt {product.product_name} byl odstraněn z košíku.")
     else:
         messages.error(request, "Produkt nebyl nalezen v košíku.")
@@ -161,7 +181,7 @@ def remove_from_cart(request, product_id):
 def update_cart(request, product_id):
     # Checking cart inactivity.
     if check_cart_inactivity(request):
-        # If inactivity has been detected and the cart has been emptied, the user is redirected back to the cart.
+        # If inactivity is detected, the cart will be emptied.
         return redirect('cart')
 
     cart = request.session.get('cart', {})
@@ -178,9 +198,9 @@ def update_cart(request, product_id):
     return redirect('cart')
 
 def complete_order(request):
-    # Checking cart inactivity.
+    # Cart inactivity checking.
     if check_cart_inactivity(request):
-        # If inactivity has been detected and the cart has been emptied, the user is redirected back to the cart.
+        # If inactivity is detected, the cart will be emptied.
         return redirect('cart')
 
     # Retrieving the cart after checking for inactivity.

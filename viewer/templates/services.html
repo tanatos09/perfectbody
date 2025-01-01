@@ -6,13 +6,18 @@
     <ul>
         {% for service in services %}
             <li>
-                <a href="{% url 'service' service.id %}"><h2>{{ service.product_name }}</h2></a> - {{ service.price }}
-                Kč
+                <a href="{% url 'service' service.id %}">
+                    <h2>{{ service.product_name }}</h2>
+                </a> - {{ service.price }} Kč
                 <p>{{ service.product_short_description }}</p>
-                <a href="{% url 'add_to_cart' service.id %}">➕ Přidat do košíku</a>
+                {% if service.has_approved_trainers %}
+                    <a href="{% url 'add_to_cart' service.id %}">➕ Přidat do košíku</a>
+                {% else %}
+                    <p style="color: red;">Nelze objednat</p>
+                {% endif %}
             </li>
         {% empty %}
-            <li>Služby nejsou k dispozici.</li>
+            <li>Služba není k dispozici.</li>
         {% endfor %}
     </ul>
 

@@ -36,7 +36,6 @@ class Producer(Model):
 
 
 class Product(Model):
-
     PRODUCT_TYPES = [
         ("merchantdise", "Merchantdise"),
         ("service", "Service"),
@@ -49,9 +48,11 @@ class Product(Model):
     product_view = URLField(null=True, blank=True)
     category = ForeignKey(Category, default=0, on_delete=SET_DEFAULT, null=False, blank=False, related_name='categories')
     price = DecimalField(max_digits=10, decimal_places=2, null=False, blank=False)
-    producer = ForeignKey(Producer, default=0, on_delete=SET_DEFAULT, null=True, blank=True, related_name='producers') # producer is filled only for merchantdise product_type
-    stock_availability = PositiveIntegerField(default=0, null=False, blank=True) # a value will always be a number (never NULL)
-    reserved_stock = PositiveIntegerField(default=0, null=False, blank=True) # a value will always be a number (never NULL)
+    # Producer is filled only for merchantdise product_type.
+    producer = ForeignKey(Producer, default=0, on_delete=SET_DEFAULT, null=True, blank=True, related_name='producers')
+    # A value for stock_availability and reserved_stock will always be a number (never NULL).
+    stock_availability = PositiveIntegerField(default=0, null=False, blank=True)
+    reserved_stock = PositiveIntegerField(default=0, null=False, blank=True)
 
     class Meta:
         ordering = ['product_name']
@@ -63,6 +64,8 @@ class Product(Model):
         return f"{self.product_name} ({self.price} Kč)"
 
     def available_stock(self):
+        if self.product_type == 'service':
+            return float('inf') # Services are available indefinitely if they have at least one trainer assigned.
         return max(self.stock_availability - self.reserved_stock, 0)
 
 
@@ -70,7 +73,8 @@ class TrainersServices(Model):
     trainer = ForeignKey(UserProfile, on_delete=CASCADE, related_name="services")
     service = ForeignKey(Product, on_delete=CASCADE, related_name="trainers")
     trainers_service_description = TextField(blank=False, null=False)
-    is_approved = BooleanField(default=False) # The trainer has to be approved by an employee before including in the trainer list.
+    # The trainer has to be approved by an employee before including in the trainer list.
+    is_approved = BooleanField(default=False)
 
     class Meta:
         constraints = [UniqueConstraint(fields=['trainer', 'service'], name='unique_trainer_service')]

@@ -7,18 +7,26 @@
 
     <br>
     <div class="service-category"><b>Kategorie:</b> {{ service.category }}</div>
-    <div class="service-trainers"><b>Trenéři:</b>
-        {% for trainer in trainer_detail.last_name.all %}
-            {{ trainer.full_name }}
-        {% endfor %}
-        Zde bude seznam všech trenérů.
+    <div class="service-trainers">
+        <b>Trenéři:</b>
+        {% if approved_trainers %}
+            {% for trainer in approved_trainers %}
+                <a href="{% url 'trainer' trainer.id %}">{{ trainer.full_name }}</a>{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        {% else %}
+            <span style="color: red;">Pro službu nejsou k dispozici schválení trenéři</span>
+        {% endif %}
     </div>
     <div class="service-price"><b>Cena:</b> {{ service.price }} Kč</div>
 
     <br>
     <!-- Adding to cart -->
-    <div class="add-to-cart">
-        <a href="{% url 'add_to_cart' service.id %}">➕ Přidat do košíku</a>
-    </div>
+    {% if approved_trainers %}
+        <div class="add-to-cart">
+            <a href="{% url 'add_to_cart' service.id %}">➕ Přidat do košíku</a>
+        </div>
+    {% else %}
+        <p style="color: red;">Nelze objednat</p>
+    {% endif %}
 
 {% endblock %}

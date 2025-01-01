@@ -6,7 +6,7 @@
     <div class="product-description"><b>Popis zboží:</b> {{ product.product_long_description }}</div>
 
     <br>
-    <div class="product-category"><b>Kategorie:</b> {{ product.category }}</div>
+    <div class="product-category"><b>Kategorie:</b> <a href="{% url 'category' product.category.id %}">{{ product.category }}</a></div>
     <div class="product-producer"><b>Výrobce:</b> {{ product.producer }}</div>
     <div class="product-stock-availability"><b>Skladová dostupnost:</b>
         {% if product.available_stock > 0 %}

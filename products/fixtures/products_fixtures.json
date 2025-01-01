@@ -138,8 +138,8 @@
     "model": "products.category",
     "pk": 16,
     "fields": {
-      "category_name": "Služby",
-      "category_description": "Tréninkové služby a kurzy.",
+      "category_name": "Videokurzy",
+      "category_description": "Objevte svět pohybu a duševní harmonie prostřednictvím našich videokurzů. Každý kurz obsahuje 10 pečlivě připravených lekcí, které vás provedou od základů až po pokročilé techniky. Každé 45minutové instruktážní video je vytvořeno tak, aby bylo srozumitelné pro začátečníky, ale zároveň poskytlo nové výzvy i pokročilým jedincům. Do 24 hodin od objednání služby obdržíte první video a poté vám budou lekce pravidelně zasílány přímo do vašeho e-mailu na týdenní bázi. Můžete si tak užít pohodlí cvičení kdykoliv a kdekoliv, podle vašeho rozvrhu a vašich možností. Navíc vám bude po celou dobu kurzu k dispozici váš osobní lektor, na kterého se můžete kdykoliv po dobu trvání kurzu obrátit s dotazy, žádostí o radu nebo individuální konzultací. S našimi videokurzy si osvojíte zdravý životní styl, zlepšíte svou kondici, posílíte tělo a uvolníte mysl. Nechte se vést profesionály z oboru a začněte svou cestu ke zdravějšímu a spokojenějšímu já ještě dnes!",
       "category_parent": null
     }
   },
@@ -147,8 +147,8 @@
     "model": "products.category",
     "pk": 17,
     "fields": {
-      "category_name": "Videokurzy",
-      "category_description": "Kurzy na téma fitness a jóga.",
+      "category_name": "Fitness",
+      "category_description": "Fitness je klíčem k aktivnímu a zdravému životnímu stylu. V naší kategorii fitness najdete dynamické a efektivní tréninky zaměřené na zlepšení síly, vytrvalosti a celkové fyzické kondice. Nabízíme lekce pro začátečníky i pokročilé, od kruhových tréninků po intervalové a specializované tréninky na posilování určitých svalových skupin. Naši trenéři vám poskytnou odborné vedení a motivaci k dosažení vašich cílů – ať už chcete spalovat kalorie, budovat svalovou hmotu nebo zlepšit celkovou vitalitu. Přidejte do svého života pohyb a energii díky našim fitness programům přizpůsobeným vašim potřebám.",
       "category_parent": 16
     }
   },
@@ -156,27 +156,18 @@
     "model": "products.category",
     "pk": 18,
     "fields": {
-      "category_name": "Fitness",
-      "category_description": "Fitness videokurzy.",
-      "category_parent": 17
+      "category_name": "Jóga",
+      "category_description": "Jóga je více než jen cvičení – je to cesta k harmonii těla, mysli a duše. V naší kategorii jógy najdete širokou škálu kurzů, které vás provedou od základních pozic až po pokročilé techniky. Jóga pomáhá zlepšit flexibilitu, sílu, rovnováhu a především odbourává stres a podporuje vnitřní klid. Ať už hledáte relaxaci po náročném dni, nebo intenzivnější formy jógy, naše kurzy vám nabídnou vše, co potřebujete. Vyberte si lekce vedené zkušenými instruktory, kteří vás provedou každým krokem na cestě k zdravějšímu a šťastnějšímu životu.",
+      "category_parent": 16
     }
   },
   {
     "model": "products.category",
     "pk": 19,
     "fields": {
-      "category_name": "Jóga",
-      "category_description": "Kurzy jógy pro všechny úrovně.",
-      "category_parent": 17
-    }
-  },
-  {
-    "model": "products.category",
-    "pk": 20,
-    "fields": {
       "category_name": "Osobní tréninkové plány",
       "category_description": "Individuální tréninkové plány.",
-      "category_parent": 16
+      "category_parent": null
     }
   },
   {
@@ -335,7 +326,7 @@
       "product_short_description": "Objevte klid a rovnováhu prostřednictvím tradiční Hatha jógy.",
       "product_long_description": "Hatha jóga je ideálním vstupem do světa jógy, zaměřená na nalezení harmonie mezi tělem a myslí. Tento kurz je navržen tak, aby vás prováděl klidným tempem, během kterého se naučíte správné držení těla, hluboké techniky dýchání a metody relaxace. Zkušený instruktor vás povede jednotlivými pozicemi (ásanami) s důrazem na techniku a bezpečnost, aby byl kurz vhodný jak pro začátečníky, tak i pro pokročilé jogíny. Hatha jóga vám pomůže zlepšit flexibilitu, posílit svaly a podpořit vnitřní klid. Kurz je perfektní volbou pro ty, kteří hledají účinný způsob, jak se zbavit stresu a dosáhnout fyzické i duševní pohody.",
       "price": 499.00,
-      "category": 19,
+      "category": 18,
       "producer": null,
       "stock_availability": 0
     }
@@ -349,7 +340,7 @@
       "product_short_description": "Vysoce intenzivní trénink pro efektivní spalování tuků a zlepšení kondice.",
       "product_long_description": "HIIT (High-Intensity Interval Training) je vysoce intenzivní tréninkový program zaměřený na efektivní spalování kalorií a zlepšení fyzické kondice. Tento kurz vás provede sérií dynamických cvičení kombinujících krátké, intenzivní intervaly s odpočinkovými fázemi. Program je navržen tak, aby zvýšil váš metabolismus, podpořil zpevnění svalů a zvýšil celkovou vytrvalost. Lekce jsou vedeny zkušenými trenéry, kteří vás budou motivovat k dosažení vašich cílů. HIIT je ideální pro ty, kteří chtějí rychlé výsledky, zlepšit svou fyzičku a posunout své hranice. Vhodné pro všechny úrovně zkušeností.",
       "price": 699.00,
-      "category": 18,
+      "category": 17,
       "producer": null,
       "stock_availability": 0
     }
@@ -363,7 +354,7 @@
       "product_short_description": "Dynamická jóga s plynulými přechody pro flexibilitu a posílení těla.",
       "product_long_description": "Vinyasa jóga je jedinečný a dynamický styl jógy, který propojuje jednotlivé pozice plynulými přechody synchronizovanými s vaším dechem. Tento kurz je navržen pro zlepšení flexibility, síly a celkové koordinace těla, a zároveň poskytuje uvolnění od stresu. Při lekcích se zaměříte na plynulý pohyb, který harmonizuje tělo i mysl. Kurz je vhodný pro všechny úrovně od začátečníků po pokročilé a přináší komplexní fyzický i mentální trénink. Vinyasa jóga vám pomůže objevit nové možnosti vašeho těla a navodí pozitivní energii a vnitřní klid.",
       "price": 599.00,
-      "category": 19,
+      "category": 18,
       "producer": null,
       "stock_availability": 0
     }
@@ -377,7 +368,7 @@
       "product_short_description": "Hluboce relaxační jóga pro obnovení energie a rovnováhy.",
       "product_long_description": "Restorativní jóga je klidná a regenerující praxe, navržená pro hlubokou relaxaci a obnovení vnitřní rovnováhy. Tento kurz je ideální pro ty, kteří chtějí zmírnit stres, uvolnit napětí a obnovit svou energii po náročném dni. Lekce zahrnují jemné pozice, které jsou podporovány polštářky, přikrývkami a dalšími pomůckami, což umožňuje hluboké uvolnění těla bez fyzického vypětí. Restorativní jóga je vhodná pro všechny úrovně, od začátečníků po pokročilé, a nabízí příležitost k propojení těla a mysli. Přihlaste se a dopřejte si chvíli klidu, kterou si zasloužíte – ideální pro navrácení harmonie do vašeho života.",
       "price": 499.00,
-      "category": 19,
+      "category": 18,
       "producer": null,
       "stock_availability": 0
     }
@@ -433,7 +424,7 @@
       "product_short_description": "Efektivní cvičení kombinující intenzivní intervaly a odpočinek pro zlepšení kondice.",
       "product_long_description": "Intervalový trénink je navržen tak, aby maximalizoval váš výkon a výsledky. Tento kurz kombinuje krátké, intenzivní intervaly fyzické aktivity, jako jsou sprinty nebo dynamické cviky, s fázemi aktivního odpočinku, což umožňuje optimální regeneraci mezi cvičeními. Kurz je vhodný pro všechny úrovně fitness - od začátečníků po pokročilé sportovce. Poskytuje přizpůsobitelný program zahrnující kardio, posilování a flexibilitu. Díky odbornému vedení a strukturovaným lekcím vám pomůže zlepšit výdrž, spálit kalorie efektivněji a vybudovat pevné tělo. Tento online kurz nabízí flexibilitu tréninku podle vašeho tempa, a zároveň je plný inspirace a motivace pro dosažení vašich cílů.",
       "price": 699.00,
-      "category": 18,
+      "category": 17,
       "producer": null,
       "stock_availability": 0
     }

@@ -19,7 +19,7 @@ from django.urls import path
 
 from accounts.views import edit_profile, profile_view, change_password, trainer_register, register, login_view, logout_view
 from viewer.views import view_cart, add_to_cart, remove_from_cart, update_cart, home, products, product, services, \
-    service, trainers, trainer, complete_order
+    service, trainers, trainer, category, complete_order
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,6 +30,7 @@ urlpatterns = [
     path('service/<pk>', service, name='service'),
     path('trainers/', trainers, name='trainers'),
     path('trainer/<pk>', trainer, name='trainer'),
+    path('category/<int:category_id>', category, name='category'),
     path('register/', register, name='register'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),

@@ -6,7 +6,7 @@
     <div class="service-description"><b>Popis služby:</b> {{ service.product_long_description }}</div>
 
     <br>
-    <div class="service-category"><b>Kategorie:</b> {{ service.category }}</div>
+    <div class="service-category"><b>Kategorie:</b> <a href="{% url 'category' service.category.id %}">{{ service.category }}</a></div>
     <div class="service-trainers">
         <b>Trenéři:</b>
         {% if approved_trainers %}

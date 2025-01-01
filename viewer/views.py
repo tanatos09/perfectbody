@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.models import Group
-from products.models import Product, TrainersServices
+from products.models import Product, TrainersServices, Category
 from accounts.models import UserProfile
 from datetime import datetime, timedelta
 
@@ -20,13 +20,11 @@ def product(request, pk):
         return render(request, "product.html", context)
     return products(request)
 
-
 def services(request):
     services = Product.objects.filter(product_type='service').order_by('category__category_name', 'product_name')
     for service in services:
         service.has_approved_trainers = TrainersServices.objects.filter(service=service, is_approved=True).exists()
     return render(request, 'services.html', {"services": services})
-
 
 def service(request, pk):
     # Find the service by primary key or return 404.
@@ -38,7 +36,6 @@ def service(request, pk):
     context = {'service': service_detail, 'approved_trainers': approved_trainers}
     return render(request, "service.html", context)
 
-
 def trainers(request):
     trainer_group = Group.objects.filter(name='trainer').first()
     if trainer_group:
@@ -48,7 +45,6 @@ def trainers(request):
         approved_trainers = [] # If the group does not exist, the list will be empty.
     return render(request, 'trainers.html', {'approved_trainers': approved_trainers})
 
-
 def trainer(request, pk):
     # Find the trainer by primary key or return 404.
     trainer_detail = get_object_or_404(UserProfile, id=pk)
@@ -57,6 +53,12 @@ def trainer(request, pk):
     # Forward approved services only.
     context = {'trainer': trainer_detail, 'approved_services': approved_services}
     return render(request, "trainer.html", context)
+
+def category(request, category_id):
+    category_detail = get_object_or_404(Category, id=category_id)
+    products = Product.objects.filter(category=category_detail)
+    context = {'category': category_detail, 'products': products}
+    return render(request, 'category.html', context)
 
 def validate_last_activity(last_activity):
     try:
@@ -130,7 +132,7 @@ def add_to_cart(request, product_id):
 
     request.session['cart_last_activity'] = datetime.now().isoformat()
     request.session['cart'] = cart
-    messages.success(request, f"{product.product_name} přidáno do košíku.")
+    messages.success(request, f"Produkt {product.product_name} přidán do košíku.")
 
     # Redirect to cart for all product types.
     return redirect('cart')

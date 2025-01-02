@@ -43,8 +43,10 @@ def trainer_register(request: HttpRequest) -> HttpResponse:
         if form.is_valid():
             try:
                 form.save()
-                messages.success(request, "Registrace trenéra proběhla úspěšně. Žádost bude schválena administrátorem v nejbližším možném termínu.")
-                return redirect('homepage')  # Přesměrování na hlavní stránku
+                messages.success(request, "Registrace trenéra proběhla úspěšně. "
+                                          "Žádost vyhodnotí administrátor v nejbližším možném termínu. "
+                                          "O stavu schválení budete vyrozuměn/a e-mailovou notifikací.")
+                return redirect('home') # Redirect to the homepage.
             except Exception as e:
                 logger.error(f"Neočekávaná chyba při registraci trenéra: {e}", exc_info=True)
                 messages.error(request, "Došlo k neočekávané chybě. Zkuste to prosím znovu.")
@@ -52,7 +54,6 @@ def trainer_register(request: HttpRequest) -> HttpResponse:
             messages.warning(request, "Údaje nejsou platné. Zkontrolujte a zkuste znovu.")
     else:
         form = TrainerRegistrationForm()
-
     return render(request, 'trainer_register.html', {'form': form})
 
 

@@ -1,9 +1,10 @@
 from django.contrib.auth.models import AbstractUser
 from django.db.models import Model, DateTimeField, CharField, URLField, ForeignKey, SET_NULL, BooleanField, \
-    IntegerField, EmailField, TextField, DateField
+    IntegerField, EmailField, TextField, DateField, UniqueConstraint, CASCADE
 
 from perfectbody.settings import AUTH_USER_MODEL
 
+# from products.models import Product
 
 class UserProfile(AbstractUser):
     PREFERRED_CHANNEL = [('PHONE', 'Telefón'), ('EMAIL', 'Email'), ('POST', 'Pošta')]
@@ -46,3 +47,19 @@ class Address(Model):
     def __repr__(self):
         return f'user_id={self.user_id}, first_name={self.first_name}, last_name={self.last_name}, street={self.street}, city={self.city}, postal_code={self.postal_code}, country={self.country}, email={self.email}'
 
+
+class TrainersServices(Model):
+    trainer = ForeignKey(UserProfile, on_delete=CASCADE, related_name="services")
+    service = ForeignKey("products.Product", on_delete=CASCADE, related_name="trainers")
+    trainers_service_description = TextField(blank=False, null=False)
+    # The trainer has to be approved by an employee before including in the trainer list.
+    is_approved = BooleanField(default=False)
+
+    class Meta:
+        constraints = [UniqueConstraint(fields=['trainer', 'service'], name='unique_trainer_service')]
+
+    def __repr__(self):
+        return f"Trainer(full_name={self.trainer.full_name()}, service={self.service.product_name}, is_approved={self.is_approved})"
+
+    def __str__(self):
+        return f"{self.trainer.full_name()} - {self.service.product_name} (Approved: {self.is_approved})"

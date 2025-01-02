@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.models import Group
-from products.models import Product, TrainersServices, Category
-from accounts.models import UserProfile
+from products.models import Product, Category
+from accounts.models import UserProfile, TrainersServices
 from datetime import datetime, timedelta
 
 

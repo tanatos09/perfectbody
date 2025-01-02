@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
       "category_name": "Sportovní výživa",
-      "category_description": "Výživa pro sportovce.",
+      "category_description": "Komplexní nabídka doplňků stravy navržená pro podporu výkonu, regenerace a zdraví sportovců.",
       "category_parent": null
     }
   },
@@ -13,7 +13,7 @@
     "pk": 2,
     "fields": {
       "category_name": "Proteiny",
-      "category_description": "Syrovátkové a rostlinné proteiny.",
+      "category_description": "Kvalitní syrovátkové a rostlinné proteiny pro podporu růstu svalové hmoty a regenerace.",
       "category_parent": 1
     }
   },
@@ -22,7 +22,7 @@
     "pk": 3,
     "fields": {
       "category_name": "Vitamíny",
-      "category_description": "Multivitaminy a doplňky stravy.",
+      "category_description": "Široký výběr multivitaminů a minerálů pro posílení imunity a celkové vitality.",
       "category_parent": 1
     }
   },
@@ -31,7 +31,7 @@
     "pk": 4,
     "fields": {
       "category_name": "Energetické tyčinky",
-      "category_description": "Tyčinky pro rychlou energii.",
+      "category_description": "Lahodné tyčinky bohaté na energii, ideální jako svačina na cestách nebo po tréninku.",
       "category_parent": 1
     }
   },
@@ -40,7 +40,7 @@
     "pk": 5,
     "fields": {
       "category_name": "Fitness vybavení",
-      "category_description": "Pomůcky na cvičení.",
+      "category_description": "Praktické pomůcky a nástroje pro efektivní cvičení doma i v posilovně.",
       "category_parent": null
     }
   },
@@ -49,7 +49,7 @@
     "pk": 6,
     "fields": {
       "category_name": "Činky",
-      "category_description": "Činky pro domácí i profesionální cvičení.",
+      "category_description": "Odolné činky různých hmotností vhodné pro domácí i profesionální posilování.",
       "category_parent": 5
     }
   },
@@ -58,7 +58,7 @@
     "pk": 7,
     "fields": {
       "category_name": "Podložky na cvičení",
-      "category_description": "Jóga a fitness podložky.",
+      "category_description": "Kvalitní podložky pro jógu, fitness a další cvičení, zajišťující maximální pohodlí a stabilitu.",
       "category_parent": 5
     }
   },
@@ -67,7 +67,7 @@
     "pk": 8,
     "fields": {
       "category_name": "Elastické gumy",
-      "category_description": "Odporové gumy pro různé úrovně cvičení.",
+      "category_description": "Univerzální odporové gumy pro posilování, rehabilitaci a celkové zlepšení mobility.",
       "category_parent": 5
     }
   },
@@ -76,7 +76,7 @@
     "pk": 9,
     "fields": {
       "category_name": "Sportovní láhve",
-      "category_description": "Láhve na vodu a proteiny.",
+      "category_description": "Funkční láhve na vodu a proteiny pro sportovní aktivity a každodenní hydrataci.",
       "category_parent": 5
     }
   },
@@ -85,7 +85,7 @@
     "pk": 10,
     "fields": {
       "category_name": "Švihadla",
-      "category_description": "Švihadla pro kardio trénink.",
+      "category_description": "Švihadla pro efektivní kardio trénink a zlepšení kondice.",
       "category_parent": 5
     }
   },
@@ -94,7 +94,7 @@
     "pk": 11,
     "fields": {
       "category_name": "Sportovní oblečení",
-      "category_description": "Oblečení na sport.",
+      "category_description": "Stylové a funkční oblečení pro každou nejen sportovní aktivitu.",
       "category_parent": null
     }
   },
@@ -103,7 +103,7 @@
     "pk": 12,
     "fields": {
       "category_name": "Trička",
-      "category_description": "Sportovní trička.",
+      "category_description": "Prodyšná sportovní trička navržená pro maximální pohodlí a výkon.",
       "category_parent": 11
     }
   },
@@ -112,7 +112,7 @@
     "pk": 13,
     "fields": {
       "category_name": "Legíny",
-      "category_description": "Kompresní a běžecké legíny.",
+      "category_description": "Kompresní a běžecké legíny pro podporu svalů a maximálního pohodlí nejen při sportu.",
       "category_parent": 11
     }
   },
@@ -121,7 +121,7 @@
     "pk": 14,
     "fields": {
       "category_name": "Kraťasy",
-      "category_description": "Sportovní kraťasy pro muže i ženy.",
+      "category_description": "Lehké a pohodlné sportovní kraťasy pro muže i ženy.",
       "category_parent": 11
     }
   },
@@ -130,7 +130,7 @@
     "pk": 15,
     "fields": {
       "category_name": "Obuv",
-      "category_description": "Boty na fitness a běh.",
+      "category_description": "Odolné boty vhodné pro fitness, běh a další sportovní aktivity.",
       "category_parent": 11
     }
   },
@@ -174,35 +174,40 @@
     "model": "products.producer",
     "pk": 1,
     "fields": {
-      "producer_name": "GymPro"
+      "producer_name": "GymPro",
+      "producer_description": "GymPro je synonymem pro špičkovou kvalitu v oblasti fitness vybavení. Zaměřujeme se na výrobu odolných, ergonomických a funkčních produktů, které splňují nejvyšší standardy. Naše činky, nakládací závaží a další fitness pomůcky jsou navrženy tak, aby podpořily vaše cvičení doma i v posilovně. GymPro je zde, aby vás posunulo blíže k vašim fitness cílům."
     }
   },
   {
     "model": "products.producer",
     "pk": 2,
     "fields": {
-      "producer_name": "NutriFit"
+      "producer_name": "NutriFit",
+      "producer_description": "NutriFit je lídrem v oblasti sportovní výživy. Nabízíme širokou škálu proteinových prášků, multivitaminů a doplňků stravy, které vám pomohou dosáhnout maximálního výkonu. Naše produkty jsou vyvíjeny s důrazem na přírodní složení a optimální přínos pro zdraví a regeneraci. NutriFit je volba číslo jedna pro sportovce i všechny, kteří dbají na vyvážený životní styl."
     }
   },
   {
     "model": "products.producer",
     "pk": 3,
     "fields": {
-      "producer_name": "ActiveWear"
+      "producer_name": "ActiveWear",
+      "producer_description": "ActiveWear přináší styl, pohodlí a funkčnost do světa sportovní módy. Naše kolekce sportovního oblečení jsou vyrobeny z prodyšných, odolných a ekologicky šetrných materiálů, které vám zajistí pohodlí během každého tréninku. Díky modernímu designu a preciznímu zpracování je ActiveWear ideální volbou nejen pro fitness, ale i pro váš aktivní životní styl."
     }
   },
   {
     "model": "products.producer",
     "pk": 4,
     "fields": {
-      "producer_name": "StrongTools"
+      "producer_name": "StrongTools",
+      "producer_description": "StrongTools je vaším spolehlivým partnerem pro profesionální fitness vybavení. Naše činky, závaží a další nástroje jsou navrženy s důrazem na trvanlivost, bezpečnost a výkon. Věříme, že kvalitní vybavení je klíčem k úspěchu na vaší fitness cestě. StrongTools je značka, na kterou se můžete spolehnout – doma i v posilovně."
     }
   },
   {
     "model": "products.producer",
     "pk": 5,
     "fields": {
-      "producer_name": "HealthyLife"
+      "producer_name": "HealthyLife",
+      "producer_description": "HealthyLife je zaměřen na zdraví a pohodu každého z nás. Nabízíme vysoce kvalitní rostlinné proteiny, multivitaminy a omega-3 doplňky, které jsou přizpůsobeny potřebám moderního člověka. Naše produkty jsou 100% přírodní, bez přidaných cukrů a umělých přísad, aby podpořily vaše zdraví a vitalitu. S HealthyLife budete žít zdravěji každý den."
     }
   },
     {
@@ -411,7 +416,7 @@
       "product_long_description": "Proteinová tyčinka s příchutí vanilky nabízí skvělou kombinaci chuti a výživy. Obsahuje 20 g kvalitního syrovátkového proteinu pro podporu regenerace svalů po cvičení. Nízký obsah cukru (méně než 2 g) ji činí vhodnou volbou i pro ty, kteří sledují svůj příjem kalorií. Tyčinka je obohacena o vlákninu, která přispívá ke zdravému trávení, a je bez umělých barviv a konzervantů. Praktické balení umožňuje snadné použití kdykoliv a kdekoliv, ať už potřebujete doplnit energii po tréninku, nebo hledáte zdravou svačinu během dne.",
       "price": 49.00,
       "category": 4,
-      "producer": 1,
+      "producer": 5,
       "stock_availability": 200
     }
   },

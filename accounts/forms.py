@@ -9,8 +9,8 @@ from django.db import transaction
 from django.forms import ModelForm, CharField, Form, PasswordInput, BooleanField, TextInput, EmailInput, Textarea, \
     ModelMultipleChoiceField, CheckboxSelectMultiple, DateField, DateInput
 
-from accounts.models import UserProfile, Address
-from products.models import Product, TrainersServices
+from accounts.models import UserProfile, Address, TrainersServices
+from products.models import Product
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +25,7 @@ class RegistrationForm(ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ['first_name', 'last_name', 'email', 'phone', 'username', 'password']
+        fields = ['first_name', 'last_name', 'email', 'phone', 'username', 'password', 'date_of_birth']
         widgets = {
             'password': PasswordInput(attrs={'placeholder': 'Zadejte heslo'}),
             'first_name': TextInput(attrs={'placeholder': 'Jméno'}),
@@ -33,6 +33,7 @@ class RegistrationForm(ModelForm):
             'email': EmailInput(attrs={'placeholder': 'E-mail'}),
             'phone': TextInput(attrs={'placeholder': 'Telefon'}),
             'username': TextInput(attrs={'placeholder': 'Uživatelské jméno'}),
+            'date_of_birth': DateInput(attrs={'type': 'date'}),
         }
 
     def clean_username(self):

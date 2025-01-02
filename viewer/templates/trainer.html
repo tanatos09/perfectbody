@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>{{ trainer.full_name }}</h1>
+
+    <!-- Contact details -->
+    <div>
+        <p><strong>E-mail:</strong> {{ trainer.email }}</p>
+        <p><strong>Telefon:</strong> {{ trainer.phone }}</p>
+    </div>
+
+    <!-- Trainer long description -->
+    <div>
+        <h2>O mně</h2>
+        <p>{{ trainer.trainer_long_description }}</p>
+    </div>
+
+    <!-- Trainer services -->
+    <div>
+        <h2>Nabízené služby</h2>
+        {% if approved_services %}
+            <ul>
+                {% for service in approved_services %}
+                    <li>
+                        <h3><a href="{% url 'service' service.service.id %}">{{ service.service.product_name }}</a></h3>
+                        <p>{{ service.trainers_service_description }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Trenér zatím nemá schválené služby.</p>
+        {% endif %}
+    </div>
+
+{% endblock %}

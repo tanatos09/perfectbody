@@ -21,7 +21,7 @@ from orders.views import start_order, order_summary, confirm_order, thank_you, m
 
 from accounts.views import edit_profile, profile_view, change_password, trainer_register, register, login_view, logout_view
 from viewer.views import view_cart, add_to_cart, remove_from_cart, update_cart, home, products, product, services, \
-    service, trainers, user_profile_view, search, update_cart_ajax
+    service, trainers, trainer, category,complete_order, user_profile_view, search, update_cart_ajax
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,6 +31,8 @@ urlpatterns = [
     path('services/', services, name='services'),
     path('service/<pk>', service, name='service'),
     path('trainers/', trainers, name='trainers'),
+    path('trainer/<pk>', trainer, name='trainer'),
+    path('category/<int:category_id>', category, name='category'),
     path('register/', register, name='register'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
@@ -52,4 +54,5 @@ urlpatterns = [
     path('detail/<int:order_id>/', order_detail, name='order_detail'),
     path('orders/cancel/<int:order_id>/', cancel_order, name='cancel_order'),
     path('search/', search, name='search'),
+path('cart/complete/', complete_order, name='complete_order'),
 ]

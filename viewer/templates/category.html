@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ category.category_name }}</h1>
+    <p>{{ category.category_description }}</p>
+
+    {% if category.category_parent %}
+        <p><strong>Tato kategorie spadá pod hlavní kategorii:</strong>
+            <a href="{% url 'category' category.category_parent.id %}">{{ category.category_parent.category_name }}</a>
+        </p>
+    {% endif %}
+
+    <h2>Seznam položek v kategorii</h2>
+    <ul>
+        {% for product in products %}
+            <li>
+                <a href="{% url 'product' product.id %}">{{ product.product_name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

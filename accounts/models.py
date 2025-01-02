@@ -1,9 +1,10 @@
 from django.contrib.auth.models import AbstractUser
 from django.db.models import Model, DateTimeField, CharField, URLField, ForeignKey, SET_NULL, BooleanField, \
-    IntegerField, EmailField
+    IntegerField, EmailField, TextField, DateField, UniqueConstraint, CASCADE
 
 from perfectbody.settings import AUTH_USER_MODEL
 
+# from products.models import Product
 
 class UserProfile(AbstractUser):
     PREFERRED_CHANNEL = [('PHONE', 'Telefón'), ('EMAIL', 'Email'), ('POST', 'Pošta')]
@@ -12,6 +13,9 @@ class UserProfile(AbstractUser):
     avatar = URLField(blank=True, null=True)  # url avataru
     phone = CharField(max_length=15, blank=True, null=True)  # telefon
     preferred_channel = CharField(max_length=10, choices=PREFERRED_CHANNEL, default='EMAIL')  # prefer. kom. kanal, vyber z PREFERRED_CHANNEL
+    trainer_short_description = TextField(blank=True, null=True)
+    trainer_long_description = TextField(blank=True, null=True)
+    date_of_birth = DateField(blank=True, null=True)
     created_at = DateTimeField(auto_now_add=True) # datum vytvoreni uctu
     account_type = CharField(max_length=15, choices=ACCOUNT_TYPES, default='registered')
 
@@ -20,6 +24,10 @@ class UserProfile(AbstractUser):
 
     def __repr__(self):
         return f'username={self.username},last_login={self.last_login}, is_superuser={self.is_superuser}, is_staff={self.is_staff}'
+
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
 
 class Address(Model):
 
@@ -39,3 +47,19 @@ class Address(Model):
     def __repr__(self):
         return f'user_id={self.user_id}, first_name={self.first_name}, last_name={self.last_name}, street={self.street}, city={self.city}, postal_code={self.postal_code}, country={self.country}, email={self.email}'
 
+
+class TrainersServices(Model):
+    trainer = ForeignKey(UserProfile, on_delete=CASCADE, related_name="services")
+    service = ForeignKey("products.Product", on_delete=CASCADE, related_name="trainers")
+    trainers_service_description = TextField(blank=False, null=False)
+    # The trainer has to be approved by an employee before including in the trainer list.
+    is_approved = BooleanField(default=False)
+
+    class Meta:
+        constraints = [UniqueConstraint(fields=['trainer', 'service'], name='unique_trainer_service')]
+
+    def __repr__(self):
+        return f"Trainer(full_name={self.trainer.full_name()}, service={self.service.product_name}, is_approved={self.is_approved})"
+
+    def __str__(self):
+        return f"{self.trainer.full_name()} - {self.service.product_name} (Approved: {self.is_approved})"

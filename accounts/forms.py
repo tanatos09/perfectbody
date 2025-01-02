@@ -6,9 +6,11 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.db import transaction
-from django.forms import ModelForm, CharField, Form, PasswordInput, BooleanField, TextInput, EmailInput
+from django.forms import ModelForm, CharField, Form, PasswordInput, BooleanField, TextInput, EmailInput, Textarea, \
+    ModelMultipleChoiceField, CheckboxSelectMultiple, DateField, DateInput
 
-from accounts.models import UserProfile, Address
+from accounts.models import UserProfile, Address, TrainersServices
+from products.models import Product
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +25,7 @@ class RegistrationForm(ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ['first_name', 'last_name', 'email', 'phone', 'username', 'password']
+        fields = ['first_name', 'last_name', 'email', 'phone', 'username', 'password', 'date_of_birth']
         widgets = {
             'password': PasswordInput(attrs={'placeholder': 'Zadejte heslo'}),
             'first_name': TextInput(attrs={'placeholder': 'Jméno'}),
@@ -31,6 +33,7 @@ class RegistrationForm(ModelForm):
             'email': EmailInput(attrs={'placeholder': 'E-mail'}),
             'phone': TextInput(attrs={'placeholder': 'Telefon'}),
             'username': TextInput(attrs={'placeholder': 'Uživatelské jméno'}),
+            'date_of_birth': DateInput(attrs={'type': 'date'}),
         }
 
     def clean_username(self):
@@ -106,12 +109,38 @@ class RegistrationForm(ModelForm):
         return user
 
 class TrainerRegistrationForm(RegistrationForm):
-    trainer_description = CharField(
+    trainer_short_description = CharField(
         max_length=500,
         required=True,
-        widget=TextInput(attrs={'placeholder': "Popište v krátkosti své zkušenosti, dovednosti nebo nab(dky"}),
-        label='Popis trenéra'
+        widget=Textarea(attrs={'placeholder': "Úvodní představení se v seznamu trenérů (maximálně 500 znaků)."}),
+        label='Představení trenéra'
     )
+    trainer_long_description = CharField(
+        widget=Textarea(attrs={'placeholder': "Prozraďte nám podrobnosti o vaší životní cestě a zkušenostech do vašeho medailonku."}),
+        required=True,
+        label='Detail trenéra'
+    )
+    services = ModelMultipleChoiceField(
+        queryset=Product.objects.filter(product_type='service'),
+        widget=CheckboxSelectMultiple,
+        label="Vyberte služby, které nabízíte"
+    )
+    trainers_services_descriptions = CharField(
+        widget=Textarea(attrs={'placeholder': "Popište svůj jedinečný přístup ke každé vybrané službě. Uveďte vaše dosavadní zkušenosti s vybranou službou, kurzy a certifikáty."}),
+        required=True,
+        label="Popis služeb (oddělte jednotlivé popisy pomocí '---')"
+    )
+    date_of_birth = DateField(
+        required=True,
+        widget=DateInput(attrs={'type': 'date'}),
+        label="Datum narození"
+    )
+    add_address = BooleanField(required=False, label="Chci zadat adresu")
+    street = CharField(max_length=255, required=False, label="Ulice")
+    street_number = CharField(max_length=255, required=False, label="Číslo ulice")
+    city = CharField(max_length=255, required=False, label="Město")
+    postal_code = CharField(max_length=10, required=False, label="PSČ")
+    country = CharField(max_length=255, required=False, label="Země", initial="Česká republika")
 
     def clean_postal_code(self):
         postal_code = self.cleaned_data.get('postal_code')
@@ -124,48 +153,66 @@ class TrainerRegistrationForm(RegistrationForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        # Pole, která musí být vždy vyplněna
-        required_fields = [
-            ('first_name', 'Jméno'),
-            ('last_name', 'Příjmení'),
-            ('email', 'Email'),
-            ('phone', 'Telefon'),
-            ('username', 'Uživatelské jméno'),
-            ('street', 'Ulice'),
-            ('street_number', 'Číslo ulice'),
-            ('city', 'Město'),
-            ('postal_code', 'PSČ'),
-            ('country', 'Země'),
-        ]
-        for field, label in required_fields:
-            if not cleaned_data.get(field):
-                self.add_error(field, f'Pole {label} je povinné.')
+        services = cleaned_data.get('services')
+        descriptions = cleaned_data.get('trainers_services_descriptions')
 
+        if not services:
+            self.add_error('services', 'Musíte vybrat alespoň jednu službu.')
+
+        if services and descriptions:
+            descriptions_list = descriptions.split('---')
+            if len(descriptions_list) != len(services):
+                self.add_error(
+                    'trainers_services_descriptions',
+                    f'Počet popisů ({len(descriptions_list)}) musí odpovídat počtu vybraných služeb ({len(services)}).'
+                )
+
+        if cleaned_data.get('add_address'):
+            required_address_fields = [
+                ('street', 'Ulice'),
+                ('street_number', 'Číslo ulice'),
+                ('city', 'Město'),
+                ('postal_code', 'PSČ'),
+                ('country', 'Země'),
+            ]
+            for field, label in required_address_fields:
+                if not cleaned_data.get(field):
+                    self.add_error(field, f'Pole {label} je povinné, pokud zadáváte adresu.')
         return cleaned_data
 
     def save(self, commit=True):
-        with transaction.atomic():
-            user = super().save(commit=False)
-            user.account_type = 'registered'
-            if commit:
-                user.save()
+        user = super().save(commit=False)
+        user.account_type = 'registered'
+        user.trainer_short_description = self.cleaned_data.get('trainer_short_description')
+        user.trainer_long_description = self.cleaned_data.get('trainer_long_description')
 
-                trainer_group, created = Group.objects.get_or_create(name='trainer')
-                user.groups.add(trainer_group)
+        if commit:
+            user.save()
+            trainer_group, created = Group.objects.get_or_create(name='trainer')
+            user.groups.add(trainer_group)
 
-                user.profile_description = self.cleaned_data.get('trainer_description')
-                user.save()
+            # Uložení služeb a jejich popisů
+            services = self.cleaned_data.get('services')
+            descriptions = self.cleaned_data.get('trainers_services_descriptions').split('---')
+            for service, description in zip(services, descriptions):
+                TrainersServices.objects.create(
+                    trainer=user,
+                    service=service,
+                    trainers_service_description=description.strip()
+                )
 
+            # Uložení adresy
+            if self.cleaned_data.get('add_address'):
                 Address.objects.create(
                     user=user,
                     first_name=user.first_name,
                     last_name=user.last_name,
-                    street=self.cleaned_data['street'],
-                    street_number=self.cleaned_data['street_number'],
-                    city=self.cleaned_data['city'],
-                    postal_code=self.cleaned_data['postal_code'].replace(' ', ''),
-                    country=self.cleaned_data['country'],
-                    email=self.cleaned_data['email'],
+                    street=self.cleaned_data.get('street'),
+                    street_number=self.cleaned_data.get('street_number'),
+                    city=self.cleaned_data.get('city'),
+                    postal_code=self.cleaned_data.get('postal_code'),
+                    country=self.cleaned_data.get('country'),
+                    email=user.email,
                 )
         return user
 

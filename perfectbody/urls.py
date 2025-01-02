@@ -21,7 +21,7 @@ from orders.views import start_order, order_summary, confirm_order, thank_you, m
 
 from accounts.views import edit_profile, profile_view, change_password, trainer_register, register, login_view, logout_view
 from viewer.views import view_cart, add_to_cart, remove_from_cart, update_cart, home, products, product, services, \
-    service, trainers, user_profile_view, search
+    service, trainers, user_profile_view, search, update_cart_ajax
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -40,6 +40,7 @@ urlpatterns = [
     path('cart/add/<int:product_id>/', add_to_cart, name='add_to_cart'),
     path('cart/remove/<int:product_id>/', remove_from_cart, name='remove_from_cart'),
     path('card/update/<int:product_id>/', update_cart, name='update_cart'),
+    path('cart/update/<int:product_id>/', update_cart_ajax, name='update_cart_ajax'),
     path('change_password/', change_password, name='change_password'),
     path('trainer_register', trainer_register, name='trainer_register'),
     path('user/<str:username>/', user_profile_view, name='user_profile'),

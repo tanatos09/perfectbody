@@ -1,46 +1,86 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Košík</h1>
+<h1 style="text-align: center;">Váš košík</h1>
 
 {% if cart %}
-    <table>
+    <table style="width: 80%; margin: auto; border-spacing: 10px;">
         <thead>
             <tr>
-                <th>Produkt</th>
-                <th>Množství</th>
-                <th>Cena za kus</th>
-                <th>Celkem</th>
-                <th>Akce</th>
+                <th style="text-align: left;">Produkt</th>
+                <th style="text-align: center;">Množství</th>
+                <th style="text-align: center;">Cena za kus</th>
+                <th style="text-align: center;">Celkem</th>
+                <th style="text-align: center;">Akce</th>
             </tr>
         </thead>
         <tbody>
             {% for product_id, item in cart.items %}
                 <tr>
-                    <td>{{ item.name }}</td>
-                    <td>
-                        <!-- Formulář pro aktualizaci množství -->
-                        <form action="{% url 'update_cart' product_id=product_id %}" method="POST">
+                    <td style="padding: 5px;">{{ item.name }}</td>
+                    <td style="padding: 5px; text-align: center;">
+                        <form data-product-id="{{ product_id }}">
                             {% csrf_token %}
-                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
-                            <button type="submit">Aktualizovat</button>
+                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1" style="width: 50px;">
                         </form>
                     </td>
-                    <td>{{ item.price }} Kč</td>
-                    <td>{{ item.price|floatformat:2|add:item.quantity }} Kč</td>
-                    <td>
+                    <td style="padding: 5px; text-align: center;">{{ item.price }} Kč</td>
+                    <td style="padding: 5px; text-align: center;" id="total-{{ product_id }}">{{ item.total }} Kč</td>
+                    <td style="padding: 5px; text-align: center;">
                         <a href="{% url 'remove_from_cart' product_id=product_id %}">Odstranit</a>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-    <div>
-        <p><strong>Celková cena: {{ total }} Kč</strong></p>
+
+    <div style="margin: 20px auto; text-align: right; width: 80%;">
+        <p><strong>Celková cena:</strong> <span id="cart-total">{{ total }} Kč</span></p>
         <a href="{% url 'start_order' %}">Pokračovat k objednávce</a>
     </div>
 {% else %}
-    <p>Košík je prázdný.</p>
-    <a href="{% url 'products' %}">Pokračovat v nákupu</a>
+    <p style="text-align: center; margin-top: 20px;">Váš košík je prázdný. <a href="{% url 'products' %}">Pokračovat v nákupu.</a></p>
 {% endif %}
+
+<!-- JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const initializeQuantityListeners = () => {
+        document.querySelectorAll('input[name="quantity"]').forEach(input => {
+            input.addEventListener('change', function () {
+                const productId = this.closest('form').dataset.productId;
+                const quantity = this.value;
+
+                fetch(`/cart/update/${productId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                    body: JSON.stringify({ quantity })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.querySelector(`#total-${productId}`).textContent = `${data.item_total} Kč`;
+
+                        document.querySelector('#cart-total').textContent = `Celková cena: ${data.cart_total} Kč`;
+                    } else {
+                        alert('Aktualizace selhala!');
+                    }
+                })
+                .catch(error => {
+                    console.error('Chyba:', error);
+                });
+            });
+        });
+    };
+
+    initializeQuantityListeners();
+});
+
+</script>
+
+
 {% endblock %}

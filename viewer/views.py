@@ -1,7 +1,11 @@
+import json
+
 import requests
 from unidecode import unidecode
 from django.contrib.auth.models import Group
 from django.shortcuts import render, get_object_or_404, redirect
+
+from django.http import JsonResponse
 
 from accounts.models import UserProfile, Address
 from products.models import Product
@@ -108,10 +112,14 @@ def service(request, pk):
 def trainers(request):
     return render(request, 'trainers.html')
 
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, redirect
+
 def add_to_cart(request, product_id):
     cart = request.session.get('cart', {})
     product_id_str = str(product_id)
     product = get_object_or_404(Product, id=product_id)
+
     if product_id_str in cart:
         cart[product_id_str]['quantity'] += 1
     else:
@@ -122,12 +130,26 @@ def add_to_cart(request, product_id):
         }
 
     request.session['cart'] = cart
-    return redirect('cart')
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        cart_total = sum(item['quantity'] * item['price'] for item in cart.values())
+        return JsonResponse({
+            'success': True,
+            'cart': cart,
+            'cart_total': f"{cart_total:.2f}"
+        })
+    else:
+        return redirect('cart')
+
 
 def view_cart(request):
     cart = request.session.get('cart', {})
+    for product_id, item in cart.items():
+        item['total'] = item['quantity'] * item['price']
     total = sum(item['quantity'] * item['price'] for item in cart.values())
     return render(request, 'cart.html', {"cart": cart, "total": total})
+
+
 
 def remove_from_cart(request, product_id):
     cart = request.session.get('cart', {})
@@ -152,6 +174,57 @@ def update_cart(request, product_id):
 
     request.session['cart'] = cart
     return redirect('cart')
+
+
+
+def update_cart_ajax(request, product_id):
+    if request.method == 'POST' and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        cart = request.session.get('cart', {})
+        product_id_str = str(product_id)
+
+        if product_id_str in cart:
+            try:
+                data = json.loads(request.body)
+                new_quantity = int(data.get('quantity', 1))
+                if new_quantity > 0:
+                    cart[product_id_str]['quantity'] = new_quantity
+                    request.session['cart'] = cart
+                    total = sum(item['quantity'] * item['price'] for item in cart.values())
+                    item_total = cart[product_id_str]['quantity'] * cart[product_id_str]['price']
+
+                    response = {
+                        'success': True,
+                        'item_total': f"{item_total:.2f}",
+                        'cart_total': f"{total:.2f}"
+                    }
+                    print("Response JSON:", response)
+                    return JsonResponse(response)
+
+                else:
+                    del cart[product_id_str]
+                    request.session['cart'] = cart
+                    total = sum(item['quantity'] * item['price'] for item in cart.values())
+
+                    response = {'success': True, 'cart_total': f"{total:.2f}"}
+                    print("Response JSON:", response)
+                    return JsonResponse(response)
+
+            except (ValueError, KeyError) as e:
+                error_response = {'success': False, 'error': 'Invalid data'}
+                print("Error JSON:", error_response)
+                return JsonResponse(error_response)
+        else:
+            error_response = {'success': False, 'error': 'Product not found'}
+            print("Error JSON:", error_response)
+            return JsonResponse(error_response)
+
+    error_response = {'success': False, 'error': 'Invalid request'}
+    print("Error JSON:", error_response)
+    return JsonResponse(error_response)
+
+
+
+
 
 def user_profile_view(request, username):
     user = get_object_or_404(UserProfile, username=username)

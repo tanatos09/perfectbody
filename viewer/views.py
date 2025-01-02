@@ -251,39 +251,44 @@ def get_name_day():
 def normalize_for_search(text):
     return unidecode(text).lower()
 
-#FIXME - pri vyhledani sluzby se nalezne sluzba ale zaroven i produkt - opravit, zkus vyhledat HIIT a pochopis
 def search(request):
     query = request.GET.get('q', '').strip()
+    if not query:
+        # Pokud není dotaz, zobrazíme prázdné výsledky
+        return render(request, 'search_results.html', {
+            'query': query,
+            'products': [],
+            'services': [],
+            'trainers': [],
+        })
+
+    # Normalizace dotazu
     normalized_query = normalize_for_search(query)
-    products = []
-    services = []
-    trainers = []
 
-    if query:
-        all_products = Product.objects.all()
-        products = [
-            product for product in all_products
-            if normalized_query in normalize_for_search(product.product_name)
-            or normalized_query in normalize_for_search(product.product_description or "")
+    # Hledání v produktech
+    products = [
+        product for product in Product.objects.filter(product_type='merchantdise')
+        if normalized_query in normalize_for_search(product.product_name)
+        or normalized_query in normalize_for_search(product.product_description or "")
+    ]
+
+    # Hledání ve službách
+    services = [
+        service for service in Product.objects.filter(product_type='service')
+        if normalized_query in normalize_for_search(service.product_name)
+        or normalized_query in normalize_for_search(service.product_description or "")
+    ]
+
+    # Hledání u trenérů
+    trainers_group = Group.objects.filter(name='trainer').first()
+    if trainers_group:
+        trainers = [
+            trainer for trainer in UserProfile.objects.filter(groups__in=[trainers_group])
+            if normalized_query in normalize_for_search(trainer.first_name)
+            or normalized_query in normalize_for_search(trainer.last_name)
         ]
-
-        all_services = Product.objects.filter(product_type='service')
-        services = [
-            service for service in all_services
-            if normalized_query in normalize_for_search(service.product_name)
-            or normalized_query in normalize_for_search(service.product_description or "")
-        ]
-
-        try:
-            trainers_group = Group.objects.get(name='trainer')
-            all_trainers = UserProfile.objects.filter(groups__in=[trainers_group])
-            trainers = [
-                trainer for trainer in all_trainers
-                if normalized_query in normalize_for_search(trainer.first_name)
-                or normalized_query in normalize_for_search(trainer.last_name)
-            ]
-        except Group.DoesNotExist:
-            trainers = []
+    else:
+        trainers = []
 
     return render(request, 'search_results.html', {
         'query': query,
@@ -291,3 +296,4 @@ def search(request):
         'services': services,
         'trainers': trainers,
     })
+

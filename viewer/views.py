@@ -1,6 +1,8 @@
 import json
 
 import requests
+import unicodedata
+from django.db.models import Q
 from django.urls import reverse
 from unidecode import unidecode
 from django.contrib.auth.models import Group
@@ -400,7 +402,10 @@ def get_name_day():
 
 
 def normalize_for_search(text):
-    return unidecode(text).lower()
+    return ''.join(
+        c for c in unicodedata.normalize('NFD', text.lower())
+        if unicodedata.category(c) != 'Mn'
+    )
 
 def search(request):
     query = request.GET.get('q', '').strip()
@@ -440,19 +445,20 @@ def search(request):
         or normalized_query in normalize_for_search(service.product_short_description or "")
     ]
 
-    trainers_group = Group.objects.filter(name='trainer').first()
-    if trainers_group:
-        trainers = [
-            {
-                'name': f"{trainer.first_name} {trainer.last_name}",
-                'url': reverse('user_profile', args=[trainer.username])
-            }
-            for trainer in UserProfile.objects.filter(groups=trainer, services__is_approved=True)
-            if normalized_query in normalize_for_search(trainer.first_name)
-            or normalized_query in normalize_for_search(trainer.last_name)
-        ]
-    else:
-        trainers = []
+    trainers_group = UserProfile.objects.filter(groups__name='trainer')
+    trainers = [
+        {
+            'username': trainer.username,
+            'name': f"{trainer.first_name} {trainer.last_name}",
+            'description': trainer.trainer_short_description,
+            'url': reverse('user_profile', args=[trainer.username])
+        }
+        for trainer in trainers_group
+        if normalized_query in normalize_for_search(trainer.username)
+        or normalized_query in normalize_for_search(trainer.first_name)
+        or normalized_query in normalize_for_search(trainer.last_name)
+        or normalized_query in normalize_for_search(trainer.trainer_short_description or "")
+    ]
 
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         return JsonResponse({
@@ -470,4 +476,3 @@ def search(request):
         'services': services,
         'trainers': trainers,
     })
-

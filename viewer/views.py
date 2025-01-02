@@ -8,7 +8,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.models import Group
 from products.models import Product, Category
-from accounts.models import UserProfile, TrainersServices
+from accounts.models import UserProfile, TrainersServices, Address
 from datetime import datetime, timedelta
 from django.http import JsonResponse
 
@@ -379,10 +379,6 @@ def update_cart_ajax(request, product_id):
     print("Error JSON:", error_response)
     return JsonResponse(error_response)
 
-
-
-
-
 def user_profile_view(request, username):
     user = get_object_or_404(UserProfile, username=username)
     is_trainer = user.groups.filter(name='trainer').exists()
@@ -426,24 +422,24 @@ def search(request):
         {
             'id': product.id,
             'name': product.product_name,
-            'description': product.product_description,
+            'description': product.product_short_description,
             'url': reverse('product', args=[product.id])
         }
         for product in Product.objects.filter(product_type='merchantdise')
         if normalized_query in normalize_for_search(product.product_name)
-        or normalized_query in normalize_for_search(product.product_description or "")
+        or normalized_query in normalize_for_search(product.product_short_description or "")
     ]
 
     services = [
         {
             'id': service.id,
             'name': service.product_name,
-            'description': service.product_description,
+            'description': service.product_short_description,
             'url': reverse('service', args=[service.id])
         }
         for service in Product.objects.filter(product_type='service')
         if normalized_query in normalize_for_search(service.product_name)
-        or normalized_query in normalize_for_search(service.product_description or "")
+        or normalized_query in normalize_for_search(service.product_short_description or "")
     ]
 
     trainers_group = Group.objects.filter(name='trainer').first()
@@ -453,7 +449,7 @@ def search(request):
                 'name': f"{trainer.first_name} {trainer.last_name}",
                 'url': reverse('user_profile', args=[trainer.username])
             }
-            for trainer in UserProfile.objects.filter(groups__in=[trainers_group])
+            for trainer in UserProfile.objects.filter(groups=trainer, services__is_approved=True)
             if normalized_query in normalize_for_search(trainer.first_name)
             or normalized_query in normalize_for_search(trainer.last_name)
         ]

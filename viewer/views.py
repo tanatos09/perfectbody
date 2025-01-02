@@ -49,8 +49,8 @@ def translate_weather_description(description):
     return translations.get(description, description)
 
 def get_weather(city):
-    url = f"https://wttr.in/{city}?format=j1"
     try:
+        url = f"https://wttr.in/{city}?format=j1"
         response = requests.get(url)
         if response.status_code == 200:
             data = response.json()
@@ -61,8 +61,6 @@ def get_weather(city):
                 'description': translate_weather_description(current_condition['weatherDesc'][0]['value']),
                 'humidity': current_condition['humidity'],
             }
-        else:
-            print(f"Chyba API Wttr.in: {response.status_code}")
     except Exception as e:
         print(f"Chyba při získávání počasí: {e}")
     return None

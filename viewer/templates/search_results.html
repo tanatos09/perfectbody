@@ -23,17 +23,22 @@
 {% if services %}
     <ul>
         {% for service in services %}
-            <li>
-                <a href="{% url 'service' service.id %}">
-                    {{ service.product_name }}
-                </a>
-                - {{ service.product_description }}
-            </li>
+            {% if service.id %}
+                <li>
+                    <a href="{% url 'service' service.id %}">
+                        {{ service.name }}
+                    </a>
+                    - {{ service.description }}
+                </li>
+            {% else %}
+                <li>Neplatná služba</li>
+            {% endif %}
         {% endfor %}
     </ul>
 {% else %}
     <p>Žádné služby nebyly nalezeny.</p>
 {% endif %}
+
 
 <h2>Trenéři</h2>
 {% if trainers %}

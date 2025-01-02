@@ -1,6 +1,7 @@
 import json
 
 import requests
+from django.urls import reverse
 from unidecode import unidecode
 from django.contrib.auth.models import Group
 from django.shortcuts import render, get_object_or_404, redirect
@@ -26,6 +27,23 @@ def translate_weather_description(description):
         "Fog": "Mlha",
         "Clear": "Jasno",
         "Overcast": "Převážně zataženo",
+        "Light rain": "Slabý déšť",
+        "Heavy rain": "Silný déšť",
+        "Light snow": "Slabé sněžení",
+        "Heavy snow": "Silné sněžení",
+        "Showers": "Přeháňky",
+        "Drizzle": "Mrholení",
+        "Light drizzle": "Slabé mrholení",
+        "Heavy drizzle": "Silné mrholení",
+        "Hail": "Kroupy",
+        "Sleet": "Déšť se sněhem",
+        "Blizzard": "Vánice",
+        "Freezing rain": "Mrznoucí déšť",
+        "Windy": "Větrno",
+        "Breezy": "Mírný vítr",
+        "Gale": "Bouřlivý vítr",
+        "Hurricane": "Hurikán",
+        "Tornado": "Tornádo",
     }
     return translations.get(description, description)
 
@@ -254,7 +272,8 @@ def normalize_for_search(text):
 def search(request):
     query = request.GET.get('q', '').strip()
     if not query:
-        # Pokud není dotaz, zobrazíme prázdné výsledky
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({'success': True, 'results': []})
         return render(request, 'search_results.html', {
             'query': query,
             'products': [],
@@ -262,33 +281,55 @@ def search(request):
             'trainers': [],
         })
 
-    # Normalizace dotazu
     normalized_query = normalize_for_search(query)
 
-    # Hledání v produktech
     products = [
-        product for product in Product.objects.filter(product_type='merchantdise')
+        {
+            'id': product.id,
+            'name': product.product_name,
+            'description': product.product_description,
+            'url': reverse('product', args=[product.id])
+        }
+        for product in Product.objects.filter(product_type='merchantdise')
         if normalized_query in normalize_for_search(product.product_name)
         or normalized_query in normalize_for_search(product.product_description or "")
     ]
 
-    # Hledání ve službách
     services = [
-        service for service in Product.objects.filter(product_type='service')
+        {
+            'id': service.id,
+            'name': service.product_name,
+            'description': service.product_description,
+            'url': reverse('service', args=[service.id])
+        }
+        for service in Product.objects.filter(product_type='service')
         if normalized_query in normalize_for_search(service.product_name)
         or normalized_query in normalize_for_search(service.product_description or "")
     ]
 
-    # Hledání u trenérů
     trainers_group = Group.objects.filter(name='trainer').first()
     if trainers_group:
         trainers = [
-            trainer for trainer in UserProfile.objects.filter(groups__in=[trainers_group])
+            {
+                'name': f"{trainer.first_name} {trainer.last_name}",
+                'url': reverse('user_profile', args=[trainer.username])
+            }
+            for trainer in UserProfile.objects.filter(groups__in=[trainers_group])
             if normalized_query in normalize_for_search(trainer.first_name)
             or normalized_query in normalize_for_search(trainer.last_name)
         ]
     else:
         trainers = []
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({
+            'success': True,
+            'results': {
+                'products': products,
+                'services': services,
+                'trainers': trainers,
+            }
+        })
 
     return render(request, 'search_results.html', {
         'query': query,

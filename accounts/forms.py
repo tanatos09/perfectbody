@@ -108,7 +108,6 @@ class RegistrationForm(ModelForm):
                     )
         return user
 
-
 class TrainerRegistrationForm(RegistrationForm):
     trainer_short_description = CharField(
         max_length=1000,
@@ -142,6 +141,15 @@ class TrainerRegistrationForm(RegistrationForm):
     city = CharField(max_length=255, required=False, label="Město")
     postal_code = CharField(max_length=10, required=False, label="PSČ")
     country = CharField(max_length=255, required=False, label="Země", initial="Česká republika")
+
+    def clean_postal_code(self):
+        postal_code = self.cleaned_data.get('postal_code')
+        if postal_code:
+            if ' ' in postal_code:
+                raise ValidationError('PSČ nesmí obsahovat mezery')
+            if not postal_code.isdigit():
+                raise ValidationError('PSČ musí obsahovat pouze číslice')
+        return postal_code
 
     def clean(self):
         cleaned_data = super().clean()
@@ -223,6 +231,15 @@ class UserEditForm(UserChangeForm):
     class Meta:
         model = UserProfile
         fields = ['username', 'first_name', 'last_name', 'email', 'phone', 'avatar', 'preferred_channel']
+        labels = {
+            'username': 'Uživatelské jméno',
+            'first_name': 'Jméno',
+            'last_name': 'Příjmení',
+            'email': 'E-mail',
+            'phone': 'Telefon',
+            'avatar': 'Avatar',
+            'preferred_channel': 'Preferovaný komunikační kanál',
+        }
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -269,4 +286,17 @@ class PasswordChangeForm(Form):
         self.user.set_password(new_password)
         self.user.save()
 
-
+class AddressForm(ModelForm):
+    class Meta:
+        model = Address
+        fields = ['first_name', 'last_name', 'street', 'street_number', 'city', 'postal_code', 'country', 'email']
+        labels = {
+            'first_name': 'Jméno',
+            'last_name': 'Příjmení',
+            'street': 'Ulice',
+            'street_number': 'Číslo domu',
+            'city': 'Město',
+            'postal_code': 'PSČ',
+            'country': 'Země',
+            'email': 'E-mail',
+        }

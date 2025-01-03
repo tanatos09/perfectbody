@@ -32,14 +32,14 @@ class UserProfile(AbstractUser):
 class Address(Model):
 
     user = ForeignKey(AUTH_USER_MODEL, on_delete=SET_NULL, null=True, blank=True, related_name='addresses')
-    first_name = CharField(max_length=255)
-    last_name = CharField(max_length=255)
-    street = CharField(max_length=255)
-    street_number = CharField(max_length=255)
-    city = CharField(max_length=255)
-    postal_code = CharField(max_length=255)
-    country = CharField(max_length=255, default='Česká republika')
-    email = EmailField()
+    first_name = CharField(max_length=255, verbose_name='Jméno')
+    last_name = CharField(max_length=255, verbose_name='Příjmení')
+    street = CharField(max_length=255, verbose_name='Ulice')
+    street_number = CharField(max_length=255, verbose_name='Číslo domu')
+    city = CharField(max_length=255, verbose_name='Město')
+    postal_code = CharField(max_length=255, verbose_name='PSČ')
+    country = CharField(max_length=255, verbose_name='Země', default='Česká republika')
+    email = EmailField(verbose_name='E-mail')
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}, {self.street}, {self.street_number}, {self.city}, {self.country}, {self.postal_code}, {self.email}'

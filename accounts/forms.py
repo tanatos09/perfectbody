@@ -111,7 +111,7 @@ class RegistrationForm(ModelForm):
 
 class TrainerRegistrationForm(RegistrationForm):
     trainer_short_description = CharField(
-        max_length=500,
+        max_length=1000,
         required=True,
         widget=Textarea(attrs={'placeholder': "Úvodní představení se v seznamu trenérů (maximálně 500 znaků)."}),
         label='Představení trenéra'

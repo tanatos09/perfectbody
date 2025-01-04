@@ -175,7 +175,8 @@
     "pk": 1,
     "fields": {
       "producer_name": "GymPro",
-      "producer_description": "GymPro je synonymem pro špičkovou kvalitu v oblasti fitness vybavení. Zaměřujeme se na výrobu odolných, ergonomických a funkčních produktů, které splňují nejvyšší standardy. Naše činky, nakládací závaží a další fitness pomůcky jsou navrženy tak, aby podpořily vaše cvičení doma i v posilovně. GymPro je zde, aby vás posunulo blíže k vašim fitness cílům."
+      "producer_description": "GymPro je synonymem pro špičkovou kvalitu a inovaci ve světě fitness vybavení. Filosofie značky stojí na třech pilířích: odolnost, ergonomie a výkon. Naše produkty nejsou jen nástroje, ale partneři na vaší fitness cestě. Ať už jste začátečník nebo profesionální sportovec, naše činky, nakládací závaží a posilovací pomůcky jsou navrženy tak, aby odolaly každé výzvě. GymPro věří, že každý detail záleží – od precizního zpracování až po moderní design, který motivuje. Připojte se k tisícům spokojených zákazníků, kteří si díky GymPro nastavili nové fitness cíle a dosáhli jich.",
+      "producer_view": "https://i.ibb.co/YyG9yg0/GYMPRO.jpg"
     }
   },
   {
@@ -183,7 +184,8 @@
     "pk": 2,
     "fields": {
       "producer_name": "NutriFit",
-      "producer_description": "NutriFit je lídrem v oblasti sportovní výživy. Nabízíme širokou škálu proteinových prášků, multivitaminů a doplňků stravy, které vám pomohou dosáhnout maximálního výkonu. Naše produkty jsou vyvíjeny s důrazem na přírodní složení a optimální přínos pro zdraví a regeneraci. NutriFit je volba číslo jedna pro sportovce i všechny, kteří dbají na vyvážený životní styl."
+      "producer_description": "NutriFit je více než jen značka sportovní výživy – je to životní styl. Naše mise je jasná: pomáhat lidem zlepšit svůj výkon, regeneraci a celkové zdraví. Věříme, že síla přírody je klíčem k úspěchu, proto jsou všechny naše produkty vyvíjeny s maximálním ohledem na přirozené složení. Proteiny, aminokyseliny, multivitaminy a další doplňky jsou navrženy tak, aby podporovaly vaše tělo při těch nejnáročnějších výkonech. NutriFit je pro ty, kdo chtějí vyhrávat nejen na hřišti nebo v posilovně, ale i v každodenním životě. Zvolte NutriFit – volbu, která vás posune dál.",
+      "producer_view": "https://i.ibb.co/DwyRvgX/NUTRIFIT.jpg"
     }
   },
   {
@@ -191,7 +193,8 @@
     "pk": 3,
     "fields": {
       "producer_name": "ActiveWear",
-      "producer_description": "ActiveWear přináší styl, pohodlí a funkčnost do světa sportovní módy. Naše kolekce sportovního oblečení jsou vyrobeny z prodyšných, odolných a ekologicky šetrných materiálů, které vám zajistí pohodlí během každého tréninku. Díky modernímu designu a preciznímu zpracování je ActiveWear ideální volbou nejen pro fitness, ale i pro váš aktivní životní styl."
+      "producer_description": "ActiveWear je esencí stylu a funkčnosti pro aktivní životní styl. Naše značka je inspirována pohybem a svobodou, kterou přináší. Filosofie ActiveWear spočívá ve spojení technologie a estetiky. Každý kousek našeho oblečení je navržen tak, aby podporoval vaši výkonnost při sportu a zároveň se stal stylovým doplňkem vašeho každodenního života. Používáme ekologicky šetrné materiály a inovativní technologie, které vám zajistí pohodlí i během těch nejnáročnějších aktivit. S ActiveWear můžete být sami sebou – na tréninku, v parku i ve městě.",
+      "producer_view": "https://i.ibb.co/4pyC66K/ACTIVEWEAR.jpg"
     }
   },
   {
@@ -199,7 +202,8 @@
     "pk": 4,
     "fields": {
       "producer_name": "StrongTools",
-      "producer_description": "StrongTools je vaším spolehlivým partnerem pro profesionální fitness vybavení. Naše činky, závaží a další nástroje jsou navrženy s důrazem na trvanlivost, bezpečnost a výkon. Věříme, že kvalitní vybavení je klíčem k úspěchu na vaší fitness cestě. StrongTools je značka, na kterou se můžete spolehnout – doma i v posilovně."
+      "producer_description": "StrongTools je značka pro opravdové dříče, kteří věří, že kvalitní vybavení tvoří základ úspěchu. Vyrábíme činky, závaží, posilovací lavice a další pomůcky, které si oblíbili profesionálové i nadšenci do fitness. Naše produkty jsou synonymem odolnosti a bezpečnosti, protože víme, že na vaší cestě k silnějšímu já není prostor pro kompromisy. Každý nástroj je navržen s ohledem na maximální efektivitu tréninku. S StrongTools se můžete spolehnout, že vaše vybavení vás nikdy nezradí, ať už cvičíte doma nebo v posilovně.",
+      "producer_view": "https://i.ibb.co/HnZwMvq/STRONGTOOLS.jpg"
     }
   },
   {
@@ -207,7 +211,8 @@
     "pk": 5,
     "fields": {
       "producer_name": "HealthyLife",
-      "producer_description": "HealthyLife je zaměřen na zdraví a pohodu každého z nás. Nabízíme vysoce kvalitní rostlinné proteiny, multivitaminy a omega-3 doplňky, které jsou přizpůsobeny potřebám moderního člověka. Naše produkty jsou 100% přírodní, bez přidaných cukrů a umělých přísad, aby podpořily vaše zdraví a vitalitu. S HealthyLife budete žít zdravěji každý den."
+      "producer_description": "HealthyLife není jen značka – je to poslání měnit životy. Naše produkty jsou navrženy tak, aby podporovaly vaše zdraví přirozenou cestou. Zaměřujeme se na rostlinné proteiny, vysoce kvalitní multivitaminy, omega-3 doplňky a další produkty, které odpovídají potřebám moderního životního stylu. HealthyLife věří, že zdraví není jen o fyzické kondici, ale také o duševní pohodě a dlouhodobé vitalitě. Naše produkty neobsahují přidané cukry ani umělé přísady a jsou ideální pro každého, kdo chce zlepšit své zdraví bez kompromisů. S HealthyLife žijte plnější, aktivnější a šťastnější život.",
+      "producer_view": "https://i.ibb.co/LNDGHNF/HEALTHYLIFE.jpg"
     }
   },
     {

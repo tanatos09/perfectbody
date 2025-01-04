@@ -3,22 +3,42 @@
 {% block content %}
 
     <h1>{{ producer.producer_name }}</h1>
+
+    <!-- Zobrazení loga výrobce -->
+    {% if producer.producer_view %}
+        <div class="producer-logo">
+            <img src="{{ producer.producer_view }}" alt="Logo {{ producer.producer_name }}" style="max-width: 250px; height: auto;">
+        </div>
+    {% endif %}
+
     <p>{{ producer.producer_description }}</p>
 
     <h2>Produkty výrobce</h2>
-    {% for category, products in grouped_products.items %}
-        <h3>
-            <a href="{% url 'products' category.pk %}">
-                {{ category.category_name }}
-            </a>
-        </h3>
-        <ul>
-            {% for product in products %}
-                <li>
-                    <a href="{% url 'product' product.id %}">{{ product.product_name }}</a> - {{ product.price }} Kč
-                </li>
-            {% endfor %}
-        </ul>
-    {% endfor %}
+    {% if grouped_products %}
+        {% for category, products in grouped_products.items %}
+            <h3>
+                <a href="{% url 'products' category.pk %}">
+                    {{ category.category_name }}
+                </a>
+            </h3>
+            <ul>
+                {% for product in products %}
+                    <li>
+                        <a href="{% url 'product' product.id %}">{{ product.product_name }}</a> - {{ product.price }} Kč
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    {% else %}
+        <p style="color: red;">Žádné produkty nejsou k dispozici.</p>
+    {% endif %}
+
+    <!-- Seznam všech výrobců -->
+    <p>
+        <b>Výrobci:</b>
+        {% for producer_item in all_producers %}
+            <a href="{% url 'producer' producer_item.pk %}">{{ producer_item.producer_name }}</a>{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </p>
 
 {% endblock %}

@@ -146,11 +146,22 @@ def product(request, pk):
 def producer(request, pk):
     producer_detail = get_object_or_404(Producer, id=pk)
     products = Product.objects.filter(producer=producer_detail).select_related('category')
+
     # Skupinové seskupení produktů podle kategorií
     grouped_products = {}
     for category, items in groupby(products, key=attrgetter('category')):
         grouped_products[category] = list(items)
-    context = {'producer': producer_detail, 'grouped_products': grouped_products,}
+
+    # Získání všech výrobců pro seznam a odstranění mezer z názvů
+    all_producers = Producer.objects.all().order_by('producer_name')
+    for producer in all_producers:
+        producer.producer_name = producer.producer_name.strip()
+
+    context = {
+        'producer': producer_detail,
+        'grouped_products': grouped_products,
+        'all_producers': all_producers,  # Přidání seznamu všech výrobců
+    }
     return render(request, 'producer.html', context)
 
 def services(request, pk=None):

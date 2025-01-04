@@ -1,24 +1,71 @@
 {% extends "base.html" %}
 
 {% block content %}
+    {% if category is None %}
+        <!-- Zobrazení hlavních kategorií -->
+        <h1>Kategorie služeb</h1>
+        <ul>
+            {% for category in main_categories %}
+                <li>
+                    <a href="{% url 'services' category.pk %}">
+                        {{ category.category_name }}
+                    </a>
+                </li>
+            {% empty %}
+                <li>Žádné kategorie nejsou k dispozici.</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <!-- Zobrazení aktuální kategorie -->
+        <h1>{{ category.category_name }}</h1>
+        <p>{{ category.category_description }}</p>
 
-    <h1>Služby našich trenérů</h1>
-    <ul>
-        {% for service in services %}
-            <li>
-                <a href="{% url 'service' service.id %}">
-                    <h2>{{ service.product_name }}</h2>
-                </a> - {{ service.price }} Kč
-                <p>{{ service.product_short_description }}</p>
-                {% if service.has_approved_trainers %}
-                    <a href="{% url 'add_to_cart' service.id %}">➕ Přidat do košíku</a>
-                {% else %}
-                    <p style="color: red;">Nelze objednat</p>
-                {% endif %}
-            </li>
-        {% empty %}
-            <li>Služba není k dispozici.</li>
-        {% endfor %}
-    </ul>
+        {% if category.category_parent %}
+            <p>
+                <strong>Zpět na kategorii:</strong>
+                <a href="{% url 'services' category.category_parent.pk %}">
+                    {{ category.category_parent.category_name }}
+                </a>
+            </p>
+        {% endif %}
 
+        <!-- Podkategorie -->
+        {% if subcategories.exists %}
+            <h2>Podkategorie</h2>
+            <ul>
+                {% for subcategory in subcategories %}
+                    <li>
+                        <a href="{% url 'services' subcategory.pk %}">{{ subcategory.category_name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <!-- Služby -->
+        {% if services.exists %}
+            <h2>Služby</h2>
+            <ul>
+                {% for service in services %}
+                    <li>
+                        <a href="{% url 'service' service.pk %}">
+                            <h3>{{ service.product_name }}</h3>
+                        </a> - {{ service.price }} Kč
+                        <p>{{ service.product_short_description }}</p>
+
+                        <div>
+                            {% if service.has_approved_trainers %}
+                                <a href="{% url 'add_to_cart' service.pk %}">➕ Přidat do košíku</a>
+                            {% else %}
+                                <p style="color: red;">Nelze objednat</p>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if not subcategories.exists and not services.exists %}
+            <p style="color: red;">Žádné podkategorie ani služby nejsou k dispozici.</p>
+        {% endif %}
+    {% endif %}
 {% endblock %}

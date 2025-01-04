@@ -106,10 +106,35 @@ def get_name_day():
         print(f"Chyba při získávání jmenin: {e}")
         return "Chyba"
 
+def products(request, pk=None):
+    if pk is None:
+        # Načtení hlavních kategorií
+        main_categories = Category.objects.filter(
+            category_parent=None,  # Hlavní kategorie
+            subcategories__categories__product_type='merchantdise'  # Produkty v podkategoriích typu 'merchantdise'
+        ).distinct()
 
-def products(request):
-    products = Product.objects.filter(product_type='merchantdise').order_by('category__category_name', 'product_name')
-    return render(request, 'products.html', {'products': products})
+        context = {
+            'main_categories': main_categories,
+            'category': None,
+            'subcategories': None,
+            'products': None,
+        }
+    else:
+        # Načtení aktuální kategorie
+        category = get_object_or_404(Category, pk=pk)
+
+        # Načtení podkategorií a produktů
+        subcategories = category.subcategories.all()
+        products = Product.objects.filter(category=category, product_type='merchantdise')
+
+        context = {
+            'main_categories': None,
+            'category': category,
+            'subcategories': subcategories,
+            'products': products,
+        }
+    return render(request, 'products.html', context)
 
 def product(request, pk):
     if Product.objects.filter(id=pk):
@@ -128,11 +153,39 @@ def producer(request, pk):
     context = {'producer': producer_detail, 'grouped_products': grouped_products,}
     return render(request, 'producer.html', context)
 
-def services(request):
-    services = Product.objects.filter(product_type='service').order_by('category__category_name', 'product_name')
-    for service in services:
-        service.has_approved_trainers = TrainersServices.objects.filter(service=service, is_approved=True).exists()
-    return render(request, 'services.html', {"services": services})
+def services(request, pk=None):
+    if pk is None:
+        # Získání hlavních kategorií, které mají přes podkategorie služby typu 'service'
+        main_categories = Category.objects.filter(
+            category_parent=None,  # Hlavní kategorie
+            subcategories__categories__product_type='service'  # Služby v podkategoriích typu 'service'
+        ).distinct()
+
+        context = {
+            'main_categories': main_categories,
+            'category': None,
+            'subcategories': None,
+            'services': None,
+        }
+    else:
+        # Načtení aktuální kategorie
+        category = get_object_or_404(Category, pk=pk)
+
+        # Načtení podkategorií a služeb
+        subcategories = category.subcategories.all()
+        services = Product.objects.filter(category=category, product_type='service')
+
+        # Kontrola schválených trenérů pro každou službu
+        for service in services:
+            service.has_approved_trainers = TrainersServices.objects.filter(service=service, is_approved=True).exists()
+
+        context = {
+            'main_categories': None,
+            'category': category,
+            'subcategories': subcategories,
+            'services': services,
+        }
+    return render(request, 'services.html', context)
 
 def service(request, pk):
     # Find the service by primary key or return 404.
@@ -162,10 +215,33 @@ def trainer(request, pk):
     return render(request, "trainer.html", context)
 
 def category(request, pk):
-    category_detail = get_object_or_404(Category, id=pk)
-    products = Product.objects.filter(category=category_detail)
-    context = {'category': category_detail, 'products': products}
-    return render(request, 'category.html', context)
+    # Načtení aktuální kategorie
+    category = get_object_or_404(Category, pk=pk)
+
+    # Načtení podkategorií
+    subcategories = category.subcategories.all()
+
+    # Načtení produktů typu 'merchantdise'
+    products = Product.objects.filter(category=category, product_type='merchantdise')
+
+    # Načtení služeb typu 'service'
+    services = Product.objects.filter(category=category, product_type='service')
+
+    context = {
+        'category': category,
+        'subcategories': subcategories,
+        'products': products,
+        'services': services,
+    }
+
+    # Rozhodnutí, kterou šablonu vykreslit
+    if products.exists() or subcategories.exists():
+        return render(request, 'products.html', context)
+    elif services.exists():
+        return render(request, 'services.html', context)
+    else:
+        # Pokud kategorie nemá žádné podkategorie, produkty ani služby
+        return render(request, 'products.html', context)
 
 def add_to_cart(request, product_id):
     # Načtení košíku ze session

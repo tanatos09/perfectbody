@@ -19,6 +19,9 @@ class UserProfile(AbstractUser):
     created_at = DateTimeField(auto_now_add=True) # datum vytvoreni uctu
     account_type = CharField(max_length=15, choices=ACCOUNT_TYPES, default='registered')
 
+    class Meta:
+        ordering = ['first_name', 'last_name']
+
     def __str__(self):
         return f'{self.username} - {self.first_name} {self.last_name}'
 

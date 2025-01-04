@@ -1,25 +1,72 @@
 {% extends "base.html" %}
 
 {% block content %}
+    {% if category is None %}
+        <!-- Zobrazení hlavních kategorií -->
+        <h1>Kategorie produktů</h1>
+        <ul>
+            {% for category in main_categories %}
+                <li>
+                    <a href="{% url 'products' category.pk %}">
+                        {{ category.category_name }}
+                    </a>
+                </li>
+            {% empty %}
+                <li>Žádné kategorie nejsou k dispozici.</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <!-- Zobrazení aktuální kategorie -->
+        <h1>{{ category.category_name }}</h1>
+        <p>{{ category.category_description }}</p>
 
-    <h1>Seznam všech našich produktů</h1>
-    <ul>
-        {% for product in products %}
-            <li>
-                <a href="{% url 'product' product.id %}">
-                    <h2>{{ product.product_name }}</h2>
-                </a> - {{ product.price }} Kč
-                <p>{{ product.product_short_description }}</p>
-                {% if product.available_stock > 0 %}
-                    <p>Dostupné množství: {{ product.available_stock }} kusů</p>
-                    <a href="{% url 'add_to_cart' product.id %}">➕ Přidat do košíku</a>
-                {% else %}
-                    <p style="color: red;">Není skladem</p>
-                {% endif %}
-            </li>
-        {% empty %}
-            <li>Produkty nejsou k dispozici.</li>
-        {% endfor %}
-    </ul>
+        {% if category.category_parent %}
+            <p>
+                <strong>Zpět na kategorii:</strong>
+                <a href="{% url 'products' category.category_parent.pk %}">
+                    {{ category.category_parent.category_name }}
+                </a>
+            </p>
+        {% endif %}
 
+        <!-- Podkategorie -->
+        {% if subcategories.exists %}
+            <h2>Podkategorie</h2>
+            <ul>
+                {% for subcategory in subcategories %}
+                    <li>
+                        <a href="{% url 'products' subcategory.pk %}">{{ subcategory.category_name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <!-- Produkty -->
+        {% if products.exists %}
+            <h2>Produkty</h2>
+            <ul>
+                {% for product in products %}
+                    <li>
+                        <a href="{% url 'product' product.pk %}">
+                            <h3>{{ product.product_name }}</h3>
+                        </a> - {{ product.price }} Kč
+                        <p>{{ product.product_short_description }}</p>
+
+                        <div>
+                            {% if product.available_stock > 0 %}
+                                <p>Dostupné množství: {{ product.available_stock }} kusů</p>
+                                <a href="{% url 'add_to_cart' product.pk %}">➕ Přidat do košíku</a>
+                            {% else %}
+                                <p style="color: red;">Není skladem</p>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if not subcategories.exists and not products.exists %}
+            <p style="color: red;">Žádné podkategorie ani produkty nejsou k dispozici.</p>
+        {% endif %}
+    {% endif %}
 {% endblock %}

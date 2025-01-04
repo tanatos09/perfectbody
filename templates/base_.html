@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html
+    {% if LANGUAGE_CODE %}
+        lang="{{ LANGUAGE_CODE }}"
+    {% else %}
+        lang="cs"
+    {% endif %}
+>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PerfectBody</title>
+
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+
+<body>
+  <!-- Navbar -->
+    {% include "navbar.html" %}
+
+    <!-- Vyhledavani -->
+    <form method="get" action="{% url 'search' %}" id="search-form" style="position: absolute; left: 50%; transform: translate(-50%);">
+    <input type="text" name="q" id="search-input" placeholder="Hledat..." required>
+    <button type="submit">Vyhledat</button>
+    <div id="search-results" style="display: none;"></div>
+    </form>
+
+    <div id="search-results" style="position: absolute; top: 50px; left: 50%; transform: translate(-50%); background: white; border: 1px solid #ccc; width: 300px; display: none; z-index: 1000;">
+    </div>
+
+    <div class="container">
+
+        <!-- Zprávy -->
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <div class="jumbotron">
+
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    {% include "footer.html" %}
+
+    <!-- JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
+
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.trim();
+
+        if (query.length > 0) {
+            fetch(`/search?q=${encodeURIComponent(query)}`, {
+                method: 'GET',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    displayResults(data.results);
+                }
+            })
+            .catch(error => {
+                console.error('Chyba při vyhledávání:', error);
+            });
+        } else {
+            searchResults.style.display = 'none';
+        }
+    });
+
+    document.addEventListener('click', (event) => {
+        if (!searchInput.contains(event.target) && !searchResults.contains(event.target)) {
+            searchResults.style.display = 'none';
+        }
+    });
+
+    function displayResults(results) {
+        let html = '';
+
+        if (results.products.length > 0) {
+            html += '<h3>Produkty</h3><ul>';
+            results.products.forEach(product => {
+                html += `<li><a href="${product.url}">${product.name}</a> - ${product.description}</li>`;
+            });
+            html += '</ul>';
+        }
+
+        if (results.services.length > 0) {
+            html += '<h3>Služby</h3><ul>';
+            results.services.forEach(service => {
+                html += `<li><a href="${service.url}">${service.name}</a> - ${service.description}</li>`;
+            });
+            html += '</ul>';
+        }
+
+        if (results.trainers.length > 0) {
+            html += '<h3>Trenéři</h3><ul>';
+            results.trainers.forEach(trainer => {
+                html += `<li><a href="${trainer.url}">${trainer.name}</a></li>`;
+            });
+            html += '</ul>';
+        }
+
+        if (!html) {
+            html = '<p>Žádné výsledky.</p>';
+        }
+
+        searchResults.innerHTML = html;
+        searchResults.style.display = 'block';
+    }
+});
+</script>
+
+
+</body>
+
+</html>

@@ -1,14 +1,13 @@
-<nav class="navbar navbar-expand-sm bg-secondary navbar-dark align-items-start fixed-top">
+<nav class="navbar navbar-expand-sm d-flex align-items-start">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
             <img src="/static/images/PerfectBody_logo_b.png" alt="PerfectBody" style="height: 80px;">
         </a>
-        <!--tlačítko pro sbalení menu u menší obrazovky-->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu-up" aria-controls="menu-up" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="menu-up">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav me-auto mb-2 mb-sm-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Domů</a>
                 </li>
@@ -18,8 +17,8 @@
                         <li><a class="dropdown-item" href="#">Jídlo</a></li>
                         <li><a class="dropdown-item" href="#">Čínky</a></li>
                         <li><a class="dropdown-item" href="#">Skopičinky</a></li>
-
-                </li>          </ul>
+                    </ul>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link dropdown-toggle" id="dropdown02" data-bs-toggle="dropdown" aria-expanded="false" href="/services/">Služby</a>
                     <ul class="dropdown-menu" aria-labelledby="dropdown02">
@@ -29,12 +28,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link dropdown-toggle" id="dropdown03" data-bs-toggle="dropdown" aria-expanded="false"  href="/trainers/">Trenéři</a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdown03">
-                        <li><a class="dropdown-item" href="#">Trénink</a></li>
-                        <li><a class="dropdown-item" href="#">Online</a></li>
-                        <li><a class="dropdown-item" href="#">Videa</a></li>
-                    </ul>
+                    <a class="nav-link" href="/trainers/">Trenéři</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/login/">Přihlásit se</a>

@@ -54,5 +54,6 @@ urlpatterns = [
     path('detail/<int:order_id>/', order_detail, name='order_detail'),
     path('orders/cancel/<int:order_id>/', cancel_order, name='cancel_order'),
     path('search/', search, name='search'),
-path('cart/complete/', complete_order, name='complete_order'),
+    path('cart/complete/', complete_order, name='complete_order'),
+
 ]

@@ -1,22 +1,39 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #bdbdbd;
-    color: #212529;
+body {font-family:Arial, sans-serif;
+    background-image: url('/static/images/mw_background.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     margin: 0;
     padding: 0;
-    line-height: 1.6;
+
+}
+.bg-image {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
 .navbar {
-    background-color: #3788ff;
-    color: white;
+    background: #1e1c1c;
     padding: 0.5rem 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
 }
+.bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
 
+@media (min-width: 768px) {
+.bd-placeholder-img-lg {
+  font-size: 3.5rem;
+}
+}
 .navbar-container {
     display: flex;
     width: 100%;
@@ -31,66 +48,81 @@ body {
 }
 
 .navbar-brand:hover {
-    color: #0066ff;
+    color: #eca727;
 }
 
 .navbar-links {
-    display: flex;
-    gap: 1rem;
+
 }
 
 .nav-link {
-    color: #000000;
-    text-decoration: none;
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
+
 }
 
 .nav-link:hover {
-    background-color: #609fff;
+    background-color: #d1ba5e;
 }
 
-.nav-link.active {
-    background-color: #0065ff;
-    color: #ffffff;
+.nav-link:active {
+    background-color: #d15e7d;
+
     font-weight: bold;
 }
 
 /* === Footer === */
+
 .footer {
-    background-color: #3788ff;
-    color: white;
+    background-color: #f8f9fa !important; /* Světle šedá barva */
+    color: #6c757d; /* Šedé písmo */
     text-align: center;
-    padding: 1rem 0;
-    font-size: 0.9rem;
-    margin-top: 2rem;
+    padding: 20px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer a {
+    color: #6c757d; /* Šedé odkazy */
+    background-color: #ffffff; /* Bílé podbarvení odkazů */
+    padding: 5px; border-radius: 5px; text-decoration: none;
+}
+.footer a:hover {
+    color: #ffffff; /* Bílé písmo při najetí myší */
+    background-color: #6c757d; /* Šedé podbarvení při najetí myší */
 }
 
 
-.jumbotron {
-    padding: 2rem;
-    background-color: #ffffff;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    margin-bottom: 2rem;
-}
 
-.jumbotron h1 {
-    margin-bottom: 1rem;
-    font-size: 2.5rem;
-    color: #343a40;
-}
+#menu-left {
+    background: #d1ba5e;
 
-.jumbotron p {
-    margin-bottom: 1.5rem;
-    color: #6c757d;
 }
 
 
 .container {
+    background: #ffffff;
     width: 90%;
     max-width: 1200px;
     margin: 2rem auto;
 }
+
+/* styles menu css */
+
+
+     /* Styl pro vyhledavač */
+    #search-results {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: white;
+        border: 1px solid #ccc;
+        z-index: 1000;
+        max-height: 300px;
+        overflow-y: auto;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    #search-form {
+        position: relative;
+    }
+

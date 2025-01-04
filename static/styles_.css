@@ -1,0 +1,185 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgba(243, 203, 154, 0.9);
+    background-image:url("/static/images/mw_background.jpg");
+    height: 500px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    color: #212529;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+.body-image{
+    background-image:url("/static/images/mw_background.jpg");
+
+
+}
+.navbar {
+    background-color: #9c8571;
+    color: white;
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.navbar-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    color: #000000;
+    text-decoration: none;
+}
+
+.navbar-brand:hover {
+    color: #eca727;
+}
+
+.navbar-links {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    gap: 1rem;
+}
+
+.nav-link {
+    color: #ffffff;
+    text-decoration: none;
+    text-align: center;
+
+    font-size: 1rem;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.nav-link:hover {
+    background-color: #d1ba5e;
+}
+
+.nav-link:active {
+    background-color: #d15e7d;
+
+    font-weight: bold;
+}
+
+/* === Footer === */
+.footer {
+    background-color: #9c8571;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+}
+
+
+.jumbotron {
+    width: 75%;
+    float: right;
+    order: 2;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    margin-bottom: 2rem;
+}
+
+.jumbotron h1 {
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    color: #343a40;
+}
+
+.jumbotron p {
+    margin-bottom: 1.5rem;
+    color: #6c757d;
+}
+
+.page-main {
+    box-sizing: border-box;
+    margin: auto;
+    max-width: 1440px;
+    padding-left: 20px;
+    padding-right: 20px;
+    flex-grow: 1;
+    position: relative;
+    display: block;
+
+}
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 2rem auto;
+}
+
+/* styles menu css */
+
+@media (min-width: 768px), print {
+.sidebar-navigation {
+    display: block;
+    float: left;
+    background-color: #ececec;
+    padding: 12px;
+}
+}
+
+
+.menu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    background-color: #333;
+}
+
+.menu > li {
+    display: inline-block;
+    position: relative;
+}
+
+.menu > li > a {
+    display: block;
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+}
+.menu > li > a:hover {
+    background-color: #111;
+}
+
+.submenu {
+    display: none;
+    position: absolute; top: 100%; left: 0;
+    list-style-type: none;
+    padding: 0; margin: 0;
+    background-color: #333;
+}
+.submenu > li > a { display: block;
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+}
+
+.submenu > li > a:hover {
+    background-color: #111;
+}
+
+.menu > li:hover .submenu {
+    display: block;
+}

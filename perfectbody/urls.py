@@ -21,7 +21,7 @@ from accounts.forms import TrainerBasicForm, TrainerServicesForm, TrainerDescrip
     TrainerProfileDescriptionForm
 from orders.views import start_order, order_summary, confirm_order, thank_you, my_orders, order_detail, cancel_order
 
-from accounts.views import edit_profile, profile_view, change_password, trainer_register, register, login_view, \
+from accounts.views import edit_profile, profile_view, change_password, register, login_view, \
     logout_view, TrainerRegistrationWizard, registration_success
 from viewer.views import view_cart, add_to_cart, remove_from_cart, update_cart, home, products, product, services, \
     service, trainers, trainer, category,complete_order, user_profile_view, search, update_cart_ajax
@@ -47,7 +47,6 @@ urlpatterns = [
     # path('cart/update/<int:product_id>/', update_cart, name='update_cart'),
     path('cart/update/<int:product_id>/', update_cart_ajax, name='update_cart_ajax'),
     path('change_password/', change_password, name='change_password'),
-    # path('trainer_register/', trainer_register, name='trainer_register'),
     path('user/<str:username>/', user_profile_view, name='user_profile'),
     path('start/',start_order, name='start_order'),
     path('summary/', order_summary, name='order_summary'),

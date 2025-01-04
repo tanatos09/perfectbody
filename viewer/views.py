@@ -421,6 +421,7 @@ def search(request):
 
     normalized_query = normalize_for_search(query)
 
+    # Vyhledávání produktů
     products = [
         {
             'id': product.id,
@@ -433,6 +434,7 @@ def search(request):
         or normalized_query in normalize_for_search(product.product_short_description or "")
     ]
 
+    # Vyhledávání služeb
     services = [
         {
             'id': service.id,
@@ -445,19 +447,26 @@ def search(request):
         or normalized_query in normalize_for_search(service.product_short_description or "")
     ]
 
-    trainers_group = UserProfile.objects.filter(groups__name='trainer')
-    trainers = [
+    # Vyhledávání trenérů se schválenými službami
+    trainers = UserProfile.objects.filter(
+        groups__name='trainer',
+        services__is_approved=True
+    ).distinct()
+
+    filtered_trainers = [
         {
             'username': trainer.username,
             'name': f"{trainer.first_name} {trainer.last_name}",
             'description': trainer.trainer_short_description,
             'url': reverse('user_profile', args=[trainer.username])
         }
-        for trainer in trainers_group
-        if normalized_query in normalize_for_search(trainer.username)
-        or normalized_query in normalize_for_search(trainer.first_name)
-        or normalized_query in normalize_for_search(trainer.last_name)
-        or normalized_query in normalize_for_search(trainer.trainer_short_description or "")
+        for trainer in trainers
+        if (
+            normalized_query in normalize_for_search(trainer.username)
+            or normalized_query in normalize_for_search(trainer.first_name)
+            or normalized_query in normalize_for_search(trainer.last_name)
+            or normalized_query in normalize_for_search(trainer.trainer_short_description or "")
+        )
     ]
 
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
@@ -466,7 +475,7 @@ def search(request):
             'results': {
                 'products': products,
                 'services': services,
-                'trainers': trainers,
+                'trainers': filtered_trainers,
             }
         })
 
@@ -474,5 +483,5 @@ def search(request):
         'query': query,
         'products': products,
         'services': services,
-        'trainers': trainers,
+        'trainers': filtered_trainers,
     })

@@ -3,6 +3,7 @@ import logging
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
 from django.contrib.messages import get_messages
 from django.db import IntegrityError
 from django.forms import modelformset_factory, modelform_factory
@@ -16,54 +17,6 @@ from accounts.forms import RegistrationForm, LoginForm, UserEditForm, PasswordCh
 from accounts.models import Address, UserProfile, TrainersServices
 
 logger = logging.getLogger(__name__)
-
-def clear_messages(request: HttpRequest):
-    storage = get_messages(request)
-    for _ in storage:
-        pass
-
-def register(request: HttpRequest) -> HttpResponse:
-    clear_messages(request)
-
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            try:
-                form.save()
-                messages.success(request, "Registrace proběhla úspěšně. Nyní se můžete přihlásit.")
-                return redirect('login')
-            except Exception as e:
-                logger.error(f"Neočekávaná chyba při registraci: {e}", exc_info=True)
-                messages.error(request, "Došlo k neočekávané chybě. Zkuste to znovu.")
-        else:
-            messages.warning(request, "Údaje nejsou platné. Zkontrolujte a zkuste znovu.")
-    else:
-        form = RegistrationForm()
-
-    return render(request, 'register.html', {"form": form})
-
-
-def trainer_register(request: HttpRequest) -> HttpResponse:
-    if request.method == 'POST':
-        form = TrainerRegistrationForm(request.POST)
-        if form.is_valid():
-            try:
-                form.save()
-                messages.success(request, "Registrace trenéra proběhla úspěšně. "
-                                          "Žádost vyhodnotí administrátor v nejbližším možném termínu. "
-                                          "O stavu schválení budete vyrozuměn/a e-mailovou notifikací.")
-                return redirect('home') # Redirect to the homepage.
-            except Exception as e:
-                logger.error(f"Neočekávaná chyba při registraci trenéra: {e}", exc_info=True)
-                messages.error(request, "Došlo k neočekávané chybě. Zkuste to prosím znovu.")
-        else:
-            messages.warning(request, "Údaje nejsou platné. Zkontrolujte a zkuste znovu.")
-    else:
-        form = TrainerRegistrationForm()
-    return render(request, 'trainer_register.html', {'form': form})
-
-def registration_success(request):
-    return render(request, 'registration_success.html')
 
 class TrainerRegistrationWizard(SessionWizardView):
     template_name = "trainer_register.html"
@@ -94,31 +47,58 @@ class TrainerRegistrationWizard(SessionWizardView):
             email=forms[0]['email'],
             phone=forms[0]['phone'],
             date_of_birth=forms[0]['date_of_birth'],
-            trainer_short_description=forms[3]['trainer_short_description'],
-            trainer_long_description=forms[3]['trainer_long_description']
+            trainer_short_description=forms[3]['trainer_short_description'],  # Použití správného indexu
+            trainer_long_description=forms[3]['trainer_long_description']  # Použití správného indexu
         )
         user.set_password(forms[0]['password'])
         user.save()
 
+        # Přiřazení do skupiny `trainer`
+        trainer_group, _ = Group.objects.get_or_create(name='trainer')
+        user.groups.add(trainer_group)
+
+        # Uložení schválených služeb
         selected_services = forms[1]['services']
-        descriptions = forms[2]
+        descriptions = forms[2]  # Popisy služeb jsou v kroku 3
         for service in selected_services:
             description_key = f'description_{service.id}'
             TrainersServices.objects.create(
                 trainer=user,
                 service=service,
-                trainers_service_description=descriptions[description_key]
+                trainers_service_description=descriptions[description_key],
+                is_approved=False
             )
 
-        if any(forms[4].values()):
-            Address.objects.create(
-                user=user,
-                **forms[4]
-            )
-
+        # Přesměrování na stránku úspěšné registrace
         return redirect('registration_success')
 
+def registration_success(request):
+    return render(request, 'registration_success.html')
 
+def clear_messages(request: HttpRequest):
+    storage = get_messages(request)
+    for _ in storage:
+        pass
+
+def register(request: HttpRequest) -> HttpResponse:
+    clear_messages(request)
+
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                messages.success(request, "Registrace proběhla úspěšně. Nyní se můžete přihlásit.")
+                return redirect('login')
+            except Exception as e:
+                logger.error(f"Neočekávaná chyba při registraci: {e}", exc_info=True)
+                messages.error(request, "Došlo k neočekávané chybě. Zkuste to znovu.")
+        else:
+            messages.warning(request, "Údaje nejsou platné. Zkontrolujte a zkuste znovu.")
+    else:
+        form = RegistrationForm()
+
+    return render(request, 'register.html', {"form": form})
 
 def login_view(request: HttpRequest) -> HttpResponse:
     clear_messages(request)

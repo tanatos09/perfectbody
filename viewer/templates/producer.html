@@ -5,9 +5,13 @@
     <h1>{{ producer.producer_name }}</h1>
     <p>{{ producer.producer_description }}</p>
 
-    <h2>Produkty výrobce {{ producer.producer_name }}</h2>
+    <h2>Produkty výrobce</h2>
     {% for category, products in grouped_products.items %}
-        <h3>{{ category.category_name }}</h3>
+        <h3>
+            <a href="{% url 'products' category.pk %}">
+                {{ category.category_name }}
+            </a>
+        </h3>
         <ul>
             {% for product in products %}
                 <li>

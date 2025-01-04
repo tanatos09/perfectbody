@@ -19,20 +19,22 @@ from django.urls import path
 
 from orders.views import start_order, order_summary, confirm_order, thank_you, my_orders, order_detail, cancel_order
 
-from accounts.views import edit_profile, profile_view, change_password, trainer_register, register, login_view, logout_view
-from viewer.views import view_cart, add_to_cart, remove_from_cart, update_cart, home, products, product, services, \
-    service, trainers, trainer, category,complete_order, user_profile_view, search, update_cart_ajax
+from accounts.views import edit_profile, profile_view, change_password, trainer_register, register, login_view, \
+    logout_view
+from viewer.views import view_cart, add_to_cart, remove_from_cart, update_cart, home, products, product, producer, \
+    services, service, trainers, trainer, category, complete_order, user_profile_view, search, update_cart_ajax
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
     path('products/', products, name='products'),
     path('product/<pk>', product, name='product'),
+    path('producer/<pk>', producer, name='producer'),
     path('services/', services, name='services'),
     path('service/<pk>', service, name='service'),
     path('trainers/', trainers, name='trainers'),
     path('trainer/<pk>', trainer, name='trainer'),
-    path('category/<int:category_id>', category, name='category'),
+    path('category/<pk>', category, name='category'),
     path('register/', register, name='register'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
@@ -46,7 +48,7 @@ urlpatterns = [
     path('change_password/', change_password, name='change_password'),
     path('trainer_register', trainer_register, name='trainer_register'),
     path('user/<str:username>/', user_profile_view, name='user_profile'),
-    path('start/',start_order, name='start_order'),
+    path('start/', start_order, name='start_order'),
     path('summary/', order_summary, name='order_summary'),
     path('confirm/', confirm_order, name='confirm_order'),
     path('thank-you/<int:order_id>/', thank_you, name='thank_you'),
@@ -54,5 +56,5 @@ urlpatterns = [
     path('detail/<int:order_id>/', order_detail, name='order_detail'),
     path('orders/cancel/<int:order_id>/', cancel_order, name='cancel_order'),
     path('search/', search, name='search'),
-path('cart/complete/', complete_order, name='complete_order'),
+    path('cart/complete/', complete_order, name='complete_order'),
 ]

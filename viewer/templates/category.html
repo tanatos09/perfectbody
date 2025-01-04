@@ -6,7 +6,7 @@
 
     {% if category.category_parent %}
         <p><strong>Tato kategorie spadá pod hlavní kategorii:</strong>
-            <a href="{% url 'category' category.category_parent.id %}">{{ category.category_parent.category_name }}</a>
+            <a href="{% url 'category' category.category_parent.pk %}">{{ category.category_parent.category_name }}</a>
         </p>
     {% endif %}
 
@@ -14,7 +14,7 @@
     <ul>
         {% for product in products %}
             <li>
-                <a href="{% url 'product' product.id %}">{{ product.product_name }}</a>
+                <a href="{% url 'product' product.pk %}">{{ product.product_name }}</a>
             </li>
         {% endfor %}
     </ul>

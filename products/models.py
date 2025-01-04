@@ -50,11 +50,10 @@ class Product(Model):
     product_view = URLField(null=True, blank=True)
     category = ForeignKey(Category, default=0, on_delete=SET_DEFAULT, null=False, blank=False, related_name='categories')
     price = DecimalField(max_digits=10, decimal_places=2, null=False, blank=False)
-    # Producer is filled only for merchantdise product_type.
+    # Producer exists only for merchantdise product_type.
     producer = ForeignKey(Producer, default=0, on_delete=SET_DEFAULT, null=True, blank=True, related_name='producers')
-    # A value for stock_availability and reserved_stock will always be a number (never NULL).
+    # A value will always be a number (never NULL).
     stock_availability = PositiveIntegerField(default=0, null=False, blank=True)
-    reserved_stock = PositiveIntegerField(default=0, null=False, blank=True)
 
     class Meta:
         ordering = ['product_name']
@@ -66,9 +65,7 @@ class Product(Model):
         return f"{self.product_name} ({self.price} Kč)"
 
     def available_stock(self):
-        if self.product_type == 'service':
-            return float('inf') # Services are available indefinitely if they have at least one trainer assigned.
-        return max(self.stock_availability - self.reserved_stock, 0)
+        return max(self.stock_availability, 0)
 
 
 class ProductReview(Model):

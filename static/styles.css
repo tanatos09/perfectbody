@@ -7,14 +7,31 @@ body {font-family:Arial, sans-serif;
     padding: 0;
 
 }
-.bg-image {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
+
+.navbar-brand {
+    margin: 0;
+    padding: 0;
+}
+
+.form-inline {
+    display: flex;
+    align-items: center;
+}
+
+.form-control {
+    margin-right: 10px;
+}
+
+.nav-link {
+    margin-left: 10px;
+}
+.nav-link svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor; /* Použije barvu textu */
 }
 
 .navbar {
-    background: #1e1c1c;
     padding: 0.5rem 1rem;
     display: flex;
     justify-content: space-between;
@@ -41,11 +58,7 @@ body {font-family:Arial, sans-serif;
     align-items: center;
 }
 
-.navbar-brand {
-    font-size: 1.5rem;
-    color: #000000;
-    text-decoration: none;
-}
+
 
 .navbar-brand:hover {
     color: #eca727;

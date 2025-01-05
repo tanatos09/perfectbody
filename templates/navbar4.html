@@ -1,25 +1,41 @@
-<nav class="navbar navbar-expand-sm d-flex align-items-start">
+{% load static %}
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">
-            <img src="/static/images/PerfectBody_logo_b.png" alt="PerfectBody" style="height: 80px;">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu-up" aria-controls="menu-up" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="menu-up">
-            <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Domů</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false" href="/products/">Produkty</a>
                     <ul class="dropdown-menu" aria-labelledby="dropdown01">
-                        <li><a class="dropdown-item" href="#">Jídlo</a></li>
-                        <li><a class="dropdown-item" href="#">Čínky</a></li>
-                        <li><a class="dropdown-item" href="#">Skopičinky</a></li>
+                        {% for category in categories %}
+                            <li class="dropdown-item dropdown">
+                                <a class="dropdown-toggle" id="dropdown{{ forloop.counter }}" data-bs-toggle="dropdown" aria-expanded="false" href="#">{{ category.category_name }}</a>
+                                {% if category.subcategories.all %}
+                                    <ul class="dropdown-menu" aria-labelledby="dropdown{{ forloop.counter }}">
+                                        {% for subcategory in category.subcategories.all %}
+                                            <li class="dropdown-item dropdown">
+                                                <a class="dropdown-toggle" id="dropdown{{ forloop.parentloop.counter }}-{{ forloop.counter }}" data-bs-toggle="dropdown" aria-expanded="false" href="#">{{ subcategory.category_name }}</a>
+                                                {% if subcategory.subcategories.all %}
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdown{{ forloop.parentloop.counter }}-{{ forloop.counter }}">
+                                                        {% for subsubcategory in subcategory.subcategories.all %}
+                                                            <li class="dropdown-item">{{ subsubcategory.category_name }}</li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                {% endif %}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
                     </ul>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="dropdown02" data-bs-toggle="dropdown" aria-expanded="false" href="/services/">Služby</a>
                     <ul class="dropdown-menu" aria-labelledby="dropdown02">
                         <li><a class="dropdown-item" href="#">Link 1</a></li>
@@ -27,23 +43,15 @@
                         <li><a class="dropdown-item" href="#">Link 3</a></li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/trainers/">Trenéři</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/login/">Přihlásit se</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/register/">Registrovat</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/cart/">🛒</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="dropdown03" data-bs-toggle="dropdown" aria-expanded="false" href="/trainers/">Trenéři</a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdown03">
+                        <li><a class="dropdown-item" href="#">Trénink</a></li>
+                        <li><a class="dropdown-item" href="#">Online</a></li>
+                        <li><a class="dropdown-item" href="#">Videa</a></li>
+                    </ul>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Vyhledávání" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Hledat</button>
-            </form>
         </div>
     </div>
 </nav>

@@ -44,6 +44,9 @@ class Address(Model):
     country = CharField(max_length=255, verbose_name='Země', default='Česká republika')
     email = EmailField(verbose_name='E-mail')
 
+    class Meta:
+        verbose_name_plural = "addresses"
+
     def __str__(self):
         return f'{self.first_name} {self.last_name}, {self.street}, {self.street_number}, {self.city}, {self.country}, {self.postal_code}, {self.email}'
 
@@ -55,7 +58,7 @@ class TrainersServices(Model):
     trainer = ForeignKey(UserProfile, on_delete=CASCADE, related_name="services")
     service = ForeignKey("products.Product", on_delete=CASCADE, related_name="trainers")
     trainers_service_description = TextField(blank=False, null=False)
-    # The trainer has to be approved by an employee before including in the trainer list.
+    # The trainer has to be approved by an employee before including to the trainer list.
     is_approved = BooleanField(default=False)
 
     class Meta:

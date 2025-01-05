@@ -65,9 +65,21 @@
             <ul>
                 {% for product in products %}
                     <li>
-                        <a href="{% url 'product' product.pk %}">{{ product.product_name }}</a> - {{ product.price }} Kč
+                        <a href="{% url 'product' product.pk %}">
+                             <h3>{{ product.product_name }}</h3>
+                        </a> - {{ product.price }} Kč
                         <p>{{ product.product_short_description }}</p>
+
+                        <div>
+                            {% if product.available_stock > 0 %}
+                                <p>Dostupné množství: {{ product.available_stock }} kusů</p>
+                                <a href="{% url 'add_to_cart' product.pk %}">➕ Přidat do košíku</a>
+                            {% else %}
+                                <p style="color: red;">Nelze objednat</p>
+                            {% endif %}
+                        </div>
                     </li>
+
                 {% endfor %}
             </ul>
         {% endif %}

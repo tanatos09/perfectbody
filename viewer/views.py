@@ -224,7 +224,8 @@ def service(request, pk):
     # Find the service by primary key or return 404.
     service_detail = get_object_or_404(Product, id=pk)
     # Getting approved trainers for that service.
-    approved_trainers_services = TrainersServices.objects.filter(service=service_detail, is_approved=True).select_related('trainer')
+    approved_trainers_services = TrainersServices.objects.filter(service=service_detail,
+                                                                 is_approved=True).select_related('trainer')
     approved_trainers = [ts.trainer for ts in approved_trainers_services]
     context = {'service': service_detail, 'approved_trainers': approved_trainers}
     return render(request, "service.html", context)
@@ -235,14 +236,15 @@ def trainers(request):
         # Checking whether the user from trainer group has at least one approved service.
         approved_trainers = UserProfile.objects.filter(groups=trainer_group, services__is_approved=True).distinct()
     else:
-        approved_trainers = [] # If the group does not exist, the list will be empty.
+        approved_trainers = []  # If the group does not exist, the list will be empty.
     return render(request, 'trainers.html', {'approved_trainers': approved_trainers})
 
 def trainer(request, pk):
     # Find the trainer by primary key or return 404.
     trainer_detail = get_object_or_404(UserProfile, id=pk)
     # Get approved trainer services.
-    approved_services = TrainersServices.objects.filter(trainer=trainer_detail, is_approved=True).select_related('service')
+    approved_services = TrainersServices.objects.filter(trainer=trainer_detail, is_approved=True).select_related(
+        'service')
     # Forward approved services only.
     context = {'trainer': trainer_detail, 'approved_services': approved_services}
     return render(request, "trainer.html", context)
@@ -456,7 +458,7 @@ def search(request):
         }
         for product in Product.objects.filter(product_type='merchantdise')
         if normalized_query in normalize_for_search(product.product_name)
-        or normalized_query in normalize_for_search(product.product_short_description or "")
+           or normalized_query in normalize_for_search(product.product_short_description or "")
     ]
 
     services = [
@@ -468,7 +470,7 @@ def search(request):
         }
         for service in Product.objects.filter(product_type='service')
         if normalized_query in normalize_for_search(service.product_name)
-        or normalized_query in normalize_for_search(service.product_short_description or "")
+           or normalized_query in normalize_for_search(service.product_short_description or "")
     ]
 
     trainers_group = Group.objects.filter(name='trainer').first()
@@ -480,7 +482,7 @@ def search(request):
             }
             for trainer in UserProfile.objects.filter(groups=trainer, services__is_approved=True)
             if normalized_query in normalize_for_search(trainer.first_name)
-            or normalized_query in normalize_for_search(trainer.last_name)
+               or normalized_query in normalize_for_search(trainer.last_name)
         ]
     else:
         trainers = []

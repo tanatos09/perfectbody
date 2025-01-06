@@ -105,7 +105,7 @@
     "fields": {
       "category_name": "Sportovní oblečení",
       "category_description": "Stylové a funkční sportovní kousky, které spojují pohodlí s nejnovějšími trendy. Ideální pro trénink i volný čas. Naše kolekce zahrnuje technicky propracované materiály, které odvádějí vlhkost, zajišťují volnost pohybu a podporují vaše sportovní výkony.",
-      "category_view": "https://i.ibb.co/MkB482B/SPORTOVNIOBLECENI.jpg",
+      "category_view": "https://i.ibb.co/s1v6s5b/SPORTOVNIOBLECENI.jpg",
       "category_parent": null
     }
   },
@@ -145,7 +145,7 @@
     "fields": {
       "category_name": "Obuv",
       "category_description": "Sportovní obuv, která zajistí podporu a komfort během každé aktivity. Vyberte si z bot na fitness, běh nebo jiné sporty. Nabízíme modely s vysokou odolností, perfektním tlumením a optimálním odvodem vlhkosti.",
-      "category_view": "https://i.ibb.co/8YC8PTy/OBUV.jpg",
+      "category_view": "https://i.ibb.co/LQyRhdK/OBUV.jpg",
       "category_parent": 11
     }
   },
@@ -391,7 +391,7 @@
       "product_name": "Vinyasa jóga",
       "product_short_description": "Dynamická jóga s plynulými přechody pro flexibilitu a posílení těla.",
       "product_long_description": "Vinyasa jóga je jedinečný a dynamický styl jógy, který propojuje jednotlivé pozice plynulými přechody synchronizovanými s vaším dechem. Tento kurz je navržen pro zlepšení flexibility, síly a celkové koordinace těla, a zároveň poskytuje uvolnění od stresu. Při lekcích se zaměříte na plynulý pohyb, který harmonizuje tělo i mysl. Kurz je vhodný pro všechny úrovně od začátečníků po pokročilé a přináší komplexní fyzický i mentální trénink. Vinyasa jóga vám pomůže objevit nové možnosti vašeho těla a navodí pozitivní energii a vnitřní klid.",
-      "product_view": "https://i.ibb.co/3szKvTM/VINYASAJOGA.jpg",
+      "product_view": "https://i.ibb.co/1ZMXP1m/VINYASAJOGA.jpg",
       "price": 599.00,
       "category": 18,
       "producer": null,

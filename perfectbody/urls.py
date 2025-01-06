@@ -24,7 +24,7 @@ from orders.views import start_order, order_summary, confirm_order, thank_you, m
 from accounts.views import edit_profile, profile_view, change_password, register, login_view, \
     logout_view, TrainerRegistrationWizard, registration_success
 from viewer.views import view_cart, add_to_cart, remove_from_cart, update_cart, home, products, product, services, \
-    service, trainers, trainer, category,complete_order, user_profile_view, search, update_cart_ajax
+    service, trainers, trainer,complete_order, user_profile_view, search, update_cart_ajax
 from accounts.views import edit_profile, profile_view, change_password, register, login_view, \
     logout_view
 from viewer.views import view_cart, add_to_cart, remove_from_cart, update_cart, home, products, product, producer, \
@@ -42,7 +42,6 @@ urlpatterns = [
     path('service/<pk>', service, name='service'),
     path('trainers/', trainers, name='trainers'),
     path('trainer/<pk>', trainer, name='trainer'),
-    path('category/<int:category_id>', category, name='category'),
     path('register/', register, name='register'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),

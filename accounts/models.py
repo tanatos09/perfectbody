@@ -13,11 +13,15 @@ class UserProfile(AbstractUser):
     avatar = URLField(blank=True, null=True)  # url avataru
     phone = CharField(max_length=15, blank=True, null=True)  # telefon
     preferred_channel = CharField(max_length=10, choices=PREFERRED_CHANNEL, default='EMAIL')  # prefer. kom. kanal, vyber z PREFERRED_CHANNEL
+    profile_picture = URLField(null=True, blank=True)
     trainer_short_description = TextField(blank=True, null=True)
     trainer_long_description = TextField(blank=True, null=True)
     date_of_birth = DateField(blank=True, null=True)
     created_at = DateTimeField(auto_now_add=True) # datum vytvoreni uctu
     account_type = CharField(max_length=15, choices=ACCOUNT_TYPES, default='registered')
+
+    class Meta:
+        ordering = ['first_name', 'last_name']
 
     def __str__(self):
         return f'{self.username} - {self.first_name} {self.last_name}'
@@ -41,6 +45,9 @@ class Address(Model):
     country = CharField(max_length=255, verbose_name='Země', default='Česká republika')
     email = EmailField(verbose_name='E-mail')
 
+    class Meta:
+        verbose_name_plural = "addresses"
+
     def __str__(self):
         return f'{self.first_name} {self.last_name}, {self.street}, {self.street_number}, {self.city}, {self.country}, {self.postal_code}, {self.email}'
 
@@ -52,7 +59,7 @@ class TrainersServices(Model):
     trainer = ForeignKey(UserProfile, on_delete=CASCADE, related_name="services")
     service = ForeignKey("products.Product", on_delete=CASCADE, related_name="trainers")
     trainers_service_description = TextField(blank=False, null=False)
-    # The trainer has to be approved by an employee before including in the trainer list.
+    # The trainer has to be approved by an employee before including to the trainer list.
     is_approved = BooleanField(default=False)
 
     class Meta:

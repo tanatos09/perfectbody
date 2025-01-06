@@ -7,7 +7,7 @@ from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.forms import ModelForm, CharField, Form, PasswordInput, BooleanField, TextInput, EmailInput, Textarea, \
-    ModelMultipleChoiceField, CheckboxSelectMultiple, DateField, DateInput
+    ModelMultipleChoiceField, CheckboxSelectMultiple, DateField, DateInput, EmailField
 
 from accounts.models import UserProfile, Address, TrainersServices
 from products.models import Product
@@ -88,8 +88,8 @@ class RegistrationForm(ModelForm):
 
     def save(self, commit=True):
         with transaction.atomic():
-            user = super().save(commit=False) # zabrani ulozeni
-            user.account_type = 'registered' # nastavi zakaznikovi ze je registrovany
+            user = super().save(commit=False)
+            user.account_type = 'registered'
             user.set_password(self.cleaned_data['password'])
             if commit:
                 user.save()
@@ -110,7 +110,7 @@ class RegistrationForm(ModelForm):
 
 class TrainerRegistrationForm(RegistrationForm):
     trainer_short_description = CharField(
-        max_length=500,
+        max_length=1000,
         required=True,
         widget=Textarea(attrs={'placeholder': "Úvodní představení se v seznamu trenérů (maximálně 500 znaků)."}),
         label='Představení trenéra'
@@ -191,7 +191,6 @@ class TrainerRegistrationForm(RegistrationForm):
             trainer_group, created = Group.objects.get_or_create(name='trainer')
             user.groups.add(trainer_group)
 
-            # Uložení služeb a jejich popisů
             services = self.cleaned_data.get('services')
             descriptions = self.cleaned_data.get('trainers_services_descriptions').split('---')
             for service, description in zip(services, descriptions):
@@ -201,7 +200,6 @@ class TrainerRegistrationForm(RegistrationForm):
                     trainers_service_description=description.strip()
                 )
 
-            # Uložení adresy
             if self.cleaned_data.get('add_address'):
                 Address.objects.create(
                     user=user,
@@ -215,6 +213,86 @@ class TrainerRegistrationForm(RegistrationForm):
                     email=user.email,
                 )
         return user
+
+class TrainerBasicForm(Form):
+    username = CharField(label='Uživatelské jméno', max_length=50)
+    first_name = CharField(label='Jméno', max_length=100)
+    last_name = CharField(label='Příjmení', max_length=100)
+    email = EmailField(label='E-mail')
+    phone = CharField(label='Telefon', max_length=15)
+    password = CharField(label='Heslo', widget=PasswordInput)
+    password_confirm = CharField(label='Potvrzení hesla', widget=PasswordInput)
+    date_of_birth = DateField(label='Datum narození', widget=DateInput(attrs={'type': 'date'}))
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if UserProfile.objects.filter(username=username).exists():
+            raise ValidationError('Toto uživatelské jméno již existuje. Zvolte jiné.')
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if UserProfile.objects.filter(email=email).exists():
+            raise ValidationError('Tento e-mail je již používán.')
+        return email
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        password_confirm = cleaned_data.get('password_confirm')
+
+        if password != password_confirm:
+            self.add_error('password_confirm', 'Hesla se neshodují.')
+        return cleaned_data
+
+
+class TrainerServicesForm(Form):
+    services = ModelMultipleChoiceField(
+        queryset=Product.objects.filter(product_type='service'),
+        widget=CheckboxSelectMultiple,
+        label="Videokurzy"
+    )
+
+
+class TrainerDescriptionsForm(Form):
+    def __init__(self, *args, **kwargs):
+        selected_services = kwargs.pop('selected_services', [])
+        super().__init__(*args, **kwargs)
+
+        for service in selected_services:
+            self.fields[f'description_{service.id}'] = CharField(
+                label=f'Popis pro službu: {service.product_name}',
+                widget=Textarea(attrs={'placeholder': f'Napište popis pro {service.product_name}'}),
+                required=True
+            )
+
+class TrainerProfileDescriptionForm(Form):
+    trainer_short_description = CharField(
+        max_length=500,
+        label="Krátký popis",
+        widget=Textarea(attrs={
+            'placeholder': 'Krátké představení se (maximálně 500 znaků).',
+            'rows': 3
+        }),
+        required=True
+    )
+    trainer_long_description = CharField(
+        label="Dlouhý popis",
+        widget=Textarea(attrs={
+            'placeholder': 'Podrobnosti o vaší kariéře, zkušenostech, kurzech a certifikátech.',
+            'rows': 5
+        }),
+        required=True
+    )
+
+
+
+class TrainerAddressForm(Form):
+    street = CharField(label='Ulice', max_length=255, required=False)
+    street_number = CharField(label='Číslo domu', max_length=10, required=False)
+    city = CharField(label='Město', max_length=100, required=False)
+    postal_code = CharField(label='PSČ', max_length=10, required=False)
+    country = CharField(label='Země', max_length=100, initial='Česká republika', required=False)
 
 
 class LoginForm(Form):

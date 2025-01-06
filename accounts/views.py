@@ -3,16 +3,77 @@ import logging
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
 from django.contrib.messages import get_messages
+from django.db import IntegrityError
 from django.forms import modelformset_factory, modelform_factory
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from formtools.wizard.views import SessionWizardView
 
 from accounts.forms import RegistrationForm, LoginForm, UserEditForm, PasswordChangeForm, TrainerRegistrationForm, \
-    AddressForm
-from accounts.models import Address, UserProfile
+    AddressForm, TrainerBasicForm, TrainerServicesForm, TrainerDescriptionsForm, TrainerAddressForm, \
+    TrainerProfileDescriptionForm
+from accounts.models import Address, UserProfile, TrainersServices
 
 logger = logging.getLogger(__name__)
+
+class TrainerRegistrationWizard(SessionWizardView):
+    template_name = "trainer_register.html"
+    form_list = [
+        TrainerBasicForm,
+        TrainerServicesForm,
+        TrainerDescriptionsForm,
+        TrainerProfileDescriptionForm,
+        TrainerAddressForm
+    ]
+
+    def get_form_kwargs(self, step):
+        kwargs = super().get_form_kwargs(step)
+        if step == '2':
+            previous_data = self.get_cleaned_data_for_step('1')
+            if previous_data:
+                kwargs['selected_services'] = previous_data['services']
+        return kwargs
+
+    def done(self, form_list, **kwargs):
+        forms = [form.cleaned_data for form in form_list]
+
+        # Uložení uživatele
+        user = UserProfile(
+            username=forms[0]['username'],
+            first_name=forms[0]['first_name'],
+            last_name=forms[0]['last_name'],
+            email=forms[0]['email'],
+            phone=forms[0]['phone'],
+            date_of_birth=forms[0]['date_of_birth'],
+            trainer_short_description=forms[3]['trainer_short_description'],  # Použití správného indexu
+            trainer_long_description=forms[3]['trainer_long_description']  # Použití správného indexu
+        )
+        user.set_password(forms[0]['password'])
+        user.save()
+
+        # Přiřazení do skupiny `trainer`
+        trainer_group, _ = Group.objects.get_or_create(name='trainer')
+        user.groups.add(trainer_group)
+
+        # Uložení schválených služeb
+        selected_services = forms[1]['services']
+        descriptions = forms[2]  # Popisy služeb jsou v kroku 3
+        for service in selected_services:
+            description_key = f'description_{service.id}'
+            TrainersServices.objects.create(
+                trainer=user,
+                service=service,
+                trainers_service_description=descriptions[description_key],
+                is_approved=False
+            )
+
+        # Přesměrování na stránku úspěšné registrace
+        return redirect('registration_success')
+
+def registration_success(request):
+    return render(request, 'registration_success.html')
 
 def clear_messages(request: HttpRequest):
     storage = get_messages(request)
@@ -38,27 +99,6 @@ def register(request: HttpRequest) -> HttpResponse:
         form = RegistrationForm()
 
     return render(request, 'register.html', {"form": form})
-
-
-def trainer_register(request: HttpRequest) -> HttpResponse:
-    if request.method == 'POST':
-        form = TrainerRegistrationForm(request.POST)
-        if form.is_valid():
-            try:
-                form.save()
-                messages.success(request, "Registrace trenéra proběhla úspěšně. "
-                                          "Žádost vyhodnotí administrátor v nejbližším možném termínu. "
-                                          "O stavu schválení budete vyrozuměn/a e-mailovou notifikací.")
-                return redirect('home') # Redirect to the homepage.
-            except Exception as e:
-                logger.error(f"Neočekávaná chyba při registraci trenéra: {e}", exc_info=True)
-                messages.error(request, "Došlo k neočekávané chybě. Zkuste to prosím znovu.")
-        else:
-            messages.warning(request, "Údaje nejsou platné. Zkontrolujte a zkuste znovu.")
-    else:
-        form = TrainerRegistrationForm()
-    return render(request, 'trainer_register.html', {'form': form})
-
 
 def login_view(request: HttpRequest) -> HttpResponse:
     clear_messages(request)

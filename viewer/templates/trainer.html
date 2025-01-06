@@ -4,10 +4,19 @@
 
     <h1>{{ trainer.full_name }}</h1>
 
+    <!-- Profile picture -->
+    {% if trainer.profile_picture %}
+        <div class="trainer-image">
+            <img src="{{ trainer.profile_picture }}" alt="Obrázek trenéra {{ trainer.full_name }}"
+                 style="max-width: 450px; height: auto;">
+        </div>
+    {% endif %}
+
     <!-- Contact details -->
     <div>
-        <p><strong>E-mail:</strong> {{ trainer.email }}</p>
-        <p><strong>Telefon:</strong> {{ trainer.phone }}</p>
+        <h2>Kontakty</h2>
+        <p><strong>E-mail:</strong> {{ trainer.email }}<br>
+        <strong>Telefon:</strong> {{ trainer.phone }}</p>
     </div>
 
     <!-- Trainer long description -->

@@ -13,6 +13,7 @@ class UserProfile(AbstractUser):
     avatar = URLField(blank=True, null=True)  # url avataru
     phone = CharField(max_length=15, blank=True, null=True)  # telefon
     preferred_channel = CharField(max_length=10, choices=PREFERRED_CHANNEL, default='EMAIL')  # prefer. kom. kanal, vyber z PREFERRED_CHANNEL
+    profile_picture = URLField(null=True, blank=True)
     trainer_short_description = TextField(blank=True, null=True)
     trainer_long_description = TextField(blank=True, null=True)
     date_of_birth = DateField(blank=True, null=True)

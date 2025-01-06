@@ -250,7 +250,7 @@ class TrainerServicesForm(Form):
     services = ModelMultipleChoiceField(
         queryset=Product.objects.filter(product_type='service'),
         widget=CheckboxSelectMultiple,
-        label="Vyberte služby"
+        label="Videokurzy"
     )
 
 

@@ -5,8 +5,9 @@ Online store with admin panel.
 ## Functionalities
 
 - [x] products/services list
-- [ ] product/service information
-- [x] time validation in cart
+- [x] product/service information
+- [x] trainers list
+- [x] trainer information
 
 ## Database
 
@@ -21,6 +22,9 @@ Online store with admin panel.
   - [x] last_name
   - [x] phone_number
   - [x] email
+  - [x] trainer_short_description
+  - [x] trainer_long_description
+  - [x] date_of_birth
   - [x] preferred_communication_channel
   - [x] user_creation_datetime
 - [x] address
@@ -42,7 +46,6 @@ Online store with admin panel.
   - [x] price
   - [x] producer_id (1:n -> producer)
   - [x] stock_availability
-  - [x] reserved_stock
 - [x] category
   - [x] id
   - [x] category_name
@@ -73,6 +76,7 @@ Online store with admin panel.
 - [x] producer
   - [x] id
   - [x] producer_name
+  - [x] producer_view
 - [ ] product_review
   - [ ] id
   - [ ] product_id (1:n -> product)
@@ -89,3 +93,7 @@ Online store with admin panel.
   - [ ] comment
   - [ ] review_creation_datetime
   - [ ] review_update_datetime
+
+### Images sources
+- https://unsplash.com/
+- https://www.freepik.com/

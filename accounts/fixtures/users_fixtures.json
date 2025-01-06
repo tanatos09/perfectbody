@@ -1,0 +1,312 @@
+[
+{
+  "model": "accounts.userprofile",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$uFcKglUz5zlJ0XOAeR5pJL$DESYzhGZDqQ4rToJ34LZAB/eulRS+GWQ4W474iMMoAU=",
+    "last_login": "2025-01-05T19:46:16.945Z",
+    "is_superuser": false,
+    "username": "tresnicka",
+    "first_name": "Klára",
+    "last_name": "Třešničková",
+    "email": "klara.tresnickova@seznam.cz",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-01-03T21:39:32.529Z",
+    "avatar": null,
+    "phone": "123456789",
+    "preferred_channel": "EMAIL",
+    "profile_picture": "https://i.ibb.co/R759dtG/KLARATRESNICKOVA.jpg",
+    "trainer_short_description": "Instruktorka jógy s celoživotní vášní pro zdravý životní styl. Díky certifikacím z mezinárodně uznávaných kurzů a hlubokým znalostem v oblasti jógy Klára svým klientům nabízí vyvážený přístup ke cvičení a relaxaci. Specializuje se na Hatha a Vinyasa jógu, které pomáhají zlepšit tělesnou kondici, duševní rovnováhu a celkový životní styl.",
+    "trainer_long_description": "Jsem certifikovaná instruktorka jógy, která je mou životní cestou už více než 10 let. Má cesta k józe začala během studií východních nauk na univerzitě v Brně, kde mě uchvátila obzvláště důmyslná filosofie propojení těla a mysli. Své znalosti a zkušenosti jsem získala na cestách po Indii za absolvováním několika intenzivních kurzů v Rishikeshi, hlavním městě jógy.\r\n\r\nSpecializuji se na Hatha a Vinyasa jógu, které vnímám jako cestu k harmonii mezi fyzickým tělem, emocemi a myslí. Ve svých kurzech kladu důraz na správné provádění ásan, vědomé dýchání a relaxaci. Mým cílem je inspirovat klienty, aby skrze jógu nacházeli rovnováhu a radost v každodenním životě.\r\n\r\nMůj přístup je autentický a všestranný - kombinuji tradiční principy jógy s moderními poznatky o pohybu a zdraví. Kromě výuky jógy se neustále vzdělávám v oblastech meditace a mindfulness, které integruji do svých kurzů. Věřím, že jóga je cestou ke spokojenějšímu a zdravějšímu životu.",
+    "date_of_birth": "1990-01-01",
+    "created_at": "2025-01-03T21:39:33.384Z",
+    "account_type": "registered",
+    "groups": [
+      1
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.userprofile",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$f5zXmvCZaIthQBXY0jejz5$UkUL6akRfVCOze8O5sLbkW2IZXX6e7v7FUrbvwG61Nc=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "travnicek",
+    "first_name": "Jaroslav",
+    "last_name": "Trávníček",
+    "email": "jaroslav.travnicek95@seznam.cz",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-01-03T22:15:35.756Z",
+    "avatar": null,
+    "phone": "987654321",
+    "preferred_channel": "EMAIL",
+    "profile_picture": "https://i.ibb.co/Gck2FZk/JAROSLAVTRAVNICEK.jpg",
+    "trainer_short_description": "Fitness trenér zaměřený na dosažení měřitelných výsledků. Jaroslavovým cílem je pomoci klientům budovat silné a zdravé tělo prostřednictvím moderních tréninkových metod a individuálního přístupu. Díky bohatým znalostem a četným certifikacím z oblasti fitness nabízí strukturované plány, které motivují a vedou ke skutečným výsledkům. Ať už chcete zhubnout, nabrat svalovou hmotu nebo zlepšit svou kondici, Jaroslav vám pomůže splnit vaše cíle s jasnou vizí a důrazem na správné techniky cvičení.",
+    "trainer_long_description": "Jmenuji se Jaroslav Trávníček a fitness je mou vášní již od mládí. Od roku 2015 se věnuji profesionálnímu tréninku, přičemž mým hlavním cílem je pomáhat klientům dosáhnout konkrétních výsledků. Specializuji se na intervalové tréninky s důrazem na dynamiku, sílu a vytrvalost.\r\n\r\nVěřím, že každého člověka lze posunout dál, pokud má správný plán a motivaci. Mé metody jsou založené na nejnovějších vědeckých poznatcích, přičemž kladu důraz na individuální přístup. Záleží mi na tom, aby každý klient věděl, že jeho úsilí přinese ovoce. Mými prioritami jsou efektivita, správné technické provedení cviků a prevence zranění.\r\n\r\nAť už chcete zhubnout, nabrat svalovou hmotu nebo zlepšit svou kondici - jsem tady, abych vás podpořil, motivoval a inspiroval na vaší cestě ke zdravějšímu a silnějšímu já.",
+    "date_of_birth": "1995-01-01",
+    "created_at": "2025-01-03T22:15:36.517Z",
+    "account_type": "registered",
+    "groups": [
+      1
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.userprofile",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$yNOnzsLPT2lRqfRfYkNIlF$xbFX7kVndnhh+xd1vk0RzHtuaXJAnd5cnghWaC6tWo4=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "podzimkova",
+    "first_name": "Petra",
+    "last_name": "Podzimková",
+    "email": "podzimkova.petra@seznam.cz",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-01-03T22:22:11.660Z",
+    "avatar": null,
+    "phone": "111222333",
+    "preferred_channel": "EMAIL",
+    "profile_picture": "https://i.ibb.co/CH5Jvyk/PETRAPODZIMKOVA.jpg",
+    "trainer_short_description": "Lektorka jógy, která se specializuje na restorativní a hatha jógu. Petra našla svou cestu k józe po životní krizi spojené s vyhořením v náročném korporátním prostředí. Dnes je jejím posláním pomáhat ostatním objevovat klid a rovnováhu prostřednictvím jógy, a to jak na fyzické, tak na duševní úrovni. Svým klientům nabízí empatický přístup, který je inspirován její osobní zkušeností a hlubokou vášní pro jógu.",
+    "trainer_long_description": "Jmenuji se Petra Podzimková a jóga se stala mojí životní kotvou a vášní. Ještě před deseti lety jsem pracovala na vysoké manažerské pozici v nadnárodní korporaci, ale každodenní stres a neustále se zvyšující tlak na výkon mě dovedly k vyhoření. V momentě, kdy jsem hledala cestu zpět sama k sobě, objevila jsem jógu, která mi pomohla najít nejen vnitřní klid, ale také smysl mého života. Absolvovala jsem certifikované kurzy jógy v Česku, se zaměřením na restorativní a hatha jógu, které mě oslovily svou schopností léčit tělo i mysl.\r\n\r\nDnes vedu své klienty k nalezení harmonie prostřednictvím jemných i dynamických lekcí jógy. Každá lekce je přizpůsobena potřebám klientů, ať už hledají regeneraci a uvolnění, nebo posílení těla a zlepšení flexibility. Jóga je pro mě cestou nejen k fyzické kondici, ale také k hlubšímu spojení se sebou samým.",
+    "date_of_birth": "1990-09-09",
+    "created_at": "2025-01-03T22:22:12.438Z",
+    "account_type": "registered",
+    "groups": [
+      1
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.userprofile",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$Cybedh5WElMPW4TyEeABZZ$iHpgOhVdunhf6sgwgwkRpsX3RiMhQGX+edHVAlnmBOM=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "petrzelka",
+    "first_name": "Vítězslav",
+    "last_name": "Petrželka",
+    "email": "petrzelka88@seznam.cz",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-01-03T22:30:38.904Z",
+    "avatar": null,
+    "phone": "444555666",
+    "preferred_channel": "EMAIL",
+    "profile_picture": "https://i.ibb.co/BKr837G/VITEZSLAVPETRZELKA.jpg",
+    "trainer_short_description": "Energický trenér s nakažlivou vášní pro fitness a kulturistiku. S více než desetiletou praxí v oblasti osobního tréninku pomáhá svým klientům překonávat vlastní hranice a dosahovat viditelných výsledků. Vítězslav věří, že správně nastavený trénink a disciplína vedou nejen k lepší postavě, ale i k sebevědomí a vnitřní spokojenosti. Jeho přístup je založen na individuálních potřebách klienta a důrazu na maximální efektivitu.",
+    "trainer_long_description": "Jmenuji se Vítězslav Petrželka a fitness a kulturistika jsou mým životem i posláním. Už od dětství mě fascinovala síla a možnosti lidského těla při pohledu na akční hrdiny zahraničních filmů, což mě později přivedlo k hlubokému zájmu o fyziologii a efektivní metody tréninku. Více než deset let se věnuji osobnímu tréninku a pomohl jsem stovkám klientů zlepšit jejich fyzickou kondici, vyrýsovat postavu svých snů a získat zdravé návyky.\r\n\r\nMůj přístup je zaměřen na výsledky – ať už je vaším cílem zhubnout, nabrat svalovou hmotu nebo zvýšit fyzickou výkonnost, v mých kurzech naleznete odpovědi, jak na to. Věřím, že každý z nás má potenciál dosáhnout svých cílů, stačí správné vedení, motivace a odhodlání. Kromě fyzické přípravy se zaměřuji i na mentální stránku cvičení, protože právě hlava je často klíčem k úspěchu.",
+    "date_of_birth": "1988-08-08",
+    "created_at": "2025-01-03T22:30:39.700Z",
+    "account_type": "registered",
+    "groups": [
+      1
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.userprofile",
+  "pk": 5,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$S3AYGpGOZ4vL21ZUVwKyBY$rpSbatg34FYgEY56qAihyCy40d7SqburCXSxmTfWwOE=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "zahradka",
+    "first_name": "Zdeněk",
+    "last_name": "Zahrádka",
+    "email": "zdenek.zahradka@seznam.cz",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-01-03T22:50:22.204Z",
+    "avatar": null,
+    "phone": "777888999",
+    "preferred_channel": "EMAIL",
+    "profile_picture": "https://i.ibb.co/5W8cX73/ZDENEKZAHRADKA.jpg",
+    "trainer_short_description": "Fitness trenér a instruktor jógy v jednom, s vášní pro propojení intenzivního tréninku a jógy. Díky své odbornosti ve fyzioterapii a odbornému přístupu pomáhá klientům nejen dosáhnout skvělé kondice, ale také předcházet zdravotním problémům. Jeho unikátní metoda kombinuje HIIT trénink s hluboce relaxačními technikami restorativní jógy pro maximální efekt a pohodu.",
+    "trainer_long_description": "Jmenuji se Zdeněk Zahrádka a jsem certifikovaný fyzioterapeut, trenér HIIT tréninku a lektor restorativní jógy. Ve své praxi propojuji dynamiku intenzivního cvičení s klidem a regenerací jógy, abych svým klientům pomohl dosáhnout nejen skvělých fyzických výsledků, ale také duševní rovnováhy.\r\n\r\nMá cesta k józe začala během mé praxe fyzioterapeuta, kde jsem se často setkával s klienty, kteří se vraceli s těmi samými obtížemi. Bylo mi jasné, že pouhé řešení fyzických důsledků nestačí – je potřeba jít hlouběji. Sám jsem začal pociťovat vyčerpání a stres z náročného pracovního tempa. Jednoho dne jsem byl pozván na lekci jógy a tehdy jsem poprvé zažil, jak propojení dechu, pohybu a klidu dokáže nejen uvolnit tělo, ale také přinést hlubokou vnitřní pohodu.\r\n\r\nTento zážitek změnil můj přístup k životu i práci. Postupně jsem jógu začal začleňovat do rehabilitačních programů a viděl jsem, jak pozitivně ovlivňuje nejen tělo, ale i mysl mých klientů. Uvědomil jsem si, že cesta ke skutečnému zdraví vede skrze rovnováhu – mezi intenzivním tréninkem a hlubokou regenerací, mezi výkonem a odpočinkem, který není o nic méně důležitý.\r\n\r\nVe svých lekcích HIIT tréninku vám pomohu posunout vaše limity, zlepšit fyzickou kondici a podpořit spalování tuků. Díky svému vzdělání ve fyzioterapii kladu důraz na techniku a prevenci zranění, abyste cvičili efektivně a bezpečně. Naopak v lekcích restorativní jógy vás naučím, jak se zastavit, najít klid a obnovit energii, kterou potřebujete pro každodenní život.\r\n\r\nMým cílem je inspirovat vás, abyste se cítili dobře nejen fyzicky, ale i psychicky. Společně najdeme cestu, jak dosáhnout vašich cílů – ať už je to pevné tělo, více energie, nebo větší spokojenost a radost ze života.",
+    "date_of_birth": "1980-07-07",
+    "created_at": "2025-01-03T22:50:23.008Z",
+    "account_type": "registered",
+    "groups": [
+      1
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.address",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "first_name": "Klára",
+    "last_name": "Třešničková",
+    "street": "Novosadová",
+    "street_number": "1",
+    "city": "Brno",
+    "postal_code": "60200",
+    "country": "Česká republika",
+    "email": "klara.tresnickova@seznam.cz"
+  }
+},
+{
+  "model": "accounts.address",
+  "pk": 2,
+  "fields": {
+    "user": 2,
+    "first_name": "Jaroslav",
+    "last_name": "Trávníček",
+    "street": "Starodvorská",
+    "street_number": "95",
+    "city": "Praha",
+    "postal_code": "10100",
+    "country": "Česká republika",
+    "email": "jaroslav.travnicek95@seznam.cz"
+  }
+},
+{
+  "model": "accounts.address",
+  "pk": 3,
+  "fields": {
+    "user": 3,
+    "first_name": "Petra",
+    "last_name": "Podzimková",
+    "street": "Podzimní",
+    "street_number": "10",
+    "city": "Praha",
+    "postal_code": "10100",
+    "country": "Česká republika",
+    "email": "podzimkova.petra@seznam.cz"
+  }
+},
+{
+  "model": "accounts.address",
+  "pk": 4,
+  "fields": {
+    "user": 4,
+    "first_name": "Vítězslav",
+    "last_name": "Petrželka",
+    "street": "Nejezchlebová",
+    "street_number": "6",
+    "city": "Horní Police",
+    "postal_code": "47106",
+    "country": "Česká republika",
+    "email": "petrzelka88@seznam.cz"
+  }
+},
+{
+  "model": "accounts.address",
+  "pk": 5,
+  "fields": {
+    "user": 5,
+    "first_name": "Zdeněk",
+    "last_name": "Zahrádka",
+    "street": "V Záhonkách",
+    "street_number": "39",
+    "city": "Dolní Police",
+    "postal_code": "47107",
+    "country": "Česká republika",
+    "email": "zdenek.zahradka@seznam.cz"
+  }
+},
+{
+  "model": "accounts.trainersservices",
+  "pk": 1,
+  "fields": {
+    "trainer": 1,
+    "service": 9,
+    "trainers_service_description": "Svým klientům přináším autentické zážitky z Hatha jógy díky certifikacím z tradičních kurzů v Indii. Kladu důraz na správné provádění každé asány a propojení asán s dechem. Své lekce obohacuji o prvky relaxace a mindfulness, které pomáhají odbourat stres a navodit pocit klidu. Moje metoda je ideální pro začátečníky i pokročilé, kteří chtějí zlepšit celkovou flexibilitu a rovnováhu tělesných i duševních sil.",
+    "is_approved": true
+  }
+},
+{
+  "model": "accounts.trainersservices",
+  "pk": 2,
+  "fields": {
+    "trainer": 1,
+    "service": 11,
+    "trainers_service_description": "Vinyasa jóga v mém podání je dynamickým a plynulým cvičením, které propojuje dech s pohybem. Absolvovala jsem specializovaný kurz na Vinyasu u renomovaných zahraničních učitelů a do svých lekcí vnáším energii a kreativitu. S klienty pracuji na správné technice pohybu a plynulých přechodech mezi jednotlivými pozicemi. Díky svým zkušenostem dokážu přizpůsobit tempo a náročnost každé lekce tak, aby byla přístupná skutečně pro každého. Věřím, že Vinyasa jóga je nejen skvělým cvičením pro tělo, ale také cestou k vnitřní harmonii.",
+    "is_approved": true
+  }
+},
+{
+  "model": "accounts.trainersservices",
+  "pk": 3,
+  "fields": {
+    "trainer": 2,
+    "service": 16,
+    "trainers_service_description": "Intervalový trénink pod mým vedením je navržen tak, aby z každé minuty cvičení vytěžil maximum. Tento trénink je ideální volbou pro všechny, kdo chtějí zlepšit svou fyzickou kondici, spálit kalorie a zpevnit tělo. Díky kombinaci intenzivních intervalů a odpočinkových fází si osvojíte efektivní tréninkové metody, které vám pomohou dosáhnout výsledků rychleji. Jsem tady, abych vás vedl, motivoval a dohlížel na správné provedení všech cviků. Díky mému vedení získáte nejen silnější tělo, ale také větší sebedůvěru a energii do každodenních výzev života. Věřím, že každý krok na cestě k vašim cílům stojí za to, a jsem připraven vás na této cestě doprovázet. Společně to zvládneme!",
+    "is_approved": true
+  }
+},
+{
+  "model": "accounts.trainersservices",
+  "pk": 4,
+  "fields": {
+    "trainer": 3,
+    "service": 9,
+    "trainers_service_description": "Hatha jóga je tradiční a klidná forma jógy, která se zaměřuje na správné provedení jednotlivých pozic, dýchací techniky a celkové propojení těla a mysli. Pod mým vedením se naučíte základy jógy, správné držení těla a techniky, které vám pomohou zlepšit fyzickou kondici i vnitřní klid. Kurz je ideální pro začátečníky i pokročilé, kteří chtějí zlepšit své dosavadní dovednosti v Hatha józe.",
+    "is_approved": true
+  }
+},
+{
+  "model": "accounts.trainersservices",
+  "pk": 5,
+  "fields": {
+    "trainer": 3,
+    "service": 12,
+    "trainers_service_description": "Jóga mě naučila, jak se zastavit a naslouchat vlastnímu tělu, což je přesně to, co nabízím svým klientům. Restorativní jóga je klidná a regenerující praxe, která pomáhá uvolnit napětí a obnovit energii. Pod mým vedením se naučíte, jak efektivně relaxovat a dopřát si prostor pro obnovu těla i mysli. Lekce jsou jemné, podpůrné a zaměřené na hlubokou relaxaci – ideální pro každého, kdo chce zklidnit hektický životní rytmus.",
+    "is_approved": true
+  }
+},
+{
+  "model": "accounts.trainersservices",
+  "pk": 6,
+  "fields": {
+    "trainer": 4,
+    "service": 10,
+    "trainers_service_description": "HIIT je o efektivitě – v krátkém čase spálíte maximum kalorií a zlepšíte svou fyzickou kondici. Pod mým vedením vás čekají dynamické lekce, při kterých vás budu motivovat k tomu, abyste překonali své limity. Každý trénink je přizpůsoben potřebám začátečníků i pokročilých. HIIT vám pomůže nejen zlepšit kondici, ale také vyrýsovat postavu a zvýšit metabolismus, což povede k dlouhodobým výsledkům.",
+    "is_approved": true
+  }
+},
+{
+  "model": "accounts.trainersservices",
+  "pk": 7,
+  "fields": {
+    "trainer": 4,
+    "service": 16,
+    "trainers_service_description": "Intervalový trénink kombinuje intenzivní cvičení s fázemi odpočinku, což umožňuje tělu pracovat efektivněji a zároveň regenerovat. Tento typ tréninku je ideální pro ty, kdo hledají způsob, jak spálit tuky, zpevnit svaly a zlepšit výdrž. Pod mým vedením se naučíte, jak správně provádět jednotlivé cviky, aby byly co nejefektivnější. Intervalový trénink je navržen tak, aby vás nejen fyzicky posunul dál, ale také vám dodal motivaci a energii k dosažení vašich cílů.",
+    "is_approved": true
+  }
+},
+{
+  "model": "accounts.trainersservices",
+  "pk": 8,
+  "fields": {
+    "trainer": 5,
+    "service": 10,
+    "trainers_service_description": "HIIT je perfektní volbou pro ty, kteří chtějí rychle dosáhnout viditelných výsledků. Mé lekce kombinují dynamická cvičení s krátkými odpočinkovými intervaly, což vede k maximálnímu spalování kalorií a zlepšení kondice. Díky mému odbornému vzdělání ve fyzioterapii se zaměřuji nejen na efektivitu, ale také na bezpečnost a správnou techniku. Ať už jste začátečník nebo pokročilý, mé tréninky vás posunou blíž k vašim cílům.",
+    "is_approved": true
+  }
+},
+{
+  "model": "accounts.trainersservices",
+  "pk": 9,
+  "fields": {
+    "trainer": 5,
+    "service": 12,
+    "trainers_service_description": "Pro mě je jóga nejen způsobem relaxace, ale i prostředkem k obnově těla a mysli. Restorativní jóga je klidná praxe, kterou vedu tak, aby pomohla klientům uvolnit stres, regenerovat tělo a zlepšit flexibilitu. Kombinuji jógové pozice s technikami hlubokého dýchání a mindfulness, což umožňuje klientům dosáhnout maximálního uvolnění a harmonie. Tato metoda je ideální pro každého, kdo chce zlepšit své zdraví a cítit se lépe ve svém těle.",
+    "is_approved": true
+  }
+}
+]

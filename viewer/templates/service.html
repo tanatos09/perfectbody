@@ -3,15 +3,26 @@
 {% block content %}
 
     <h1>{{ service.product_name }}</h1>
+
+    <!-- Obrázek služby -->
+    {% if service.product_view %}
+        <div class="service-image">
+            <img src="{{ service.product_view }}" alt="Obrázek služby {{ service.product_name }}"
+                 style="max-width: 450px; height: auto;">
+        </div>
+    {% endif %}
+
     <div class="service-description"><b>Popis služby:</b> {{ service.product_long_description }}</div>
 
     <br>
-    <div class="service-category"><b>Kategorie:</b> <a href="{% url 'category' service.category.id %}">{{ service.category }}</a></div>
+    <div class="service-category"><b>Kategorie:</b> <a
+            href="{% url 'services' service.category.pk %}">{{ service.category }}</a></div>
     <div class="service-trainers">
         <b>Trenéři:</b>
         {% if approved_trainers %}
             {% for trainer in approved_trainers %}
-                <a href="{% url 'trainer' trainer.id %}">{{ trainer.full_name }}</a>{% if not forloop.last %}, {% endif %}
+                <a href="{% url 'trainer' trainer.id %}">{{ trainer.full_name }}</a>{% if not forloop.last %},
+            {% endif %}
             {% endfor %}
         {% else %}
             <span style="color: red;">Pro službu nejsou k dispozici schválení trenéři</span>

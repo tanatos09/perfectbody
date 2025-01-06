@@ -1,4 +1,6 @@
 import json
+from itertools import groupby
+from operator import attrgetter
 
 import requests
 import unicodedata
@@ -9,7 +11,7 @@ from django.contrib.auth.models import Group
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.models import Group
-from products.models import Product, Category
+from products.models import Category, Producer, Product
 from accounts.models import UserProfile, TrainersServices, Address
 from datetime import datetime, timedelta
 from django.http import JsonResponse
@@ -104,10 +106,46 @@ def get_name_day():
         print(f"Chyba při získávání jmenin: {e}")
         return "Chyba"
 
+def products(request, pk=None):
+    sort_by = request.GET.get('sort_by', 'name')
 
-def products(request):
-    products = Product.objects.filter(product_type='merchantdise').order_by('category__category_name', 'product_name')
-    return render(request, 'products.html', {'products': products})
+    if pk is None:
+        # Načtení hlavních kategorií
+        main_categories = Category.objects.filter(
+            category_parent=None,  # Hlavní kategorie
+            subcategories__categories__product_type='merchantdise'  # Produkty v podkategoriích typu 'merchantdise'
+        ).distinct()
+
+        context = {
+            'main_categories': main_categories,
+            'category': None,
+            'subcategories': None,
+            'products': None,
+            'sort_by': sort_by,
+        }
+    else:
+        # Načtení aktuální kategorie
+        category = get_object_or_404(Category, pk=pk)
+
+        # Načtení podkategorií a produktů
+        subcategories = category.subcategories.all()
+
+        # Řazení produktů na základě parametru sort_by
+        if sort_by == 'price_asc':
+            products = Product.objects.filter(category=category, product_type='merchantdise').order_by('price')
+        elif sort_by == 'price_desc':
+            products = Product.objects.filter(category=category, product_type='merchantdise').order_by('-price')
+        else:
+            products = Product.objects.filter(category=category, product_type='merchantdise').order_by('product_name')
+
+        context = {
+            'main_categories': None,
+            'category': category,
+            'subcategories': subcategories,
+            'products': products,
+            'sort_by': sort_by,
+        }
+    return render(request, 'products.html', context)
 
 def product(request, pk):
     if Product.objects.filter(id=pk):
@@ -116,16 +154,75 @@ def product(request, pk):
         return render(request, "product.html", context)
     return products(request)
 
-def services(request):
-    services = Product.objects.filter(product_type='service').order_by('category__category_name', 'product_name')
-    for service in services:
-        service.has_approved_trainers = TrainersServices.objects.filter(service=service, is_approved=True).exists()
-    return render(request, 'services.html', {"services": services})
+def producer(request, pk):
+    producer_detail = get_object_or_404(Producer, id=pk)
+    products = Product.objects.filter(producer=producer_detail).select_related('category')
+
+    # Skupinové seskupení produktů podle kategorií
+    grouped_products = {}
+    for category, items in groupby(products, key=attrgetter('category')):
+        grouped_products[category] = list(items)
+
+    # Získání všech výrobců pro seznam a odstranění mezer z názvů
+    all_producers = Producer.objects.all().order_by('producer_name')
+    for producer in all_producers:
+        producer.producer_name = producer.producer_name.strip()
+
+    context = {
+        'producer': producer_detail,
+        'grouped_products': grouped_products,
+        'all_producers': all_producers,  # Přidání seznamu všech výrobců
+    }
+    return render(request, 'producer.html', context)
+
+def services(request, pk=None):
+    sort_by = request.GET.get('sort_by', 'name')
+
+    if pk is None:
+        # Získání hlavních kategorií, které mají přes podkategorie služby typu 'service'
+        main_categories = Category.objects.filter(
+            category_parent=None,  # Hlavní kategorie
+            subcategories__categories__product_type='service'  # Služby v podkategoriích typu 'service'
+        ).distinct()
+
+        context = {
+            'main_categories': main_categories,
+            'category': None,
+            'subcategories': None,
+            'services': None,
+            'sort_by': sort_by,
+        }
+    else:
+        # Načtení aktuální kategorie
+        category = get_object_or_404(Category, pk=pk)
+
+        # Načtení podkategorií a služeb
+        subcategories = category.subcategories.all()
+
+        # Řazení produktů na základě parametru sort_by
+        if sort_by == 'price_asc':
+            services = Product.objects.filter(category=category, product_type='service').order_by('price')
+        elif sort_by == 'price_desc':
+            services = Product.objects.filter(category=category, product_type='service').order_by('-price')
+        else:
+            services = Product.objects.filter(category=category, product_type='service').order_by('product_name')
+
+        # Kontrola schválených trenérů pro každou službu
+        for service in services:
+            service.has_approved_trainers = TrainersServices.objects.filter(service=service, is_approved=True).exists()
+
+        context = {
+            'main_categories': None,
+            'category': category,
+            'subcategories': subcategories,
+            'services': services,
+            'sort_by': sort_by,
+        }
+    return render(request, 'services.html', context)
 
 def service(request, pk):
     # Find the service by primary key or return 404.
     service_detail = get_object_or_404(Product, id=pk)
-
     # Getting approved trainers for that service.
     approved_trainers_services = TrainersServices.objects.filter(service=service_detail, is_approved=True).select_related('trainer')
     approved_trainers = [ts.trainer for ts in approved_trainers_services]
@@ -150,64 +247,31 @@ def trainer(request, pk):
     context = {'trainer': trainer_detail, 'approved_services': approved_services}
     return render(request, "trainer.html", context)
 
-def category(request, category_id):
-    category_detail = get_object_or_404(Category, id=category_id)
-    products = Product.objects.filter(category=category_detail)
-    context = {'category': category_detail, 'products': products}
-    return render(request, 'category.html', context)
-
-def validate_last_activity(last_activity):
-    try:
-        return datetime.fromisoformat(last_activity)
-    except (ValueError, TypeError):
-        return None
-
-def check_cart_inactivity(request):
-    """
-    Check the timestamp of the last activity in the cart.
-    If the time limit is exceeded, the cart is emptied and the reservation is released.
-    """
-    cart = request.session.get('cart', {})
-    last_activity = request.session.get('cart_last_activity')
-
-    last_activity_time = validate_last_activity(last_activity)
-    if last_activity_time and datetime.now() - last_activity_time > timedelta(minutes=15):
-        # Emptying the cart and releasing the reservation.
-        for product_id_str, item in cart.items():
-            product = get_object_or_404(Product, id=int(product_id_str))
-            product.reserved_stock -= item['quantity']
-            product.save()
-        request.session['cart'] = {}
-        request.session['cart_last_activity'] = None
-        messages.info(request, "Váš košík byl z důvodu neaktivity vyprázdněn.")
-        return True  # Indicates that the cart has been emptied.
-    return False  # Indicates that the cart is still active.
-
 def add_to_cart(request, product_id):
-    # Cart inactivity checking.
-    if check_cart_inactivity(request):
-        # If inactivity is detected, the cart will be emptied.
-        return redirect('cart')
-
+    # Načtení košíku ze session
     cart = request.session.get('cart', {})
     product_id_str = str(product_id)
     product = get_object_or_404(Product, id=product_id)
 
-    if product.available_stock() <= 0:
-        messages.error(request, "Produkt není skladem.")
-        # Redirect to the product detail page.
-        if product.product_type == 'service':
+    if product.product_type == 'service':
+        # Kontrola, zda má služba schválené trenéry
+        has_approved_trainers = TrainersServices.objects.filter(service=product, is_approved=True).exists()
+        if not has_approved_trainers:
+            messages.error(request, "Pro tuto službu nejsou k dispozici schválení trenéři.")
             return redirect('service', pk=product_id)
-        return redirect('product', product_id=product_id)
+    else:
+        # Kontrola skladové dostupnosti pro zboží
+        if product.available_stock() <= 0:
+            messages.error(request, "Produkt není skladem.")
+            return redirect('product', pk=product_id)
 
+    # Přidání produktu nebo služby do košíku
     if product_id_str in cart:
-        if cart[product_id_str]['quantity'] >= product.available_stock():
+        if product.product_type == 'service' or cart[product_id_str]['quantity'] < product.available_stock():
+            cart[product_id_str]['quantity'] += 1
+        else:
             messages.error(request, "Nelze přidat více, než je dostupné množství.")
-            # Redirect to the product detail page.
-            if product.product_type == 'service':
-                return redirect('service', pk=product_id)
-            return redirect('product', product_id=product_id)
-        cart[product_id_str]['quantity'] += 1
+            return redirect('product', pk=product_id)
     else:
         cart[product_id_str] = {
             'name': product.product_name,
@@ -215,122 +279,87 @@ def add_to_cart(request, product_id):
             'quantity': 1,
         }
 
-    reserved_quantity = cart[product_id_str]['quantity']
-    if reserved_quantity <= product.available_stock():
-        product.reserved_stock += 1
-        product.save()
-    else:
-        messages.error(request, "Nelze přidat více produktů do košíku, než je dostupné množství.")
-        # Redirect to the product detail page.
-        if product.product_type == 'service':
-            return redirect('service', pk=product_id)
-        return redirect('product', product_id=product_id)
-
-    request.session['cart_last_activity'] = datetime.now().isoformat()
+    # Uložení košíku do session
     request.session['cart'] = cart
 
-    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        cart_total = sum(item['quantity'] * item['price'] for item in cart.values())
-        return JsonResponse({
-            'success': True,
-            'cart': cart,
-            'cart_total': f"{cart_total:.2f}"
-        })
-    else:
-        return redirect('cart')
+    messages.success(request, f"{product.product_name} byl přidán do košíku.")
+    return redirect('cart')
 
 def view_cart(request):
-    # Cart inactivity checking.
-    if check_cart_inactivity(request):
-        # If inactivity is detected, the cart will be emptied.
-        return redirect('cart')
-
+    # Získání košíku ze session
     cart = request.session.get('cart', {})
+
+    # Výpočet celkové ceny a jednotlivých částek
     for product_id, item in cart.items():
         item['total'] = item['quantity'] * item['price']
     total = sum(item['quantity'] * item['price'] for item in cart.values())
+
+    # Zobrazení stránky košíku
     return render(request, 'cart.html', {"cart": cart, "total": total})
 
 def remove_from_cart(request, product_id):
-    # Cart inactivity checking.
-    if check_cart_inactivity(request):
-        # If inactivity is detected, the cart will be emptied.
-        return redirect('cart')
-
+    # Získání košíku ze session
     cart = request.session.get('cart', {})
     product_id_str = str(product_id)
 
     if product_id_str in cart:
-        product = get_object_or_404(Product, id=product_id)
-        removed_quantity = cart[product_id_str]['quantity']
-
-        # Product type checking.
-        if product.product_type != 'service': # It is necessary to update the stock availability for products.
-            if product.reserved_stock >= removed_quantity:
-                product.reserved_stock -= removed_quantity
-                product.save()
-            else:
-                messages.error(request, "Nelze odstranit více položek, než je rezervováno.")
-                return redirect('cart')
-
-        # Removing an item from the cart.
+        # Odebrání položky z košíku
         del cart[product_id_str]
         request.session['cart'] = cart
-        request.session['cart_last_activity'] = datetime.now().isoformat()
 
-        messages.success(request, f"Produkt {product.product_name} byl odstraněn z košíku.")
+        messages.success(request, "Produkt byl odstraněn z košíku.")
     else:
         messages.error(request, "Produkt nebyl nalezen v košíku.")
 
     return redirect('cart')
 
 def update_cart(request, product_id):
-    # Checking cart inactivity.
-    if check_cart_inactivity(request):
-        # If inactivity is detected, the cart will be emptied.
-        return redirect('cart')
-
+    # Získání košíku ze session
     cart = request.session.get('cart', {})
     product_id_str = str(product_id)
 
     if product_id_str in cart:
-        new_quantity = int(request.POST.get('quantity', 1))
-        if new_quantity > 0:
-            cart[product_id_str]['quantity'] = new_quantity
-        else:
-            del cart[product_id_str]
+        try:
+            # Získání nového množství z POST dat
+            new_quantity = int(request.POST.get('quantity', 1))
+            if new_quantity > 0:
+                # Aktualizace množství v košíku
+                cart[product_id_str]['quantity'] = new_quantity
+            else:
+                # Odstranění položky, pokud je nové množství 0 nebo méně
+                del cart[product_id_str]
+        except ValueError:
+            # Ošetření chybného vstupu
+            messages.error(request, "Neplatná hodnota množství.")
+            return redirect('cart')
 
+    # Aktualizace session
     request.session['cart'] = cart
+    messages.success(request, "Košík byl úspěšně aktualizován.")
     return redirect('cart')
 
 def complete_order(request):
-    # Cart inactivity checking.
-    if check_cart_inactivity(request):
-        # If inactivity is detected, the cart will be emptied.
-        return redirect('cart')
-
-    # Retrieving the cart after checking for inactivity.
+    # Načtení košíku ze session
     cart = request.session.get('cart', {})
     if not cart:
         messages.error(request, "Váš košík je prázdný.")
         return redirect('cart')
 
-    # Order processing.
+    # Zpracování objednávky
     for product_id_str, item in cart.items():
         product = get_object_or_404(Product, id=int(product_id_str))
         quantity = item['quantity']
 
-        if product.reserved_stock >= quantity:
+        # Kontrola dostupnosti skladu
+        if product.stock_availability >= quantity:
             product.stock_availability -= quantity
-            product.reserved_stock -= quantity
             product.save()
         else:
             messages.error(request, f"Nedostatek zboží: {product.product_name}.")
             return redirect('cart')
 
-    # Emptying the cart after completing the order.
+    # Vyprázdnění košíku po dokončení objednávky
     request.session['cart'] = {}
-    request.session['cart_last_activity'] = None
     messages.success(request, "Objednávka byla úspěšně dokončena.")
     return redirect('products')
 

@@ -3,11 +3,22 @@
 {% block content %}
 
     <h1>{{ product.product_name }}</h1>
-    <div class="product-description"><b>Popis zboží:</b> {{ product.product_long_description }}</div>
+
+    <!-- Obrázek produktu -->
+    {% if product.product_view %}
+        <div class="product-image">
+            <img src="{{ product.product_view }}" alt="Obrázek produktu {{ product.product_name }}"
+                 style="max-width: 450px; height: auto;">
+        </div>
+    {% endif %}
+
+    <div class="product-description"><b>Popis produktu:</b> {{ product.product_long_description }}</div>
 
     <br>
-    <div class="product-category"><b>Kategorie:</b> <a href="{% url 'category' product.category.id %}">{{ product.category }}</a></div>
-    <div class="product-producer"><b>Výrobce:</b> {{ product.producer }}</div>
+    <div class="product-category"><b>Kategorie:</b> <a
+            href="{% url 'products' product.category.pk %}">{{ product.category }}</a></div>
+    <div class="product-producer"><b>Výrobce:</b> <a
+            href="{% url 'producer' product.producer.pk %}">{{ product.producer }}</a></div>
     <div class="product-stock-availability"><b>Skladová dostupnost:</b>
         {% if product.available_stock > 0 %}
             {{ product.available_stock }} kusů k dispozici.

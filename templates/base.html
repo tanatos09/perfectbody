@@ -16,8 +16,8 @@
     {% bootstrap_css %}
     {% bootstrap_javascript %}
 
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">-->
 
 </head>
 
@@ -28,7 +28,7 @@
         {% include "navbar.html" %}
 
     <!-- Blok pro vkládání stránek z navbaru -->
-        <div class="container">
+        <div class="container mt-5">
             {% block content %}
             {% endblock %}
         </div>

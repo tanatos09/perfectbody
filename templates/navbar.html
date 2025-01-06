@@ -34,6 +34,21 @@
                     </ul>
                 </li>
             </ul>
+           <ul class="list-group">
+    {% for category in categories %}
+        <li class="list-group-item">
+            {{ category.name }}
+            {% if category.subcategories.all %}
+                <ul class="list-group ms-3">
+                    {% for subcategory in category.subcategories.all %}
+                        <li class="list-group-item">{{ subcategory.name }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
         </div>
     </div>
 </nav>

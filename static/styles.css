@@ -7,6 +7,7 @@ body {
 
     font-size: 10pt;
     line-height: 1.5;
+    overflow: hidden;
 }
 svg {
     color: #6c757d !important;
@@ -18,6 +19,9 @@ svg {
     justify-content: center;
     width: 90%;
     color: #6c757d;
+    height: 100vh; /* Nastavte výšku podle potřeby */
+    overflow-y: scroll;
+
 
 }
 .container li{

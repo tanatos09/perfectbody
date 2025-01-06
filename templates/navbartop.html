@@ -28,9 +28,16 @@
                     </svg>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    {% if user.is_authenticated %}
+                    <li><a class="nav-link" href="{% url 'profile' %}">{{ user.username }}</a></li>
+                    <li><a class="nav-link" href="{% url 'logout' %}">Odhlásit se</a></li>
+                     {% else %}
                     <li><a class="dropdown-item" href="{% url 'login' %}">Přihlásit se</a></li>
                     <li><a class="dropdown-item" href="{% url 'register' %}">Registrovat</a></li>
+                {% endif %}
                 </ul>
+
+
             </li>
         </ul>
         <a class="nav-link d-flex align-items-center" href="/cart/">

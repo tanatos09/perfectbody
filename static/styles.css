@@ -18,12 +18,30 @@ svg {
     justify-content: center;
     width: 90%;
     color: #6c757d;
+
+}
+.container li{
+    list-style-type: none;
+}
+.container a{
+    font-weight: bold;
+    text-decoration: none;
+
 }
 .container h1 {
     text-align: center;
     font-weight: bolder;
     font-size: 1.5rem;
     background-color: #6c757d;
+    color: white;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+.container h2 {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 1.2rem;
+    background-color: darkgrey;
     color: white;
     padding-right: 0 !important;
     padding-left: 0 !important;

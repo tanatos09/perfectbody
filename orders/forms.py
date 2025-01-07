@@ -1,9 +1,13 @@
-from django.forms import ModelForm, Form, EmailField
+from django.forms import ModelForm, Form, EmailField, BooleanField
 
 from accounts.models import Address
 
 class GuestOrderForm(Form):
-    email = EmailField(label='Email', required=True)
+    guest_email = EmailField(label="E-mail", required=True, error_messages={
+        'invalid': "Zadejte platnou e-mailovou adresu.",
+        'required': "E-mail je povinný.",
+    })
+
 
 
 class OrderAddressForm(ModelForm):
@@ -20,4 +24,5 @@ class OrderAddressForm(ModelForm):
             'country': 'Země',
             'email': 'E-mail',
         }
+
 

@@ -10,6 +10,10 @@ from django.forms import modelform_factory
 from accounts.models import Address
 from orders.models import Order, OrderProduct
 
+from django.db import transaction
+
+from products.models import Product
+
 
 def normalize_address_data(address_data):
     return {
@@ -160,7 +164,6 @@ def order_summary(request):
     })
 
 
-
 def confirm_order(request):
     cart_order = request.session.get('cart_order', None)
 
@@ -185,25 +188,34 @@ def confirm_order(request):
         messages.error(request, 'Email je povinný pro neregistrované uživatele.')
         return redirect('start_order')
 
-    if not request.user.is_authenticated and guest_email:
-        request.session['guest_email'] = guest_email
-
-    order = Order.objects.create(
-        customer=request.user if request.user.is_authenticated else None,
-        guest_email=guest_email,
-        billing_address=billing_address,
-        shipping_address=shipping_address,
-        total_price=sum(item['quantity'] * item['price'] for item in cart.values())
-    )
-
-    for product_id, item in cart.items():
-        OrderProduct.objects.create(
-            order=order,
-            product_id=product_id,
-            quantity=item['quantity'],
-            price_per_item=item['price'],
+    # Použití transakce k zajištění integrity dat
+    with transaction.atomic():
+        # Vytvoření objednávky
+        order = Order.objects.create(
+            customer=request.user if request.user.is_authenticated else None,
+            guest_email=guest_email,
+            billing_address=billing_address,
+            shipping_address=shipping_address,
+            total_price=sum(item['quantity'] * item['price'] for item in cart.values())
         )
 
+        # Odečet skladové zásoby a vytvoření položek objednávky
+        for product_id, item in cart.items():
+            product = get_object_or_404(Product, id=product_id)
+
+            # Odečtení zásoby
+            product.stock_availability -= item['quantity']
+            product.save()
+
+            # Vytvoření položky objednávky
+            OrderProduct.objects.create(
+                order=order,
+                product=product,
+                quantity=item['quantity'],
+                price_per_item=item['price'],
+            )
+
+    # Vymazání session
     request.session.pop('cart_order', None)
     request.session.pop('cart', None)
 
@@ -277,11 +289,20 @@ def order_detail(request, order_id):
 @login_required
 def cancel_order(request, order_id):
     order = get_object_or_404(Order, id=order_id, customer=request.user)
+
     if order.order_state != 'PENDING':
-        messages.error(request, 'Tuto objedávku nelze zrušit')
+        messages.error(request, 'Tuto objednávku nelze zrušit.')
         return redirect('my_orders')
 
+    # Vrácení skladové zásoby pro každý produkt v objednávce
+    for item in order.items.all():
+        product = item.product
+        product.stock_availability += item.quantity
+        product.save()
+
+    # Aktualizace stavu objednávky
     order.order_state = 'CANCELLED'
     order.save()
-    messages.success(request, f'Objednávka #{order.id} byla zrušena')
+
+    messages.success(request, f'Objednávka #{order.id} byla úspěšně zrušena a produkty byly vráceny na sklad.')
     return redirect('my_orders')

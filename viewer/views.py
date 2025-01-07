@@ -156,7 +156,7 @@ def product(request, pk):
 
 def producer(request, pk):
     producer_detail = get_object_or_404(Producer, id=pk)
-    products = Product.objects.filter(producer=producer_detail).select_related('category')
+    products = Product.objects.filter(producer=producer_detail).select_related('category').order_by('category')
 
     # Skupinové seskupení produktů podle kategorií
     grouped_products = {}
@@ -340,75 +340,54 @@ def update_cart(request, product_id):
     messages.success(request, "Košík byl úspěšně aktualizován.")
     return redirect('cart')
 
-def complete_order(request):
-    # Načtení košíku ze session
-    cart = request.session.get('cart', {})
-    if not cart:
-        messages.error(request, "Váš košík je prázdný.")
-        return redirect('cart')
-
-    # Zpracování objednávky
-    for product_id_str, item in cart.items():
-        product = get_object_or_404(Product, id=int(product_id_str))
-        quantity = item['quantity']
-
-        # Kontrola dostupnosti skladu
-        if product.stock_availability >= quantity:
-            product.stock_availability -= quantity
-            product.save()
-        else:
-            messages.error(request, f"Nedostatek zboží: {product.product_name}.")
-            return redirect('cart')
-
-    # Vyprázdnění košíku po dokončení objednávky
-    request.session['cart'] = {}
-    messages.success(request, "Objednávka byla úspěšně dokončena.")
-    return redirect('products')
-
 def update_cart_ajax(request, product_id):
     if request.method == 'POST' and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         cart = request.session.get('cart', {})
         product_id_str = str(product_id)
 
+        # Získání produktu a jeho skladové zásoby
+        product = get_object_or_404(Product, id=product_id)
+
         if product_id_str in cart:
             try:
                 data = json.loads(request.body)
                 new_quantity = int(data.get('quantity', 1))
+
                 if new_quantity > 0:
+                    # Kontrola skladové dostupnosti
+                    if new_quantity > product.available_stock():
+                        return JsonResponse({
+                            'success': False,
+                            'error': f'Na skladě je k dispozici pouze {product.available_stock()} kusů.'
+                        })
+
+                    # Aktualizace množství v košíku
                     cart[product_id_str]['quantity'] = new_quantity
                     request.session['cart'] = cart
+
+                    # Přepočet celkové ceny
                     total = sum(item['quantity'] * item['price'] for item in cart.values())
                     item_total = cart[product_id_str]['quantity'] * cart[product_id_str]['price']
 
-                    response = {
+                    return JsonResponse({
                         'success': True,
-                        'item_total': f"{item_total:.2f}",
-                        'cart_total': f"{total:.2f}"
-                    }
-                    print("Response JSON:", response)
-                    return JsonResponse(response)
-
+                        'item_total': f"{item_total:.2f} Kč",
+                        'cart_total': f"{total:.2f} Kč"
+                    })
                 else:
+                    # Odstranění položky z košíku, pokud je nové množství 0 nebo méně
                     del cart[product_id_str]
                     request.session['cart'] = cart
+
                     total = sum(item['quantity'] * item['price'] for item in cart.values())
+                    return JsonResponse({'success': True, 'cart_total': f"{total:.2f} Kč"})
 
-                    response = {'success': True, 'cart_total': f"{total:.2f}"}
-                    print("Response JSON:", response)
-                    return JsonResponse(response)
-
-            except (ValueError, KeyError) as e:
-                error_response = {'success': False, 'error': 'Invalid data'}
-                print("Error JSON:", error_response)
-                return JsonResponse(error_response)
+            except (ValueError, KeyError):
+                return JsonResponse({'success': False, 'error': 'Neplatná hodnota množství.'})
         else:
-            error_response = {'success': False, 'error': 'Product not found'}
-            print("Error JSON:", error_response)
-            return JsonResponse(error_response)
+            return JsonResponse({'success': False, 'error': 'Produkt nebyl nalezen v košíku.'})
 
-    error_response = {'success': False, 'error': 'Invalid request'}
-    print("Error JSON:", error_response)
-    return JsonResponse(error_response)
+    return JsonResponse({'success': False, 'error': 'Neplatný požadavek.'})
 
 def user_profile_view(request, username):
     user = get_object_or_404(UserProfile, username=username)

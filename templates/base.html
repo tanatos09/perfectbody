@@ -22,13 +22,13 @@
 </head>
 
 <body>
-    <div>
+    <div class="container mt-0">
         <!-- Navbar -->
         {% include "navbartop.html" %}
         {% include "navbar.html" %}
 
     <!-- Blok pro vkládání stránek z navbaru -->
-        <div class="container">
+        <div class="container mt-0" id="element">
             {% block content %}
             {% endblock %}
         </div>

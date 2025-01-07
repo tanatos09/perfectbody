@@ -16,21 +16,23 @@ svg {
 .container {
     background-color: rgb(255, 255, 255, 0.65);
     align-items: center;
-    justify-content: center;
     width: 90%;
     color: #6c757d;
     height: 100vh; /* Nastavte výšku podle potřeby */
-    overflow-y: scroll;
-
-
+    display: flex;
+    justify-content: space-between;
 }
+/* === scrolling */
+#element{
+    overflow-y: scroll;
+  }
+
 .container li{
     list-style-type: none;
 }
 .container a{
     font-weight: bold;
     text-decoration: none;
-
 }
 .container h1 {
     text-align: center;
@@ -106,6 +108,13 @@ svg {
     width: 60%;
     position: relative;
 
+}
+/* === Product === */
+.product-image {
+    width: 45%;
+}
+.product-description {
+    width: 45%;
 }
 
 /* === Footer === */

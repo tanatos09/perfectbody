@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% load static %}
+{% load bootstrap5 %}
+<html
+    {% if LANGUAGE_CODE %}
+        lang="{{ LANGUAGE_CODE }}"
+    {% else %}
+        lang="cs"
+    {% endif %}
+>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Perfect Body{% endblock %}</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Navbar -->
+        {% include "navbartop.html" %}
+        {% include "navbar.html" %}
+
+
+
+        <!-- Blok pro vkládání stránek z navbaru -->
+        <div class="container" id="element">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+        <!-- Footer -->
+        {% include "footer.html" %}
+    </div>
+
+    <script>
+        // JavaScript pro zobrazení/skrytí levého menu
+        document.addEventListener('DOMContentLoaded', function() {
+            var navbarLinks = document.querySelectorAll('.navbar-nav .nav-link');
+            var leftMenu = document.getElementById('left-menu');
+
+            navbarLinks.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth >= 768) {
+                        leftMenu.classList.toggle('d-none');
+                    }
+                });
+            });
+
+            window.addEventListener('resize', function() {
+                if (window.innerWidth < 768) {
+                    leftMenu.classList.add('d-none');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

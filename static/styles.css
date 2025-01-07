@@ -19,8 +19,8 @@ svg {
     width: 90%;
     color: #6c757d;
     height: 100vh; /* Nastavte výšku podle potřeby */
-    display: flex;
-    justify-content: space-between;
+   /* display: flex;
+    justify-content: space-between;*/
 }
 /* === scrolling */
 #element{
@@ -110,13 +110,13 @@ svg {
 
 }
 /* === Product === */
+
 .product-image {
     width: 45%;
 }
 .product-description {
     width: 45%;
 }
-
 /* === Footer === */
 
 .footer {

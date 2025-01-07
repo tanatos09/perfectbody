@@ -411,9 +411,22 @@ def update_cart_ajax(request, product_id):
 def user_profile_view(request, username):
     user = get_object_or_404(UserProfile, username=username)
     is_trainer = user.groups.filter(name='trainer').exists()
+
     if request.user.is_authenticated and request.user == user:
         return redirect('profile')
-    return render(request, 'user_profile.html', {'user': user, 'is_trainer': is_trainer})
+
+    if is_trainer:
+        approved_services = TrainersServices.objects.filter(trainer=user, is_approved=True).select_related('service')
+        return render(request, 'trainer.html', {
+            'trainer': user,
+            'approved_services': approved_services,
+        })
+
+    return render(request, 'user_profile.html', {
+        'user': user,
+        'is_trainer': is_trainer,
+    })
+
 
 def get_name_day():
     try:

@@ -7,7 +7,7 @@ from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.forms import ModelForm, CharField, Form, PasswordInput, BooleanField, TextInput, EmailInput, Textarea, \
-    ModelMultipleChoiceField, CheckboxSelectMultiple, DateField, DateInput, EmailField
+    ModelMultipleChoiceField, CheckboxSelectMultiple, DateField, DateInput, EmailField, FileInput, URLInput
 
 from accounts.models import UserProfile, Address, TrainersServices
 from products.models import Product
@@ -266,25 +266,54 @@ class TrainerDescriptionsForm(Form):
                 required=True
             )
 
-class TrainerProfileDescriptionForm(Form):
+class TrainerProfileDescriptionForm(ModelForm):
     trainer_short_description = CharField(
         max_length=500,
-        label="Krátký popis",
+        required=False,
+        label="Upravit krátký popis",
         widget=Textarea(attrs={
-            'placeholder': 'Krátké představení se (maximálně 500 znaků).',
-            'rows': 3
-        }),
-        required=True
-    )
-    trainer_long_description = CharField(
-        label="Dlouhý popis",
-        widget=Textarea(attrs={
-            'placeholder': 'Podrobnosti o vaší kariéře, zkušenostech, kurzech a certifikátech.',
-            'rows': 5
-        }),
-        required=True
+            'placeholder': 'Krátký popis trenéra (maximálně 500 znaků)',
+            'rows': 3,
+        })
     )
 
+    class Meta:
+        model = UserProfile
+        fields = ['trainer_short_description', 'trainer_long_description', 'pending_profile_picture']
+        labels = {
+            'trainer_short_description': 'Krátký popis trenéra',
+            'trainer_long_description': 'Dlouhý popis trenéra',
+            'pending_profile_picture': 'Profilový obrázek (URL)',
+        }
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        # Uložit změny pouze do pending polí
+        instance.pending_trainer_short_description = self.cleaned_data.get('trainer_short_description')
+        if commit:
+            instance.save()
+        return instance
+
+    def clean_trainer_short_description(self):
+        # Vrací pouze nový popis
+        return self.cleaned_data.get('trainer_short_description')
+
+
+class TrainerServiceDescriptionsForm(Form):
+    def __init__(self, *args, **kwargs):
+        services = kwargs.pop('services', [])
+        super().__init__(*args, **kwargs)
+
+        for service in services:
+            self.fields[f"description_{service.id}"] = CharField(
+                label=f"Popis služby: {service.service.product_name}",
+                initial=service.pending_trainers_service_description or service.trainers_service_description,
+                widget=Textarea(attrs={
+                    'placeholder': f"Popis pro {service.service.product_name}",
+                    'rows': 3
+                }),
+                required=False
+            )
 
 
 class TrainerAddressForm(Form):
@@ -318,17 +347,20 @@ class UserEditForm(UserChangeForm):
             'avatar': 'Avatar',
             'preferred_channel': 'Preferovaný komunikační kanál',
         }
+        help_texts = {
+            'username': 'Maximálně 150 znaků. Pouze písmena, číslice a znaky @/./+/-/_',
+        }
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if UserProfile.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
-            raise ValidationError('Tento email již existuje.')
+            raise ValidationError('Tento email již existuje.')  # Správná zpráva
         return email
 
     def clean_phone(self):
         phone = self.cleaned_data.get('phone')
         if phone and not phone.isdigit():
-            raise ValidationError('Telefoní číslo může obsahovat pouze číslice.')
+            raise ValidationError('Telefonní číslo může obsahovat pouze číslice.')
         return phone
 
 class PasswordChangeForm(Form):
@@ -346,8 +378,14 @@ class PasswordChangeForm(Form):
         new_password = cleaned_data.get('new_password')
         confirm_password = cleaned_data.get('confirm_password')
 
+        if not new_password:
+            raise ValidationError('Nové heslo nesmí být prázdné.')
+
+        if not confirm_password:
+            raise ValidationError('Potvrzení hesla nesmí být prázdné.')
+
         if not self.user.check_password(old_password):
-            raise ValidationError('Původní heslo není správné')
+            raise ValidationError('Původní heslo není správné.')
 
         if new_password != confirm_password:
             raise ValidationError('Hesla se neshodují!')

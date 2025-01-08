@@ -37,5 +37,9 @@
     {% else %}
         <p style="color: red;">Nelze objednat</p>
     {% endif %}
+    {% if user.is_staff %}
+    <a href="{% url 'edit_product' product.pk %}">🖉 Upravit</a>
+{% endif %}
+
 
 {% endblock %}

@@ -1,6 +1,8 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models import Model, CharField, TextField, URLField, ForeignKey, DecimalField, IntegerField, \
     DateTimeField, PositiveIntegerField, SET_NULL, CASCADE, SET_DEFAULT
+from django.template.defaultfilters import slugify
+
 
 # from accounts.models import UserProfile
 
@@ -9,7 +11,9 @@ class Category(Model):
     category_name = CharField(max_length=50, null=False, blank=False, unique=True)
     category_description = TextField(null=True, blank=True)
     category_view = URLField(null=True, blank=True)
-    category_parent = ForeignKey('self', on_delete=SET_NULL, null=True, blank=True, related_name='subcategories')
+    category_parent = ForeignKey(
+        'self', on_delete=SET_NULL, null=True, blank=True, related_name='subcategories'
+    )
 
     class Meta:
         ordering = ['category_name']
@@ -20,6 +24,11 @@ class Category(Model):
 
     def __str__(self):
         return self.category_name
+
+    def save(self, *args, **kwargs):
+        if not self.category_view:
+            self.category_view = f'/{slugify(self.category_name)}/'
+        super().save(*args, **kwargs)
 
 
 class Producer(Model):

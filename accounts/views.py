@@ -13,7 +13,7 @@ from formtools.wizard.views import SessionWizardView
 
 from accounts.forms import RegistrationForm, LoginForm, UserEditForm, PasswordChangeForm, TrainerRegistrationForm, \
     AddressForm, TrainerBasicForm, TrainerServicesForm, TrainerDescriptionsForm, TrainerAddressForm, \
-    TrainerProfileDescriptionForm
+    TrainerProfileDescriptionForm, TrainerServiceDescriptionsForm
 from accounts.models import Address, UserProfile, TrainersServices
 
 logger = logging.getLogger(__name__)
@@ -132,18 +132,27 @@ def logout_view(request: HttpRequest) -> HttpResponse:
     messages.success(request, "Byl(a) jste úspěšně odhlášen(a).")
     return redirect('login')
 @login_required
-def profile_view(request: HttpRequest) -> HttpResponse:
+def profile_view(request):
     user = request.user
-    primary_address = None
+    is_trainer = user.groups.filter(name='trainer').exists()
 
+    # Schválené služby pro trenéra
+    approved_services = []
+    if is_trainer:
+        approved_services = TrainersServices.objects.filter(trainer=user, is_approved=True).select_related('service')
+
+    # Primární adresa uživatele
+    primary_address = None
     if hasattr(user, 'addresses') and user.addresses.exists():
         primary_address = user.addresses.order_by('-id').first()
 
+    # Nedávné objednávky
     recent_orders = user.orders.all().order_by('-order_creation_datetime')[:5]
-
 
     return render(request, 'profile.html', {
         'user': user,
+        'is_trainer': is_trainer,
+        'approved_services': approved_services,
         'primary_address': primary_address,
         'recent_orders': recent_orders,
     })
@@ -154,37 +163,73 @@ def edit_profile(request):
     user = request.user
 
     UserForm = UserEditForm
-    AddressForm = modelform_factory(Address, fields=['first_name', 'last_name', 'street', 'street_number', 'city', 'postal_code', 'country', 'email'])
+    TrainerForm = TrainerProfileDescriptionForm
+    AddressForm = modelform_factory(Address, fields=[
+        'first_name', 'last_name', 'street', 'street_number', 'city', 'postal_code', 'country', 'email'
+    ])
+
+    approved_services = TrainersServices.objects.filter(trainer=user, is_approved=True).select_related('service')
+    ServiceDescriptionsForm = TrainerServiceDescriptionsForm
 
     last_shipping_address = user.addresses.order_by('-id').first()
-    last_billing_address = None
+
+    user_form = UserForm(instance=user)
+    trainer_form = TrainerForm(instance=user)
+    shipping_form = AddressForm(instance=last_shipping_address, prefix='shipping')
+    service_form = ServiceDescriptionsForm(services=approved_services)
 
     if request.method == 'POST':
-        user_form = UserForm(request.POST, instance=user)
-        shipping_form = AddressForm(request.POST, instance=last_shipping_address, prefix='shipping')
-        billing_form = AddressForm(request.POST, instance=last_billing_address, prefix='billing') if last_billing_address else None
+        form_type = request.POST.get('form_type')
 
-        if user_form.is_valid() and shipping_form.is_valid() and (billing_form is None or billing_form.is_valid()):
-            user_form.save()
-            shipping_form.save()
-            if billing_form:
-                billing_form.save()
-            messages.success(request, 'Profil byl úspěšně aktualizován.')
-            return redirect('profile')
-        else:
-            messages.error(request, 'Došlo k chybě při aktualizaci profilu. Zkontrolujte zadané údaje.')
-    else:
-        user_form = UserForm(instance=user)
-        shipping_form = AddressForm(instance=last_shipping_address, prefix='shipping')
-        billing_form = AddressForm(instance=last_billing_address, prefix='billing') if last_billing_address else None
+        if form_type == 'user_form':
+            user_form = UserForm(request.POST, instance=user)
+            if user_form.is_valid():
+                user_form.save()
+                messages.success(request, "Osobní údaje byly úspěšně změněny.")
+            else:
+                for error in user_form.errors.values():
+                    messages.error(request, error)
 
-    return render(request, 'edit_profile.html', {
+        elif form_type == 'trainer_form':
+            trainer_form = TrainerForm(request.POST, instance=user)
+            if trainer_form.is_valid():
+                trainer_form.save()
+                messages.success(request, "Trenérské údaje byly úspěšně změněny.")
+            else:
+                for error in trainer_form.errors.values():
+                    messages.error(request, error)
+
+        elif form_type == 'service_form':
+            service_form = ServiceDescriptionsForm(request.POST, services=approved_services)
+            if service_form.is_valid():
+                for service in approved_services:
+                    description_field = f"description_{service.id}"
+                    service.pending_trainers_service_description = service_form.cleaned_data.get(description_field)
+                    service.save()
+                messages.success(request, "Popisy služeb byly uloženy a čekají na schválení.")
+            else:
+                for error in service_form.errors.values():
+                    messages.error(request, error)
+
+        elif form_type == 'shipping_form':
+            shipping_form = AddressForm(request.POST, instance=last_shipping_address, prefix='shipping')
+            if shipping_form.is_valid():
+                shipping_form.save()
+                messages.success(request, "Adresa byla úspěšně změněna.")
+            else:
+                for field, errors in shipping_form.errors.items():
+                    for error in errors:
+                        messages.error(request, f"{field}: {error}")
+
+    context = {
         'user_form': user_form,
+        'trainer_form': trainer_form,
         'shipping_form': shipping_form,
-        'billing_form': billing_form,
-    })
+        'service_form': service_form,
+        'approved_services': approved_services,
+    }
 
-
+    return render(request, 'edit_profile.html', context)
 
 @login_required
 def change_password(request):

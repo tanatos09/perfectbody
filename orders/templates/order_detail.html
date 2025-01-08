@@ -3,7 +3,7 @@
 {% block content %}
 <h2>Detail objednávky #{{ order.id|stringformat:"08d" }}</h2>
 
-
+<!-- Adresa doručení -->
 <div>
     <h3>Adresa doručení</h3>
     <p>{{ order.billing_address.first_name }} {{ order.billing_address.last_name }}</p>
@@ -15,12 +15,13 @@
 
 <hr>
 
+<!-- Obsah objednávky -->
 <div>
     <h3>Obsah objednávky</h3>
     <ul>
         {% for item in order.items.all %}
             <li>
-                <strong>{{ item.product.product_name }}</strong> 
+                <strong>{{ item.product.product_name }}</strong>
                 - {{ item.quantity }} ks x {{ item.price_per_item }} Kč
             </li>
         {% endfor %}
@@ -30,11 +31,27 @@
 
 <hr>
 
+<!-- Stav objednávky -->
 <div>
     <strong>Stav objednávky:</strong> {{ order.get_order_state_display }}
 </div>
 
+<!-- Tlačítko zrušit objednávku -->
+{% if order.order_state == 'PENDING' %}
+    <form method="post" action="{% url 'cancel_order' order.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Opravdu chcete zrušit tuto objednávku?');">
+            Zrušit objednávku
+        </button>
+    </form>
+{% else %}
+    <p class="text-muted">Objednávku již nelze zrušit.</p>
+{% endif %}
+
+<hr>
+
+<!-- Navigační tlačítka -->
 <a href="{% url 'my_orders' %}" class="btn btn-secondary">Zpět na seznam objednávek</a>
-    <br>
+<br>
 <a href="{% url 'profile' %}" class="btn btn-secondary">Zpět na profil</a>
 {% endblock %}

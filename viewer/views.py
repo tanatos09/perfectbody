@@ -1,4 +1,5 @@
 import json
+import logging
 from itertools import groupby
 from operator import attrgetter
 
@@ -106,14 +107,16 @@ def get_name_day():
         print(f"Chyba při získávání jmenin: {e}")
         return "Chyba"
 
+logger = logging.getLogger(__name__)
 def products(request, pk=None):
     sort_by = request.GET.get('sort_by', 'name')
 
     if pk is None:
-        # Načtení hlavních kategorií
+        # Zobrazí hlavní kategorie, které obsahují produkty nebo podkategorie s produkty typu 'merchantdise'
         main_categories = Category.objects.filter(
-            category_parent=None,  # Hlavní kategorie
-            subcategories__categories__product_type='merchantdise'  # Produkty v podkategoriích typu 'merchantdise'
+            category_parent=None
+        ).filter(
+            Q(categories__product_type='merchantdise') | Q(subcategories__categories__product_type='merchantdise')
         ).distinct()
 
         context = {
@@ -123,14 +126,16 @@ def products(request, pk=None):
             'products': None,
             'sort_by': sort_by,
         }
+
     else:
-        # Načtení aktuální kategorie
+        # Zobrazení konkrétní kategorie
         category = get_object_or_404(Category, pk=pk)
 
-        # Načtení podkategorií a produktů
-        subcategories = category.subcategories.all()
+        subcategories = category.subcategories.filter(
+            Q(categories__product_type='merchantdise') | Q(subcategories__categories__product_type='merchantdise')
+        ).distinct()
 
-        # Řazení produktů na základě parametru sort_by
+        # Produkty v aktuální kategorii
         if sort_by == 'price_asc':
             products = Product.objects.filter(category=category, product_type='merchantdise').order_by('price')
         elif sort_by == 'price_desc':
@@ -145,6 +150,7 @@ def products(request, pk=None):
             'products': products,
             'sort_by': sort_by,
         }
+
     return render(request, 'products.html', context)
 
 def product(request, pk):
@@ -392,9 +398,22 @@ def update_cart_ajax(request, product_id):
 def user_profile_view(request, username):
     user = get_object_or_404(UserProfile, username=username)
     is_trainer = user.groups.filter(name='trainer').exists()
+
     if request.user.is_authenticated and request.user == user:
         return redirect('profile')
-    return render(request, 'user_profile.html', {'user': user, 'is_trainer': is_trainer})
+
+    if is_trainer:
+        approved_services = TrainersServices.objects.filter(trainer=user, is_approved=True).select_related('service')
+        return render(request, 'trainer.html', {
+            'trainer': user,
+            'approved_services': approved_services,
+        })
+
+    return render(request, 'user_profile.html', {
+        'user': user,
+        'is_trainer': is_trainer,
+    })
+
 
 def get_name_day():
     try:

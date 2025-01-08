@@ -16,6 +16,16 @@ class OrderTests(TestCase):
             producer_name="Testovací výrobce",
             producer_description="Popis výrobce"
         )
+        self.product = Product.objects.create(
+            product_type="merchantdise",
+            product_name="Testovací produkt",
+            product_short_description="Krátký popis produktu",
+            product_long_description="Dlouhý popis produktu",
+            price=100.0,
+            category=self.category,
+            producer=self.producer,
+            stock_availability=10
+        )
 
     def test_order_summary(self):
         product = Product.objects.create(
@@ -228,3 +238,88 @@ class OrderTests(TestCase):
         response = self.client.get(reverse('my_orders'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Objednávka #00000001")
+
+
+    def test_guest_order(self):
+        session = self.client.session
+        session['cart'] = {
+            str(self.product.id): {
+                'product_name': self.product.product_name,
+                'quantity': 1,
+                'price': self.product.price
+            }
+        }
+        session.save()
+
+        response = self.client.post(reverse('start_order'), {
+            'guest_email': "guest@example.com",
+            'shipping-first_name': "Jan",
+            'shipping-last_name': "Novák",
+            'shipping-street': "Hlavní",
+            'shipping-street_number': "123",
+            'shipping-city': "Praha",
+            'shipping-postal_code': "11000",
+            'shipping-country': "Česká republika",
+        })
+
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('order_summary'))
+
+        address = Address.objects.first()
+        self.assertIsNotNone(address)
+        self.assertEqual(address.first_name, "Jan")
+        self.assertEqual(address.email, "guest@example.com")
+
+        cart_order = self.client.session.get('cart_order', {})
+        self.assertIn('shipping_address_id', cart_order)
+        self.assertIn('billing_address_id', cart_order)
+
+    def test_guest_order_missing_required_fields(self):
+        session = self.client.session
+        session['cart'] = {
+            str(self.product.id): {
+                'product_name': self.product.product_name,
+                'quantity': 1,
+                'price': self.product.price
+            }
+        }
+        session.save()
+
+        response = self.client.post(reverse('start_order'), {
+            'guest_email': "",
+            'shipping-first_name': "",
+            'shipping-last_name': "",
+            'shipping-street': "",
+            'shipping-street_number': "",
+            'shipping-city': "",
+            'shipping-postal_code': "",
+            'shipping-country': "",
+        })
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Toto pole je třeba vyplnit.")
+        self.assertTemplateUsed(response, 'start_order.html')
+
+    def test_empty_cart_redirects_to_cart_page(self):
+
+        session = self.client.session
+        session['cart'] = {}
+        session.save()
+
+        response = self.client.get(reverse('start_order'))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('cart'))
+
+        messages = list(response.wsgi_request._messages)
+        self.assertTrue(any("Váš košík je prázdný." in str(message) for message in messages))
+
+
+
+
+
+
+
+
+
+

@@ -78,7 +78,7 @@ svg {
 
 /* === Style search === */
 #navbarNav a:hover {
-    color: white !important;
+    color: darkred !important;
 
 }
 #search-results {

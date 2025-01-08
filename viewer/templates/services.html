@@ -7,9 +7,16 @@
         <ul>
             {% for category in main_categories %}
                 <li>
-                    <a href="{% url 'services' category.pk %}">
-                        {{ category.category_name }}
-                    </a>
+                    <a href="{% url 'services' category.pk %}">{{ category.category_name }}</a>
+
+                    {% if user.is_staff %}
+                        <!-- Tlačítka pro úpravu a mazání hlavní kategorie -->
+                        <a href="{% url 'edit_category' category.pk %}" class="btn btn-sm btn-warning">Upravit</a>
+                        <form method="post" action="{% url 'delete_category' category.pk %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tuto kategorii?');">Smazat</button>
+                        </form>
+                    {% endif %}
                 </li>
             {% empty %}
                 <li>Žádné kategorie nejsou k dispozici.</li>
@@ -28,6 +35,15 @@
 
         <p>{{ category.category_description }}</p>
 
+        {% if user.is_staff %}
+            <!-- Tlačítka pro úpravu a mazání aktuální kategorie -->
+            <a href="{% url 'edit_category' category.pk %}" class="btn btn-sm btn-warning">Upravit</a>
+            <form method="post" action="{% url 'delete_category' category.pk %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tuto kategorii?');">Smazat</button>
+            </form>
+        {% endif %}
+
         {% if category.category_parent %}
             <p>
                 <strong>Zpět na předchozí kategorii:</strong>
@@ -44,6 +60,15 @@
                 {% for subcategory in subcategories %}
                     <li>
                         <a href="{% url 'services' subcategory.pk %}">{{ subcategory.category_name }}</a>
+
+                        {% if user.is_staff %}
+                            <!-- Tlačítka pro úpravu a mazání podkategorie -->
+                            <a href="{% url 'edit_category' subcategory.pk %}" class="btn btn-sm btn-warning">Upravit</a>
+                            <form method="post" action="{% url 'delete_category' subcategory.pk %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tuto podkategorii?');">Smazat</button>
+                            </form>
+                        {% endif %}
                     </li>
                 {% endfor %}
             </ul>
@@ -76,6 +101,15 @@
                                 <p style="color: red;">Nelze objednat</p>
                             {% endif %}
                         </div>
+
+                        {% if user.is_staff %}
+                            <!-- Tlačítka pro úpravu a mazání služby -->
+                            <a href="{% url 'edit_service' service.pk %}" class="btn btn-sm btn-warning">Upravit</a>
+                            <form method="post" action="{% url 'delete_service' service.pk %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tuto službu?');">Smazat</button>
+                            </form>
+                        {% endif %}
                     </li>
                 {% endfor %}
             </ul>

@@ -193,7 +193,7 @@ def edit_profile(request):
         elif form_type == 'trainer_form':
             trainer_form = TrainerForm(request.POST, instance=user)
             if trainer_form.is_valid():
-                trainer_form.save()
+                trainer_form.save() # ukladat do trainer pending podobne jako service nize
                 messages.success(request, "Trenérské údaje byly úspěšně změněny.")
             else:
                 for error in trainer_form.errors.values():

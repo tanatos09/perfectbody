@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Přidat výrobce</h1>
+
+<!-- Formulář pro přidání výrobce -->
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Přidat výrobce</button>
+</form>
+
+<!-- Odkaz pro návrat na seznam výrobců -->
+<a href="{% url 'manage_producers' %}" class="btn btn-secondary">Zpět na správu výrobců</a>
+
+{% endblock %}

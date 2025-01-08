@@ -5,20 +5,18 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from unicodedata import category
 
-from accounts.models import TrainersServices
-from manager.forms import CategoryForm, ProductForm, ServiceForm
-from products.models import Product, Category
+from accounts.models import TrainersServices, UserProfile
+from manager.forms import CategoryForm, ProductForm, ServiceForm, TrainerForm, ProducerForm, UserForm
+from products.models import Product, Category, Producer
 
 
 def is_admin(user):
     return user.is_superuser or user.is_staff
 
-@login_required
 @user_passes_test(is_admin)
 def dashboard(request):
     return render(request,'dashboard.html')
 
-@login_required
 @user_passes_test(is_admin)
 def add_product(request):
     if request.method == 'POST':
@@ -30,7 +28,6 @@ def add_product(request):
         form = ProductForm()
         return render(request,'add_product.html', {"form": form})
 
-@login_required
 @user_passes_test(is_admin)
 def add_category(request):
     if request.method == 'POST':
@@ -40,13 +37,12 @@ def add_category(request):
             print(f"Kategorie byla vytvořena: {category.category_name}")
             return redirect('products')
         else:
-            print(f"Chyba ve formuláři: {form.errors}")  # Debugging chyb
+            print(f"Chyba ve formuláři: {form.errors}")
     else:
         form = CategoryForm()
 
     return render(request, 'add_category.html', {'form': form})
 
-@login_required
 @user_passes_test(is_admin)
 def approve_service(request):
     pending_services = TrainersServices.objects.filter(is_approved=False)
@@ -58,19 +54,25 @@ def approve_service(request):
         return redirect('approve_service')
     return render(request, 'approve_service.html', {"pending_services": pending_services})
 
-@login_required
 @user_passes_test(is_admin)
 def add_service(request):
     if request.method == 'POST':
         form = ServiceForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('dashboard')
+            service = form.save(commit=False)
+            service.save()
+            messages.success(request, 'Služba byla úspěšně přidána jako service.')
+            return redirect('services')
+        else:
+            messages.error(request, 'Chyba při přidávání služby. Zkontrolujte zadané údaje.')
     else:
         form = ServiceForm()
-    return render(request, 'add_service.html', {'form': form})
 
-@login_required
+    context = {
+        'form': form,
+    }
+    return render(request, 'add_service.html', context)
+
 @user_passes_test(is_admin)
 def edit_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
@@ -108,7 +110,6 @@ def empty_categories(request):
     return render(request, 'empty_categories.html', {'empty_categories': empty_categories})
 
 def edit_category(request, pk):
-    # Načtení kategorie podle ID
     category = get_object_or_404(Category, pk=pk)
 
     if request.method == 'POST':
@@ -121,3 +122,151 @@ def edit_category(request, pk):
         form = CategoryForm(instance=category)
 
     return render(request, 'edit_category.html', {'form': form, 'category': category})
+
+@user_passes_test(is_admin)
+def delete_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == 'POST':
+        product.delete()
+        messages.success(request, f"Produkt '{product.product_name}' byl úspěšně smazán.")
+        return redirect('dashboard')
+    return render(request, 'delete_product.html', {"product": product})
+
+@user_passes_test(is_admin)
+def edit_service(request, service_id):
+    service = get_object_or_404(Product, id=service_id, product_type='service')
+    if request.method == 'POST':
+        form = ServiceForm(request.POST, instance=service)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"Služba '{service.product_name}' byla úspěšně upravena.")
+            return redirect('manage_services')
+        else:
+            messages.error(request, 'Chyba při ukládání změn. Zkontrolujte zadané údaje.')
+    else:
+        form = ServiceForm(instance=service)
+    return render(request, 'edit_service.html', {"form": form, "service": service})
+
+@user_passes_test(is_admin)
+def delete_service(request, service_id):
+    service = get_object_or_404(Product, id=service_id, product_type='service')
+    if request.method == 'POST':
+        service.delete()
+        messages.success(request, f"Služba '{service.product_name}' byla úspěšně smazána.")
+        return redirect('manage_services')
+    return render(request, 'delete_service.html', {"service": service})
+
+@user_passes_test(is_admin)
+def manage_products(request):
+    products = Product.objects.filter(product_type='merchantdise')
+    return render(request, 'manage_products.html', {'products': products})
+
+@user_passes_test(is_admin)
+def manage_services(request):
+    services = Product.objects.filter(product_type='service')
+    return render(request, 'manage_services.html', {'services': services})
+
+@user_passes_test(is_admin)
+def edit_trainer(request, trainer_id):
+    trainer = get_object_or_404(UserProfile, id=trainer_id, is_staff=False)
+    if request.method == 'POST':
+        form = TrainerForm(request.POST, request.FILES, instance=trainer)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"Trenér '{trainer.full_name()}' byl úspěšně upraven.")
+            return redirect('trainers')
+        else:
+            messages.error(request, 'Chyba při ukládání změn. Zkontrolujte formulář.')
+    else:
+        form = TrainerForm(instance=trainer)
+    return render(request, 'edit_trainer.html', {'form': form, 'trainer': trainer})
+
+@user_passes_test(is_admin)
+def delete_trainer(request, trainer_id):
+    trainer = get_object_or_404(UserProfile, id=trainer_id, is_staff=False)
+    if request.method == 'POST':
+        trainer.delete()
+        messages.success(request, f"Trenér '{trainer.full_name()}' byl úspěšně smazán.")
+        return redirect('trainers')
+    return render(request, 'delete_trainer.html', {'trainer': trainer})
+
+@user_passes_test(is_admin)
+def delete_category(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    if request.method == 'POST':
+        category.delete()
+        messages.success(request, f"Kategorie '{category.category_name}' byla úspěšně smazána.")
+        return redirect('services')
+    return redirect('services')
+
+@user_passes_test(is_admin)
+def edit_producer(request, pk):
+    producer = get_object_or_404(Producer, pk=pk)
+    if request.method == 'POST':
+        form = ProducerForm(request.POST, instance=producer)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"Výrobce '{producer.producer_name}' byl úspěšně upraven.")
+            return redirect('producer', pk=pk)
+        else:
+            messages.error(request, 'Chyba při ukládání změn. Zkontrolujte formulář.')
+    else:
+        form = ProducerForm(instance=producer)
+    return render(request, 'edit_producer.html', {'form': form, 'producer': producer})
+
+@user_passes_test(is_admin)
+def delete_producer(request, pk):
+    producer = get_object_or_404(Producer, pk=pk)
+    if request.method == 'POST':
+        producer.delete()
+        messages.success(request, f"Výrobce '{producer.producer_name}' byl úspěšně smazán.")
+        return redirect('manage_producers')
+    return redirect('producer', pk=pk)
+
+@user_passes_test(is_admin)
+def manage_producers(request):
+    producers = Producer.objects.all()
+    return render(request, 'manage_producers.html', {'producers': producers})
+
+@user_passes_test(is_admin)
+def add_producer(request):
+    if request.method == 'POST':
+        form = ProducerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Výrobce byl úspěšně přidán.")
+            return redirect('manage_producers')
+        else:
+            messages.error(request, "Chyba při přidávání výrobce. Zkontrolujte formulář.")
+    else:
+        form = ProducerForm()
+    return render(request, 'add_producer.html', {'form': form})
+
+@user_passes_test(is_admin)
+def manage_users(request):
+    users = UserProfile.objects.all()
+    return render(request, 'manage_users.html', {'users': users})
+
+@user_passes_test(is_admin)
+def edit_user(request, user_id):
+    user = get_object_or_404(UserProfile, id=user_id)
+    if request.method == 'POST':
+        form = UserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Uživatel byl úspěšně upraven.")
+            return redirect('manage_users')
+        else:
+            messages.error(request, "Chyba při úpravě uživatele.")
+    else:
+        form = UserForm(instance=user)
+    return render(request, 'edit_user.html', {'form': form, 'user': user})
+
+@user_passes_test(is_admin)
+def delete_user(request, user_id):
+    user = get_object_or_404(UserProfile, id=user_id)
+    if request.method == 'POST':
+        user.delete()
+        messages.success(request, "Uživatel byl úspěšně smazán.")
+        return redirect('manage_users')
+    return render(request, 'delete_user.html', {'user': user})

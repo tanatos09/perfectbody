@@ -3,24 +3,25 @@
 {% block content %}
     {% if category is None %}
         <!-- Zobrazení hlavních kategorií -->
-        {% if category is None %}
-    <h1>Kategorie produktů</h1>
-<ul>
-    {% for category in main_categories %}
-        <li>
-            <a href="{% url 'products' category.pk %}">{{ category.category_name }}</a>
-        </li>
-    {% empty %}
-        <li>Žádné kategorie nejsou k dispozici.</li>
-    {% endfor %}
-</ul>
-{% endif %}
-        <!-- Tlačítko pro přidání nové kategorie -->
-        {% if user.is_staff %}
-        <div style="margin-bottom: 20px;">
-                <h3>Novou kategorii přidejte v Admin Dashboardu</h3>
-        </div>
-    {% endif %}
+        <h1>Kategorie produktů</h1>
+        <ul>
+            {% for category in main_categories %}
+                <li>
+                    <a href="{% url 'products' category.pk %}">{{ category.category_name }}</a>
+
+                    {% if user.is_staff %}
+                        <!-- Tlačítka pro úpravu a mazání hlavní kategorie -->
+                        <a href="{% url 'edit_category' category.pk %}" class="btn btn-sm btn-warning">Upravit</a>
+                        <form method="post" action="{% url 'delete_category' category.pk %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tuto kategorii?');">Smazat</button>
+                        </form>
+                    {% endif %}
+                </li>
+            {% empty %}
+                <li>Žádné kategorie nejsou k dispozici.</li>
+            {% endfor %}
+        </ul>
     {% else %}
         <!-- Zobrazení aktuální kategorie -->
         <h1>{{ category.category_name }}</h1>
@@ -28,16 +29,24 @@
         <!-- Obrázek kategorie -->
         {% if category.category_view %}
             <div class="category-image">
-                <img src="{{ category.category_view }}" alt="Obrázek kategorie {{ category.category_name }}"
-                     style="max-width: 450px; height: auto;">
+                <img src="{{ category.category_view }}" alt="Obrázek kategorie {{ category.category_name }}" style="max-width: 450px; height: auto;">
             </div>
         {% endif %}
 
         <p>{{ category.category_description }}</p>
 
+        {% if user.is_staff %}
+            <!-- Tlačítka pro úpravu a mazání aktuální kategorie -->
+            <a href="{% url 'edit_category' category.pk %}" class="btn btn-sm btn-warning">Upravit</a>
+            <form method="post" action="{% url 'delete_category' category.pk %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tuto kategorii?');">Smazat</button>
+            </form>
+        {% endif %}
+
         {% if category.category_parent %}
             <p>
-                <strong>Zpět na nadřazenou kategorii:</strong>
+                <strong>Zpět na předchozí kategorii:</strong>
                 <a href="{% url 'products' category.category_parent.pk %}">
                     {{ category.category_parent.category_name }}
                 </a>
@@ -46,15 +55,24 @@
 
         <!-- Podkategorie -->
         {% if subcategories %}
-    <h2>Podkategorie</h2>
-    <ul>
-        {% for subcategory in subcategories %}
-            <li>
-                <a href="{% url 'products' subcategory.pk %}">{{ subcategory.category_name }}</a>
-            </li>
-        {% endfor %}
-    </ul>
-{% endif %}
+            <h2>Podkategorie</h2>
+            <ul>
+                {% for subcategory in subcategories %}
+                    <li>
+                        <a href="{% url 'products' subcategory.pk %}">{{ subcategory.category_name }}</a>
+
+                        {% if user.is_staff %}
+                            <!-- Tlačítka pro úpravu a mazání podkategorie -->
+                            <a href="{% url 'edit_category' subcategory.pk %}" class="btn btn-sm btn-warning">Upravit</a>
+                            <form method="post" action="{% url 'delete_category' subcategory.pk %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tuto podkategorii?');">Smazat</button>
+                            </form>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
 
         <!-- Produkty -->
         {% if products %}
@@ -67,54 +85,36 @@
                 <a href="?sort_by=price_asc">Od nejlevnějšího</a> |
                 <a href="?sort_by=price_desc">Od nejdražšího</a>
             </div>
-            {% if user.is_staff %}
-            <div style="margin-bottom: 20px;">
-                <a href="{% url 'add_product' %}" class="btn btn-primary">➕ Přidat produkt</a>
-            </div>
-            {% endif %}
 
             <ul>
                 {% for product in products %}
                     <li>
                         <a href="{% url 'product' product.pk %}">
-                             <h3>{{ product.product_name }}</h3>
+                            <h3>{{ product.product_name }}</h3>
                         </a> - {{ product.price }} Kč
                         <p>{{ product.product_short_description }}</p>
-                    <div>{% if user.is_staff %}
-                            <a href="{% url 'edit_product' product.pk %}">🖉 Upravit</a>
+
+                        {% if user.is_staff %}
+                            <!-- Tlačítka pro úpravu a mazání produktu -->
+                            <a href="{% url 'edit_product' product.pk %}" class="btn btn-sm btn-warning">Upravit</a>
+                            <form method="post" action="{% url 'delete_product' product.pk %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tento produkt?');">Smazat</button>
+                            </form>
                         {% endif %}
-                    </div>
-
-                        <div>
-                            {% if product.available_stock > 0 %}
-                                <p>Dostupné množství: {{ product.available_stock }} kusů</p>
-                                <a href="{% url 'add_to_cart' product.pk %}">➕ Přidat do košíku</a>
-                            {% else %}
-                                <p style="color: red;">Nelze objednat</p>
-                            {% endif %}
-                        </div>
                     </li>
-
                 {% endfor %}
             </ul>
         {% endif %}
-        {% if user.is_staff %}
-    <div style="margin-bottom: 20px;">
-                <h3>Novou podkategorii přidejte v Admin Dashboardu</h3>
-    </div>
-{% endif %}
 
-        <!-- Odkaz zpět na rozcestník hlavních kategorií -->
         {% if category.category_parent is None %}
             <p>
                 <a href="{% url 'products' %}">Zpět na rozcestník kategorií produktů</a>
             </p>
         {% endif %}
 
-
         {% if not subcategories and not products %}
             <p style="color: red;">Žádné podkategorie ani produkty nejsou k dispozici.</p>
         {% endif %}
     {% endif %}
-
 {% endblock %}

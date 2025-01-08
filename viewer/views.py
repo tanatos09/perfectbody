@@ -156,7 +156,7 @@ def product(request, pk):
 
 def producer(request, pk):
     producer_detail = get_object_or_404(Producer, id=pk)
-    products = Product.objects.filter(producer=producer_detail).select_related('category')
+    products = Product.objects.filter(producer=producer_detail).select_related('category').order_by('category')
 
     # Skupinové seskupení produktů podle kategorií
     grouped_products = {}
@@ -224,7 +224,8 @@ def service(request, pk):
     # Find the service by primary key or return 404.
     service_detail = get_object_or_404(Product, id=pk)
     # Getting approved trainers for that service.
-    approved_trainers_services = TrainersServices.objects.filter(service=service_detail, is_approved=True).select_related('trainer')
+    approved_trainers_services = TrainersServices.objects.filter(service=service_detail,
+                                                                 is_approved=True).select_related('trainer')
     approved_trainers = [ts.trainer for ts in approved_trainers_services]
     context = {'service': service_detail, 'approved_trainers': approved_trainers}
     return render(request, "service.html", context)
@@ -235,14 +236,15 @@ def trainers(request):
         # Checking whether the user from trainer group has at least one approved service.
         approved_trainers = UserProfile.objects.filter(groups=trainer_group, services__is_approved=True).distinct()
     else:
-        approved_trainers = [] # If the group does not exist, the list will be empty.
+        approved_trainers = []  # If the group does not exist, the list will be empty.
     return render(request, 'trainers.html', {'approved_trainers': approved_trainers})
 
 def trainer(request, pk):
     # Find the trainer by primary key or return 404.
     trainer_detail = get_object_or_404(UserProfile, id=pk)
     # Get approved trainer services.
-    approved_services = TrainersServices.objects.filter(trainer=trainer_detail, is_approved=True).select_related('service')
+    approved_services = TrainersServices.objects.filter(trainer=trainer_detail, is_approved=True).select_related(
+        'service')
     # Forward approved services only.
     context = {'trainer': trainer_detail, 'approved_services': approved_services}
     return render(request, "trainer.html", context)
@@ -338,75 +340,54 @@ def update_cart(request, product_id):
     messages.success(request, "Košík byl úspěšně aktualizován.")
     return redirect('cart')
 
-def complete_order(request):
-    # Načtení košíku ze session
-    cart = request.session.get('cart', {})
-    if not cart:
-        messages.error(request, "Váš košík je prázdný.")
-        return redirect('cart')
-
-    # Zpracování objednávky
-    for product_id_str, item in cart.items():
-        product = get_object_or_404(Product, id=int(product_id_str))
-        quantity = item['quantity']
-
-        # Kontrola dostupnosti skladu
-        if product.stock_availability >= quantity:
-            product.stock_availability -= quantity
-            product.save()
-        else:
-            messages.error(request, f"Nedostatek zboží: {product.product_name}.")
-            return redirect('cart')
-
-    # Vyprázdnění košíku po dokončení objednávky
-    request.session['cart'] = {}
-    messages.success(request, "Objednávka byla úspěšně dokončena.")
-    return redirect('products')
-
 def update_cart_ajax(request, product_id):
     if request.method == 'POST' and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         cart = request.session.get('cart', {})
         product_id_str = str(product_id)
 
+        # Získání produktu a jeho skladové zásoby
+        product = get_object_or_404(Product, id=product_id)
+
         if product_id_str in cart:
             try:
                 data = json.loads(request.body)
                 new_quantity = int(data.get('quantity', 1))
+
                 if new_quantity > 0:
+                    # Kontrola skladové dostupnosti
+                    if new_quantity > product.available_stock():
+                        return JsonResponse({
+                            'success': False,
+                            'error': f'Na skladě je k dispozici pouze {product.available_stock()} kusů.'
+                        })
+
+                    # Aktualizace množství v košíku
                     cart[product_id_str]['quantity'] = new_quantity
                     request.session['cart'] = cart
+
+                    # Přepočet celkové ceny
                     total = sum(item['quantity'] * item['price'] for item in cart.values())
                     item_total = cart[product_id_str]['quantity'] * cart[product_id_str]['price']
 
-                    response = {
+                    return JsonResponse({
                         'success': True,
-                        'item_total': f"{item_total:.2f}",
-                        'cart_total': f"{total:.2f}"
-                    }
-                    print("Response JSON:", response)
-                    return JsonResponse(response)
-
+                        'item_total': f"{item_total:.2f} Kč",
+                        'cart_total': f"{total:.2f} Kč"
+                    })
                 else:
+                    # Odstranění položky z košíku, pokud je nové množství 0 nebo méně
                     del cart[product_id_str]
                     request.session['cart'] = cart
+
                     total = sum(item['quantity'] * item['price'] for item in cart.values())
+                    return JsonResponse({'success': True, 'cart_total': f"{total:.2f} Kč"})
 
-                    response = {'success': True, 'cart_total': f"{total:.2f}"}
-                    print("Response JSON:", response)
-                    return JsonResponse(response)
-
-            except (ValueError, KeyError) as e:
-                error_response = {'success': False, 'error': 'Invalid data'}
-                print("Error JSON:", error_response)
-                return JsonResponse(error_response)
+            except (ValueError, KeyError):
+                return JsonResponse({'success': False, 'error': 'Neplatná hodnota množství.'})
         else:
-            error_response = {'success': False, 'error': 'Product not found'}
-            print("Error JSON:", error_response)
-            return JsonResponse(error_response)
+            return JsonResponse({'success': False, 'error': 'Produkt nebyl nalezen v košíku.'})
 
-    error_response = {'success': False, 'error': 'Invalid request'}
-    print("Error JSON:", error_response)
-    return JsonResponse(error_response)
+    return JsonResponse({'success': False, 'error': 'Neplatný požadavek.'})
 
 def user_profile_view(request, username):
     user = get_object_or_404(UserProfile, username=username)
@@ -460,7 +441,7 @@ def search(request):
         }
         for product in Product.objects.filter(product_type='merchantdise')
         if normalized_query in normalize_for_search(product.product_name)
-        or normalized_query in normalize_for_search(product.product_short_description or "")
+           or normalized_query in normalize_for_search(product.product_short_description or "")
     ]
 
     # Vyhledávání služeb
@@ -473,7 +454,7 @@ def search(request):
         }
         for service in Product.objects.filter(product_type='service')
         if normalized_query in normalize_for_search(service.product_name)
-        or normalized_query in normalize_for_search(service.product_short_description or "")
+           or normalized_query in normalize_for_search(service.product_short_description or "")
     ]
 
     # Vyhledávání trenérů se schválenými službami

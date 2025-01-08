@@ -24,11 +24,11 @@ from orders.views import start_order, order_summary, confirm_order, thank_you, m
 from accounts.views import edit_profile, profile_view, change_password, register, login_view, \
     logout_view, TrainerRegistrationWizard, registration_success
 from viewer.views import view_cart, add_to_cart, remove_from_cart, update_cart, home, products, product, services, \
-    service, trainers, trainer,complete_order, user_profile_view, search, update_cart_ajax
+    service, trainers, trainer, user_profile_view, search, update_cart_ajax
 from accounts.views import edit_profile, profile_view, change_password, register, login_view, \
     logout_view
 from viewer.views import view_cart, add_to_cart, remove_from_cart, update_cart, home, products, product, producer, \
-    services, service, trainers, trainer, complete_order, user_profile_view, search, update_cart_ajax
+    services, service, trainers, trainer, user_profile_view, search, update_cart_ajax
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -62,8 +62,6 @@ urlpatterns = [
     path('detail/<int:order_id>/', order_detail, name='order_detail'),
     path('orders/cancel/<int:order_id>/', cancel_order, name='cancel_order'),
     path('search/', search, name='search'),
-    path('cart/complete/', complete_order, name='complete_order'),
-path('cart/complete/', complete_order, name='complete_order'),
 path(
         'register/trainer/',
         TrainerRegistrationWizard.as_view(

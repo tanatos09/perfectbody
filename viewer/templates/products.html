@@ -14,19 +14,11 @@
         <li>Žádné kategorie nejsou k dispozici.</li>
     {% endfor %}
 </ul>
-            <h1>Debugging hlavních kategorií</h1>
-<ul>
-    {% for category in main_categories %}
-        <li>{{ category.category_name }} - Parent: {{ category.category_parent }}</li>
-    {% empty %}
-        <li>Žádné kategorie nejsou k dispozici.</li>
-    {% endfor %}
-</ul>
 {% endif %}
         <!-- Tlačítko pro přidání nové kategorie -->
         {% if user.is_staff %}
         <div style="margin-bottom: 20px;">
-        <a href="{% url 'add_category' %}" class="btn btn-primary">➕ Přidat kategorii</a>
+                <h3>Novou kategorii přidejte v Admin Dashboardu</h3>
         </div>
     {% endif %}
     {% else %}
@@ -108,7 +100,7 @@
         {% endif %}
         {% if user.is_staff %}
     <div style="margin-bottom: 20px;">
-        <a href="{% url 'add_category' %}?parent_id={{ category.pk }}" class="btn btn-primary">➕ Přidat podkategorii</a>
+                <h3>Novou podkategorii přidejte v Admin Dashboardu</h3>
     </div>
 {% endif %}
 
@@ -124,6 +116,5 @@
             <p style="color: red;">Žádné podkategorie ani produkty nejsou k dispozici.</p>
         {% endif %}
     {% endif %}
-    <a href="?include_empty=true">Zobrazit všechny kategorie</a>
-<a href="?include_empty=false">Zobrazit pouze kategorie s produkty</a>
+
 {% endblock %}

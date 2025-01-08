@@ -112,6 +112,7 @@ def products(request, pk=None):
     sort_by = request.GET.get('sort_by', 'name')
 
     if pk is None:
+        # Zobrazí hlavní kategorie, které obsahují produkty nebo podkategorie s produkty typu 'merchantdise'
         main_categories = Category.objects.filter(
             category_parent=None
         ).filter(
@@ -125,13 +126,16 @@ def products(request, pk=None):
             'products': None,
             'sort_by': sort_by,
         }
+
     else:
+        # Zobrazení konkrétní kategorie
         category = get_object_or_404(Category, pk=pk)
 
         subcategories = category.subcategories.filter(
             Q(categories__product_type='merchantdise') | Q(subcategories__categories__product_type='merchantdise')
         ).distinct()
 
+        # Produkty v aktuální kategorii
         if sort_by == 'price_asc':
             products = Product.objects.filter(category=category, product_type='merchantdise').order_by('price')
         elif sort_by == 'price_desc':

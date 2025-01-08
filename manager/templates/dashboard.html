@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Admin Dashboard</h1>
+<ul>
+    <li><a href="{% url 'add_product' %}">Přidat produkt</a></li>
+    <li><a href="{% url 'add_category' %}">Přidat kategorii</a></li>
+    <li><a href="{% url 'approve_service' %}">Schválit služby</a></li>
+    <li><a href="{% url 'add_service' %}">Vytvořit službu</a></li>
+</ul>
+
+{% endblock %}

@@ -11,11 +11,26 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false" href="/products/">Produkty</a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdown01">
-                        <li><a class="dropdown-item" href="/products/">koule</a></li>
-                        <li><a class="dropdown-item" href="">Čínky</a></li>
-                        <li><a class="dropdown-item" href="#">Skopičinky</a></li>
-                    </ul>
+                    <ul class="dropdown-menu" aria-labelledby="productsDropdown">
+    {% for category in main_categories %}
+        <li>
+            <a class="dropdown-item" href="{% url 'products' category.pk %}">
+                <strong>{{ category.category_name }}</strong>
+            </a>
+            {% if category.subcategories.exists %}
+                <ul class="dropdown-submenu">
+                    {% for subcategory in category.subcategories.all %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'products' subcategory.pk %}">
+                                {{ subcategory.category_name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="dropdown02" data-bs-toggle="dropdown" aria-expanded="false" href="/services/">Služby</a>

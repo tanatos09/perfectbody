@@ -204,9 +204,15 @@ def confirm_order(request):
         for product_id, item in cart.items():
             product = get_object_or_404(Product, id=product_id)
 
-            # Odečtení zásoby
-            product.stock_availability -= item['quantity']
-            product.save()
+            # Kontrola skladové dostupnosti
+            if product.product_type == 'merchantdise' and product.stock_availability < item['quantity']:
+                messages.error(request, f'Produkt {product.product_name} nemá dostatečnou skladovou zásobu.')
+                return redirect('cart')
+
+            # Odečtení zásoby pouze u produktů typu 'merchantdise'
+            if product.product_type == 'merchantdise':
+                product.stock_availability -= item['quantity']
+                product.save()
 
             # Vytvoření položky objednávky
             OrderProduct.objects.create(
@@ -222,7 +228,6 @@ def confirm_order(request):
 
     messages.success(request, f'Děkujeme za objednávku #{order.id}!')
     return redirect('thank_you', order_id=order.id)
-
 
 def thank_you(request, order_id):
     if request.user.is_authenticated:

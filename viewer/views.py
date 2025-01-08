@@ -360,8 +360,8 @@ def update_cart_ajax(request, product_id):
                 new_quantity = int(data.get('quantity', 1))
 
                 if new_quantity > 0:
-                    # Kontrola skladové dostupnosti
-                    if new_quantity > product.available_stock():
+                    # Kontrola skladové dostupnosti pouze pro produkty typu 'merchantdise'
+                    if product.product_type == 'merchantdise' and new_quantity > product.available_stock():
                         return JsonResponse({
                             'success': False,
                             'error': f'Na skladě je k dispozici pouze {product.available_stock()} kusů.'

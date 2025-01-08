@@ -86,7 +86,7 @@ urlpatterns = [
     path('edit_product/<int:product_id>/', edit_product, name='edit_product'),
     path('dashboard/', admin_dashboard, name='admin_dashboard'),
     path('empty-categories/', empty_categories, name='empty_categories'),
-    path('/edit-category/<int:pk>/', edit_category, name='edit_category'),
+    path('edit-category/<int:pk>', edit_category, name='edit_category'),
 
 
 ]

@@ -1,3 +1,4 @@
+from django.db.models import CharField
 from django.forms import ModelForm
 
 from products.models import Product, Category
@@ -12,7 +13,7 @@ class ProductForm(ModelForm):
 class CategoryForm(ModelForm):
     class Meta:
         model = Category
-        fields = '__all__'
+        fields = ['category_name', 'category_description', 'category_parent', 'category_view']
 
 class ServiceForm(ModelForm):
     class Meta:
@@ -25,3 +26,8 @@ class ServiceForm(ModelForm):
         if commit:
             instance.save()
         return instance
+
+class ProductForm(ModelForm):
+    class Meta:
+        model = Product
+        fields = ['product_name', 'product_short_description', 'product_long_description', 'price', 'category', 'producer', 'stock_availability']

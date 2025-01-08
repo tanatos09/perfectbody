@@ -3,18 +3,32 @@
 {% block content %}
     {% if category is None %}
         <!-- Zobrazení hlavních kategorií -->
-        <h1>Kategorie produktů</h1>
-        <ul>
-            {% for category in main_categories %}
-                <li>
-                    <a href="{% url 'products' category.pk %}">
-                        {{ category.category_name }}
-                    </a>
-                </li>
-            {% empty %}
-                <li>Žádné kategorie nejsou k dispozici.</li>
-            {% endfor %}
-        </ul>
+        {% if category is None %}
+    <h1>Kategorie produktů</h1>
+<ul>
+    {% for category in main_categories %}
+        <li>
+            <a href="{% url 'products' category.pk %}">{{ category.category_name }}</a>
+        </li>
+    {% empty %}
+        <li>Žádné kategorie nejsou k dispozici.</li>
+    {% endfor %}
+</ul>
+            <h1>Debugging hlavních kategorií</h1>
+<ul>
+    {% for category in main_categories %}
+        <li>{{ category.category_name }} - Parent: {{ category.category_parent }}</li>
+    {% empty %}
+        <li>Žádné kategorie nejsou k dispozici.</li>
+    {% endfor %}
+</ul>
+{% endif %}
+        <!-- Tlačítko pro přidání nové kategorie -->
+        {% if user.is_staff %}
+        <div style="margin-bottom: 20px;">
+        <a href="{% url 'add_category' %}" class="btn btn-primary">➕ Přidat kategorii</a>
+        </div>
+    {% endif %}
     {% else %}
         <!-- Zobrazení aktuální kategorie -->
         <h1>{{ category.category_name }}</h1>
@@ -40,15 +54,15 @@
 
         <!-- Podkategorie -->
         {% if subcategories %}
-            <h2>Podkategorie</h2>
-            <ul>
-                {% for subcategory in subcategories %}
-                    <li>
-                        <a href="{% url 'products' subcategory.pk %}">{{ subcategory.category_name }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+    <h2>Podkategorie</h2>
+    <ul>
+        {% for subcategory in subcategories %}
+            <li>
+                <a href="{% url 'products' subcategory.pk %}">{{ subcategory.category_name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
 
         <!-- Produkty -->
         {% if products %}
@@ -61,6 +75,11 @@
                 <a href="?sort_by=price_asc">Od nejlevnějšího</a> |
                 <a href="?sort_by=price_desc">Od nejdražšího</a>
             </div>
+            {% if user.is_staff %}
+            <div style="margin-bottom: 20px;">
+                <a href="{% url 'add_product' %}" class="btn btn-primary">➕ Přidat produkt</a>
+            </div>
+            {% endif %}
 
             <ul>
                 {% for product in products %}
@@ -69,6 +88,10 @@
                              <h3>{{ product.product_name }}</h3>
                         </a> - {{ product.price }} Kč
                         <p>{{ product.product_short_description }}</p>
+                    <div>{% if user.is_staff %}
+                            <a href="{% url 'edit_product' product.pk %}">🖉 Upravit</a>
+                        {% endif %}
+                    </div>
 
                         <div>
                             {% if product.available_stock > 0 %}
@@ -83,6 +106,11 @@
                 {% endfor %}
             </ul>
         {% endif %}
+        {% if user.is_staff %}
+    <div style="margin-bottom: 20px;">
+        <a href="{% url 'add_category' %}?parent_id={{ category.pk }}" class="btn btn-primary">➕ Přidat podkategorii</a>
+    </div>
+{% endif %}
 
         <!-- Odkaz zpět na rozcestník hlavních kategorií -->
         {% if category.category_parent is None %}
@@ -91,8 +119,11 @@
             </p>
         {% endif %}
 
+
         {% if not subcategories and not products %}
             <p style="color: red;">Žádné podkategorie ani produkty nejsou k dispozici.</p>
         {% endif %}
     {% endif %}
+    <a href="?include_empty=true">Zobrazit všechny kategorie</a>
+<a href="?include_empty=false">Zobrazit pouze kategorie s produkty</a>
 {% endblock %}

@@ -1,4 +1,5 @@
 import json
+import logging
 from itertools import groupby
 from operator import attrgetter
 
@@ -106,14 +107,15 @@ def get_name_day():
         print(f"Chyba při získávání jmenin: {e}")
         return "Chyba"
 
+logger = logging.getLogger(__name__)
 def products(request, pk=None):
     sort_by = request.GET.get('sort_by', 'name')
 
     if pk is None:
-        # Načtení hlavních kategorií
         main_categories = Category.objects.filter(
-            category_parent=None,  # Hlavní kategorie
-            subcategories__categories__product_type='merchantdise'  # Produkty v podkategoriích typu 'merchantdise'
+            category_parent=None
+        ).filter(
+            Q(categories__product_type='merchantdise') | Q(subcategories__categories__product_type='merchantdise')
         ).distinct()
 
         context = {
@@ -124,13 +126,12 @@ def products(request, pk=None):
             'sort_by': sort_by,
         }
     else:
-        # Načtení aktuální kategorie
         category = get_object_or_404(Category, pk=pk)
 
-        # Načtení podkategorií a produktů
-        subcategories = category.subcategories.all()
+        subcategories = category.subcategories.filter(
+            Q(categories__product_type='merchantdise') | Q(subcategories__categories__product_type='merchantdise')
+        ).distinct()
 
-        # Řazení produktů na základě parametru sort_by
         if sort_by == 'price_asc':
             products = Product.objects.filter(category=category, product_type='merchantdise').order_by('price')
         elif sort_by == 'price_desc':
@@ -145,6 +146,7 @@ def products(request, pk=None):
             'products': products,
             'sort_by': sort_by,
         }
+
     return render(request, 'products.html', context)
 
 def product(request, pk):

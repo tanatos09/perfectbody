@@ -19,7 +19,8 @@ from django.urls import path
 
 from accounts.forms import TrainerBasicForm, TrainerServicesForm, TrainerDescriptionsForm, TrainerAddressForm, \
     TrainerProfileDescriptionForm
-from manager.views import dashboard, add_product, approve_service, add_category, add_service
+from manager.views import dashboard, add_product, approve_service, add_category, add_service, edit_product, \
+    admin_dashboard, empty_categories, edit_category
 from orders.views import start_order, order_summary, confirm_order, thank_you, my_orders, order_detail, cancel_order
 
 from accounts.views import edit_profile, profile_view, change_password, register, login_view, \
@@ -64,8 +65,8 @@ urlpatterns = [
     path('orders/cancel/<int:order_id>/', cancel_order, name='cancel_order'),
     path('search/', search, name='search'),
     path('cart/complete/', complete_order, name='complete_order'),
-path('cart/complete/', complete_order, name='complete_order'),
-path(
+    path('cart/complete/', complete_order, name='complete_order'),
+    path(
         'register/trainer/',
         TrainerRegistrationWizard.as_view(
             form_list=[
@@ -78,10 +79,16 @@ path(
         ),
         name='trainer_register'
     ),
-path('register/success/', registration_success, name='registration_success'),
-path('dashboard', dashboard, name='dashboard'),
-path('add-product/', add_product, name='add_product'),
-path('add-category/', add_category, name='add_category'),
-path('add-service', add_service, name='add_service'),
-path('approve-service', approve_service, name='approve_service'),
+    path('register/success/', registration_success, name='registration_success'),
+    path('dashboard', dashboard, name='dashboard'),
+    path('add-product/', add_product, name='add_product'),
+    path('add-category/', add_category, name='add_category'),
+    path('add-service', add_service, name='add_service'),
+    path('approve-service', approve_service, name='approve_service'),
+    path('edit_product/<int:product_id>/', edit_product, name='edit_product'),
+    path('dashboard/', admin_dashboard, name='admin_dashboard'),
+    path('empty-categories/', empty_categories, name='empty_categories'),
+    path('/edit-category/<int:pk>/', edit_category, name='edit_category'),
+
+
 ]

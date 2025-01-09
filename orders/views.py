@@ -74,7 +74,7 @@ def start_order(request):
 
     AddressForm = modelform_factory(
         Address,
-        fields=['first_name', 'last_name', 'street', 'street_number', 'city', 'postal_code', 'country']
+        fields=['first_name', 'last_name', 'street', 'street_number', 'city', 'postal_code', 'country', 'email']
     )
 
     email = None
@@ -121,8 +121,23 @@ def start_order(request):
         messages.error(request, 'Vyplňte všechna povinná pole správně.')
 
     else:
-        shipping_form = AddressForm(prefix='shipping')
-        billing_form = AddressForm(prefix='billing') if not request.user.is_authenticated else None
+        initial_data = None
+        if request.user.is_authenticated:
+            last_address = request.user.addresses.order_by('-id').first()
+            if last_address:
+                initial_data = {
+                    'first_name': last_address.first_name,
+                    'last_name': last_address.last_name,
+                    'street': last_address.street,
+                    'street_number': last_address.street_number,
+                    'city': last_address.city,
+                    'postal_code': last_address.postal_code,
+                    'country': last_address.country,
+                    'email': last_address.email,
+                }
+
+        shipping_form = AddressForm(prefix='shipping', initial=initial_data)
+        billing_form = AddressForm(prefix='billing')
 
     return render(request, 'start_order.html', {
         'shipping_address_form': shipping_form,

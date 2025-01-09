@@ -335,7 +335,7 @@ class TrainerAddressForm(Form):
 
 
 class LoginForm(Form):
-    username = CharField(max_length=50, label='Uživatelské jméno') # pole pro prihlasovaci jmeno uzivatele
+    username = CharField(max_length=50, label='Uživatelské jméno')
     password = CharField(
         max_length=128,
         widget=PasswordInput,
@@ -364,7 +364,7 @@ class UserEditForm(UserChangeForm):
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if UserProfile.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
-            raise ValidationError('Tento email již existuje.')  # Správná zpráva
+            raise ValidationError('Tento email již existuje.')
         return email
 
     def clean_phone(self):
@@ -426,3 +426,19 @@ class AddressForm(ModelForm):
             'country': 'Země',
             'email': 'E-mail',
         }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        address_type = kwargs.pop('address_type', None)
+        super().__init__(*args, **kwargs)
+
+        if user and address_type:
+            address = None
+            if address_type == 'shipping':
+                address = user.shipping_address if hasattr(user, 'shipping_address') else None
+            elif address_type == 'billing':
+                address = user.billing_address if hasattr(user, 'billing_address') else None
+
+            if address:
+                for field_name in self.fields:
+                    self.fields[field_name].initial = getattr(address, field_name, '')

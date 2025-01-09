@@ -442,3 +442,14 @@ class AddressForm(ModelForm):
             if address:
                 for field_name in self.fields:
                     self.fields[field_name].initial = getattr(address, field_name, '')
+
+    def clean_postal_code(self):
+        postal_code = self.cleaned_data.get('postal_code')
+        if postal_code and not postal_code.isdigit():
+            raise ValidationError("PSČ musí obsahovat pouze číslice.")
+        return postal_code
+
+    def clean(self):
+        cleaned_data = super().clean()
+        # Volitelně můžete přidat další validace zde
+        return cleaned_data

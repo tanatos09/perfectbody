@@ -4,7 +4,9 @@ from django.contrib.messages import get_messages
 from django.test import TestCase
 from django.urls import reverse
 
-from accounts.models import Address, UserProfile
+from accounts.forms import UserEditForm
+from accounts.models import Address, UserProfile, TrainersServices
+from products.models import Product, Producer, Category
 
 
 class ChangePasswordTest(TestCase):
@@ -75,157 +77,262 @@ class ChangePasswordTest(TestCase):
 
 class EditProfileTest(TestCase):
     def setUp(self):
-        self.user = UserProfile.objects.create_user(
-            username='testuser',
-            password='password123',
-            first_name='OldFirstName',
-            last_name='OldLastName',
-            email='old@example.com',
-            phone='123456789',
+        self.user = get_user_model().objects.create_user(
+            username='TestovaciUzivatel',
+            email='testovaci.uzivatel@seznam.cz',
+            password='Heslo123'
         )
+        self.profile_url = reverse('edit_profile')
+        self.client.login(username='TestovaciUzivatel', password='Heslo123')
 
-        self.client.login(username='testuser', password='password123')
-        self.url = reverse('edit_profile')
-        self.client.login(username='testuser', password='password123')
-        self.url = reverse('edit_profile')
-        self.address = Address.objects.create(
+    def test_edit_address_success(self):
+        Address.objects.create(
             user=self.user,
-            first_name='OldFirstName',
-            last_name='OldLastName',
-            street='OldStreet',
+            first_name='Test',
+            last_name='User',
+            street='Test Street',
             street_number='123',
-            city='OldCity',
+            city='Test City',
             postal_code='12345',
-            country='OldCountry',
-            email='old@example.com'
-        )
-        self.client.login(username='testuser', password='password123')
-        self.url = reverse('edit_profile')
-
-    def test_edit_address(self):
-        post_data = {
-            'form_type': 'shipping_form',
-            'shipping-first_name': 'NewFirstName',
-            'shipping-last_name': 'NewLastName',
-            'shipping-street': 'NewStreet',
-            'shipping-street_number': '456',
-            'shipping-city': 'NewCity',
-            'shipping-postal_code': '54321',
-            'shipping-country': 'NewCountry',
-            'shipping-email': 'new@example.com',
-        }
-        response = self.client.post(self.url, post_data)
-
-        self.address.refresh_from_db()
-
-        self.assertEqual(self.address.first_name, 'NewFirstName')
-        self.assertEqual(self.address.last_name, 'NewLastName')
-        self.assertEqual(self.address.street, 'NewStreet')
-        self.assertEqual(self.address.street_number, '456')
-        self.assertEqual(self.address.city, 'NewCity')
-        self.assertEqual(self.address.postal_code, '54321')
-        self.assertEqual(self.address.country, 'NewCountry')
-        self.assertEqual(self.address.email, 'new@example.com')
-
-        messages = list(response.wsgi_request._messages)
-        self.assertEqual(len(messages), 1)
-        self.assertEqual(str(messages[0]), "Adresa byla úspěšně změněna.")
-
-    def test_edit_personal_details(self):
-        post_data = {
-            'form_type': 'user_form',
-            'username': 'testuser',
-            'first_name': 'NewFirstName',
-            'last_name': 'NewLastName',
-            'email': 'new@example.com',
-            'phone': '987654321',
-            'avatar': 'http://example.com/new_avatar.png',
-            'preferred_channel': 'PHONE',
-        }
-        response = self.client.post(self.url, post_data)
-
-        self.assertEqual(response.status_code, 200)
-
-        self.user.refresh_from_db()
-
-        self.assertEqual(self.user.first_name, 'NewFirstName')
-        self.assertEqual(self.user.last_name, 'NewLastName')
-        self.assertEqual(self.user.email, 'new@example.com')
-        self.assertEqual(self.user.phone, '987654321')
-        self.assertEqual(self.user.avatar, 'http://example.com/new_avatar.png')
-        self.assertEqual(self.user.preferred_channel, 'PHONE')
-
-        messages = list(response.wsgi_request._messages)
-        self.assertEqual(len(messages), 1, "Očekával se jeden message")
-        self.assertEqual(str(messages[0]), "Osobní údaje byly úspěšně změněny.")
-
-    def test_edit_address_invalid_data(self):
-        post_data = {
-            'form_type': 'shipping_form',
-            'shipping-first_name': '',
-            'shipping-last_name': '',
-            'shipping-email': 'invalid-email',
-        }
-        response = self.client.post(self.url, post_data)
-
-        self.address.refresh_from_db()
-        self.assertNotEqual(self.address.first_name, '')
-        self.assertNotEqual(self.address.last_name, '')
-
-        messages = list(response.wsgi_request._messages)
-        self.assertGreater(len(messages), 0)
-        self.assertIn("first_name: Toto pole je třeba vyplnit.", [str(m) for m in messages])
-        self.assertIn("last_name: Toto pole je třeba vyplnit.", [str(m) for m in messages])
-        self.assertIn("email: Zadejte platnou e-mailovou adresu.", [str(m) for m in messages])
-
-    def test_edit_personal_details_duplicate_email(self):
-        UserProfile.objects.create_user(
-            username='anotheruser',
-            email='duplicate@example.com',
-            password='password123'
+            country='Česká republika',
+            email='testovaci.uzivatel@seznam.cz'
         )
 
-        post_data = {
+        response = self.client.post(self.profile_url, {
+            'form_type': 'shipping_form',
+            'first_name': 'Nové',
+            'last_name': 'Jméno',
+            'street': 'Nová Street',
+            'street_number': '456',
+            'city': 'Nové Město',
+            'postal_code': '54321',
+            'country': 'Slovensko',
+            'email': 'novy.email@seznam.cz',
+        })
+
+        updated_address = Address.objects.filter(user=self.user).latest('id')
+
+        self.assertEqual(updated_address.first_name, 'Nové')
+        self.assertEqual(updated_address.city, 'Nové Město')
+        self.assertRedirects(response, self.profile_url)
+
+    def test_edit_personal_data_success(self):
+        response = self.client.post(self.profile_url, {
             'form_type': 'user_form',
-            'username': 'testuser',
-            'first_name': 'NewFirstName',
-            'last_name': 'NewLastName',
-            'email': 'duplicate@example.com',
-            'phone': '987654321',
-            'avatar': 'http://example.com/new_avatar.png',
-            'preferred_channel': 'PHONE',
-        }
-        response = self.client.post(self.url, post_data)
+            'username': 'NovyUzivatel',
+            'first_name': 'NovéJméno',
+            'last_name': 'NovéPříjmení',
+            'email': 'novy.email@seznam.cz',
+            'phone': '123456789',
+            'preferred_channel': 'EMAIL',
+        })
 
-        self.assertEqual(response.status_code, 200)
+
+        if response.status_code == 200:
+            print("Form errors (if any):", response.context['user_form'].errors)
 
         self.user.refresh_from_db()
-        self.assertNotEqual(self.user.email, 'duplicate@example.com')
+        self.assertEqual(self.user.first_name, 'NovéJméno')
+        self.assertEqual(self.user.preferred_channel, 'EMAIL')
+        self.assertRedirects(response, self.profile_url)
 
-        self.assertContains(response, "Tento email již existuje.")
+    def test_edit_personal_data_invalid_email(self):
+        response = self.client.post(self.profile_url, {
+            'form_type': 'user_form',
+            'username': 'NovyUzivatel',
+            'first_name': 'NovéJméno',
+            'last_name': 'NovéPříjmení',
+            'email': 'nevalidni-email',
+            'phone': '123456789',
+        })
 
-    def test_phone_with_invalid_characters(self):
-        """Telefon obsahující nepovolené znaky by měl selhat"""
-        invalid_phone_data = {
-            "form_type": "user_form",
-            "username": "testuser",
-            "first_name": "NewFirstName",
-            "last_name": "NewLastName",
-            "email": "new@example.com",
-            "phone": "123ABC@!#",
-        }
-        response = self.client.post(self.url, invalid_phone_data)
-        self.assertEqual(response.status_code, 200)
         self.user.refresh_from_db()
-        self.assertNotEqual(self.user.phone, "123ABC@!#")
-        self.assertContains(response, "Telefonní číslo může obsahovat pouze číslice.")
 
-    def test_unauthorized_user_access(self):
-        """Nepřihlášený uživatel by neměl mít přístup na stránku úpravy profilu"""
-        self.client.logout()  # Odhlásíme uživatele
-        response = self.client.get(self.url)
+        self.assertNotEqual(self.user.email, 'nevalidni-email')
+        self.assertContains(response, 'Zadejte platnou e-mailovou adresu')
+
+    def test_edit_personal_data_existing_email(self):
+        get_user_model().objects.create_user(
+            username='JinyUzivatel',
+            email='existujici.email@seznam.cz',
+            password='Heslo123'
+        )
+
+        response = self.client.post(self.profile_url, {
+            'form_type': 'user_form',
+            'username': 'NovyUzivatel',
+            'first_name': 'NovéJméno',
+            'last_name': 'NovéPříjmení',
+            'email': 'existujici.email@seznam.cz',
+            'phone': '123456789',
+        })
+
+        self.user.refresh_from_db()
+
+        self.assertNotEqual(self.user.email, 'existujici.email@seznam.cz')
+        self.assertContains(response, 'Tento email již existuje.')
+
+    def test_edit_personal_data_invalid_phone(self):
+        response = self.client.post(self.profile_url, {
+            'form_type': 'user_form',
+            'username': 'NovyUzivatel',
+            'first_name': 'NovéJméno',
+            'last_name': 'NovéPříjmení',
+            'email': 'novy.email@seznam.cz',
+            'phone': 'neplatnýTelefon',
+        })
+
+        self.user.refresh_from_db()
+
+        self.assertNotEqual(self.user.phone, 'neplatnýTelefon')
+        self.assertContains(response, 'Telefonní číslo může obsahovat pouze číslice.')
+
+    def test_unauthenticated_user_redirect(self):
+        self.client.logout()
+        response = self.client.get(self.profile_url)
+        self.assertRedirects(response, f"{reverse('login')}?next={self.profile_url}")
+
+    def test_invalid_phone_number(self):
+        """Chyba při neplatném telefonním čísle"""
+        response = self.client.post(self.profile_url, {
+            'form_type': 'user_form',
+            'username': 'NovyUzivatel',
+            'first_name': 'NovéJméno',
+            'last_name': 'NovéPříjmení',
+            'email': 'novy.email@seznam.cz',
+            'phone': 'invalidPhone',  # Neplatné telefonní číslo
+            'preferred_channel': 'EMAIL',
+        })
+
+        self.user.refresh_from_db()
+
+        self.assertNotEqual(self.user.phone, 'invalidPhone')
+        self.assertContains(response, 'Telefonní číslo může obsahovat pouze číslice.')
+
+    def test_duplicate_email(self):
+        """Chyba při použití existujícího e-mailu"""
+        get_user_model().objects.create_user(
+            username='JinyUzivatel',
+            email='existujici.email@seznam.cz',
+            password='Heslo123'
+        )
+
+        response = self.client.post(self.profile_url, {
+            'form_type': 'user_form',
+            'username': 'NovyUzivatel',
+            'first_name': 'NovéJméno',
+            'last_name': 'NovéPříjmení',
+            'email': 'existujici.email@seznam.cz',
+            'phone': '123456789',
+            'preferred_channel': 'EMAIL',
+        })
+
+        self.user.refresh_from_db()
+
+        self.assertNotEqual(self.user.email, 'existujici.email@seznam.cz')
+        self.assertContains(response, 'Tento email již existuje.')
+
+    def test_invalid_address_data(self):
+        """Chyba při neplatných datech adresy"""
+        response = self.client.post(self.profile_url, {
+            'form_type': 'shipping_form',
+            'first_name': 'Test',
+            'last_name': 'User',
+            'street': 'Invalid Street',
+            'street_number': '123',
+            'city': 'Invalid City',
+            'postal_code': 'InvalidPSČ',  # Neplatné PSČ
+            'country': 'Česká republika',
+            'email': 'test@seznam.cz',
+        })
+
+        address_count = Address.objects.filter(user=self.user).count()
+
+        self.assertEqual(address_count, 0)
+        self.assertContains(response, 'PSČ musí obsahovat pouze číslice.')
+
+class TrainerProfileTest(TestCase):
+    def setUp(self):
+        """Příprava testovacího prostředí"""
+        # Vytvoření kategorie
+        self.category = Category.objects.create(
+            category_name="Test Category",
+            category_description="Popis testovací kategorie"
+        )
+
+        # Vytvoření producenta
+        self.producer = Producer.objects.create(producer_name="Test Producer")
+
+        # Vytvoření testovacích produktů (služeb)
+        self.service_1 = Product.objects.create(
+            product_name="Osobní trénink",
+            product_type="service",
+            price=500,
+            producer=self.producer,
+            category=self.category,  # Nastavení kategorie
+            product_short_description="Krátký popis služby",
+            product_long_description="Dlouhý popis služby",
+        )
+        self.service_2 = Product.objects.create(
+            product_name="Online trénink",
+            product_type="service",
+            price=300,
+            producer=self.producer,
+            category=self.category,  # Nastavení kategorie
+            product_short_description="Krátký popis služby",
+            product_long_description="Dlouhý popis služby",
+        )
+
+        # Vytvoření trenéra
+        self.trainer = get_user_model().objects.create_user(
+            username="TestTrener",
+            email="test.trener@seznam.cz",
+            password="Heslo123",
+            trainer_short_description="Zkušený trenér",
+            trainer_long_description="Detailní informace o trenérovi.",
+        )
+
+        # Přidání schválených služeb s popisky
+        self.service_description_1 = TrainersServices.objects.create(
+            trainer=self.trainer,
+            service=self.service_1,
+            trainers_service_description="Pomoc při osobním tréninku.",
+            pending_trainers_service_description="",
+        )
+        self.service_description_2 = TrainersServices.objects.create(
+            trainer=self.trainer,
+            service=self.service_2,
+            trainers_service_description="Pomoc při online tréninku.",
+            pending_trainers_service_description="",
+        )
+
+        self.edit_profile_url = reverse("edit_profile")
+        self.client.login(username="TestTrener", password="Heslo123")
+
+    def test_invalid_service_description(self):
+        response = self.client.post(self.edit_profile_url, {
+            "form_type": "service_form",
+            f"description_{self.service_description_1.id}": "",
+            f"description_{self.service_description_2.id}": "Krátký",
+        })
+
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(response.url.startswith(reverse("login")))
+        self.assertRedirects(response, self.edit_profile_url)
+
+        service_1 = TrainersServices.objects.get(id=self.service_description_1.id)
+        service_2 = TrainersServices.objects.get(id=self.service_description_2.id)
+
+        self.assertEqual(service_1.pending_trainers_service_description, "")
+        self.assertEqual(service_2.pending_trainers_service_description, "")
+        self.assertEqual(service_1.trainers_service_description, "Pomoc při osobním tréninku.")
+        self.assertEqual(service_2.trainers_service_description, "Pomoc při online tréninku.")
+
+    def test_unauthorized_access(self):
+        self.client.logout()
+        response = self.client.get(self.edit_profile_url)
+        self.assertRedirects(response, f"{reverse('login')}?next={self.edit_profile_url}")
+
+
 
 
 

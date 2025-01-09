@@ -276,23 +276,33 @@ class TrainerProfileDescriptionForm(ModelForm):
             'rows': 3,
         })
     )
+    trainer_long_description = CharField(
+        required=False,
+        label="Upravit dlouhý popis",
+        widget=Textarea(attrs={
+            'placeholder': 'Dlouhý popis trenéra',
+            'rows': 6,
+        })
+    )
 
     class Meta:
         model = UserProfile
-        fields = ['trainer_short_description', 'trainer_long_description', 'pending_profile_picture']
+        fields = ['pending_trainer_short_description', 'pending_trainer_long_description', 'pending_profile_picture']
         labels = {
-            'trainer_short_description': 'Krátký popis trenéra',
-            'trainer_long_description': 'Dlouhý popis trenéra',
+            'pending_trainer_short_description': 'Krátký popis trenéra',
+            'pending_trainer_long_description': 'Dlouhý popis trenéra',
             'pending_profile_picture': 'Profilový obrázek (URL)',
         }
 
-    def save(self, commit=True):
-        instance = super().save(commit=False)
-        # Uložit změny pouze do pending polí
-        instance.pending_trainer_short_description = self.cleaned_data.get('trainer_short_description')
-        if commit:
-            instance.save()
-        return instance
+    def __init__(self, *args, **kwargs):
+        instance = kwargs.get('instance', None)
+        initial = kwargs.setdefault('initial', {})
+        if instance:
+            initial['trainer_short_description'] = instance.pending_trainer_short_description or instance.trainer_short_description
+            initial['trainer_long_description'] = instance.pending_trainer_long_description or instance.trainer_long_description
+            initial['pending_profile_picture'] = instance.pending_profile_picture or instance.profile_picture
+        super().__init__(*args, **kwargs)
+
 
     def clean_trainer_short_description(self):
         # Vrací pouze nový popis

@@ -31,14 +31,14 @@
 
     <!-- Krátký popis -->
     <div>
-        <label for="id_trainer_short_description">Krátký popis trenéra</label>
-        {{ trainer_form.trainer_short_description }}
+        <label for="id_pending_trainer_short_description">Krátký popis trenéra</label>
+        {{ trainer_form.pending_trainer_short_description }}
     </div>
 
     <!-- Dlouhý popis -->
     <div>
-        <label for="id_trainer_long_description">Dlouhý popis trenéra</label>
-        {{ trainer_form.trainer_long_description }}
+        <label for="id_pending_trainer_long_description">Dlouhý popis trenéra</label>
+        {{ trainer_form.pending_trainer_long_description }}
     </div>
 
     <button type="submit" name="form_type" value="trainer_form" class="btn btn-primary">Uložit informace o trenérovi</button>
@@ -54,6 +54,9 @@
     <button type="submit" name="form_type" value="service_form" class="btn btn-primary">Uložit popisky služeb</button>
 </form>
 {% endif %}
+
+<a href="{% url 'profile' %}" class="btn btn-secondary mt-3">Zpět na profil</a>
+
 
 <!-- Osobní údaje -->
 <form method="post">

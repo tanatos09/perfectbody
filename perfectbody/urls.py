@@ -22,15 +22,11 @@ from accounts.forms import TrainerBasicForm, TrainerServicesForm, TrainerDescrip
 from manager.views import dashboard, add_product, approve_service, add_category, add_service, edit_product, \
     admin_dashboard, empty_categories, edit_category, delete_product, manage_products, manage_services, edit_service, \
     delete_service, edit_trainer, delete_trainer, delete_category, edit_producer, delete_producer, manage_producers, \
-    add_producer, delete_user, edit_user, manage_users
+    add_producer, delete_user, edit_user, manage_users, approve_trainer_content
 from orders.views import start_order, order_summary, confirm_order, thank_you, my_orders, order_detail, cancel_order
 
-from accounts.views import edit_profile, profile_view, change_password, register, login_view, \
-    logout_view, TrainerRegistrationWizard, registration_success
-from viewer.views import view_cart, add_to_cart, remove_from_cart, update_cart, home, products, product, services, \
-    service, trainers, trainer, user_profile_view, search, update_cart_ajax
-from accounts.views import edit_profile, profile_view, change_password, register, login_view, \
-    logout_view
+from accounts.views import edit_profile, profile_view, change_password, register, login_view, logout_view, TrainerRegistrationWizard, registration_success
+
 from viewer.views import view_cart, add_to_cart, remove_from_cart, update_cart, home, products, product, producer, \
     services, service, trainers, trainer, user_profile_view, search, update_cart_ajax
 
@@ -104,5 +100,6 @@ urlpatterns = [
     path('manage-users/', manage_users, name='manage_users'),
     path('edit-user/<int:user_id>/', edit_user, name='edit_user'),
     path('delete-user/<int:user_id>/', delete_user, name='delete_user'),
+    path("approve_trainer_content/", approve_trainer_content, name="approve_trainer_content"),
 
 ]

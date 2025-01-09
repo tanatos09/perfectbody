@@ -13,6 +13,9 @@ from products.models import Product, Category, Producer
 def is_admin(user):
     return user.is_superuser or user.is_staff
 
+def is_superuser(user):
+    return user.is_superuser
+
 @user_passes_test(is_admin)
 def dashboard(request):
     return render(request,'dashboard.html')
@@ -247,20 +250,31 @@ def manage_users(request):
     users = UserProfile.objects.all()
     return render(request, 'manage_users.html', {'users': users})
 
-@user_passes_test(is_admin)
+@user_passes_test(is_superuser)
 def edit_user(request, user_id):
-    user = get_object_or_404(UserProfile, id=user_id)
-    if request.method == 'POST':
-        form = UserForm(request.POST, instance=user)
+    user_to_edit = get_object_or_404(UserProfile, id=user_id)
+
+    if not request.user.is_superuser and user_to_edit.is_superuser:
+        messages.error(request, "Nemáte oprávnění upravovat superuživatele.")
+        return redirect("manage_users")
+
+    if request.method == "POST":
+        form = UserForm(request.POST, instance=user_to_edit)
         if form.is_valid():
+            is_staff = form.cleaned_data.get("is_staff")
+            is_superuser = form.cleaned_data.get("is_superuser")
+
+            if not request.user.is_superuser and (is_staff or is_superuser):
+                messages.error(request, "Nemáte oprávnění udělit administrátorská nebo superuživatelská práva.")
+                return redirect("manage_users")
+
             form.save()
-            messages.success(request, "Uživatel byl úspěšně upraven.")
-            return redirect('manage_users')
-        else:
-            messages.error(request, "Chyba při úpravě uživatele.")
+            messages.success(request, f"Uživatel '{user_to_edit.full_name()}' byl úspěšně upraven.")
+            return redirect("manage_users")
     else:
-        form = UserForm(instance=user)
-    return render(request, 'edit_user.html', {'form': form, 'user': user})
+        form = UserForm(instance=user_to_edit)
+
+    return render(request, "edit_user.html", {"form": form, "user": user_to_edit})
 
 @user_passes_test(is_admin)
 def delete_user(request, user_id):
@@ -270,3 +284,61 @@ def delete_user(request, user_id):
         messages.success(request, "Uživatel byl úspěšně smazán.")
         return redirect('manage_users')
     return render(request, 'delete_user.html', {'user': user})
+
+@user_passes_test(is_admin)
+def approve_trainer_content(request):
+    pending_trainers = UserProfile.objects.filter(
+        Q(pending_trainer_short_description__isnull=False) |
+        Q(pending_trainer_long_description__isnull=False)
+    )
+    pending_services = TrainersServices.objects.filter(
+        pending_trainers_service_description__isnull=False
+    )
+
+    if request.method == "POST":
+        content_type = request.POST.get("content_type")
+        content_id = request.POST.get("content_id")
+        action = request.POST.get("action")
+
+        if content_type == "trainer_short_description":
+            trainer = get_object_or_404(UserProfile, id=content_id)
+            if action == "approve":
+                trainer.trainer_short_description = trainer.pending_trainer_short_description
+                trainer.pending_trainer_short_description = None
+                trainer.save()
+                messages.success(request, f"Krátký popis trenéra '{trainer.full_name()}' byl schválen.")
+            elif action == "reject":
+                trainer.pending_trainer_short_description = None
+                trainer.save()
+                messages.info(request, f"Krátký popis trenéra '{trainer.full_name()}' byl zamítnut.")
+
+        elif content_type == "trainer_long_description":
+            trainer = get_object_or_404(UserProfile, id=content_id)
+            if action == "approve":
+                trainer.trainer_long_description = trainer.pending_trainer_long_description
+                trainer.pending_trainer_long_description = None
+                trainer.save()
+                messages.success(request, f"Dlouhý popis trenéra '{trainer.full_name()}' byl schválen.")
+            elif action == "reject":
+                trainer.pending_trainer_long_description = None
+                trainer.save()
+                messages.info(request, f"Dlouhý popis trenéra '{trainer.full_name()}' byl zamítnut.")
+
+        elif content_type == "service":
+            service = get_object_or_404(TrainersServices, id=content_id)
+            if action == "approve":
+                service.trainers_service_description = service.pending_trainers_service_description
+                service.pending_trainers_service_description = None
+                service.save()
+                messages.success(request, f"Popis služby '{service.service.product_name}' byl schválen.")
+            elif action == "reject":
+                service.pending_trainers_service_description = None
+                service.save()
+                messages.info(request, f"Popis služby '{service.service.product_name}' byl zamítnut.")
+
+        return redirect("approve_trainer_content")
+
+    return render(request, "approve_trainer_content.html", {
+        "pending_trainers": pending_trainers,
+        "pending_services": pending_services,
+    })

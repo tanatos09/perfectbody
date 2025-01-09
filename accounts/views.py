@@ -162,74 +162,48 @@ def profile_view(request):
 def edit_profile(request):
     user = request.user
 
-    UserForm = UserEditForm
     TrainerForm = TrainerProfileDescriptionForm
-    AddressForm = modelform_factory(Address, fields=[
-        'first_name', 'last_name', 'street', 'street_number', 'city', 'postal_code', 'country', 'email'
-    ])
-
-    approved_services = TrainersServices.objects.filter(trainer=user, is_approved=True).select_related('service')
     ServiceDescriptionsForm = TrainerServiceDescriptionsForm
 
-    last_shipping_address = user.addresses.order_by('-id').first()
+    approved_services = TrainersServices.objects.filter(trainer=user, is_approved=True).select_related("service")
 
-    user_form = UserForm(instance=user)
-    trainer_form = TrainerForm(instance=user)
-    shipping_form = AddressForm(instance=last_shipping_address, prefix='shipping')
+    trainer_form = TrainerForm(instance=user, initial={
+        "pending_trainer_short_description": user.pending_trainer_short_description or user.trainer_short_description,
+        "pending_trainer_long_description": user.pending_trainer_long_description or user.trainer_long_description,
+        "pending_profile_picture": user.pending_profile_picture or user.profile_picture,
+    })
     service_form = ServiceDescriptionsForm(services=approved_services)
 
-    if request.method == 'POST':
-        form_type = request.POST.get('form_type')
+    if request.method == "POST":
+        form_type = request.POST.get("form_type")
 
-        if form_type == 'user_form':
-            user_form = UserForm(request.POST, instance=user)
-            if user_form.is_valid():
-                user_form.save()
-                messages.success(request, "Osobní údaje byly úspěšně změněny.")
-            else:
-                for error in user_form.errors.values():
-                    messages.error(request, error)
-
-        elif form_type == 'trainer_form':
+        if form_type == "trainer_form":
             trainer_form = TrainerForm(request.POST, instance=user)
             if trainer_form.is_valid():
-                trainer_form.save() # ukladat do trainer pending podobne jako service nize
-                messages.success(request, "Trenérské údaje byly úspěšně změněny.")
-            else:
-                for error in trainer_form.errors.values():
-                    messages.error(request, error)
+                user.pending_trainer_short_description = trainer_form.cleaned_data.get("pending_trainer_short_description")
+                user.pending_trainer_long_description = trainer_form.cleaned_data.get("pending_trainer_long_description")
+                user.pending_profile_picture = trainer_form.cleaned_data.get("pending_profile_picture")
+                user.save()
+                messages.success(request, "Změny v profilu trenéra byly uloženy a čekají na schválení.")
+                return redirect("edit_profile")
 
-        elif form_type == 'service_form':
+        elif form_type == "service_form":
             service_form = ServiceDescriptionsForm(request.POST, services=approved_services)
             if service_form.is_valid():
                 for service in approved_services:
                     description_field = f"description_{service.id}"
                     service.pending_trainers_service_description = service_form.cleaned_data.get(description_field)
                     service.save()
-                messages.success(request, "Popisy služeb byly uloženy a čekají na schválení.")
-            else:
-                for error in service_form.errors.values():
-                    messages.error(request, error)
+                messages.success(request, "Změny v popiscích služeb byly uloženy a čekají na schválení.")
+                return redirect("edit_profile")
 
-        elif form_type == 'shipping_form':
-            shipping_form = AddressForm(request.POST, instance=last_shipping_address, prefix='shipping')
-            if shipping_form.is_valid():
-                shipping_form.save()
-                messages.success(request, "Adresa byla úspěšně změněna.")
-            else:
-                for field, errors in shipping_form.errors.items():
-                    for error in errors:
-                        messages.error(request, f"{field}: {error}")
-
-    context = {
-        'user_form': user_form,
-        'trainer_form': trainer_form,
-        'shipping_form': shipping_form,
-        'service_form': service_form,
-        'approved_services': approved_services,
-    }
-
-    return render(request, 'edit_profile.html', context)
+    return render(request, "edit_profile.html", {
+        "user": user,
+        "trainer_form": trainer_form,
+        "service_form": service_form,
+        "user_form": UserEditForm(instance=user),
+        "shipping_form": AddressForm(instance=user.addresses.order_by("-id").first(), prefix="shipping"),
+    })
 
 @login_required
 def change_password(request):

@@ -117,7 +117,17 @@ class ProducerForm(ModelForm):
 class UserForm(ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['first_name', 'last_name', 'email', 'phone', 'date_of_birth', 'trainer_short_description', 'trainer_long_description', 'is_staff']
+        fields = [
+            'first_name',
+            'last_name',
+            'email',
+            'phone',
+            'date_of_birth',
+            'trainer_short_description',
+            'trainer_long_description',
+            'is_staff',
+            'is_superuser',
+        ]
         labels = {
             'first_name': 'Jméno',
             'last_name': 'Příjmení',
@@ -127,4 +137,13 @@ class UserForm(ModelForm):
             'trainer_short_description': 'Krátký popis trenéra',
             'trainer_long_description': 'Dlouhý popis trenéra',
             'is_staff': 'Je admin',
+            'is_superuser': 'Je superuživatel',
         }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
+        if user and not user.is_superuser:
+            self.fields.pop('is_staff', None)
+            self.fields.pop('is_superuser', None)

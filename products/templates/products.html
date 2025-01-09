@@ -3,24 +3,23 @@
 {% block content %}
     {% if category is None %}
         <!-- Zobrazení hlavních kategorií -->
-        {% if category is None %}
-    <h1>Kategorie produktů</h1>
-<ul>
-    {% for category in main_categories %}
-        <li>
-            <a href="{% url 'products' category.pk %}">{{ category.category_name }}</a>
-        </li>
-    {% empty %}
-        <li>Žádné kategorie nejsou k dispozici.</li>
-    {% endfor %}
-</ul>
-{% endif %}
+        <h1>Kategorie produktů</h1>
+        <ul>
+            {% for category in main_categories %}
+                <li>
+                    <a href="{% url 'products' category.pk %}">{{ category.category_name }}</a>
+                </li>
+            {% empty %}
+                <li>Žádné kategorie nejsou k dispozici.</li>
+            {% endfor %}
+        </ul>
+
         <!-- Tlačítko pro přidání nové kategorie -->
         {% if user.is_staff %}
-        <div style="margin-bottom: 20px;">
+            <div style="margin-bottom: 20px;">
                 <h3>Novou kategorii přidejte v Admin Dashboardu</h3>
-        </div>
-    {% endif %}
+            </div>
+        {% endif %}
     {% else %}
         <!-- Zobrazení aktuální kategorie -->
         <h1>{{ category.category_name }}</h1>
@@ -46,15 +45,15 @@
 
         <!-- Podkategorie -->
         {% if subcategories %}
-    <h2>Podkategorie</h2>
-    <ul>
-        {% for subcategory in subcategories %}
-            <li>
-                <a href="{% url 'products' subcategory.pk %}">{{ subcategory.category_name }}</a>
-            </li>
-        {% endfor %}
-    </ul>
-{% endif %}
+            <h2>Podkategorie</h2>
+            <ul>
+                {% for subcategory in subcategories %}
+                    <li>
+                        <a href="{% url 'products' subcategory.pk %}">{{ subcategory.category_name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
 
         <!-- Produkty -->
         {% if products %}
@@ -68,22 +67,23 @@
                 <a href="?sort_by=price_desc">Od nejdražšího</a>
             </div>
             {% if user.is_staff %}
-            <div style="margin-bottom: 20px;">
-                <a href="{% url 'add_product' %}" class="btn btn-primary">➕ Přidat produkt</a>
-            </div>
+                <div style="margin-bottom: 20px;">
+                    <a href="{% url 'add_product' %}" class="btn btn-primary">➕ Přidat produkt</a>
+                </div>
             {% endif %}
 
             <ul>
                 {% for product in products %}
                     <li>
                         <a href="{% url 'product' product.pk %}">
-                             <h3>{{ product.product_name }}</h3>
+                            <h3>{{ product.product_name }}</h3>
                         </a> - {{ product.price }} Kč
                         <p>{{ product.product_short_description }}</p>
-                    <div>{% if user.is_staff %}
-                            <a href="{% url 'edit_product' product.pk %}">🖉 Upravit</a>
-                        {% endif %}
-                    </div>
+                        <div>
+                            {% if user.is_staff %}
+                                <a href="{% url 'edit_product' product.pk %}">🖉 Upravit</a>
+                            {% endif %}
+                        </div>
 
                         <div>
                             {% if product.available_stock > 0 %}
@@ -94,15 +94,28 @@
                             {% endif %}
                         </div>
                     </li>
-
                 {% endfor %}
             </ul>
+
+            <!-- Navigace stránkování -->
+            <div class="pagination">
+                <span class="step-links">
+                    {% if products.has_previous %}
+                        <a href="?page=1{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">&laquo; První</a>
+                        <a href="?page={{ products.previous_page_number }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Předchozí</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Stránka {{ products.number }} z {{ products.paginator.num_pages }}
+                    </span>
+
+                    {% if products.has_next %}
+                        <a href="?page={{ products.next_page_number }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Další</a>
+                        <a href="?page={{ products.paginator.num_pages }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Poslední &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
         {% endif %}
-        {% if user.is_staff %}
-    <div style="margin-bottom: 20px;">
-                <h3>Novou podkategorii přidejte v Admin Dashboardu</h3>
-    </div>
-{% endif %}
 
         <!-- Odkaz zpět na rozcestník hlavních kategorií -->
         {% if category.category_parent is None %}
@@ -111,10 +124,8 @@
             </p>
         {% endif %}
 
-
         {% if not subcategories and not products %}
             <p style="color: red;">Žádné podkategorie ani produkty nejsou k dispozici.</p>
         {% endif %}
     {% endif %}
-
 {% endblock %}

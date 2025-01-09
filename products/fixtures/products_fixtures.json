@@ -479,8 +479,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Ovocná tyčinka s jahodami",
-      "product_short_description": "Lehká a svěží proteinová tyčinka s příchutí jahod, ideální pro zdravou svačinu.",
-      "product_long_description": "Jahodová tyčinka je plná přírodní chuti a živin. Obsahuje 15 g bílkovin a je vyrobena z přírodních surovin, včetně skutečných jahod. Obohacena o vitamíny C a E, pomáhá posílit imunitní systém a dodává energii během náročného dne. Vhodná i pro vegetariány.",
+      "product_short_description": "Lehká a svěží proteinová tyčinka s příchutí jahod, ideální pro zdravou svačinu a rychlé doplnění energie během dne.",
+      "product_long_description": "Ovocná tyčinka s jahodami přináší skvělou kombinaci lahodné chuti a nutričních hodnot. Obsahuje 15 g bílkovin, které podporují regeneraci svalů a udržují energii po celý den. Vyrobena z přírodních surovin, tato tyčinka zahrnuje skutečné sušené jahody bohaté na antioxidanty a vitamín C, které pomáhají posílit imunitní systém. Dále je obohacena o vitamín E, jenž přispívá ke zdraví pokožky a vlasů. Díky vysokému obsahu vlákniny z ovesných vloček podporuje zdravé trávení a zajišťuje delší pocit sytosti. Bez lepku, bez přidaných konzervantů a umělých barviv je vhodná pro vegetariány i ty, kdo hledají zdravou a chutnou alternativu ke sladkostem. Perfektní volba na cesty, do práce nebo jako rychlá svačina před sportem.",
       "product_view": "",
       "price": 48.00,
       "category": 4,
@@ -495,7 +495,7 @@
       "product_type": "merchantdise",
       "product_name": "Arašídová proteinová tyčinka",
       "product_short_description": "Lahodná tyčinka s arašídy a proteinem, která je perfektní svačinou pro aktivní den.",
-      "product_long_description": "Arašídová tyčinka kombinuje chuť pražených arašídů s vysokým obsahem bílkovin (18 g). Je bez lepku a bez umělých sladidel. Obsahuje také omega-3 mastné kyseliny, které přispívají ke zdraví srdce. Praktické balení ji činí ideální volbou pro cestování nebo trénink.",
+      "product_long_description": "Arašídová proteinová tyčinka je stvořena pro milovníky pražených arašídů a aktivního životního stylu. Obsahuje 18 g vysoce kvalitního rostlinného proteinu, který podporuje růst svalů a regeneraci po cvičení. Tyčinka je obohacena o omega-3 mastné kyseliny z lněného semínka, které přispívají ke zdraví srdce a mozku. Díky nízkému obsahu cukru (méně než 1 g na porci) je vhodná i pro osoby sledující svůj denní příjem kalorií. Neobsahuje lepek, umělá sladidla ani konzervanty. Praktické balení ji činí ideální volbou na cestách, v práci i po sportovním výkonu. S každým kouskem si užijete autentickou chuť přírodních arašídů a zdravou svačinu plnou energie. Vyzkoušejte a poznejte rozdíl, který dokáže udělat malá, ale výživná změna ve vašem dni!",
       "product_view": "",
       "price": 54.00,
       "category": 4,
@@ -509,8 +509,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Tyčinka s příchutí cookies a krému",
-      "product_short_description": "Proteinová tyčinka s příchutí cookies a krému, vhodná jako dezertní svačina.",
-      "product_long_description": "Tato proteinová tyčinka obsahuje 20 g bílkovin a chuťově připomíná oblíbené cookies a krém. Je obohacena o vápník a hořčík, které podporují zdraví kostí. Bez lepku a s nízkým obsahem cukru, nabízí skvělou kombinaci chuti a výživy.",
+      "product_short_description": "Proteinová tyčinka s příchutí cookies a krému, ideální jako dezertní svačina, která doplní bílkoviny.",
+      "product_long_description": "Nechte se unést lahodnou chutí oblíbeného dezertu v podobě této tyčinky s příchutí cookies a krému. Obsahuje 20 g kvalitního syrovátkového proteinu, který je ideální pro regeneraci svalů po fyzické aktivitě nebo jako zdravá svačina během dne. Je obohacena o vápník a hořčík, což podporuje zdraví kostí a zubů, a zároveň pomáhá snižovat únavu. Díky nízkému obsahu cukru (méně než 3 g na porci) je vhodná pro ty, kdo chtějí udržovat zdravý životní styl, aniž by museli obětovat chuť na sladké. Tyčinka neobsahuje lepek a je vyrobena z prémiových surovin bez umělých přísad. Praktické balení vám umožní mít oblíbenou chuť vždy po ruce – ať už v práci, na cestách nebo po tréninku. Dopřejte si dezert bez výčitek a dodejte tělu potřebnou energii a živiny!",
       "product_view": "",
       "price": 55.00,
       "category": 4,
@@ -524,8 +524,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Kokosová proteinová tyčinka",
-      "product_short_description": "Exotická kokosová tyčinka plná bílkovin a vlákniny pro zdravý životní styl.",
-      "product_long_description": "Kokosová tyčinka je skvělou volbou pro milovníky exotických chutí. Obsahuje 19 g syrovátkového proteinu a vlákninu, která pomáhá udržovat zdravé trávení. Je bez konzervantů a přidaného cukru, což ji činí vhodnou pro všechny, kdo dbají na svůj jídelníček.",
+      "product_short_description": "Exotická kokosová tyčinka s 19 g proteinu a vlákniny, ideální volba pro zdravý životní styl a dobrou náladu.",
+      "product_long_description": "Nechte se přenést na tropické pláže díky této kokosové proteinové tyčince, která spojuje chuť exotiky s vysokou výživovou hodnotou. Obsahuje 19 g syrovátkového proteinu pro podporu svalové regenerace a 5 g vlákniny na podporu zdravého trávení a pocitu sytosti. Kokosová moučka, přírodní kokosový olej a jemné kokosové aroma vytvářejí nezapomenutelnou chuť, která uspokojí i ty nejnáročnější gurmány. Tyčinka je navíc zcela bez konzervantů, umělých sladidel a přidaného cukru. Díky obsaženým MCT tukům z kokosového oleje pomáhá tyčinka dodávat trvalou energii během dne. Praktické balení je ideální na cesty, do práce nebo po sportovním výkonu. Proč si nevychutnat zdravou exotickou svačinu, která vás inspiruje k lepšímu dni?",
       "product_view": "",
       "price": 53.00,
       "category": 4,
@@ -539,8 +539,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Proteinová tyčinka s příchutí lesního ovoce",
-      "product_short_description": "Výživná tyčinka s lahodnou chutí lesního ovoce a obsahem 18 g bílkovin.",
-      "product_long_description": "Lesní ovoce a kvalitní protein v jedné tyčince. Obsahuje 18 g bílkovin, vlákninu pro podporu trávení a antioxidanty z borůvek a malin. Ideální volba pro zdravou svačinu během dne.",
+      "product_short_description": "Výživná tyčinka s intenzivní chutí lesního ovoce, 18 g bílkovin a antioxidanty, ideální pro aktivní životní styl.",
+      "product_long_description": "Dopřejte si chuť přírody s touto proteinovou tyčinkou plnou lesního ovoce! Obsahuje 18 g vysoce kvalitního proteinu pro podporu regenerace svalů a vlákninu, která přispívá ke zdravému trávení. Borůvky, maliny a ostružiny jsou nejen zdrojem lahodné chuti, ale také přírodních antioxidantů, které pomáhají chránit buňky před oxidačním stresem. Tyčinka je obohacena o vitamíny C a E, které podporují imunitní systém, a přírodní aroma z lesního ovoce zajišťuje autentický chuťový zážitek. Díky absenci umělých barviv a konzervantů je tato tyčinka perfektní volbou pro všechny, kteří hledají chutnou a zdravou svačinu na cesty, do práce nebo po sportovním výkonu. Nechte se unést lesní harmonií v každém soustu!",
       "product_view": "",
       "price": 50.00,
       "category": 4,
@@ -554,8 +554,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Citronová tyčinka s proteinem",
-      "product_short_description": "Osvěžující tyčinka s chutí citronu a obsahem 20 g proteinu.",
-      "product_long_description": "Tato citronová proteinová tyčinka přináší svěží chuť a kvalitní výživu. Obsahuje 20 g bílkovin, vitamín C a přirozené aroma citronu. Je vhodná pro regeneraci po tréninku nebo jako rychlá svačina.",
+      "product_short_description": "Osvěžující proteinová tyčinka s 20 g bílkovin, vitamínem C a přirozenou chutí citronu, ideální pro zdravý životní styl.",
+      "product_long_description": "Citronová tyčinka s proteinem je dokonalým spojením svěžesti a výživy. Obsahuje 20 g kvalitního syrovátkového proteinu, který podporuje regeneraci svalů a dodává energii po náročném tréninku. Přirozené citronové aroma a šťavnatá chuť připomínají letní pohodu, zatímco vitamín C posiluje imunitní systém a pomáhá bojovat proti únavě. Tyčinka je obohacena o citrusovou vlákninu, která přispívá ke zdravému trávení, a neobsahuje žádná umělá barviva ani konzervanty. Praktické balení ji činí perfektní volbou na cesty, do práce nebo jako svačinu po sportovním výkonu. Dopřejte si výbuch svěžesti v každém soustu a podpořte svůj aktivní životní styl s touto lahodnou citronovou tyčinkou!",
       "product_view": "",
       "price": 51.00,
       "category": 4,
@@ -569,8 +569,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Čokoládová tyčinka s mandlemi",
-      "product_short_description": "Lahodná kombinace čokolády a mandlí s 22 g proteinu.",
-      "product_long_description": "Čokoládová tyčinka obohacená o mandle a 22 g kvalitního proteinu. Obsahuje také vitamín E a minerály pro podporu energie. Ideální volba pro aktivní životní styl.",
+      "product_short_description": "Lahodná proteinová tyčinka s prémiovou čokoládou, křupavými mandlemi a 22 g bílkovin pro váš aktivní den.",
+      "product_long_description": "Čokoládová tyčinka s mandlemi je skvělým spojením chuti a výživy. Obsahuje 22 g vysoce kvalitního proteinu, který podporuje regeneraci svalů a dodává potřebnou energii po tréninku nebo během náročného dne. Prémiová hořká čokoláda se dokonale snoubí s křupavými mandlemi, které jsou přírodním zdrojem vitamínu E, zdravých tuků a minerálů jako hořčík a zinek. Tyto složky přispívají ke snížení únavy a podporují optimální funkci svalů. Tyčinka je bez přidaných cukrů, obsahuje pouze přírodní sladidla a neobsahuje lepek, což ji činí vhodnou i pro osoby s intolerancí na lepek. Elegantní balení ji předurčuje k tomu, aby byla vaším společníkem na cestách, v práci nebo jako zdravý dezert po jídle. Dopřejte si dokonalou kombinaci čokolády a mandlí s každým soustem!",
       "product_view": "",
       "price": 56.00,
       "category": 4,
@@ -584,8 +584,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Jablečná proteinová tyčinka se skořicí",
-      "product_short_description": "Tyčinka s chutí jablek a skořice, obsahující 19 g bílkovin.",
-      "product_long_description": "Přináší kombinaci sladké chuti jablek a kořeněné skořice. Obsahuje 19 g proteinu, vlákninu a je bez přidaného cukru. Skvělá svačina pro chladné dny.",
+      "product_short_description": "Dokonale vyvážená harmonie sladkých jablek a aromatické skořice s 19 g bílkovin, ideální pro každý den.",
+      "product_long_description": "Jablečná proteinová tyčinka se skořicí je inspirovaná tradiční chutí domácího jablečného koláče. Obsahuje 19 g vysoce kvalitního proteinu, který podporuje regeneraci svalů a poskytuje energii pro celý den. Přírodní sušená jablka a pravá cejlonská skořice přinášejí jemnou sladkost a hřejivou kořeněnou chuť, která je ideální zejména během chladných dnů. Tyčinka je navíc obohacena o vlákninu z ovsa, která podporuje zdravé trávení. Neobsahuje přidaný cukr ani umělá sladidla, díky čemuž je perfektní volbou pro zdravý životní styl. Praktické balení umožňuje snadné přenášení a konzumaci kdykoli během dne – ať už jako rychlá svačina v práci, nebo jako doplnění energie po cvičení. Dopřejte si chutnou a výživnou svačinu, která vás zahřeje na těle i na duši.",
       "product_view": "",
       "price": 49.00,
       "category": 4,
@@ -599,8 +599,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Karamelová tyčinka s ořechy",
-      "product_short_description": "Chutná karamelová tyčinka s ořechy a obsahem 21 g proteinu.",
-      "product_long_description": "Spojuje sladký karamel a výživné ořechy s 21 g kvalitního proteinu. Obsahuje také zdravé tuky a minerály pro podporu regenerace. Skvělá pro sportovce i jako svačina během náročného dne.",
+      "product_short_description": "Neodolatelná kombinace sladkého karamelu a výživných ořechů s 21 g proteinu, ideální pro aktivní životní styl.",
+      "product_long_description": "Karamelová tyčinka s ořechy je lahodná svačina, která kombinuje bohatou chuť karamelu s křupavostí ořechů. Obsahuje 21 g kvalitního syrovátkového proteinu pro podporu regenerace a budování svalové hmoty, díky čemuž je perfektní volbou pro sportovce i milovníky aktivního životního stylu. Tato tyčinka je navíc bohatá na zdravé tuky z lískových ořechů a mandlí, které přispívají ke zdraví srdce a udržení energie po celý den. Minerály jako hořčík a zinek podpoří vaši vitalitu a imunitu, zatímco nízký obsah cukru zaručuje, že si ji můžete vychutnat bez výčitek. Praktické balení ji činí skvělou volbou na cesty, do práce nebo po intenzivním tréninku. Dejte svému dni chuť a energii s touto neodolatelnou kombinací, která vás zasytí a zároveň potěší vaše chuťové buňky.",
       "product_view": "",
       "price": 57.00,
       "category": 4,
@@ -614,8 +614,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Banánová tyčinka s čokoládovou polevou",
-      "product_short_description": "Lahodná banánová tyčinka s jemnou čokoládovou polevou.",
-      "product_long_description": "Banánová tyčinka s čokoládovou polevou obsahuje 20 g bílkovin a přírodní banánové aroma. Ideální pro milovníky sladkého, kteří chtějí zároveň dbát na zdravou výživu.",
+      "product_short_description": "Jemná banánová tyčinka v čokoládové polevě s 20 g proteinu, ideální pro milovníky zdravých dezertů.",
+      "product_long_description": "Banánová tyčinka s čokoládovou polevou je dokonalým spojením přírodní banánové chuti a bohaté, jemné čokoládové polevy. Obsahuje 20 g syrovátkového proteinu, který podporuje regeneraci svalů a přispívá k dlouhodobé sytosti. Tyčinka je obohacena o vlákninu pro zdravé trávení a je zcela bez umělých konzervantů a barviv. Banánové aroma pochází z přírodních ingrediencí, což zaručuje autentickou chuť. Nízký obsah cukru a zdravé tuky z kakaového másla dělají z této tyčinky ideální volbu pro milovníky sladkého, kteří dbají na svou výživu. V praktickém balení se skvěle hodí jako rychlá svačina během dne, sladká odměna po náročném cvičení nebo energie na cestách. Vyzkoušejte chuťovou harmonii banánů a čokolády, která vás nikdy nezklame.",
       "product_view": "",
       "price": 53.00,
       "category": 4,
@@ -629,8 +629,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Skořicová tyčinka s dýňovými semínky",
-      "product_short_description": "Speciální proteinová tyčinka s chutí skořice a dýňových semínek.",
-      "product_long_description": "Unikátní kombinace skořice a dýňových semínek nabízí 18 g proteinu a bohatou chuť. Je vhodná pro všechny, kdo hledají zdravou alternativu k tradičním tyčinkám.",
+      "product_short_description": "Výjimečná proteinová tyčinka s aromatickou skořicí a výživnými dýňovými semínky, obsahující 18 g proteinu.",
+      "product_long_description": "Skořicová tyčinka s dýňovými semínky přináší lahodnou kombinaci voňavé skořice a křupavých dýňových semínek. Obsahuje 18 g vysoce kvalitního proteinu, který podporuje regeneraci svalů a dlouhodobou sytost. Tyčinka je obohacena o hořčík a zinek, přirozeně obsažené v dýňových semínkách, což přispívá ke správné funkci metabolismu a zdraví pokožky. Díky obsahu vlákniny pomáhá udržovat zdravé trávení. Neobsahuje žádné umělé přísady ani konzervanty a je vhodná i pro vegetariány. Tato tyčinka je skvělou volbou pro každodenní svačinu, ať už hledáte zdravou alternativu k běžným sladkostem, nebo potřebujete rychlý zdroj energie během dne. Praktické balení ji činí ideální na cesty, do práce nebo po náročném tréninku. Objevte kouzlo přírodních chutí a dopřejte si spojení výživy a potěšení s každým kouskem.",
       "product_view": "",
       "price": 54.00,
       "category": 4,
@@ -644,8 +644,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Třešňová proteinová tyčinka",
-      "product_short_description": "Lehká a chutná tyčinka s příchutí třešní a 19 g bílkovin.",
-      "product_long_description": "Třešňová tyčinka přináší přírodní ovocnou chuť a 19 g proteinu. Obsahuje vitamíny A a C a je vhodná jako zdravá svačina pro děti i dospělé.",
+      "product_short_description": "Lehká a chutná tyčinka s příchutí třešní, obsahující 19 g bílkovin a přírodní vitamíny pro podporu zdraví.",
+      "product_long_description": "Třešňová proteinová tyčinka nabízí jedinečnou kombinaci sladké a šťavnaté chuti třešní spolu s 19 g vysoce kvalitního proteinu. Tyčinka je obohacena o přírodní vitamíny A a C, které podporují zdravý imunitní systém a přispívají ke zdraví pokožky. Obsahuje také antioxidanty získané z lyofilizovaných třešní, jež pomáhají bojovat proti volným radikálům v těle. Je vyrobena z přírodních surovin, neobsahuje žádné přidané konzervanty ani umělá sladidla. Díky své jemné textuře a lahodné chuti je vhodná pro všechny věkové kategorie – od dětí až po aktivní dospělé. Třešňová tyčinka se skvěle hodí jako zdravá svačina během dne, energetická podpora před tréninkem nebo sladký pamlsek po náročném dni. V praktickém balení, které se snadno vejde do kapsy nebo kabelky, je tato tyčinka dokonalým společníkem na cesty, do školy, do práce nebo na výlety. Ochutnejte přírodní sílu třešní a dopřejte si dokonalé spojení chuti a výživy.",
       "product_view": "",
       "price": 52.00,
       "category": 4,
@@ -659,8 +659,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Tyčinka s příchutí lískového oříšku",
-      "product_short_description": "Tyčinka s bohatou chutí lískových oříšků a 20 g proteinu.",
-      "product_long_description": "Kombinace lískových oříšků a proteinu dává tyčince plnou chuť a výživovou hodnotu. Obsahuje také antioxidanty a zdravé tuky, které podporují energii během dne.",
+      "product_short_description": "Lahodná tyčinka s bohatou chutí lískových oříšků, 20 g proteinu a zdravými tuky pro dlouhotrvající energii.",
+      "product_long_description": "Tyčinka s příchutí lískového oříšku přináší dokonalou kombinaci bohaté oříškové chuti a výživových hodnot, které vaše tělo potřebuje. Obsahuje 20 g vysoce kvalitního proteinu, který podporuje regeneraci svalů a udržuje energii během dne. Lískové oříšky, známé svým obsahem zdravých tuků a přírodních antioxidantů, přispívají ke správné funkci mozku a srdce. Každé sousto je obohaceno o vitamín E, který pomáhá bojovat proti volným radikálům, a hořčík, jenž podporuje zdravé kosti a svaly. Tyčinka je ideální nejen jako rychlá svačina, ale také jako zdroj energie před sportem nebo po něm. Neobsahuje umělá sladidla, konzervanty ani lepek, což z ní činí skvělou volbu pro ty, kteří dbají na zdravý životní styl. Díky praktickému balení je tyčinka perfektním společníkem na cesty, do kanceláře i do školy. Dopřejte si vyvážený zážitek s přirozenou chutí lískových oříšků a užijte si pocit spokojenosti z lahodné svačiny plné energie.",
       "product_view": "",
       "price": 55.00,
       "category": 4,
@@ -674,8 +674,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Proteinová tyčinka s příchutí maliny",
-      "product_short_description": "Sladká malinová tyčinka s 18 g bílkovin a nízkým obsahem cukru.",
-      "product_long_description": "Malinová tyčinka kombinuje přírodní chuť ovoce a vysoký obsah proteinu. Obsahuje 18 g bílkovin, vitamín C a vlákninu pro zdravé trávení. Ideální pro svačinu během dne.",
+      "product_short_description": "Lahodná malinová tyčinka s 18 g proteinu, vitamínem C a vlákninou pro zdravé trávení.",
+      "product_long_description": "Sladká a osvěžující proteinová tyčinka s příchutí maliny je ideální volbou pro milovníky přírodního ovoce, kteří hledají zdravou svačinu. Každá tyčinka obsahuje 18 g vysoce kvalitního syrovátkového proteinu, který přispívá k regeneraci svalů a udržení energie během celého dne. Maliny jsou přírodním zdrojem antioxidantů a vitamínu C, který podporuje imunitní systém a pomáhá bojovat proti únavě. Tyčinka je navíc obohacena o vlákninu, která zlepšuje trávení a navozuje pocit sytosti. Díky nízkému obsahu cukru a absenci umělých sladidel je vhodná i pro ty, kteří sledují svůj kalorický příjem. Vynikající chuť malin v kombinaci s jemnou texturou zajišťuje dokonalý gurmánský zážitek. Vychutnejte si tuto tyčinku kdekoliv – během práce, na cestách nebo po tréninku. Praktické balení zaručuje, že ji můžete mít vždy po ruce. Dopřejte si přirozenou energii a pocit spokojenosti s touto výjimečnou tyčinkou.",
       "product_view": "",
       "price": 49.00,
       "category": 4,
@@ -690,7 +690,7 @@
       "product_type": "merchantdise",
       "product_name": "Čokoládová proteinová tyčinka",
       "product_short_description": "Vynikající čokoládová tyčinka s vysokým obsahem bílkovin, ideální pro doplnění energie a regeneraci svalů.",
-      "product_long_description": "Tato čokoládová proteinová tyčinka obsahuje 22 g vysoce kvalitního proteinu, který podpoří regeneraci svalů po cvičení. Je obohacena o vitamíny a minerály, které pomáhají udržovat tělo v rovnováze. Tyčinka má intenzivní čokoládovou chuť a je bez přidaného cukru, což z ní činí ideální volbu pro sportovce i zdravě žijící jedince.",
+      "product_long_description": "Pro milovníky čokolády je tato tyčinka dokonalou kombinací chuti a výživy. Obsahuje 22 g vysoce kvalitního syrovátkového proteinu, který podporuje růst a regeneraci svalů po náročném cvičení. Intenzivní čokoládová chuť je dosažena díky použití prémiového kakaa, které dodává tyčince bohatou a autentickou chuť. Navíc je obohacena o esenciální vitamíny, jako je vitamín B6, který pomáhá snižovat únavu, a minerály, například hořčík, který podporuje správnou funkci svalů a nervového systému. Tyčinka je bez přidaného cukru, což z ní činí ideální volbu nejen pro sportovce, ale i pro každého, kdo dbá na zdravý životní styl. Praktické balení umožňuje snadné použití kdekoliv – v posilovně, během pracovního dne nebo na cestách. Tato tyčinka nejen potěší chuťové pohárky, ale také zajistí dlouhodobou energii a pocit sytosti. Přineste si do svého dne trochu čokoládového potěšení bez výčitek.",
       "product_view": "",
       "price": 52.00,
       "category": 4,
@@ -704,8 +704,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Proteinová tyčinka s pistáciemi",
-      "product_short_description": "Krémová pistáciová tyčinka s obsahem 21 g proteinu a přírodními ingrediencemi.",
-      "product_long_description": "Tato tyčinka s pistáciemi kombinuje ořechovou chuť s kvalitním syrovátkovým proteinem. Obsahuje 21 g bílkovin, zdravé tuky a vlákninu, která podporuje trávení. Bez lepku a bez přidaného cukru, ideální jako svačina nebo doplnění energie během dne.",
+      "product_short_description": "Krémová pistáciová tyčinka s 21 g proteinu, ryze přírodními ingrediencemi a lahodnou ořechovou chutí.",
+      "product_long_description": "Objevte harmonii jemné pistáciové chuti a nutričních benefitů v jedné tyčince! Tato proteinová tyčinka nabízí 21 g prémiového syrovátkového proteinu, který podpoří růst a regeneraci svalů. Pistácie, známé svými zdravými tuky a antioxidanty, zajišťují delší pocit sytosti a dodávají tělu energii potřebnou během dne. Tyčinka je obohacena o vlákninu, která podporuje zdravé trávení, a obsahuje přírodní ingredience, včetně lyofilizovaných pistácií, které dodávají autentickou chuť. Neobsahuje lepek, přidaný cukr ani umělá barviva, což ji činí skvělou volbou pro ty, kteří dbají na kvalitu svého jídelníčku. S praktickým balením ji můžete mít vždy po ruce – ideální jako svačina na cestách, po tréninku nebo kdykoliv během dne. Nechte se unést oříškovým pohlazením a zařaďte tuto tyčinku mezi své oblíbené zdroje energie.",
       "product_view": "",
       "price": 56.00,
       "category": 4,
@@ -719,8 +719,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Proteinová tyčinka s příchutí mango a kokos",
-      "product_short_description": "Exotická kombinace manga a kokosu s 19 g proteinu pro svěží start dne.",
-      "product_long_description": "Tato tyčinka spojuje sladkou chuť manga a jemný nádech kokosu. Obsahuje 19 g bílkovin a přírodní antioxidanty. Ideální jako zdravá svačina nebo osvěžující doplnění energie po tréninku. Neobsahuje umělá barviva ani konzervanty.",
+      "product_short_description": "Exotická kombinace manga a kokosu s 19 g proteinu pro osvěžující energii a tropickou chuť.",
+      "product_long_description": "Nechte se unést tropickou harmonií v podobě manga a kokosu! Tato proteinová tyčinka kombinuje šťavnatou sladkost zralého manga a jemný kokosový nádech, čímž vytváří nezapomenutelný chuťový zážitek. Obsahuje 19 g kvalitního syrovátkového proteinu, který podporuje regeneraci svalů a přispívá k pocitu sytosti. Tyčinka je bohatá na přírodní antioxidanty z manga, které pomáhají bojovat proti volným radikálům a podporují vitalitu. Kokos přidává zdravé tuky, které dodávají dlouhotrvající energii. Neobsahuje umělá barviva, konzervanty ani přidaný cukr, což ji činí ideální volbou pro zdravý životní styl. Praktické balení vám umožní mít tuto osvěžující svačinu vždy po ruce – ať už jste v práci, na cestách nebo po náročném tréninku. Dopřejte si dotek tropů každý den!",
       "product_view": "",
       "price": 54.00,
       "category": 4,
@@ -734,8 +734,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Proteinová tyčinka s příchutí skořice a javorového sirupu",
-      "product_short_description": "Tyčinka s příchutí skořice a javorového sirupu s 20 g proteinu pro sladké chvíle.",
-      "product_long_description": "Lahodná kombinace skořice a javorového sirupu nabízí nejen výjimečnou chuť, ale také 20 g kvalitního proteinu. Tyčinka je bohatá na vlákninu a obsahuje přírodní složky bez přidaných cukrů. Ideální volba pro podzimní dny.",
+      "product_short_description": "Lahodná tyčinka s vůní skořice a jemnou sladkostí javorového sirupu, obsahující 20 g proteinu.",
+      "product_long_description": "Spojení teplé vůně skořice a sladkosti pravého kanadského javorového sirupu dělá z této tyčinky neodolatelný zážitek. Obsahuje 20 g vysoce kvalitního proteinu pro regeneraci svalů a dodání energie, ať už jste na cestách, po tréninku nebo si chcete vychutnat sladký moment odpočinku. Tyčinka je bohatá na přírodní vlákninu, která podporuje zdravé trávení, a je vyrobena bez přidaných cukrů a umělých barviv. Javorový sirup přináší nejen jemnou sladkost, ale také přirozené antioxidanty a minerály, které prospívají vašemu zdraví. Skořice dodává přírodní kořeněný nádech, který zahřeje v chladnějších dnech. Praktické balení umožňuje mít tuto výživnou a chutnou tyčinku vždy po ruce. Skvělá volba pro milovníky dezertních chutí, kteří dbají na svůj zdravý životní styl.",
       "product_view": "",
       "price": 58.00,
       "category": 4,
@@ -749,8 +749,8 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Proteinová tyčinka s příchutí arašídového másla a čokolády",
-      "product_short_description": "Lahodná kombinace arašídového másla a čokolády s obsahem 22 g proteinu.",
-      "product_long_description": "Spojení jemného arašídového másla a hořké čokolády vytváří neodolatelnou chuť. Tyčinka obsahuje 22 g proteinu, zdravé tuky a antioxidanty. Perfektní jako svačina nebo dezert po tréninku.",
+      "product_short_description": "Neodolatelná tyčinka s jemným arašídovým máslem a hořkou čokoládou, obohacená o 22 g proteinu.",
+      "product_long_description": "Zažijte harmonii jemného arašídového másla a bohaté chuti hořké čokolády v jedné proteinové tyčince. Obsahuje 22 g kvalitního syrovátkového proteinu, který podporuje regeneraci svalů a dodává energii na celý den. Tato tyčinka je ideální volbou pro milovníky sladkého, kteří dbají na svůj zdravý životní styl. Arašídové máslo přináší zdravé tuky a přirozený zdroj vitamínu E, zatímco čokoláda obsahuje antioxidanty, které pomáhají bojovat proti volným radikálům. Tyčinka je navíc bez lepku a umělých konzervantů, což z ní dělá skvělou volbu i pro citlivější jedince. Perfektní jako rychlá svačina, dezert po cvičení nebo povzbuzující občerstvení během náročného dne. Praktické balení zajišťuje, že ji můžete mít vždy po ruce – ať už v kanceláři, na výletě, nebo v posilovně.",
       "product_view": "",
       "price": 60.00,
       "category": 4,
@@ -764,13 +764,175 @@
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Jahodová tyčinka s kousky bílého jogurtu",
-      "product_short_description": "Sladká jahodová tyčinka s jemnými kousky bílého jogurtu a 18 g proteinu.",
-      "product_long_description": "Tyčinka kombinuje svěží chuť jahod s jemnými kousky bílého jogurtu. Obsahuje 18 g bílkovin a vápník pro podporu zdravých kostí. Je bez lepku a ideální pro všechny, kdo hledají zdravou svačinu s přírodním složením.",
+      "product_short_description": "Svěží kombinace jahod a bílého jogurtu s obsahem 18 g bílkovin pro zdravou svačinu kdykoliv během dne.",
+      "product_long_description": "Vychutnejte si lahodnou kombinaci svěží chuti zralých jahod a jemných kousků bílého jogurtu v této výjimečné proteinové tyčince. Obsahuje 18 g vysoce kvalitního proteinu, který podporuje regeneraci svalů a dodává tělu energii pro aktivní životní styl. Obohacená o vápník z jogurtových kousků přispívá ke zdraví kostí a zubů. Tyčinka je navíc bez lepku a umělých barviv, takže si můžete být jisti, že si pochutnáte na přirozených ingrediencích. Přirozeně sladká chuť jahod doplněná krémovostí jogurtu vás příjemně naladí na celý den. Perfektní jako svačina do práce, do školy nebo po tréninku. Praktické balení zajišťuje, že tyčinku můžete mít kdykoliv po ruce – ať už vás čeká náročný den nebo si chcete dopřát zdravé mlsání.",
       "product_view": "",
       "price": 55.00,
       "category": 4,
       "producer": 2,
       "stock_availability": 150
+    }
+  },
+  {
+    "model": "products.producer",
+    "pk": 6,
+    "fields": {
+      "producer_name": "YogaHarmony",
+      "producer_description": "YogaHarmony přináší klid, rovnováhu a inovaci do vašeho života. Naším posláním je vytvářet produkty, které podporují fyzické i duševní zdraví - zejména prostřednictvím jógy. Naše nabídka zahrnuje ekologické cvičební podložky, ergonomické bloky, pásky, meditační polštáře a další pomůcky, které zvyšují vaše pohodlí a efektivitu nejen při cvičení, ale i relaxaci. Všechny naše výrobky jsou navrženy s důrazem na udržitelnost a jsou proto vyrobeny výhradně z recyklovaných nebo přírodních materiálů. YogaHarmony je ideální volbou pro každého, kdo hledá harmonii mezi tělem, myslí a přírodou. Věříme, že každý krok na cestě jógy by měl být provázen klidem a kvalitou. Objevte svou sílu s YogaHarmony.",
+      "producer_view": "https://i.ibb.co/Pzgc6LB/YOGAHARMONY.jpg"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 41,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Podložka na cvičení YogaMat Pro",
+      "product_short_description": "Spolehlivě protiskluzová podložka na jógu a pilates, vyrobená z ekologických materiálů.",
+      "product_long_description": "YogaMat Pro je ideální volbou pro milovníky jógy a pilates. Tato podložka je vyrobena z ekologického TPE materiálu, který je šetrný k přírodě a zaručuje vysokou odolnost a dlouhou životnost. Protiskluzový povrch poskytuje bezpečnost a stabilitu při jakémkoliv cvičení, ať už jde o náročné jógové pozice nebo intenzivní fitness trénink. Díky tloušťce 6 mm nabízí podložka optimální pohodlí a ochranu kloubů. Je lehká, snadno přenosná a dodává se s praktickým popruhem. Jednoduché čištění a voděodolná úprava zajistí, že podložka zůstane hygienicky čistá i po intenzivním používání. Perfektní společník pro domácí i venkovní cvičení.",
+      "product_view": "https://i.ibb.co/dQ4mzXy/PODLOZKANACVICENIYOGAMATPRO.jpg",
+      "price": 749.00,
+      "category": 7,
+      "producer": 6,
+      "stock_availability": 100
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 42,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Fitness podložka MultiSport",
+      "product_short_description": "Univerzální cvičební podložka s extra tloušťkou pro maximální pohodlí.",
+      "product_long_description": "Fitness podložka MultiSport je určena pro širokou škálu cvičení – od jógy a pilates až po fitness a posilování. Je vyrobena z vysoce kvalitní NBR pěny, která poskytuje vynikající tlumení a chrání vaše klouby před tvrdým povrchem. Protiskluzová spodní strana zajišťuje stabilitu na jakémkoliv povrchu, zatímco odolný a omyvatelný povrch je snadno udržovatelný. Podložka o tloušťce 10 mm je ideální pro domácí i venkovní použití. Dodává se s praktickým popruhem na přenášení a její univerzální rozměry (183 x 61 cm) zajišťují dostatek prostoru pro pohodlné cvičení. Vhodná pro začátečníky i pokročilé sportovce.",
+      "product_view": "https://i.ibb.co/7nFWSbf/FITNESSPODLOZKAMULTISPORT.jpg",
+      "price": 899.00,
+      "category": 7,
+      "producer": 6,
+      "stock_availability": 120
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 43,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Eco Balance podložka",
+      "product_short_description": "Ekologická podložka na cvičení vyrobená z přírodního kaučuku a korku.",
+      "product_long_description": "Eco Balance podložka spojuje přírodní materiály a moderní technologie pro dokonalý zážitek z cvičení. Horní vrstva z přírodního korku nabízí antibakteriální vlastnosti a přirozenou protiskluzovou strukturu, která zajišťuje bezpečnost i při pocení. Spodní vrstva z přírodního kaučuku přispívá ke stabilitě a tlumení. Podložka je ideální pro jógu, strečink i relaxační cvičení. Díky tloušťce 4 mm poskytuje dostatečnou oporu, aniž by ztratila kontakt s podložím. Navíc je biologicky rozložitelná a šetrná k životnímu prostředí. Lehká a snadno přenosná, s elegantním designem, který zaujme na první pohled. Ideální volba pro všechny, kdo dbají na své zdraví i planetu.",
+      "product_view": "https://i.ibb.co/PNvCjBg/ECOBALANCEPODLOZKA.jpg",
+      "price": 1099.00,
+      "category": 7,
+      "producer": 6,
+      "stock_availability": 80
+    }
+  },
+  {
+    "model": "products.producer",
+    "pk": 7,
+    "fields": {
+      "producer_name": "FitEssence",
+      "producer_description": "FitEssence je značka zaměřená na výrobu kvalitních fitness pomůcek, které podporují aktivní a zdravý životní styl. Naše produkty jsou navrženy s důrazem na funkčnost, jednoduchost a dlouhou životnost. Specializujeme se na lehké cvičební vybavení, které je snadno přenosné a vhodné pro každodenní použití doma, ve fitness centrech i venku. Naše nabídka zahrnuje odporové gumy, podložky na cvičení, masážní válce a další pomůcky pro zlepšení mobility a celkové fyzické kondice. Věříme, že kvalitní vybavení by mělo být dostupné pro každého, kdo chce být fit.",
+      "producer_view": "https://i.ibb.co/vDX9p1K/FITESSENCE.jpg"
+    }
+  },
+  {
+    "model": "products.producer",
+    "pk": 8,
+    "fields": {
+      "producer_name": "FlexFit",
+      "producer_description": "FlexFit je značka zaměřená na výrobu inovativních a kvalitních fitness pomůcek pro cvičení kdekoliv. Naším cílem je poskytovat produkty, které zlepšují mobilitu, sílu a flexibilitu, a zároveň přinášejí radost z pohybu. V našem sortimentu naleznete podložky na cvičení, odporové gumy, expandéry a další lehké cvičební pomůcky, které jsou ideální pro domácí trénink, fitness centra i rehabilitační cvičení. \n\nNaše produkty jsou navrženy s důrazem na ergonomii, styl a udržitelnost. Používáme ekologicky šetrné materiály, které jsou odolné, bezpečné a příjemné na dotek. Díky našemu modernímu designu se FlexFit produkty snadno stanou přirozenou součástí vašeho každodenního života. \n\nFlexFit věří, že pohyb je klíčem k celkovému zdraví a pohodě. Proto podporujeme aktivní životní styl a neustále pracujeme na vývoji produktů, které splní očekávání jak začátečníků, tak pokročilých cvičenců. Společně s našimi zákazníky vytváříme komunitu, která sdílí vášeň pro zdravý životní styl. \n\nNavíc se FlexFit zavazuje k ochraně životního prostředí. V rámci našeho ekologického programu podporujeme recyklaci, minimalizujeme plastový odpad a spolupracujeme s partnery, kteří sdílí naši vizi udržitelné budoucnosti. S FlexFit si můžete být jisti, že vaše fitness cesta přispívá k lepšímu světu.",
+      "producer_view": "https://i.ibb.co/WWLn5kW/FLEXFIT.jpg"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 44,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Odporová guma Resistance Loop Light",
+      "product_short_description": "Lehká odporová guma ideální pro rehabilitaci a jemné posilování.",
+      "product_long_description": "Resistance Loop Light je navržena pro ty, kteří hledají jemný odpor během cvičení. Tato guma je vyrobena z odolného latexu, který zaručuje dlouhou životnost a flexibilitu. Díky nízké úrovni odporu je ideální pro rehabilitaci, strečink a procvičení jemných svalových skupin.\n\nKompaktní a lehká, perfektně se vejde do každé tašky, což z ní činí ideální pomůcku pro cvičení doma i na cestách. Povrch je odolný proti opotřebení a snadno se čistí. Doporučujeme pro začátečníky nebo jako doplněk k pokročilejším cvičením.",
+      "product_view": "https://i.ibb.co/5KSTWJV/ODPOROVAGUMARESISTANCELOOPLIGHT.jpg",
+      "price": 149.00,
+      "category": 8,
+      "producer": 8,
+      "stock_availability": 200
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 45,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Univerzální guma PowerBand Medium",
+      "product_short_description": "Střední odpor pro posilování i zlepšení mobility.",
+      "product_long_description": "PowerBand Medium je univerzální odporová guma, která poskytuje střední úroveň odporu. Je ideální pro posilování, strečink i zlepšení flexibility. Vyrobena z odolného a pružného latexu, který zvládne i náročné cvičení.\n\nTato guma je vhodná pro procvičení všech hlavních svalových skupin, jako jsou nohy, záda a paže. Díky střední úrovni odporu ji ocení jak začátečníci, tak pokročilí. Navíc je lehká, snadno přenosná a odolná proti opotřebení. Skvělá volba pro domácí trénink i outdoorové aktivity.",
+      "product_view": "https://i.ibb.co/jzWM9np/UNIVERZALNIGUMAPOWERBANDMEDIUM.jpg",
+      "price": 249.00,
+      "category": 8,
+      "producer": 7,
+      "stock_availability": 150
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 46,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Odporová guma HeavyBand Pro",
+      "product_short_description": "Silná odporová guma pro náročné posilování a funkční trénink.",
+      "product_long_description": "HeavyBand Pro je určena pro sportovce a fitness nadšence, kteří hledají intenzivní tréninkový nástroj. Tato guma poskytuje vysoký odpor a je ideální pro posilování nohou, hýždí, zad a paží. Využijete ji také při crossfitu nebo funkčním tréninku.\n\nVyrobena z kvalitního přírodního latexu, který zajišťuje maximální odolnost a pružnost. Díky robustní konstrukci je HeavyBand Pro odolná vůči přetržení a zaručuje dlouhou životnost. Kompaktní rozměry a nízká hmotnost umožňují snadné přenášení, což z ní činí ideální pomůcku na cvičení kdekoliv.",
+      "product_view": "https://i.ibb.co/ChNLh0H/ODPOROVAGUMAHEAVYBANDPRO.jpg",
+      "price": 349.00,
+      "category": 8,
+      "producer": 8,
+      "stock_availability": 100
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 47,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Rychlostní švihadlo SpeedRope",
+      "product_short_description": "Lehké a odolné švihadlo pro rychlé kardio tréninky s nastavitelnou délkou.",
+      "product_long_description": "SpeedRope je rychlostní švihadlo ideální pro HIIT a kardio tréninky. Je vybaveno lehkou ocelovou šňůrou potaženou odolným PVC materiálem, který zajišťuje plynulý pohyb. Ergonomické rukojeti s protiskluzovým povrchem poskytují pohodlí i během intenzivního cvičení. Díky snadno nastavitelnému mechanismu můžete délku švihadla přizpůsobit své výšce. Perfektní volba pro zlepšení koordinace, vytrvalosti a spálení kalorií.",
+      "product_view": "https://i.ibb.co/F4jkXc6/RYCHLOSTNISVIHADLOSPEEDROPE.jpg",
+      "price": 350.00,
+      "category": 10,
+      "producer": 7,
+      "stock_availability": 200
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 42,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Švihadlo s váženými rukojeťmi",
+      "product_short_description": "Univerzální švihadlo s váženými rukojeťmi pro efektivní posilování a kardio trénink.",
+      "product_long_description": "Toto švihadlo je vybaveno váženými rukojeťmi, které zvyšují intenzitu tréninku a posilují horní část těla. Kvalitní ložiska v rukojetích zajišťují plynulý a rychlý pohyb šňůry. Nastavitelná délka umožňuje přizpůsobit švihadlo přesně vašim potřebám. Je vyrobeno z odolných materiálů, které zaručují dlouhou životnost. Skvělá volba pro sportovce, kteří chtějí kombinovat kardio s posilováním.",
+      "product_view": "https://i.ibb.co/Y3hPtfm/SVIHADLOSVAZENYMIRUKOJETMI.jpg",
+      "price": 450.00,
+      "category": 10,
+      "producer": 7,
+      "stock_availability": 150
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 44,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Švihadlo FlexRope",
+      "product_short_description": "Odolné švihadlo s extra flexibilní šňůrou pro univerzální trénink.",
+      "product_long_description": "FlexRope je švihadlo navržené pro každodenní tréninky, ať už se jedná o kardio, zahřívací nebo intervalový trénink. Šňůra je vyrobena z elastického a trvanlivého materiálu, který zajišťuje plynulý pohyb i při vysoké intenzitě. Rukojeti s protiskluzovým povrchem zaručují pevný úchop. Nastavitelná délka švihadla umožňuje použití všem věkovým kategoriím a úrovním pokročilosti. Skvělý doplněk do vaší fitness výbavy.",
+      "product_view": "https://i.ibb.co/fxSwHP1/SVIHADLOFLEXROPE.jpg",
+      "price": 280.00,
+      "category": 10,
+      "producer": 8,
+      "stock_availability": 180
     }
   }
 ]

@@ -22,15 +22,10 @@ from accounts.forms import TrainerBasicForm, TrainerServicesForm, TrainerDescrip
 from manager.views import dashboard, add_product, approve_service, add_category, add_service, edit_product, \
     admin_dashboard, empty_categories, edit_category
 from orders.views import start_order, order_summary, confirm_order, thank_you, my_orders, order_detail, cancel_order
-
-from accounts.views import edit_profile, profile_view, change_password, register, login_view, \
-    logout_view, TrainerRegistrationWizard, registration_success
-from viewer.views import view_cart, add_to_cart, remove_from_cart, update_cart, home, products, product, services, \
-    service, trainers, trainer, user_profile_view, search, update_cart_ajax
-from accounts.views import edit_profile, profile_view, change_password, register, login_view, \
-    logout_view
-from viewer.views import view_cart, add_to_cart, remove_from_cart, update_cart, home, products, product, producer, \
-    services, service, trainers, trainer, user_profile_view, search, update_cart_ajax
+from products.views import products, product, producer, services, service, trainers, trainer
+from accounts.views import edit_profile, profile_view, change_password, register, login_view, logout_view, \
+    TrainerRegistrationWizard, registration_success
+from viewer.views import view_cart, add_to_cart, remove_from_cart, home, user_profile_view, search, update_cart_ajax
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -87,6 +82,5 @@ urlpatterns = [
     path('dashboard/', admin_dashboard, name='admin_dashboard'),
     path('empty-categories/', empty_categories, name='empty_categories'),
     path('edit-category/<int:pk>', edit_category, name='edit_category'),
-
 
 ]

@@ -24,11 +24,10 @@ from manager.views import dashboard, add_product, approve_service, add_category,
     delete_service, edit_trainer, delete_trainer, delete_category, edit_producer, delete_producer, manage_producers, \
     add_producer, delete_user, edit_user, manage_users, approve_trainer_content
 from orders.views import start_order, order_summary, confirm_order, thank_you, my_orders, order_detail, cancel_order
-
-from accounts.views import edit_profile, profile_view, change_password, register, login_view, logout_view, TrainerRegistrationWizard, registration_success
-
-from viewer.views import view_cart, add_to_cart, remove_from_cart, update_cart, home, products, product, producer, \
-    services, service, trainers, trainer, user_profile_view, search, update_cart_ajax
+from products.views import products, product, producer, services, service, trainers, trainer
+from accounts.views import edit_profile, profile_view, change_password, register, login_view, logout_view, \
+    TrainerRegistrationWizard, registration_success
+from viewer.views import view_cart, add_to_cart, remove_from_cart, home, user_profile_view, search, update_cart_ajax
 
 urlpatterns = [
     path('admin/', admin.site.urls),

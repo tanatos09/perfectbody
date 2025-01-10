@@ -1,20 +1,13 @@
 import json
 import logging
-from itertools import groupby
-from operator import attrgetter
 
 import requests
 import unicodedata
-from django.db.models import Q
 from django.urls import reverse
-from unidecode import unidecode
-from django.contrib.auth.models import Group
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from django.contrib.auth.models import Group
-from products.models import Category, Producer, Product
+from products.models import Product
 from accounts.models import UserProfile, TrainersServices, Address
-from datetime import datetime, timedelta
 from django.http import JsonResponse
 
 
@@ -108,152 +101,7 @@ def get_name_day():
         return "Chyba"
 
 logger = logging.getLogger(__name__)
-def products(request, pk=None):
-    sort_by = request.GET.get('sort_by', 'name')
 
-    if pk is None:
-        # Zobrazí hlavní kategorie, které obsahují produkty nebo podkategorie s produkty typu 'merchantdise'
-        main_categories = Category.objects.filter(
-            category_parent=None
-        ).filter(
-            Q(categories__product_type='merchantdise') | Q(subcategories__categories__product_type='merchantdise')
-        ).distinct()
-
-        context = {
-            'main_categories': main_categories,
-            'category': None,
-            'subcategories': None,
-            'products': None,
-            'sort_by': sort_by,
-        }
-
-    else:
-        # Zobrazení konkrétní kategorie
-        category = get_object_or_404(Category, pk=pk)
-
-        subcategories = category.subcategories.filter(
-            Q(categories__product_type='merchantdise') | Q(subcategories__categories__product_type='merchantdise')
-        ).distinct()
-
-        # Produkty v aktuální kategorii
-        if sort_by == 'price_asc':
-            products = Product.objects.filter(category=category, product_type='merchantdise').order_by('price')
-        elif sort_by == 'price_desc':
-            products = Product.objects.filter(category=category, product_type='merchantdise').order_by('-price')
-        else:
-            products = Product.objects.filter(category=category, product_type='merchantdise').order_by('product_name')
-
-        context = {
-            'main_categories': None,
-            'category': category,
-            'subcategories': subcategories,
-            'products': products,
-            'sort_by': sort_by,
-        }
-
-    return render(request, 'products.html', context)
-
-def product(request, pk):
-    if Product.objects.filter(id=pk):
-        product_detail = Product.objects.get(id=pk)
-        context = {'product': product_detail}
-        return render(request, "product.html", context)
-    return products(request)
-
-def producer(request, pk):
-    producer_detail = get_object_or_404(Producer, id=pk)
-    products = Product.objects.filter(producer=producer_detail).select_related('category').order_by('category')
-
-    # Skupinové seskupení produktů podle kategorií
-    grouped_products = {}
-    for category, items in groupby(products, key=attrgetter('category')):
-        grouped_products[category] = list(items)
-
-    # Získání všech výrobců pro seznam a odstranění mezer z názvů
-    all_producers = Producer.objects.all().order_by('producer_name')
-    for producer in all_producers:
-        producer.producer_name = producer.producer_name.strip()
-
-    context = {
-        'producer': producer_detail,
-        'grouped_products': grouped_products,
-        'all_producers': all_producers,  # Přidání seznamu všech výrobců
-    }
-    return render(request, 'producer.html', context)
-
-def services(request, pk=None):
-    sort_by = request.GET.get('sort_by', 'name')
-
-    if pk is None:
-        # Získání hlavních kategorií, které mají přes podkategorie služby typu 'service'
-        main_categories = Category.objects.filter(
-            category_parent=None,  # Hlavní kategorie
-            subcategories__categories__product_type='service'  # Služby v podkategoriích typu 'service'
-        ).distinct()
-
-        context = {
-            'main_categories': main_categories,
-            'category': None,
-            'subcategories': None,
-            'services': None,
-            'sort_by': sort_by,
-        }
-    else:
-        # Načtení aktuální kategorie
-        category = get_object_or_404(Category, pk=pk)
-
-        # Načtení podkategorií a služeb
-        subcategories = category.subcategories.all()
-
-        # Řazení produktů na základě parametru sort_by
-        if sort_by == 'price_asc':
-            services = Product.objects.filter(category=category, product_type='service').order_by('price')
-        elif sort_by == 'price_desc':
-            services = Product.objects.filter(category=category, product_type='service').order_by('-price')
-        else:
-            services = Product.objects.filter(category=category, product_type='service').order_by('product_name')
-
-        # Kontrola schválených trenérů pro každou službu
-        for service in services:
-            service.has_approved_trainers = TrainersServices.objects.filter(service=service, is_approved=True).exists()
-
-        context = {
-            'main_categories': None,
-            'category': category,
-            'subcategories': subcategories,
-            'services': services,
-            'sort_by': sort_by,
-        }
-    return render(request, 'services.html', context)
-
-def service(request, pk):
-    # Find the service by primary key or return 404.
-    service_detail = get_object_or_404(Product, id=pk)
-    # Getting approved trainers for that service.
-    approved_trainers_services = TrainersServices.objects.filter(service=service_detail,
-                                                                 is_approved=True).select_related('trainer')
-    approved_trainers = [ts.trainer for ts in approved_trainers_services]
-    context = {'service': service_detail, 'approved_trainers': approved_trainers}
-    return render(request, "service.html", context)
-
-def trainers(request):
-    trainer_group = Group.objects.filter(name='trainer').first()
-    if trainer_group:
-        # Checking whether the user from trainer group has at least one approved service.
-        approved_trainers = UserProfile.objects.filter(groups=trainer_group, services__is_approved=True).distinct()
-    else:
-        approved_trainers = []  # If the group does not exist, the list will be empty.
-    return render(request, 'trainers.html', {'approved_trainers': approved_trainers})
-
-def trainer(request, pk):
-    # Find the trainer by primary key or return 404.
-    trainer_detail = get_object_or_404(UserProfile, id=pk)
-    # Get approved trainer services.
-    approved_services = TrainersServices.objects.filter(trainer=trainer_detail, is_approved=True).select_related(
-        'service')
-    # Forward approved services only.
-    context = {'trainer': trainer_detail, 'approved_services': approved_services}
-    return render(request, "trainer.html", context)
 
 def add_to_cart(request, product_id):
     # Načtení košíku ze session
@@ -360,8 +208,8 @@ def update_cart_ajax(request, product_id):
                 new_quantity = int(data.get('quantity', 1))
 
                 if new_quantity > 0:
-                    # Kontrola skladové dostupnosti
-                    if new_quantity > product.available_stock():
+                    # Kontrola skladové dostupnosti pouze pro produkty typu 'merchantdise'
+                    if product.product_type == 'merchantdise' and new_quantity > product.available_stock():
                         return JsonResponse({
                             'success': False,
                             'error': f'Na skladě je k dispozici pouze {product.available_stock()} kusů.'

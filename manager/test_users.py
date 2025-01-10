@@ -4,13 +4,23 @@ from accounts.models import UserProfile
 
 class UserManagementTest(TestCase):
     def setUp(self):
+        # Administrátor
         self.admin_user = UserProfile.objects.create_superuser(
-            username="admin", password="password", email="admin@seznam.com"
+            username="admin",
+            password="password",
+            email="admin@seznam.com",
+            first_name="AdminFirstName",
+            last_name="AdminLastName",
         )
         self.client.login(username="admin", password="password")
 
+        # Běžný uživatel
         self.user = UserProfile.objects.create_user(
-            username="user", password="password", email="user@.com"
+            username="user",
+            password="password",
+            email="user@seznam.com",
+            first_name="UserFirstName",
+            last_name="UserLastName",
         )
 
     def test_update_user(self):
@@ -37,6 +47,9 @@ class UserManagementTest(TestCase):
         }
 
         response = self.client.post(reverse('edit_user', args=[self.user.pk]), promote_to_admin_data)
+
+        if response.status_code == 200:
+            print("Form errors:", response.context['form'].errors)
 
         self.assertEqual(response.status_code, 302)
 

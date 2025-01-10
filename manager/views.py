@@ -26,10 +26,13 @@ def add_product(request):
         form = ProductForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Produkt byl úspěšně přidán.')
             return redirect('dashboard')
+        else:
+            messages.error(request, 'Chyba ve formuláři: Zkontrolujte zadané údaje.')
     else:
         form = ProductForm()
-        return render(request,'add_product.html', {"form": form})
+    return render(request,'add_product.html', {"form": form})
 
 @user_passes_test(is_admin)
 def add_category(request):
@@ -63,6 +66,7 @@ def add_service(request):
         form = ServiceForm(request.POST)
         if form.is_valid():
             service = form.save(commit=False)
+            service.producer = None
             service.save()
             messages.success(request, 'Služba byla úspěšně přidána jako service.')
             return redirect('services')

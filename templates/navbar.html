@@ -10,28 +10,31 @@
                     <a class="nav-link active" aria-current="page" href="/">Domů</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false" href="/products/">Produkty</a>
-                    <ul class="dropdown-menu" aria-labelledby="productsDropdown">
-    {% for category in main_categories %}
-        <li>
-            <a class="dropdown-item" href="{% url 'products' category.pk %}">
-                <strong>{{ category.category_name }}</strong>
-            </a>
-            {% if category.subcategories.exists %}
-                <ul class="dropdown-submenu">
-                    {% for subcategory in category.subcategories.all %}
-                        <li>
-                            <a class="dropdown-item" href="{% url 'products' subcategory.pk %}">
-                                {{ subcategory.category_name }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        </li>
-    {% endfor %}
-</ul>
-                </li>
+    <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Produkty
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        {% for category in main_categories %}
+            <li>
+                <a class="dropdown-item" href="{% url 'products' category.pk %}">
+                    {{ category.category_name }}
+                </a>
+                {% if category.subcategories.exists %}
+                    <ul class="dropdown-submenu">
+                        {% for subcategory in category.subcategories.all %}
+                            <li>
+                                <a class="dropdown-item" href="{% url 'products' subcategory.pk %}">
+                                    {{ subcategory.category_name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="dropdown02" data-bs-toggle="dropdown" aria-expanded="false" href="/services/">Služby</a>
                     <ul class="dropdown-menu" aria-labelledby="dropdown02">

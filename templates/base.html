@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-{% load bootstrap5 %}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
+
 <html
     {% if LANGUAGE_CODE %}
         lang="{{ LANGUAGE_CODE }}"
@@ -16,7 +14,7 @@
     <title>{% block title %}Perfect Body{% endblock %}</title>
 
 
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'styles.css' %}">
 
 </head>

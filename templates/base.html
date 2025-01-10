@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 {% load static %}
 {% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 <html
     {% if LANGUAGE_CODE %}
         lang="{{ LANGUAGE_CODE }}"
@@ -12,9 +14,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Perfect Body{% endblock %}</title>
-    {% load bootstrap5 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
+
 
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
     <link rel="stylesheet" href="{% static 'styles.css' %}">
@@ -22,22 +22,27 @@
 </head>
 
 <body>
-    <div class="container mt-0">
-        <!-- Navbar -->
+ <!-- Navbartop -->
+    <header>
         {% include "navbartop.html" %}
-        {% include "navbar.html" %}
+    </header>
 
-    <!-- Blok pro vkládání stránek z navbaru -->
-        <div class="container mt-0" id="element">
+    <!-- Navbar Left -->
+    <nav class="navbar-left">
+        {% include "navbar.html" %}
+    </nav>
+
+    <!-- Hlavní obsah -->
+    <main>
+        <div class="content-container">
             {% block content %}
             {% endblock %}
         </div>
+    </main>
 
-
-        <!-- Footer -->
+    <!-- Footer -->
+    <footer>
         {% include "footer.html" %}
-
-
-    </div>
+    </footer>
 </body>
 </html>

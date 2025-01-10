@@ -1,25 +1,18 @@
 import json
-from itertools import groupby
-from operator import attrgetter
+import logging
 
 import requests
 import unicodedata
-from django.db.models import Q
 from django.urls import reverse
-from unidecode import unidecode
-from django.contrib.auth.models import Group
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from django.contrib.auth.models import Group
-from products.models import Category, Producer, Product
+from products.models import Product
 from accounts.models import UserProfile, TrainersServices, Address
-from datetime import datetime, timedelta
 from django.http import JsonResponse
 
 
 def clean_city_name(city):
     return ''.join(c for c in city if not c.isdigit()).strip()
-
 
 def translate_weather_description(description):
     translations = {
@@ -53,7 +46,6 @@ def translate_weather_description(description):
     }
     return translations.get(description, description)
 
-
 def get_weather(city):
     try:
         url = f"https://wttr.in/{city}?format=j1"
@@ -70,7 +62,6 @@ def get_weather(city):
     except Exception as e:
         print(f"Chyba při získávání počasí: {e}")
     return None
-
 
 def home(request):
     name_day = get_name_day()
@@ -94,7 +85,6 @@ def home(request):
 
     return render(request, 'home.html', {'name_day': name_day, 'weather_data': weather_data})
 
-
 def get_name_day():
     try:
         response = requests.get('https://nameday.abalin.net/api/V1/today?country=cz')
@@ -110,155 +100,7 @@ def get_name_day():
         print(f"Chyba při získávání jmenin: {e}")
         return "Chyba"
 
-
-def products(request, pk=None):
-    sort_by = request.GET.get('sort_by', 'name')
-
-    if pk is None:
-        # Načtení hlavních kategorií
-        main_categories = Category.objects.filter(
-            category_parent=None,  # Hlavní kategorie
-            subcategories__categories__product_type='merchantdise'  # Produkty v podkategoriích typu 'merchantdise'
-        ).distinct()
-
-        context = {
-            'main_categories': main_categories,
-            'category': None,
-            'subcategories': None,
-            'products': None,
-            'sort_by': sort_by,
-        }
-    else:
-        # Načtení aktuální kategorie
-        category = get_object_or_404(Category, pk=pk)
-
-        # Načtení podkategorií a produktů
-        subcategories = category.subcategories.all()
-
-        # Řazení produktů na základě parametru sort_by
-        if sort_by == 'price_asc':
-            products = Product.objects.filter(category=category, product_type='merchantdise').order_by('price')
-        elif sort_by == 'price_desc':
-            products = Product.objects.filter(category=category, product_type='merchantdise').order_by('-price')
-        else:
-            products = Product.objects.filter(category=category, product_type='merchantdise').order_by('product_name')
-
-        context = {
-            'main_categories': None,
-            'category': category,
-            'subcategories': subcategories,
-            'products': products,
-            'sort_by': sort_by,
-        }
-    return render(request, 'products.html', context)
-
-
-def product(request, pk):
-    if Product.objects.filter(id=pk):
-        product_detail = Product.objects.get(id=pk)
-        context = {'product': product_detail}
-        return render(request, "product.html", context)
-    return products(request)
-
-
-def producer(request, pk):
-    producer_detail = get_object_or_404(Producer, id=pk)
-    products = Product.objects.filter(producer=producer_detail).select_related('category')
-
-    # Skupinové seskupení produktů podle kategorií
-    grouped_products = {}
-    for category, items in groupby(products, key=attrgetter('category')):
-        grouped_products[category] = list(items)
-
-    # Získání všech výrobců pro seznam a odstranění mezer z názvů
-    all_producers = Producer.objects.all().order_by('producer_name')
-    for producer in all_producers:
-        producer.producer_name = producer.producer_name.strip()
-
-    context = {
-        'producer': producer_detail,
-        'grouped_products': grouped_products,
-        'all_producers': all_producers,  # Přidání seznamu všech výrobců
-    }
-    return render(request, 'producer.html', context)
-
-
-def services(request, pk=None):
-    sort_by = request.GET.get('sort_by', 'name')
-
-    if pk is None:
-        # Získání hlavních kategorií, které mají přes podkategorie služby typu 'service'
-        main_categories = Category.objects.filter(
-            category_parent=None,  # Hlavní kategorie
-            subcategories__categories__product_type='service'  # Služby v podkategoriích typu 'service'
-        ).distinct()
-
-        context = {
-            'main_categories': main_categories,
-            'category': None,
-            'subcategories': None,
-            'services': None,
-            'sort_by': sort_by,
-        }
-    else:
-        # Načtení aktuální kategorie
-        category = get_object_or_404(Category, pk=pk)
-
-        # Načtení podkategorií a služeb
-        subcategories = category.subcategories.all()
-
-        # Řazení produktů na základě parametru sort_by
-        if sort_by == 'price_asc':
-            services = Product.objects.filter(category=category, product_type='service').order_by('price')
-        elif sort_by == 'price_desc':
-            services = Product.objects.filter(category=category, product_type='service').order_by('-price')
-        else:
-            services = Product.objects.filter(category=category, product_type='service').order_by('product_name')
-
-        # Kontrola schválených trenérů pro každou službu
-        for service in services:
-            service.has_approved_trainers = TrainersServices.objects.filter(service=service, is_approved=True).exists()
-
-        context = {
-            'main_categories': None,
-            'category': category,
-            'subcategories': subcategories,
-            'services': services,
-            'sort_by': sort_by,
-        }
-    return render(request, 'services.html', context)
-
-
-def service(request, pk):
-    # Find the service by primary key or return 404.
-    service_detail = get_object_or_404(Product, id=pk)
-    # Getting approved trainers for that service.
-    approved_trainers_services = TrainersServices.objects.filter(service=service_detail,
-                                                                 is_approved=True).select_related('trainer')
-    approved_trainers = [ts.trainer for ts in approved_trainers_services]
-    context = {'service': service_detail, 'approved_trainers': approved_trainers}
-    return render(request, "service.html", context)
-
-
-def trainers(request):
-    trainer_group = Group.objects.filter(name='trainer').first()
-    if trainer_group:
-        # Checking whether the user from trainer group has at least one approved service.
-        approved_trainers = UserProfile.objects.filter(groups=trainer_group, services__is_approved=True).distinct()
-    else:
-        approved_trainers = []  # If the group does not exist, the list will be empty.
-    return render(request, 'trainers.html', {'approved_trainers': approved_trainers})
-
-
-def trainer(request, pk):
-    # Find the trainer by primary key or return 404.
-    trainer_detail = get_object_or_404(UserProfile, id=pk)
-    # Get approved trainer services.
-    approved_services = TrainersServices.objects.filter(trainer=trainer_detail, is_approved=True).select_related(
-        'service')
-    # Forward approved services only.
-    context = {'trainer': trainer_detail, 'approved_services': approved_services}
-    return render(request, "trainer.html", context)
+logger = logging.getLogger(__name__)
 
 
 def add_to_cart(request, product_id):
@@ -312,7 +154,6 @@ def view_cart(request):
     # Zobrazení stránky košíku
     return render(request, 'cart.html', {"cart": cart, "total": total})
 
-
 def remove_from_cart(request, product_id):
     # Získání košíku ze session
     cart = request.session.get('cart', {})
@@ -328,7 +169,6 @@ def remove_from_cart(request, product_id):
         messages.error(request, "Produkt nebyl nalezen v košíku.")
 
     return redirect('cart')
-
 
 def update_cart(request, product_id):
     # Získání košíku ze session
@@ -355,85 +195,73 @@ def update_cart(request, product_id):
     messages.success(request, "Košík byl úspěšně aktualizován.")
     return redirect('cart')
 
-
-def complete_order(request):
-    # Načtení košíku ze session
-    cart = request.session.get('cart', {})
-    if not cart:
-        messages.error(request, "Váš košík je prázdný.")
-        return redirect('cart')
-
-    # Zpracování objednávky
-    for product_id_str, item in cart.items():
-        product = get_object_or_404(Product, id=int(product_id_str))
-        quantity = item['quantity']
-
-        # Kontrola dostupnosti skladu
-        if product.stock_availability >= quantity:
-            product.stock_availability -= quantity
-            product.save()
-        else:
-            messages.error(request, f"Nedostatek zboží: {product.product_name}.")
-            return redirect('cart')
-
-    # Vyprázdnění košíku po dokončení objednávky
-    request.session['cart'] = {}
-    messages.success(request, "Objednávka byla úspěšně dokončena.")
-    return redirect('products')
-
-
 def update_cart_ajax(request, product_id):
     if request.method == 'POST' and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         cart = request.session.get('cart', {})
         product_id_str = str(product_id)
 
+        # Získání produktu a jeho skladové zásoby
+        product = get_object_or_404(Product, id=product_id)
+
         if product_id_str in cart:
             try:
                 data = json.loads(request.body)
                 new_quantity = int(data.get('quantity', 1))
+
                 if new_quantity > 0:
+                    # Kontrola skladové dostupnosti pouze pro produkty typu 'merchantdise'
+                    if product.product_type == 'merchantdise' and new_quantity > product.available_stock():
+                        return JsonResponse({
+                            'success': False,
+                            'error': f'Na skladě je k dispozici pouze {product.available_stock()} kusů.'
+                        })
+
+                    # Aktualizace množství v košíku
                     cart[product_id_str]['quantity'] = new_quantity
                     request.session['cart'] = cart
+
+                    # Přepočet celkové ceny
                     total = sum(item['quantity'] * item['price'] for item in cart.values())
                     item_total = cart[product_id_str]['quantity'] * cart[product_id_str]['price']
 
-                    response = {
+                    return JsonResponse({
                         'success': True,
-                        'item_total': f"{item_total:.2f}",
-                        'cart_total': f"{total:.2f}"
-                    }
-                    print("Response JSON:", response)
-                    return JsonResponse(response)
-
+                        'item_total': f"{item_total:.2f} Kč",
+                        'cart_total': f"{total:.2f} Kč"
+                    })
                 else:
+                    # Odstranění položky z košíku, pokud je nové množství 0 nebo méně
                     del cart[product_id_str]
                     request.session['cart'] = cart
+
                     total = sum(item['quantity'] * item['price'] for item in cart.values())
+                    return JsonResponse({'success': True, 'cart_total': f"{total:.2f} Kč"})
 
-                    response = {'success': True, 'cart_total': f"{total:.2f}"}
-                    print("Response JSON:", response)
-                    return JsonResponse(response)
-
-            except (ValueError, KeyError) as e:
-                error_response = {'success': False, 'error': 'Invalid data'}
-                print("Error JSON:", error_response)
-                return JsonResponse(error_response)
+            except (ValueError, KeyError):
+                return JsonResponse({'success': False, 'error': 'Neplatná hodnota množství.'})
         else:
-            error_response = {'success': False, 'error': 'Product not found'}
-            print("Error JSON:", error_response)
-            return JsonResponse(error_response)
+            return JsonResponse({'success': False, 'error': 'Produkt nebyl nalezen v košíku.'})
 
-    error_response = {'success': False, 'error': 'Invalid request'}
-    print("Error JSON:", error_response)
-    return JsonResponse(error_response)
-
+    return JsonResponse({'success': False, 'error': 'Neplatný požadavek.'})
 
 def user_profile_view(request, username):
     user = get_object_or_404(UserProfile, username=username)
     is_trainer = user.groups.filter(name='trainer').exists()
+
     if request.user.is_authenticated and request.user == user:
         return redirect('profile')
-    return render(request, 'user_profile.html', {'user': user, 'is_trainer': is_trainer})
+
+    if is_trainer:
+        approved_services = TrainersServices.objects.filter(trainer=user, is_approved=True).select_related('service')
+        return render(request, 'trainer.html', {
+            'trainer': user,
+            'approved_services': approved_services,
+        })
+
+    return render(request, 'user_profile.html', {
+        'user': user,
+        'is_trainer': is_trainer,
+    })
 
 
 def get_name_day():
@@ -456,7 +284,6 @@ def normalize_for_search(text):
         c for c in unicodedata.normalize('NFD', text.lower())
         if unicodedata.category(c) != 'Mn'
     )
-
 
 def search(request):
     query = request.GET.get('q', '').strip()
@@ -513,10 +340,10 @@ def search(request):
         }
         for trainer in trainers
         if (
-                normalized_query in normalize_for_search(trainer.username)
-                or normalized_query in normalize_for_search(trainer.first_name)
-                or normalized_query in normalize_for_search(trainer.last_name)
-                or normalized_query in normalize_for_search(trainer.trainer_short_description or "")
+            normalized_query in normalize_for_search(trainer.username)
+            or normalized_query in normalize_for_search(trainer.first_name)
+            or normalized_query in normalize_for_search(trainer.last_name)
+            or normalized_query in normalize_for_search(trainer.trainer_short_description or "")
         )
     ]
 
@@ -536,5 +363,3 @@ def search(request):
         'services': services,
         'trainers': filtered_trainers,
     })
-
-

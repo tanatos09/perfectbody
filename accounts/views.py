@@ -13,7 +13,7 @@ from formtools.wizard.views import SessionWizardView
 
 from accounts.forms import RegistrationForm, LoginForm, UserEditForm, PasswordChangeForm, TrainerRegistrationForm, \
     AddressForm, TrainerBasicForm, TrainerServicesForm, TrainerDescriptionsForm, TrainerAddressForm, \
-    TrainerProfileDescriptionForm
+    TrainerProfileDescriptionForm, TrainerServiceDescriptionsForm
 from accounts.models import Address, UserProfile, TrainersServices
 
 logger = logging.getLogger(__name__)
@@ -132,18 +132,27 @@ def logout_view(request: HttpRequest) -> HttpResponse:
     messages.success(request, "Byl(a) jste úspěšně odhlášen(a).")
     return redirect('login')
 @login_required
-def profile_view(request: HttpRequest) -> HttpResponse:
+def profile_view(request):
     user = request.user
-    primary_address = None
+    is_trainer = user.groups.filter(name='trainer').exists()
 
+    # Schválené služby pro trenéra
+    approved_services = []
+    if is_trainer:
+        approved_services = TrainersServices.objects.filter(trainer=user, is_approved=True).select_related('service')
+
+    # Primární adresa uživatele
+    primary_address = None
     if hasattr(user, 'addresses') and user.addresses.exists():
         primary_address = user.addresses.order_by('-id').first()
 
+    # Nedávné objednávky
     recent_orders = user.orders.all().order_by('-order_creation_datetime')[:5]
-
 
     return render(request, 'profile.html', {
         'user': user,
+        'is_trainer': is_trainer,
+        'approved_services': approved_services,
         'primary_address': primary_address,
         'recent_orders': recent_orders,
     })
@@ -153,36 +162,93 @@ def profile_view(request: HttpRequest) -> HttpResponse:
 def edit_profile(request):
     user = request.user
 
-    UserForm = UserEditForm
-    AddressForm = modelform_factory(Address, fields=['first_name', 'last_name', 'street', 'street_number', 'city', 'postal_code', 'country', 'email'])
+    user_form = UserEditForm(instance=user)
 
     last_shipping_address = user.addresses.order_by('-id').first()
-    last_billing_address = None
+    initial_data = None
+    if last_shipping_address:
+        initial_data = {
+            'first_name': last_shipping_address.first_name,
+            'last_name': last_shipping_address.last_name,
+            'street': last_shipping_address.street,
+            'street_number': last_shipping_address.street_number,
+            'city': last_shipping_address.city,
+            'postal_code': last_shipping_address.postal_code,
+            'country': last_shipping_address.country,
+            'email': last_shipping_address.email,
+        }
 
-    if request.method == 'POST':
-        user_form = UserForm(request.POST, instance=user)
-        shipping_form = AddressForm(request.POST, instance=last_shipping_address, prefix='shipping')
-        billing_form = AddressForm(request.POST, instance=last_billing_address, prefix='billing') if last_billing_address else None
+    shipping_form = AddressForm(initial=initial_data)
 
-        if user_form.is_valid() and shipping_form.is_valid() and (billing_form is None or billing_form.is_valid()):
-            user_form.save()
-            shipping_form.save()
-            if billing_form:
-                billing_form.save()
-            messages.success(request, 'Profil byl úspěšně aktualizován.')
-            return redirect('profile')
-        else:
-            messages.error(request, 'Došlo k chybě při aktualizaci profilu. Zkontrolujte zadané údaje.')
-    else:
-        user_form = UserForm(instance=user)
-        shipping_form = AddressForm(instance=last_shipping_address, prefix='shipping')
-        billing_form = AddressForm(instance=last_billing_address, prefix='billing') if last_billing_address else None
+    TrainerForm = TrainerProfileDescriptionForm
+    ServiceDescriptionsForm = TrainerServiceDescriptionsForm
 
-    return render(request, 'edit_profile.html', {
-        'user_form': user_form,
-        'shipping_form': shipping_form,
-        'billing_form': billing_form,
+    approved_services = TrainersServices.objects.filter(trainer=user, is_approved=True).select_related("service")
+
+    trainer_form = TrainerForm(instance=user, initial={
+        "pending_trainer_short_description": user.pending_trainer_short_description or user.trainer_short_description,
+        "pending_trainer_long_description": user.pending_trainer_long_description or user.trainer_long_description,
+        "pending_profile_picture": user.pending_profile_picture or user.profile_picture,
     })
+    service_form = ServiceDescriptionsForm(services=approved_services)
+
+    if request.method == "POST":
+        form_type = request.POST.get("form_type")
+
+        if form_type == "trainer_form":
+            trainer_form = TrainerForm(request.POST, instance=user)
+            if trainer_form.is_valid():
+                user.pending_trainer_short_description = trainer_form.cleaned_data.get("pending_trainer_short_description")
+                user.pending_trainer_long_description = trainer_form.cleaned_data.get("pending_trainer_long_description")
+                user.pending_profile_picture = trainer_form.cleaned_data.get("pending_profile_picture")
+                user.save()
+                messages.success(request, "Změny v profilu trenéra byly uloženy a čekají na schválení.")
+                return redirect("edit_profile")
+            else:
+                messages.error(request, "Opravit chyby ve formuláři trenéra.")
+
+        elif form_type == "service_form":
+            service_form = ServiceDescriptionsForm(request.POST, services=approved_services)
+            if service_form.is_valid():
+                for service in approved_services:
+                    description_field = f"description_{service.id}"
+                    service.pending_trainers_service_description = service_form.cleaned_data.get(description_field)
+                    service.save()
+                messages.success(request, "Změny v popiscích služeb byly uloženy a čekají na schválení.")
+                return redirect("edit_profile")
+            else:
+                messages.error(request, "Opravit chyby v popiscích služeb.")
+
+        elif form_type == "user_form":
+            user_form = UserEditForm(request.POST, instance=user)
+            if user_form.is_valid():
+                user_form.save()
+                messages.success(request, "Osobní údaje byly úspěšně aktualizovány.")
+                return redirect("edit_profile")
+            else:
+                messages.error(request, "Opravit chyby v osobních údajích.")
+
+        elif form_type == "shipping_form":
+            shipping_form = AddressForm(request.POST)
+            if shipping_form.is_valid():
+                address = shipping_form.save(commit=False)
+                address.user = user
+                address.save()
+                messages.success(request, "Doručovací adresa byla úspěšně aktualizována.")
+                return redirect("edit_profile")
+            else:
+                messages.error(request, "Opravit chyby v doručovací adrese.")
+
+    context = {
+        "trainer_form": trainer_form,
+        "service_form": service_form,
+        "user_form": user_form,
+        "shipping_form": shipping_form,
+        "approved_services": approved_services,
+        "is_trainer": user.groups.filter(name="trainer").exists(),
+    }
+    return render(request, "edit_profile.html", context)
+
 
 
 

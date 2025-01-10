@@ -1,9 +1,13 @@
-from django.forms import ModelForm, Form, EmailField
+from django.forms import ModelForm, Form, EmailField, BooleanField, HiddenInput
 
 from accounts.models import Address
 
 class GuestOrderForm(Form):
-    email = EmailField(label='Email', required=True)
+    guest_email = EmailField(label="E-mail", required=True, error_messages={
+        'invalid': "Zadejte platnou e-mailovou adresu.",
+        'required': "E-mail je povinný.",
+    })
+
 
 
 class OrderAddressForm(ModelForm):
@@ -18,6 +22,10 @@ class OrderAddressForm(ModelForm):
             'city': 'Město',
             'postal_code': 'PSČ',
             'country': 'Země',
-            'email': 'E-mail',
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].widget = HiddenInput()
+
 

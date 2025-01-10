@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Správa uživatelů</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Jméno</th>
+            <th>Email</th>
+            <th>Typ účtu</th>
+            <th>Akce</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.full_name }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    {% if user.is_staff %}
+                        Admin
+                    {% elif user.is_superuser %}
+                        Superadmin
+                    {% elif user.trainer_short_description %}
+                        Trenér
+                    {% else %}
+                        Uživatel
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'edit_user' user.pk %}" class="btn btn-sm btn-warning">Upravit</a>
+                    <form method="post" action="{% url 'delete_user' user.pk %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tohoto uživatele?');">Smazat</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

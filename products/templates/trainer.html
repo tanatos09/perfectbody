@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{ trainer.full_name }}</h1>
+
+<!-- Profile picture -->
+{% if trainer.profile_picture %}
+    <div class="trainer-image">
+        <img src="{{ trainer.profile_picture }}" alt="Obrázek trenéra {{ trainer.full_name }}" style="max-width: 450px; height: auto;">
+    </div>
+{% endif %}
+
+<!-- Contact details -->
+<div>
+    <h2>Kontakty</h2>
+    <p><strong>E-mail:</strong> {{ trainer.email }}<br>
+    <strong>Telefon:</strong> {{ trainer.phone }}</p>
+</div>
+
+<!-- Trainer long description -->
+<div>
+    <h2>O mně</h2>
+    <p>{{ trainer.trainer_long_description }}</p>
+</div>
+
+<!-- Trainer services -->
+<div>
+    <h2>Nabízené služby</h2>
+    {% if approved_services %}
+        <ul>
+            {% for service in approved_services %}
+                <li>
+                    <h3><a href="{% url 'service' service.service.id %}">{{ service.service.product_name }}</a></h3>
+                    <p>{{ service.trainers_service_description }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Trenér zatím nemá schválené služby.</p>
+    {% endif %}
+</div>
+
+{% if user.is_staff %}
+    <a href="{% url 'edit_trainer' trainer.id %}" class="btn btn-sm btn-warning">Upravit</a>
+    <form method="post" action="{% url 'delete_trainer' trainer.id %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tohoto trenéra?');">Smazat</button>
+    </form>
+{% endif %}
+
+{% endblock %}

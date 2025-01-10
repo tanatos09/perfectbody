@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Schválit služby</h1>
+<ul>
+    {% for service in pending_services %}
+        <li>
+            {{ service.trainer.full_name }} - {{ service.service.product_name }}
+            <form method="post" style="display: inline;">
+                {% csrf_token %}
+                <input type="hidden" name="service_id" value="{{ service.id }}">
+                <button type="submit">Schválit</button>
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+
+
+{% endblock %}

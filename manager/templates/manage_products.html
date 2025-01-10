@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Správa produktů</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Název produktu</th>
+            <th>Kategorie</th>
+            <th>Cena</th>
+            <th>Akce</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.product_name }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.price }} Kč</td>
+            <td>
+                <a href="{% url 'edit_product' product.id %}" class="btn btn-sm btn-warning">Upravit</a>
+                <form method="post" action="{% url 'delete_product' product.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tento produkt?');">Smazat</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'dashboard' %}" class="btn btn-secondary">Zpět na dashboard</a>
+
+{% endblock %}

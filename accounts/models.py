@@ -14,8 +14,11 @@ class UserProfile(AbstractUser):
     phone = CharField(max_length=15, blank=True, null=True)  # telefon
     preferred_channel = CharField(max_length=10, choices=PREFERRED_CHANNEL, default='EMAIL')  # prefer. kom. kanal, vyber z PREFERRED_CHANNEL
     profile_picture = URLField(null=True, blank=True)
+    pending_profile_picture = URLField(null=True, blank=True)
     trainer_short_description = TextField(blank=True, null=True)
     trainer_long_description = TextField(blank=True, null=True)
+    pending_trainer_short_description = TextField(blank=True, null=True)
+    pending_trainer_long_description = TextField(blank=True, null=True)
     date_of_birth = DateField(blank=True, null=True)
     created_at = DateTimeField(auto_now_add=True) # datum vytvoreni uctu
     account_type = CharField(max_length=15, choices=ACCOUNT_TYPES, default='registered')
@@ -60,6 +63,7 @@ class TrainersServices(Model):
     service = ForeignKey("products.Product", on_delete=CASCADE, related_name="trainers")
     trainers_service_description = TextField(blank=False, null=False)
     # The trainer has to be approved by an employee before including to the trainer list.
+    pending_trainers_service_description = TextField(blank=True, null=True)
     is_approved = BooleanField(default=False)
 
     class Meta:

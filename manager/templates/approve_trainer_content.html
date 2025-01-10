@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Schvalování obsahu trenérů</h1>
+
+<h2>Popisky trenérů</h2>
+{% if pending_trainers %}
+    <table>
+        <thead>
+            <tr>
+                <th>Jméno</th>
+                <th>Krátký popis</th>
+                <th>Dlouhý popis</th>
+                <th>Akce</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trainer in pending_trainers %}
+    {% if trainer.pending_trainer_short_description %}
+    <tr>
+        <td>{{ trainer.full_name }}</td>
+        <td>{{ trainer.pending_trainer_short_description }}</td>
+        <td>
+            <form method="post" style="display: inline;">
+                {% csrf_token %}
+                <input type="hidden" name="content_type" value="trainer_short_description">
+                <input type="hidden" name="content_id" value="{{ trainer.id }}">
+                <button type="submit" name="action" value="approve">Schválit</button>
+                <button type="submit" name="action" value="reject">Zamítnout</button>
+            </form>
+        </td>
+    </tr>
+    {% endif %}
+    {% if trainer.pending_trainer_long_description %}
+    <tr>
+        <td>{{ trainer.full_name }}</td>
+        <td>{{ trainer.pending_trainer_long_description }}</td>
+        <td>
+            <form method="post" style="display: inline;">
+                {% csrf_token %}
+                <input type="hidden" name="content_type" value="trainer_long_description">
+                <input type="hidden" name="content_id" value="{{ trainer.id }}">
+                <button type="submit" name="action" value="approve">Schválit</button>
+                <button type="submit" name="action" value="reject">Zamítnout</button>
+            </form>
+        </td>
+    </tr>
+    {% endif %}
+{% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Žádné popisky trenérů čekající na schválení.</p>
+{% endif %}
+
+<h2>Popisky služeb</h2>
+{% if pending_services %}
+    <table>
+        <thead>
+            <tr>
+                <th>Trenér</th>
+                <th>Služba</th>
+                <th>Popis</th>
+                <th>Akce</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for service in pending_services %}
+            <tr>
+                <td>{{ service.trainer.full_name }}</td>
+                <td>{{ service.service.product_name }}</td>
+                <td>{{ service.pending_trainers_service_description }}</td>
+                <td>
+                    <form method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="content_type" value="service">
+                        <input type="hidden" name="content_id" value="{{ service.id }}">
+                        <input type="hidden" name="action" value="approve">
+                        <button type="submit">Schválit</button>
+                    </form>
+                    <form method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="content_type" value="service">
+                        <input type="hidden" name="content_id" value="{{ service.id }}">
+                        <input type="hidden" name="action" value="reject">
+                        <button type="submit">Zamítnout</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Žádné popisky služeb čekající na schválení.</p>
+{% endif %}
+
+{% endblock %}

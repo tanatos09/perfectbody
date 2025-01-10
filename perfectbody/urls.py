@@ -19,16 +19,15 @@ from django.urls import path
 
 from accounts.forms import TrainerBasicForm, TrainerServicesForm, TrainerDescriptionsForm, TrainerAddressForm, \
     TrainerProfileDescriptionForm
+from manager.views import dashboard, add_product, approve_service, add_category, add_service, edit_product, \
+    admin_dashboard, empty_categories, edit_category, delete_product, manage_products, manage_services, edit_service, \
+    delete_service, edit_trainer, delete_trainer, delete_category, edit_producer, delete_producer, manage_producers, \
+    add_producer, delete_user, edit_user, manage_users, approve_trainer_content
 from orders.views import start_order, order_summary, confirm_order, thank_you, my_orders, order_detail, cancel_order
-
-from accounts.views import edit_profile, profile_view, change_password, register, login_view, \
-    logout_view, TrainerRegistrationWizard, registration_success
-from viewer.views import view_cart, add_to_cart, remove_from_cart, update_cart, home, products, product, services, \
-    service, trainers, trainer,complete_order, user_profile_view, search, update_cart_ajax
-from accounts.views import edit_profile, profile_view, change_password, register, login_view, \
-    logout_view
-from viewer.views import view_cart, add_to_cart, remove_from_cart, update_cart, home, products, product, producer, \
-    services, service, trainers, trainer, complete_order, user_profile_view, search, update_cart_ajax
+from products.views import products, product, producer, services, service, trainers, trainer
+from accounts.views import edit_profile, profile_view, change_password, register, login_view, logout_view, \
+    TrainerRegistrationWizard, registration_success
+from viewer.views import view_cart, add_to_cart, remove_from_cart, home, user_profile_view, search, update_cart_ajax
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -62,9 +61,7 @@ urlpatterns = [
     path('detail/<int:order_id>/', order_detail, name='order_detail'),
     path('orders/cancel/<int:order_id>/', cancel_order, name='cancel_order'),
     path('search/', search, name='search'),
-    path('cart/complete/', complete_order, name='complete_order'),
-path('cart/complete/', complete_order, name='complete_order'),
-path(
+    path(
         'register/trainer/',
         TrainerRegistrationWizard.as_view(
             form_list=[
@@ -77,5 +74,31 @@ path(
         ),
         name='trainer_register'
     ),
-path('register/success/', registration_success, name='registration_success'),
+    path('register/success/', registration_success, name='registration_success'),
+    path('dashboard', dashboard, name='dashboard'),
+    path('add-product/', add_product, name='add_product'),
+    path('add-category/', add_category, name='add_category'),
+    path('add-service', add_service, name='add_service'),
+    path('approve-service', approve_service, name='approve_service'),
+    path('edit_product/<int:product_id>/', edit_product, name='edit_product'),
+    path('delete-product/<int:product_id>/', delete_product, name='delete_product'),
+    path('dashboard/', admin_dashboard, name='admin_dashboard'),
+    path('empty-categories/', empty_categories, name='empty_categories'),
+    path('edit-category/<int:pk>/', edit_category, name='edit_category'),
+    path('manage-products/', manage_products, name='manage_products'),
+    path('manage-services/', manage_services, name='manage_services'),
+    path('edit-service/<int:service_id>/', edit_service, name='edit_service'),
+    path('delete-service/<int:service_id>/', delete_service, name='delete_service'),
+    path('edit-trainer/<int:trainer_id>/', edit_trainer, name='edit_trainer'),
+    path('delete-trainer/<int:trainer_id>/', delete_trainer, name='delete_trainer'),
+    path('delete-category/<int:pk>/', delete_category, name='delete_category'),
+    path('edit-producer/<int:pk>/', edit_producer, name='edit_producer'),
+    path('delete-producer/<int:pk>/', delete_producer, name='delete_producer'),
+    path('manage-producers/', manage_producers, name='manage_producers'),
+    path('add-producer/', add_producer, name='add_producer'),
+    path('manage-users/', manage_users, name='manage_users'),
+    path('edit-user/<int:user_id>/', edit_user, name='edit_user'),
+    path('delete-user/<int:user_id>/', delete_user, name='delete_user'),
+    path("approve_trainer_content/", approve_trainer_content, name="approve_trainer_content"),
+
 ]

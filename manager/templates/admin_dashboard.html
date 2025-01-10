@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Admin Dashboard</h1>
+
+<h2>Všechny kategorie</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Název kategorie</th>
+            <th>Nadřazená kategorie</th>
+            <th>Akce</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for category in categories %}
+        <tr>
+            <td>{{ category.category_name }}</td>
+            <td>
+                {% if category.category_parent %}
+                    {{ category.category_parent.category_name }}
+                {% else %}
+                    Hlavní kategorie
+                {% endif %}
+            </td>
+            <td>
+                <a href="{{ category.view_url }}" class="btn btn-info">Náhled</a>
+                <a href="{{ category.edit_url }}" class="btn btn-warning">Upravit</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">Žádné kategorie nejsou k dispozici.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

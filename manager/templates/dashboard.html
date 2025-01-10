@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Admin Dashboard</h1>
+
+<!-- Správa produktů -->
+<h2>Správa produktů</h2>
+<ul>
+    <li><a href="{% url 'add_product' %}">Přidat produkt</a></li>
+    <li><a href="{% url 'manage_products' %}">Zobrazit všechny produkty</a></li>
+
+</ul>
+<hr>
+
+<!-- Správa služeb -->
+<h2>Správa služeb</h2>
+<ul>
+    <li><a href="{% url 'approve_service' %}">Schválit služby</a></li>
+    <li><a href="{% url 'add_service' %}">Vytvořit službu</a></li>
+    <li><a href="{% url 'manage_services' %}">Zobrazit všechny služby</a></li>
+
+</ul>
+<hr>
+
+<!-- Správa trenérů -->
+<h2>Správa trenérů</h2>
+<ul>
+    <li><a href="{% url 'approve_trainer_content' %}">Schvalování popisků upravených popisků trenérů</a></li>
+    <li><a href="{% url 'trainers' %}">Zobrazit všechny trenéry</a></li>
+</ul>
+<hr>
+
+        <!-- Správa uživatelů-->
+    <h2>Správa uživatelů</h2>
+<ul>
+    <li><a href="{% url 'manage_users' %}">Zobrazit všechny uživatele</a></li>
+</ul>
+<hr>
+
+
+<!-- Správa výrobců -->
+<h2>Správa výrobců</h2>
+<ul>
+    <li><a href="{% url 'add_producer' %}">Přidat výrobce</a></li>
+    <li><a href="{% url 'manage_producers' %}">Zobrazit všechny výrobce</a></li>
+</ul>
+<hr>
+    <!-- Správa kategorií -->
+
+<h2>Kategorie</h2>
+<ul>
+    <li><a href="{% url 'add_category' %}">Přidat kategorii</a></li>
+    <li><a href="{% url 'admin_dashboard' %}" class="btn btn-primary">Kompletní zobrazení kategorií</a></li>
+    <li><a href="{% url 'empty_categories' %}" class="btn btn-warning">Zobrazit prázdné kategorie</a></li>
+</ul>
+
+{% endblock %}

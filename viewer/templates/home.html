@@ -1,27 +1,45 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Vítejte v PerfectBody</h1>
-<div>
-    <p>Dnes má svátek: <strong>{{ name_day }}</strong></p>
+<div class="d-flex justify-content-end align-items-center mb-4">
+    <div class="nameday me-3">
+        <p>Dnes má svátek: <strong>{{ name_day }}</strong></p>
+    </div>
+    <div class="weather">
+        <h3>Aktuální počasí</h3>
+        {% if weather_data %}
+            <ul>
+                {% for weather in weather_data %}
+                    <li>
+                        <strong>{{ weather.city|default:"Neznámé město" }}:</strong>
+                        {{ weather.temperature }}°C, {{ weather.description|default:"Neznámý popis" }},
+                        Vlhkost: {{ weather.humidity|default:"?" }}%
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Počasí není dostupné.</p>
+        {% endif %}
+    </div>
 </div>
+
+<!-- Tlačítko pro zobrazení nameday a weather na menších obrazovkách -->
+<div class="toggle-info d-block d-md-none text-end">
+    <button class="btn btn-primary" onclick="toggleInfo()">Počasí a svátek</button>
+</div>
+
 <div>
-    <h3>Aktuální počasí</h3>
-    {% if weather_data %}
-        <ul>
-        {% for weather in weather_data %}
-            <li>
-                <strong>{{ weather.city|default:"Neznámé město" }}:</strong>
-                {{ weather.temperature }}°C, {{ weather.description|default:"Neznámý popis" }},
-                Vlhkost: {{ weather.humidity|default:"?" }}%
-            </li>
-        {% endfor %}
+    <h1 class="text-center mb-4">Vítejte v <span class="highlight">PerfectBody</span>!</h1>
+    <p class="lead text-center">Jsme váš spolehlivý partner na cestě ke zdravému a aktivnímu životnímu stylu.</p>
+
+    <div class="bg-light p-4 rounded shadow">
+        <h2>Co u nás najdete?</h2>
+        <ul class="custom-list">
+            <li><strong>Fitness náčiní:</strong> Kvalitní vybavení pro domácí i profesionální tréninky.</li>
+            <li><strong>Stylové oblečení:</strong> Pohodlné a funkční oblečení, které podpoří váš výkon.</li>
+            <li><strong>Zdravé potraviny a doplňky:</strong> Výběr zdravých potravin a suplementů.</li>
+            <li><strong>Výukové tréninky:</strong> Profesionální plány a videa pro všechny úrovně pokročilosti.</li>
         </ul>
-    {% else %}
-        <p>Počasí není dostupné.</p>
-    {% endif %}
+    </div>
 </div>
-
-
-
 {% endblock %}

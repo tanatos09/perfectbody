@@ -2,13 +2,13 @@
 
 {% block content %}
 <div class="d-flex justify-content-end align-items-center mb-4">
-    <div class="nameday me-3">
+    <div class="nameday me-3 border">
         <p>Dnes má svátek: <strong>{{ name_day }}</strong></p>
     </div>
-    <div class="weather">
-        <h3>Aktuální počasí</h3>
+    <div class="weather border" >
         {% if weather_data %}
-            <ul>
+            <ul style="list-style: none; padding: 0;">
+                <li style="list-style-type: none"><strong>Aktuální počasí</strong></li>
                 {% for weather in weather_data %}
                     <li>
                         <strong>{{ weather.city|default:"Neznámé město" }}:</strong>
@@ -21,11 +21,11 @@
             <p>Počasí není dostupné.</p>
         {% endif %}
     </div>
+
 </div>
 
-<!-- Tlačítko pro zobrazení nameday a weather na menších obrazovkách -->
 <div class="toggle-info d-block d-md-none text-end">
-    <button class="btn btn-primary" onclick="toggleInfo()">Počasí a svátek</button>
+    <button class="btn btn-secondary" onclick="toggleInfo()">Počasí a svátek</button>
 </div>
 
 <div>

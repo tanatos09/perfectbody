@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Upravit službu: {{ service.product_name }}</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Uložit změny</button>
+    <a href="{% url 'manage_services' %}" class="btn btn-secondary">Zpět</a>
+</form>
+{% endblock %}

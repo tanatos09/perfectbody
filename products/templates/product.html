@@ -2,51 +2,143 @@
 
 {% block content %}
 
-<h1>{{ product.product_name }}</h1>
+<h1 style="text-align: center;">{{ product.product_name }}</h1>
 
 <!-- Obrázek produktu -->
+<div style="margin-top: 2rem; text-align: center;">
 {% if product.product_view %}
-    <div class="product-image">
+    <div style="text-align: center; margin-top: 2rem;">
         <img src="{{ product.product_view }}" alt="Obrázek produktu {{ product.product_name }}"
-             style="max-width: 450px; height: auto;">
-    </div>
-{% endif %}
-
-<div class="product-description"><b>Popis produktu:</b> {{ product.product_long_description }}</div>
-
-<br>
-<div class="product-category"><b>Kategorie:</b> <a
-        href="{% url 'products' product.category.pk %}">{{ product.category }}</a></div>
-<div class="product-producer"><b>Výrobce:</b> <a
-        href="{% url 'producer' product.producer.pk %}">{{ product.producer }}</a></div>
-<div class="product-stock-availability"><b>Skladová dostupnost:</b>
-    {% if product.available_stock > 0 %}
-        {{ product.available_stock }} kusů k dispozici.
-    {% else %}
-        <span style="color: red;">Produkt není skladem.</span>
-    {% endif %}
-</div>
-<div class="product-price"><b>Cena:</b> {{ product.price }} Kč</div>
-
-<br>
-<!-- Adding to cart -->
-{% if product.available_stock > 0 %}
-    <div class="add-to-cart">
-        <a href="{% url 'add_to_cart' product.id %}">➕ Přidat do košíku</a>
+             style="max-width: 300px; height: auto; margin-bottom: 1rem;">
     </div>
 {% else %}
-    <p style="color: red;">Nelze objednat</p>
+    <p>Obrázek produktu není k dispozici.</p>
 {% endif %}
+</div>
 
-<!-- Admin Actions -->
-{% if user.is_staff %}
-    <div class="admin-actions">
-        <a href="{% url 'edit_product' product.pk %}" class="btn btn-sm btn-warning">🖉 Upravit</a>
-        <form method="post" action="{% url 'delete_product' product.pk %}" style="display:inline;">
+<!-- Popis produktu -->
+<div style="margin-top: 2rem; text-align: center;">
+    <h2>Popis produktu</h2>
+    <p>{{ product.product_long_description }}</p>
+</div>
+
+<!-- Zobrazení skladové dostupnosti -->
+<p><strong>{{ stock_message }}</strong></p>
+
+<!-- Tlačítko pro přidání do košíku -->
+{% if can_add_to_cart %}
+    <form method="post" action="{% url 'add_to_cart' product.id %}">
+        {% csrf_token %}
+        <button type="submit" style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Přidat do košíku
+        </button>
+    </form>
+{% else %}
+    <p style="color: red;"><strong>{{ stock_message }}</strong></p>
+{% endif %}
+    {% if user.is_staff %}
+    <div style="margin-top: 2rem; text-align: center;">
+        <a href="{% url 'edit_product' product.id %}" class="btn btn-sm btn-warning" style="margin-right: 1rem;">
+            Upravit produkt
+        </a>
+        <form method="post" action="{% url 'delete_product' product.id %}" style="display: inline;">
             {% csrf_token %}
-            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tento produkt?');">🗑️ Smazat</button>
+            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tento produkt?');">
+                Smazat produkt
+            </button>
         </form>
     </div>
 {% endif %}
+
+
+
+<!-- Průměrné hodnocení -->
+<div class="average-rating" style="margin-top: 2rem; text-align: center;">
+    <h2>Průměrné hodnocení</h2>
+    {% if average_rating > 0 %}
+        <p><strong>{{ average_rating }} / 5</strong></p>
+        <div class="rating-stars" style="justify-content: center;">
+            {% for state in star_states %}
+                <span class="{{ state }}">★</span>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Zatím žádné hodnocení</p>
+    {% endif %}
+</div>
+
+<!-- Formulář pro přidání hodnocení -->
+{% if user.is_authenticated %}
+    <div style="margin-top: 2rem; text-align: center;">
+        <h2>Hodnocení</h2>
+        <form method="post" action="{% url 'add_product_review' product.id %}" style="display: inline-block; text-align: left;">
+            {% csrf_token %}
+
+            <!-- Hvězdičky -->
+            <label for="rating" style="display: block; text-align: center; margin-bottom: 0.5rem;">Hodnocení:</label>
+            <div class="rating" style="justify-content: center;">
+                {% for i in "54321" %}
+                    <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}">
+                    <label for="star{{ i }}" title="{{ i }} hvězdiček">★</label>
+                {% endfor %}
+            </div>
+
+            <!-- Komentář -->
+            <label for="comment" style="display: block; text-align: center; margin-top: 1rem;">Komentář:</label>
+            <textarea id="comment" name="comment" required placeholder="Napište svůj komentář..."
+                      style="width: 100%; padding: 0.5rem; margin-bottom: 1rem; font-size: 1rem;"></textarea>
+
+            <!-- Tlačítko -->
+            <div style="text-align: center;">
+                <button type="submit" style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #3788ff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    Přidat hodnocení
+                </button>
+            </div>
+        </form>
+    </div>
+{% else %}
+    <p style="text-align: center;">Pro přidání hodnocení se musíte přihlásit.</p>
+{% endif %}
+
+<!-- Zobrazení hodnocení -->
+<div class="product-reviews" style="margin-top: 2rem; text-align: center;">
+    <h2>Hodnocení</h2>
+    {% if page_reviews %}
+        {% for review in page_reviews %}
+            <div class="review" style="margin: 1rem auto; max-width: 600px; padding: 1rem; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9;">
+                <p><strong>Hodnotil:</strong> {{ review.reviewer.username }}</p>
+                <p>
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= review.rating %}
+                            <span style="color: #f5b301;">★</span>
+                        {% else %}
+                            <span style="color: #ccc;">★</span>
+                        {% endif %}
+                    {% endfor %}
+                </p>
+                <p>{{ review.comment }}</p>
+            </div>
+        {% endfor %}
+
+        <!-- Navigace stránkování -->
+        <div class="pagination" style="margin-top: 1.5rem;">
+            <span class="step-links">
+                {% if page_reviews.has_previous %}
+                    <a href="?page=1">&laquo; První</a>
+                    <a href="?page={{ page_reviews.previous_page_number }}">Předchozí</a>
+                {% endif %}
+
+                <span>Stránka {{ page_reviews.number }} z {{ page_reviews.paginator.num_pages }}</span>
+
+                {% if page_reviews.has_next %}
+                    <a href="?page={{ page_reviews.next_page_number }}">Další</a>
+                    <a href="?page={{ page_reviews.paginator.num_pages }}">Poslední &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    {% else %}
+        <p>Zatím zde nejsou žádná hodnocení.</p>
+    {% endif %}
+</div>
 
 {% endblock %}

@@ -87,24 +87,38 @@
             </div>
 
             <ul>
-                {% for product in products %}
-                    <li>
-                        <a href="{% url 'product' product.pk %}">
-                            <h3>{{ product.product_name }}</h3>
-                        </a> - {{ product.price }} Kč
-                        <p>{{ product.product_short_description }}</p>
+    {% for product in products %}
+        <li>
+            <!-- Odkaz na detail produktu -->
+            <a href="{% url 'product' product.pk %}">
+                <h3>{{ product.product_name }}</h3>
+            </a>
+            - {{ product.price }} Kč
+            <p>{{ product.product_short_description }}</p>
 
-                        {% if user.is_staff %}
-                            <!-- Tlačítka pro úpravu a mazání produktu -->
-                            <a href="{% url 'edit_product' product.pk %}" class="btn btn-sm btn-warning">Upravit</a>
-                            <form method="post" action="{% url 'delete_product' product.pk %}" style="display:inline;">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tento produkt?');">Smazat</button>
-                            </form>
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
+            <!-- Zobrazení skladových zásob -->
+            {% if product.available_stock > 0 %}
+                <p>Skladem: {{ product.available_stock }} kusů</p>
+                <!-- Tlačítko pro přidání do košíku -->
+                <form method="post" action="{% url 'add_to_cart' product.pk %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-success">Přidat do košíku</button>
+                </form>
+            {% else %}
+                <p style="color: red;">Produkt není skladem.</p>
+            {% endif %}
+
+            <!-- Tlačítka pro úpravu a mazání produktu pro administrátory -->
+            {% if user.is_staff %}
+                <a href="{% url 'edit_product' product.pk %}" class="btn btn-sm btn-warning">Upravit</a>
+                <form method="post" action="{% url 'delete_product' product.pk %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tento produkt?');">Smazat</button>
+                </form>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
         {% endif %}
 
         {% if not subcategories and not products %}

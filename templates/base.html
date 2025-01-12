@@ -28,6 +28,14 @@
         {% include "navbartop.html" %}
         {% include "navbar.html" %}
     </header>
+ <!-- Zprávy -->
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 
     <!-- Hlavní obsah -->
     <main class="flex-grow-1 d-flex align-items-center justify-content-center" style="overflow-y: auto;">

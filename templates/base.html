@@ -31,7 +31,12 @@
         </nav>
     </header>
 
- <!-- Zprávy -->
+
+
+    <!-- Hlavní obsah -->
+    <!--<main class="flex-grow-1 d-flex align-items-center justify-content-center" style="overflow-y: auto;">
+    <div class="content-container p-4 rounded shadow" style="max-width: 80%; background-color: rgba(255, 255, 255, 0.8);">-->
+    <main class="flex-grow-1 d-flex align-items-center justify-content-center"> <!-- Zprávy -->
    <div class="alert alert-danger" role="alert">
        {% if messages %}
     <ul class="messages">
@@ -41,11 +46,6 @@
     </ul>
     {% endif %}
    </div>
-
-    <!-- Hlavní obsah -->
-    <!--<main class="flex-grow-1 d-flex align-items-center justify-content-center" style="overflow-y: auto;">
-    <div class="content-container p-4 rounded shadow" style="max-width: 80%; background-color: rgba(255, 255, 255, 0.8);">-->
-    <main class="flex-grow-1 d-flex align-items-center justify-content-center">
         <div class="content-container p-4 rounded shadow">
 
             {% block content %}

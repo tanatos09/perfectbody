@@ -43,8 +43,18 @@
             {% block content %}
             {% endblock %}
         </div>
-
-
+<div class="alert alert-danger" role="alert">
+{% if all_main_categories %}
+    <p>all_main_categories je dostupné: {{ all_main_categories|length }} kategorií</p>
+    <ul>
+        {% for category in all_main_categories %}
+            <li>{{ category.category_name }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>all_main_categories není dostupné</p>
+{% endif %}
+</div>
     </main>
 
     <!-- Footer -->

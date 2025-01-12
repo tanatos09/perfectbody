@@ -34,8 +34,52 @@ main {
     justify-content: flex-end;
     gap: 10px;
 }
+/* Dropdown menu */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+.dropdown-submenu {
+    position: relative;
+    padding-left: 15px;
+}
 
-/* Styl pro zobrazení jako tlačítko na menších obrazovkách */
+.dropdown-submenu:hover > .dropdown-menu {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    margin-top: 0;
+    z-index: 1050;
+}
+/* Responsivní navbar */
+.navbar-toggler {
+    border: none;
+    font-size: 1.2rem;
+}
+.navbar-nav .nav-item {
+    position: relative;
+}
+.collapse {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .collapse {
+        display: block;
+    }
+}
 @media (max-width: 768px) {
     .nameday, .weather {
         display: none;
@@ -58,6 +102,6 @@ main {
 main li {
     list-style-type: square;
 }
-main .nav-item.dropdown:hover > .dropdown-menu {
+.nav-item.dropdown:hover .dropdown-menu {
     display: block;
 }

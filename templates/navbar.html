@@ -1,7 +1,8 @@
 {% load static %}
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
     <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
@@ -12,18 +13,21 @@
                 </li>
                 <!-- Produkty -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuProducts" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuProducts" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
                         Produkty
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuProducts">
                         {% for category in products_categories %}
                             <li>
-                                <a class="dropdown-item" href="{% url 'products' category.pk %}">{{ category.category_name }}</a>
+                                <a class="dropdown-item"
+                                   href="{% url 'products' category.pk %}">{{ category.category_name }}</a>
                                 {% if category.subcategories.exists %}
                                     <ul class="dropdown-submenu">
                                         {% for subcategory in category.subcategories.all %}
                                             <li>
-                                                <a class="dropdown-item" href="{% url 'products' subcategory.pk %}">{{ subcategory.category_name }}</a>
+                                                <a class="dropdown-item"
+                                                   href="{% url 'products' subcategory.pk %}">{{ subcategory.category_name }}</a>
                                             </li>
                                         {% endfor %}
                                     </ul>
@@ -34,18 +38,21 @@
                 </li>
                 <!-- Služby -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuServices" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuServices" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
                         Služby
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuServices">
                         {% for category in services_categories %}
                             <li>
-                                <a class="dropdown-item" href="{% url 'services' category.pk %}">{{ category.category_name }}</a>
+                                <a class="dropdown-item"
+                                   href="{% url 'services' category.pk %}">{{ category.category_name }}</a>
                                 {% if category.subcategories.exists %}
                                     <ul class="dropdown-submenu">
                                         {% for subcategory in category.subcategories.all %}
                                             <li>
-                                                <a class="dropdown-item" href="{% url 'services' subcategory.pk %}">{{ subcategory.category_name }}</a>
+                                                <a class="dropdown-item"
+                                                   href="{% url 'services' subcategory.pk %}">{{ subcategory.category_name }}</a>
                                             </li>
                                         {% endfor %}
                                     </ul>
@@ -55,19 +62,17 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownTrainers" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownTrainers" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
                         Trenéři
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownTrainers">
-                        <!-- Odkaz na seznam všech trenérů -->
-                        <li>
-                            <a class="dropdown-item" href="{% url 'trainers' %}">Představení všech trenérů</a>
-                        </li>
-                        <!-- Odkazy na jednotlivé trenéry -->
-                        {% for trainer in navbar_trainers %}
-                            <li>
-                                <a class="dropdown-item" href="{% url 'trainer' trainer.id %}">{{ trainer.full_name }}</a>
-                            </li>
+                        <!-- Odkaz na stránku se seznamem všech trenérů -->
+                        <li><a class="dropdown-item" href="{% url 'trainers' %}">Seznam všech trenérů</a></li>
+                        <!-- Dynamické načítání jednotlivých schválených trenérů -->
+                        {% for trainer in approved_trainers %}
+                            <li><a class="dropdown-item"
+                                   href="{% url 'trainer' trainer.pk %}">{{ trainer.full_name }}</a></li>
                         {% endfor %}
                     </ul>
                 </li>

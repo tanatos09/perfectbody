@@ -1,14 +1,8 @@
-from products.models import Category
-
-def navbar_context(request):
-    all_main_categories = Category.objects.filter(category_parent=None).prefetch_related('subcategories').distinct()
-    return {
-        'all_main_categories': all_main_categories
-    }
-
-
+from django.contrib.auth.models import Group
+from accounts.models import UserProfile, TrainersServices
 from django.db.models import Q
 from products.models import Category
+
 
 
 def navbar_products_context(request):
@@ -43,10 +37,17 @@ def navbar_services_context(request):
     }
 
 
-from accounts.models import UserProfile
 def navbar_trainers_context(request):
-    # Získání všech schválených trenérů
-    trainers = UserProfile.objects.filter(groups__name='trainer').distinct()
+    # Získání skupiny trenérů
+    trainer_group = Group.objects.filter(name='trainer').first()
+    if trainer_group:
+        # Načtení schválených trenérů (s alespoň jednou schválenou službou)
+        approved_trainers = UserProfile.objects.filter(
+            groups=trainer_group,
+            services__is_approved=True
+        ).distinct()
+    else:
+        approved_trainers = []  # Pokud skupina neexistuje, seznam bude prázdný
     return {
-        'navbar_trainers': trainers
+        'approved_trainers': approved_trainers,
     }

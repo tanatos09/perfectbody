@@ -120,8 +120,28 @@
                     <li>
                         <a href="{% url 'product' product.pk %}">
                             <h3>{{ product.product_name }}</h3>
-                        </a> - {{ product.price }} Kč
+                        </a>
                         <p>{{ product.product_short_description }}</p>
+
+                        <!-- Stock availability -->
+                        <div class="product-stock-availability"><b>Skladová dostupnost:</b>
+                            {% if product.available_stock > 0 %}
+                                {{ product.available_stock }} kusů k dispozici.
+                            {% else %}
+                                <span style="color: red;">Produkt není skladem.</span>
+                            {% endif %}
+                        </div>
+                        <div class="product-price"><b>Cena:</b> {{ product.price }} Kč</div>
+
+                        <br>
+                        <!-- Add to cart -->
+                        {% if product.available_stock > 0 %}
+                            <div class="add-to-cart">
+                                <a href="{% url 'add_to_cart' product.id %}">➕ Přidat do košíku</a>
+                            </div>
+                        {% else %}
+                            <p style="color: red;">Nelze objednat</p>
+                        {% endif %}
 
                         {% if user.is_staff %}
                             <!-- Tlačítka pro úpravu a mazání produktu -->
@@ -144,7 +164,8 @@
                 <span class="step-links">
                     {% if products.has_previous %}
                         <a href="?page=1{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">&laquo; První</a>
-                        <a href="?page={{ products.previous_page_number }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Předchozí</a>
+                        <a href="?page=
+                                {{ products.previous_page_number }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Předchozí</a>
                     {% endif %}
 
                     <span class="current">
@@ -152,8 +173,10 @@
                     </span>
 
                     {% if products.has_next %}
-                        <a href="?page={{ products.next_page_number }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Další</a>
-                        <a href="?page={{ products.paginator.num_pages }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Poslední &raquo;</a>
+                        <a href="?page=
+                                {{ products.next_page_number }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Další</a>
+                        <a href="?page=
+                                {{ products.paginator.num_pages }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Poslední &raquo;</a>
                     {% endif %}
                 </span>
             </div>

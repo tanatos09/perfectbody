@@ -100,7 +100,9 @@ def product(request, pk):
 
 def producer(request, pk):
     producer_detail = get_object_or_404(Producer, id=pk)
-    products = Product.objects.filter(producer=producer_detail).select_related('category').order_by('category')
+
+    # Seřazení produktů podle kategorie a následně podle názvu
+    products = Product.objects.filter(producer=producer_detail).select_related('category').order_by('category__category_name', 'product_name')
 
     # Skupinové seskupení produktů podle kategorií
     grouped_products = {}

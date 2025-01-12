@@ -54,9 +54,23 @@
                         {% endfor %}
                     </ul>
                 </li>
-                <li class="nav-item">
-                <a class="nav-link" href="{% url 'trainers' %}">Trenéři</a>
-            </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownTrainers" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Trenéři
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownTrainers">
+                        <!-- Odkaz na seznam všech trenérů -->
+                        <li>
+                            <a class="dropdown-item" href="{% url 'trainers' %}">Představení všech trenérů</a>
+                        </li>
+                        <!-- Odkazy na jednotlivé trenéry -->
+                        {% for trainer in navbar_trainers %}
+                            <li>
+                                <a class="dropdown-item" href="{% url 'trainer' trainer.id %}">{{ trainer.full_name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>

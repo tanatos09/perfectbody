@@ -41,3 +41,12 @@ def navbar_services_context(request):
     return {
         'services_categories': services_categories
     }
+
+
+from accounts.models import UserProfile
+def navbar_trainers_context(request):
+    # Získání všech schválených trenérů
+    trainers = UserProfile.objects.filter(groups__name='trainer').distinct()
+    return {
+        'navbar_trainers': trainers
+    }

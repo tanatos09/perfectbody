@@ -23,45 +23,45 @@
 </head>
 
 <body class="d-flex flex-column min-vh-100">
- <!-- Navbartop -->
-    <header class="bg-primary text-white text-center ">
-        {% include "navbartop.html" %}
-        {% include "navbar.html" %}
+  <!-- Header s NavbarTop a Navbar -->
+    <header>
+        <div class="bg-primary text-white">
+            {% include "navbartop.html" %}
+        </div>
+        <nav class="sticky-top">
+            {% include "navbar.html" %}
+        </nav>
     </header>
+
  <!-- Zprávy -->
-    {% if messages %}
+   <div class="alert alert-danger" role="alert">
+       {% if messages %}
     <ul class="messages">
         {% for message in messages %}
             <li class="{{ message.tags }}">{{ message }}</li>
         {% endfor %}
     </ul>
     {% endif %}
+   </div>
 
     <!-- Hlavní obsah -->
-    <main class="flex-grow-1 d-flex align-items-center justify-content-center" style="overflow-y: auto;">
-        <div class="content-container p-4 rounded shadow" style="max-width: 80%; background-color: rgba(255, 255, 255, 0.8);">
+    <!--<main class="flex-grow-1 d-flex align-items-center justify-content-center" style="overflow-y: auto;">
+    <div class="content-container p-4 rounded shadow" style="max-width: 80%; background-color: rgba(255, 255, 255, 0.8);">-->
+    <main class="flex-grow-1 d-flex align-items-center justify-content-center">
+        <div class="content-container p-4 rounded shadow">
+
             {% block content %}
             {% endblock %}
         </div>
-<div class="alert alert-danger" role="alert">
-{% if all_main_categories %}
-    <p>all_main_categories je dostupné: {{ all_main_categories|length }} kategorií</p>
-    <ul>
-        {% for category in all_main_categories %}
-            <li>{{ category.category_name }}</li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>all_main_categories není dostupné</p>
-{% endif %}
-</div>
+
+
     </main>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-3">
+    <footer class="bg-light text-dark text-center py-3 mt-auto">
         {% include "footer.html" %}
     </footer>
-<script>
+  <script>
     function toggleInfo() {
         const nameday = document.querySelector('.nameday');
         const weather = document.querySelector('.weather');
@@ -72,6 +72,5 @@
         weather.style.display = isVisible ? 'none' : 'flex';
     }
 </script>
-
 </body>
 </html>

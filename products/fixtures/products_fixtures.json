@@ -125,7 +125,7 @@
     "fields": {
       "category_name": "Legíny",
       "category_description": "Komfortní a funkční legíny, které podpoří vaši pohyblivost a zajistí stabilitu při sportu. Ideální volba pro jógu, běh a fitness. Naše legíny jsou vybaveny technologií odvádění vlhkosti a švy, které neomezují pohyb.",
-      "category_view": "https://i.ibb.co/4mJ2qt9/LEGINY.jpg",
+      "category_view": "https://i.ibb.co/W28bHZM/LEGINY.jpg",
       "category_parent": 11
     }
   },
@@ -439,7 +439,7 @@
       "product_view": "https://i.ibb.co/tbGdc5m/SPOROVNILAHEV1-LITR.jpg",
       "price": 199.00,
       "category": 9,
-      "producer": 3,
+      "producer": 8,
       "stock_availability": 0
     }
   },
@@ -907,7 +907,7 @@
   },
   {
     "model": "products.product",
-    "pk": 42,
+    "pk": 48,
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Švihadlo s váženými rukojeťmi",
@@ -922,7 +922,7 @@
   },
   {
     "model": "products.product",
-    "pk": 44,
+    "pk": 49,
     "fields": {
       "product_type": "merchantdise",
       "product_name": "Švihadlo FlexRope",
@@ -933,6 +933,96 @@
       "category": 10,
       "producer": 8,
       "stock_availability": 180
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 50,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Funkční legíny s vysokým pasem dámské",
+      "product_short_description": "Stylové legíny s vysokým pasem, které poskytují maximální podporu při cvičení.",
+      "product_long_description": "Tyto legíny s vysokým pasem byly navrženy speciálně pro ženy, které hledají dokonalou kombinaci stylu a funkčnosti. Vysoce elastický materiál dokonale přilne k tělu a podporuje pohyb při jakékoliv fyzické aktivitě. Technologie odvádění vlhkosti zajišťuje suchý a pohodlný pocit i během intenzivního tréninku. Švy jsou strategicky umístěny, aby nedráždily pokožku, a vysoký pas spolehlivě zpevňuje břišní oblast. Legíny jsou ideální volbou pro jógu, pilates, fitness nebo běhání a skvěle se kombinují s jakýmkoliv sportovním topem.",
+      "product_view": "https://i.ibb.co/m56n6xP/FUNKCNILEGINYSVYSOKYMPASEMDAMSKE.jpg",
+      "price": 699.00,
+      "category": 13,
+      "producer": 3,
+      "stock_availability": 150
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 51,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Kompresní legíny dámské",
+      "product_short_description": "Vysoce funkční kompresní legíny pro maximální podporu svalů během cvičení.",
+      "product_long_description": "Tyto kompresní legíny jsou nezbytností pro každého sportovce. Ergonomický design a kompresní technologie podporují krevní oběh, čímž pomáhají ke snížení únavy svalů během náročných tréninků. Materiál je prodyšný, odvádí vlhkost a rychle schne, což zajišťuje pohodlí po celou dobu cvičení. Reflexní prvky zvyšují viditelnost při venkovních aktivitách, zatímco kapsa na drobnosti umožňuje uschování klíčů nebo telefonu. Ideální volba pro běh, posilování nebo vytrvalostní sporty.",
+      "product_view": "https://i.ibb.co/FVzsN3d/KOMPRESNILEGINYDAMSKE.jpg",
+      "price": 799.00,
+      "category": 13,
+      "producer": 3,
+      "stock_availability": 120
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 52,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Funkční legíny s geometrickým vzorem dámské",
+      "product_short_description": "Moderní legíny s důmyslným geometrickým vzorem pro stylové cvičení.",
+      "product_long_description": "Legíny s originálním geometrickým vzorem přinášejí unikátní design, který dodá šmrnc každému tréninku. Materiál je vysoce elastický a neprosvítá ani při hlubokých dřepech. Díky technologii odvádění vlhkosti se budete cítit svěže i při náročném cvičení. Ploché švy zajišťují maximální pohodlí a zamezují podráždění pokožky. Tyto legíny jsou skvělou volbou nejen do posilovny, ale i na volnočasové aktivity, jako je turistika nebo relaxace doma.",
+      "product_view": "https://i.ibb.co/NYZwXCv/FUNKCNILEGINYSGEOMETRICKYMVZOREMDAMSKE.jpg",
+      "price": 749.00,
+      "category": 13,
+      "producer": 3,
+      "stock_availability": 140
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 53,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Termoizolační sportovní legíny dámské",
+      "product_short_description": "Zimní legíny s termoizolací pro pohodlný trénink i v chladném počasí.",
+      "product_long_description": "Termoizolační legíny jsou ideální volbou pro tréninky nebo outdoorové aktivity v chladných dnech. Vyrobeny z inovativního materiálu, který kombinuje hřejivou vrstvu s vysokou prodyšností, poskytují ochranu před chladem a zároveň odvádějí vlhkost od pokožky, čímž udržují tělo v suchu. Elastický pas je doplněn o stahovací šňůrku pro lepší přizpůsobení. Strategicky umístěné ploché švy zabraňují tření a zajišťují maximální komfort při pohybu. Reflexní prvky na lýtkách zvyšují bezpečnost při venkovním tréninku za zhoršené viditelnosti. Tyto legíny jsou vhodné nejen na běh, ale také na fitness, turistiku či zimní sporty jako běžky nebo chůzi na sněžnicích.",
+      "product_view": "https://i.ibb.co/GR3YMfx/TERMOIZOLACNISPORTOVNILEGINYDAMSKE.jpg",
+      "price": 899.00,
+      "category": 13,
+      "producer": 3,
+      "stock_availability": 100
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 54,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Kompresní legíny pánské",
+      "product_short_description": "Vysoce funkční pánské legíny s kompresním střihem pro maximální podporu svalů.",
+      "product_long_description": "Tyto pánské kompresní legíny byly navrženy pro aktivní muže, kteří hledají nejlepší podporu a výkon při cvičení. Vyrobené z elastického materiálu s technologií odvádění potu, který vás udrží v suchu a pohodlí i během nejintenzivnějších tréninků. Kompresní střih zlepšuje průtok krve a snižuje svalovou únavu, což přispívá k rychlejší regeneraci. Legíny obsahují ploché švy, které minimalizují tření a zajišťují maximální pohodlí. V pase mají elastický pás se stahovací šňůrkou pro dokonalé přizpůsobení. Reflexní prvky zvyšují viditelnost při venkovním běhu za šera. Ideální pro běh, posilovnu, cyklistiku nebo týmové sporty.",
+      "product_view": "https://i.ibb.co/tMwG9Mt/KOMPRESNILEGINYPANSKE.jpg",
+      "price": 899.00,
+      "category": 13,
+      "producer": 3,
+      "stock_availability": 100
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 55,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Termoizolační sportovní legíny pánské",
+      "product_short_description": "Vysoce funkční termolegíny pro trénink a outdoorové aktivity v zimě.",
+      "product_long_description": "Pánské termolegíny jsou ideální pro sportovní aktivity v chladném počasí. Kombinují inovativní termoizolační materiál, který poskytuje vynikající ochranu proti chladu, s prodyšností, která zajišťuje odvádění vlhkosti a udržuje tělo v suchu. Ergonomický střih a ploché švy nabízejí pohodlí bez omezení pohybu. Elastický pas je doplněn o stahovací šňůrku pro dokonalé přizpůsobení. Reflexní detaily zvyšují bezpečnost při tréninku za snížené viditelnosti. Tyto legíny jsou ideální pro běh, cyklistiku, fitness nebo zimní turistiku. Vyzkoušejte jejich všestrannost a pohodlí při každém pohybu.",
+      "product_view": "https://i.ibb.co/gTtKxq3/TERMOIZOLACNISPORTOVNILEGINYPANSKE.jpg",
+      "price": 999.00,
+      "category": 13,
+      "producer": 3,
+      "stock_availability": 90
     }
   }
 ]

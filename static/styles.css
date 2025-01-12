@@ -10,9 +10,16 @@ body {
     flex-direction: column;
     min-height: 100vh;
 }
-
+header {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    position: relative;
+    z-index: 1000;
+}
 /* Main styling */
 main {
+    width: 80%;
     flex-grow: 1;
     overflow-y: auto; /* Posuvník pouze v hlavním obsahu */
     padding: 20px;
@@ -104,4 +111,25 @@ main li {
 }
 .nav-item.dropdown:hover .dropdown-menu {
     display: block;
+}
+.footer {
+    background-color: #f8f9fa !important; /* Světle šedá barva */
+    color: #6c757d; /* Šedé písmo */
+    text-align: center;
+    padding: 20px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+.footer a {
+    color: #6c757d; /* Šedé odkazy */
+    background-color: #ffffff; /* Bílé podbarvení odkazů */
+    padding: 5px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: #ffffff; /* Bílé písmo při najetí myší */
+    background-color: #6c757d; /* Šedé podbarvení při najetí myší */
 }

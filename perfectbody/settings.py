@@ -80,6 +80,7 @@ TEMPLATES = [
 
                 'viewer.context_processors.navbar_products_context',
                 'viewer.context_processors.navbar_services_context',
+                'viewer.context_processors.navbar_trainers_context',
             ],
         },
     },

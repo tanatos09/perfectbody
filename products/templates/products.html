@@ -14,7 +14,9 @@
                         <a href="{% url 'edit_category' category.pk %}" class="btn btn-sm btn-warning">Upravit</a>
                         <form method="post" action="{% url 'delete_category' category.pk %}" style="display:inline;">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tuto kategorii?');">Smazat</button>
+                            <button type="submit" class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Opravdu chcete smazat tuto kategorii?');">Smazat
+                            </button>
                         </form>
                     {% endif %}
                 </li>
@@ -29,7 +31,8 @@
         <!-- Obrázek kategorie -->
         {% if category.category_view %}
             <div class="category-image">
-                <img src="{{ category.category_view }}" alt="Obrázek kategorie {{ category.category_name }}" style="max-width: 450px; height: auto;">
+                <img src="{{ category.category_view }}" alt="Obrázek kategorie {{ category.category_name }}"
+                     style="max-width: 450px; height: auto;">
             </div>
         {% endif %}
 
@@ -40,7 +43,9 @@
             <a href="{% url 'edit_category' category.pk %}" class="btn btn-sm btn-warning">Upravit</a>
             <form method="post" action="{% url 'delete_category' category.pk %}" style="display:inline;">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tuto kategorii?');">Smazat</button>
+                <button type="submit" class="btn btn-sm btn-danger"
+                        onclick="return confirm('Opravdu chcete smazat tuto kategorii?');">Smazat
+                </button>
             </form>
         {% endif %}
 
@@ -63,10 +68,14 @@
 
                         {% if user.is_staff %}
                             <!-- Tlačítka pro úpravu a mazání podkategorie -->
-                            <a href="{% url 'edit_category' subcategory.pk %}" class="btn btn-sm btn-warning">Upravit</a>
-                            <form method="post" action="{% url 'delete_category' subcategory.pk %}" style="display:inline;">
+                            <a href="{% url 'edit_category' subcategory.pk %}"
+                               class="btn btn-sm btn-warning">Upravit</a>
+                            <form method="post" action="{% url 'delete_category' subcategory.pk %}"
+                                  style="display:inline;">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tuto podkategorii?');">Smazat</button>
+                                <button type="submit" class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Opravdu chcete smazat tuto podkategorii?');">Smazat
+                                </button>
                             </form>
                         {% endif %}
                     </li>
@@ -78,13 +87,33 @@
         {% if products %}
             <h2>Produkty</h2>
 
-            <!-- Tlačítka pro třídění -->
+            <!-- Tlačítka pro seřazení -->
             <div>
                 <strong>Seřadit:</strong>
-                <a href="?sort_by=name">Abecedně</a> |
-                <a href="?sort_by=price_asc">Od nejlevnějšího</a> |
-                <a href="?sort_by=price_desc">Od nejdražšího</a>
+                <a href="?sort_by=name{% if gender_filter %}&gender={{ gender_filter }}{% endif %}"
+                   class="{% if sort_by == 'name' %}active{% endif %}">Abecedně</a>
+                |
+                <a href="?sort_by=price_asc{% if gender_filter %}&gender={{ gender_filter }}{% endif %}"
+                   class="{% if sort_by == 'price_asc' %}active{% endif %}">Od nejlevnějšího</a>
+                |
+                <a href="?sort_by=price_desc{% if gender_filter %}&gender={{ gender_filter }}{% endif %}"
+                   class="{% if sort_by == 'price_desc' %}active{% endif %}">Od nejdražšího</a>
             </div>
+
+            <!-- Tlačítka pro filtrování -->
+            {% if ladies or gentlemans %}
+                <div>
+                    <strong>Filtrovat:</strong>
+                    <a href="?gender=ladies{% if sort_by %}&sort_by={{ sort_by }}{% endif %}"
+                       class="{% if gender_filter == 'ladies' %}active{% endif %}">Dámské</a>
+                    |
+                    <a href="?gender=gentlemans{% if sort_by %}&sort_by={{ sort_by }}{% endif %}"
+                       class="{% if gender_filter == 'gentlemans' %}active{% endif %}">Pánské</a>
+                    |
+                    <a href="?{% if sort_by %}sort_by={{ sort_by }}{% endif %}"
+                       class="{% if not gender_filter %}active{% endif %}">Vše</a>
+                </div>
+            {% endif %}
 
             <ul>
                 {% for product in products %}
@@ -99,7 +128,9 @@
                             <a href="{% url 'edit_product' product.pk %}" class="btn btn-sm btn-warning">Upravit</a>
                             <form method="post" action="{% url 'delete_product' product.pk %}" style="display:inline;">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tento produkt?');">Smazat</button>
+                                <button type="submit" class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Opravdu chcete smazat tento produkt?');">Smazat
+                                </button>
                             </form>
                         {% endif %}
                     </li>
@@ -112,3 +143,4 @@
         {% endif %}
     {% endif %}
 {% endblock %}
+

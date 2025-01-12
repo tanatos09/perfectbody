@@ -1,19 +1,22 @@
 {% load static %}
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
     <div class="container-fluid">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
             <ul class="navbar-nav">
-                <!-- Menu položky -->
-                <li class="nav-item"><a class="nav-link" href="/">Domů</a></li>
+                <!-- Domů -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Domů</a>
+                </li>
+                <!-- Produkty -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="{% url "products" %}" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuProducts" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Produkty
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        {% for category in all_main_categories %}
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuProducts">
+                        {% for category in products_categories %}
                             <li>
                                 <a class="dropdown-item" href="{% url 'products' category.pk %}">{{ category.category_name }}</a>
                                 {% if category.subcategories.exists %}
@@ -29,18 +32,32 @@
                         {% endfor %}
                     </ul>
                 </li>
-                <!-- Další položky menu -->
+                <!-- Služby -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownServices" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuServices" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Služby
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownServices">
-                        <li><a class="dropdown-item" href="#">Služba 1</a></li>
-                        <li><a class="dropdown-item" href="#">Služba 2</a></li>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuServices">
+                        {% for category in services_categories %}
+                            <li>
+                                <a class="dropdown-item" href="{% url 'services' category.pk %}">{{ category.category_name }}</a>
+                                {% if category.subcategories.exists %}
+                                    <ul class="dropdown-submenu">
+                                        {% for subcategory in category.subcategories.all %}
+                                            <li>
+                                                <a class="dropdown-item" href="{% url 'services' subcategory.pk %}">{{ subcategory.category_name }}</a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
                     </ul>
                 </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{% url 'trainers' %}">Trenéři</a>
+            </li>
             </ul>
         </div>
     </div>
 </nav>
-

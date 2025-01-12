@@ -9,12 +9,23 @@ from products.models import Category, Producer, Product
 from accounts.models import UserProfile, TrainersServices
 
 
+from django.db.models import Q
+
 def products(request, pk=None):
     sort_by = request.GET.get('sort_by', 'name')
-    page_number = request.GET.get('page', 1)  # Získání aktuální stránky z URL
+    gender_filter = request.GET.get('gender', None)
+    page_number = request.GET.get('page', 1)
+
+    # Validace vstupů
+    valid_sort_by = ['name', 'price_asc', 'price_desc']
+    if sort_by not in valid_sort_by:
+        sort_by = 'name'
+    valid_gender_filter = ['ladies', 'gentlemans', None]
+    if gender_filter not in valid_gender_filter:
+        gender_filter = None
 
     if pk is None:
-        # Zobrazí hlavní kategorie, které obsahují produkty nebo podkategorie s produkty typu 'merchantdise'
+        # Hlavní kategorie
         main_categories = Category.objects.filter(
             category_parent=None
         ).filter(
@@ -30,31 +41,50 @@ def products(request, pk=None):
         }
 
     else:
-        # Zobrazení konkrétní kategorie
+        # Načtení kategorie
         category = get_object_or_404(Category, pk=pk)
 
         subcategories = category.subcategories.filter(
             Q(categories__product_type='merchantdise') | Q(subcategories__categories__product_type='merchantdise')
         ).distinct()
 
-        # Produkty v aktuální kategorii
+        # Filtrování produktů
+        products_list = Product.objects.filter(
+            category=category,
+            product_type='merchantdise'
+        ).select_related('category')
+
+        # Dynamické filtrování podle pohlaví
+        if gender_filter == 'ladies':
+            products_list = products_list.filter(product_name__icontains='dámské')
+        elif gender_filter == 'gentlemans':
+            products_list = products_list.filter(product_name__icontains='pánské')
+
+        # Třídění produktů
         if sort_by == 'price_asc':
-            products_list = Product.objects.filter(category=category, product_type='merchantdise').order_by('price')
+            products_list = products_list.order_by('price')
         elif sort_by == 'price_desc':
-            products_list = Product.objects.filter(category=category, product_type='merchantdise').order_by('-price')
+            products_list = products_list.order_by('-price')
         else:
-            products_list = Product.objects.filter(category=category, product_type='merchantdise').order_by('product_name')
+            products_list = products_list.order_by('product_name')
 
         # Stránkování
         paginator = Paginator(products_list, 10)  # 10 produktů na stránku
         page_obj = paginator.get_page(page_number)
 
+        # Kontrola dostupnosti filtrování podle pohlaví
+        ladies = products_list.filter(product_name__icontains='dámské').exists()
+        gentlemans = products_list.filter(product_name__icontains='pánské').exists()
+
         context = {
             'main_categories': None,
             'category': category,
             'subcategories': subcategories,
-            'products': page_obj,  # Zde se předává pouze objekty pro aktuální stránku
+            'products': page_obj,
             'sort_by': sort_by,
+            'ladies': ladies,
+            'gentlemans': gentlemans,
+            'gender_filter': gender_filter,
         }
 
     return render(request, 'products.html', context)

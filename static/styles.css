@@ -149,14 +149,25 @@ main li {
     top: 100%;
     left: 0;
     width: 100%;
-    background: green;
+    background: white;
     border: 1px solid #ccc;
     z-index: 1000;
     max-height: 300px;
     overflow-y: auto;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 0.8rem;
 }
-
+#search-results .suggestion-item {
+    padding: 10px; /* Odsazení mezi výsledky */
+    font-size: 0.9rem; /* Menší písmo */
+    color: #6c757d; /* Šedá barva textu */
+    text-decoration: none; /* Bez podtržení */
+    cursor: pointer; /* Ukazatel myši při najetí */
+}
+#search-results .suggestion-item:hover {
+    background-color: #f8d7da; /* Světle červené pozadí */
+    color: #dc3545; /* Červený text */
+}
 #search-results h3{
     background-color: #6c757d;
     color: white;
@@ -171,6 +182,7 @@ main li {
     width: 60%;
     position: relative;
 }
+
 /* === Alert === */
 /* Alert container */
 .alert-container {

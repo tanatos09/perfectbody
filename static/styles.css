@@ -96,26 +96,35 @@ main {
     .collapse {
         display: block;
     }
-}
-@media (max-width: 768px) {
-    .nameday, .weather {
-        display: none;
+    .weather {
+    display: none; /* Skrytí sekce při načtení stránky */
+    background-color: #6c757d; /* Šedé pozadí */
+    color: white; /* Bílé písmo */
+    font-size: 0.8rem; /* Zmenšené písmo */
+    border-radius: 5px; /* Zaoblení rohů */
+    padding: 10px;
     }
 
     .toggle-info {
-        display: flex;
-        justify-content: flex-end;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 10px;
     }
 
     .toggle-info button {
-        background-color: #9c8571;
+        background-color: #6c757d;
         color: white;
         border: none;
         padding: 5px 10px;
         border-radius: 5px;
         cursor: pointer;
     }
+    .toggle-info button:hover {
+    background-color: #5a6268; /* Tmavší šedá při najetí */
+    }
 }
+
 main li {
     list-style-type: square;
 }
@@ -201,6 +210,7 @@ main li {
 
 /* === Footer === */
 footer {
+    font-size: 0.8rem;
     background-color: #f8f9fa !important; /* Světle šedá barva */
     color: #6c757d; /* Šedé písmo */
     text-align: center;
@@ -215,10 +225,11 @@ footer a {
     background-color: #ffffff; /* Bílé podbarvení odkazů */
     border-radius: 5px;
     text-decoration: none;
+    padding: 0 5px;
 }
 
 footer a:hover {
     color: #ffffff; /* Bílé písmo při najetí myší */
     background-color: #6c757d; /* Šedé podbarvení při najetí myší */
-    padding: 0;
+
 }

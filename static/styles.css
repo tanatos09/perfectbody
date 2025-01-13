@@ -126,6 +126,16 @@ main {
     .toggle-info button:hover {
     background-color: #5a6268; /* Tmavší šedá při najetí */
     }
+    .icon-size {
+        width: 2em;
+        height: 2em;
+    }
+}
+@media (min-width: 1200px) {
+    .icon-size {
+        width: 2.5em;
+        height: 2.5em;
+    }
 }
 
 main li {
@@ -136,8 +146,10 @@ main li {
 }
 /* === style icon === */
 .icon-size {
-    width: 1em;
-    height: 1em;
+    width: 1.5em; /* Nastavení stejné šířky */
+    height: 1.7em; /* Nastavení stejné výšky */
+    display: inline-block;
+    vertical-align: middle; /* Zarovnání na střed s textem */
 }
 /* === Style search === */
 #navbarNav a:hover {
@@ -157,15 +169,15 @@ main li {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     font-size: 0.8rem;
 }
-#search-results .suggestion-item {
-    padding: 10px; /* Odsazení mezi výsledky */
+#search-results a {
+    font-weight: bold;
+    padding: 10px 0; /* Odsazení mezi výsledky */
     font-size: 0.9rem; /* Menší písmo */
     color: #6c757d; /* Šedá barva textu */
     text-decoration: none; /* Bez podtržení */
     cursor: pointer; /* Ukazatel myši při najetí */
 }
-#search-results .suggestion-item:hover {
-    background-color: #f8d7da; /* Světle červené pozadí */
+#search-results a:hover {
     color: #dc3545; /* Červený text */
 }
 #search-results h3{
@@ -203,6 +215,7 @@ main li {
     margin-bottom: 10px; /* Odstup mezi jednotlivými alerty */
     border-radius: 8px; /* Jemné zaoblení rohů */
     text-align: center;
+    transition: opacity 0.15s linear;
 }
 
 /* Specifické styly pro typy alertů */

@@ -37,6 +37,7 @@ class OrderProduct(Model):
     product = ForeignKey(Product, on_delete=CASCADE, related_name='order_items')
     quantity = PositiveIntegerField()
     price_per_item = DecimalField(max_digits=10, decimal_places=2)
+    note = CharField(max_length=500, blank=True, null=True)
 
     def __repr__(self):
         customer_str = self.order.customer.username if self.order.customer else "GUEST"

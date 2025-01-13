@@ -1,48 +1,57 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Děkujeme za vaši objednávku!</h2>
-<p>Vaše objednávka byla úspěšně dokončena. Detaily objednávky jsou níže:</p>
+<h2 style="text-align: center; margin-bottom: 20px;">Děkujeme za vaši objednávku!</h2>
+<p style="text-align: center; margin-bottom: 30px;">Vaše objednávka byla úspěšně dokončena. Detaily objednávky naleznete níže.</p>
 
-<!-- Objednávka -->
-<div>
+<!-- Detaily objednávky -->
+<div style="width: 80%; margin: 0 auto;">
     <h3>Objednávka #{{ formatted_order_id }}</h3>
-    <p><strong>Celková cena:</strong> {{ order.total_price }} Kč</p>
-    <p><strong>Stav objednávky:</strong> {{ order.get_order_state_display }}</p>
-</div>
-
-<hr>
-
-<!-- Obsah objednávky -->
-<div>
-    <h3>Obsah objednávky</h3>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Produkt</th>
-                <th>Množství</th>
-                <th>Cena za kus</th>
-                <th>Celkem</th>
-            </tr>
-        </thead>
-<tbody>
-    {% for item in items_with_totals %}
-    <tr>
-        <td>{{ item.product_name }}</td>
-        <td>{{ item.quantity }}</td>
-        <td>{{ item.price_per_item }} Kč</td>
-        <td>{{ item.total_price }} Kč</td>
-    </tr>
-    {% endfor %}
-</tbody>
-
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+        <tr>
+            <td><strong>Celková cena:</strong></td>
+            <td>{{ order.total_price }} Kč</td>
+        </tr>
+        <tr>
+            <td><strong>Stav objednávky:</strong></td>
+            <td>{{ order.get_order_state_display }}</td>
+        </tr>
     </table>
 </div>
 
-<hr>
+<hr style="margin: 40px 0;">
+
+<!-- Obsah objednávky -->
+<div style="width: 80%; margin: 0 auto;">
+    <h3>Obsah objednávky</h3>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; border: 1px solid #ccc;">
+        <thead>
+    <tr style="border-bottom: 2px solid #000; text-align: left;">
+        <th style="padding: 10px 5px;">Produkt</th>
+        <th style="text-align: center; padding: 10px 5px;">Množství</th>
+        <th style="text-align: center; padding: 10px 5px;">Cena za kus</th>
+        <th style="text-align: center; padding: 10px 5px;">Celkem</th>
+        <th style="padding: 10px 5px;">Poznámka</th> <!-- Sloupec poznámky -->
+    </tr>
+</thead>
+<tbody>
+    {% for item in items_with_totals %}
+    <tr style="border-bottom: 1px solid #ccc;">
+        <td style="padding: 10px 5px;">{{ item.product_name }}</td>
+        <td style="text-align: center; padding: 10px 5px;">{{ item.quantity }}</td>
+        <td style="text-align: center; padding: 10px 5px;">{{ item.price_per_item }} Kč</td>
+        <td style="text-align: center; padding: 10px 5px;">{{ item.total_price }} Kč</td>
+        <td style="padding: 10px 5px;">{{ item.note|default:"-" }}</td> <!-- Zobrazení poznámky -->
+    </tr>
+    {% endfor %}
+</tbody>
+    </table>
+</div>
+
+<hr style="margin: 40px 0;">
 
 <!-- Pokyny pro platbu -->
-<div>
+<div style="width: 80%; margin: 0 auto;">
     <h3>Pokyny pro platbu převodem</h3>
     <p>Pro dokončení objednávky prosím proveďte platbu na níže uvedené údaje:</p>
     <ul>
@@ -53,11 +62,16 @@
     <p>Po přijetí platby bude vaše objednávka zpracována. Děkujeme za pochopení!</p>
 
     <!-- QR kód -->
-    <h4>QR kód pro platbu</h4>
-    <img src="data:image/png;base64,{{ qr_code_base64 }}" alt="QR kód pro platbu">
+    <div style="text-align: center; margin-top: 20px;">
+        <h4>QR kód pro platbu</h4>
+        <img src="data:image/png;base64,{{ qr_code_base64 }}" alt="QR kód pro platbu" style="border: 1px solid #ccc; padding: 10px;">
+    </div>
 </div>
 
+<hr style="margin: 40px 0;">
 
-
-<a href="{% url 'home' %}" class="btn btn-primary">Zpět na úvodní stránku</a>
+<!-- Tlačítko zpět -->
+<div style="width: 80%; margin: 0 auto; text-align: center;">
+    <a href="{% url 'home' %}" class="btn btn-primary" style="padding: 10px 20px; font-size: 1.2em;">Zpět na úvodní stránku</a>
+</div>
 {% endblock %}

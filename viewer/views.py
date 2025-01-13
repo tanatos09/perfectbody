@@ -6,6 +6,8 @@ import unicodedata
 from django.urls import reverse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.views.decorators.csrf import csrf_exempt
+
 from products.models import Product
 from accounts.models import UserProfile, TrainersServices, Address
 from django.http import JsonResponse
@@ -130,9 +132,11 @@ def add_to_cart(request, product_id):
             return redirect('product', pk=product_id)
     else:
         cart[product_id_str] = {
-            'name': product.product_name,
+            'product_name': product.product_name,
+            'product_type': product.product_type,
             'price': float(product.price),
             'quantity': 1,
+            'note': '',
         }
 
     # Uložení košíku do session
@@ -362,3 +366,18 @@ def search(request):
         'services': services,
         'trainers': filtered_trainers,
     })
+
+
+def update_note_in_cart(request, product_id):
+    if request.method == "POST":
+        note = request.POST.get('note', '').strip()
+        cart = request.session.get('cart', {})
+
+        if str(product_id) in cart:
+            cart[str(product_id)]['note'] = note  # Uložení poznámky
+            request.session['cart'] = cart
+            return JsonResponse({'success': True, 'note': note})
+
+        return JsonResponse({'success': False, 'error': 'Produkt není v košíku.'})
+
+    return JsonResponse({'success': False, 'error': 'Neplatná metoda.'})

@@ -109,10 +109,23 @@ def start_order(request):
             if not request.user.is_authenticated:
                 request.session['guest_email'] = email
 
+            # Oprava dat v košíku
+            updated_cart = {}
+            for product_id, item in cart.items():
+                product = get_object_or_404(Product, id=product_id)
+                updated_cart[product_id] = {
+                    'product_name': product.product_name,
+                    'product_type': item.get('product_type', product.product_type),
+                    'price': item.get('price', float(product.price)),
+                    'quantity': item['quantity'],
+                    'note': item.get('note'),
+                }
+
+            # Uložení opraveného košíku do session
             request.session['cart_order'] = {
                 'shipping_address_id': shipping_address.id,
                 'billing_address_id': billing_address.id,
-                'cart': cart,
+                'cart': updated_cart,
             }
 
             messages.success(request, 'Adresa byla úspěšně uložena.')
@@ -146,38 +159,45 @@ def start_order(request):
     })
 
 
+
 def order_summary(request):
+    # Získání objednávky z relace
     cart_order = request.session.get('cart_order', None)
     if not cart_order:
         messages.error(request, 'Objednávka není připravena.')
         return redirect('cart')
 
     try:
+        # Získání adres z databáze
         shipping_address = Address.objects.get(id=cart_order['shipping_address_id'])
         billing_address = Address.objects.get(id=cart_order['billing_address_id'])
     except Address.DoesNotExist:
         messages.error(request, 'Adresy objednávky nejsou platné.')
         return redirect('start_order')
 
+    # Zpracování položek košíku
     cart = cart_order['cart']
-    cart_items = [
-        {
-            'product_name': item.get('product_name', 'Produkt'),
+    cart_items = []
+    for product_id, item in cart.items():
+        cart_items.append({
+            'product_name': item.get('product_name', f'Produkt ID {product_id}'),  # Výchozí název produktu
             'quantity': item['quantity'],
             'price_per_item': item['price'],
             'total_price': item['quantity'] * item['price'],
-        }
-        for item in cart.values()
-    ]
+            'note': item.get('note', '')
+        })
 
+    # Výpočet celkové ceny
     total_price = sum(item['total_price'] for item in cart_items)
 
+    # Vykreslení šablony
     return render(request, 'order_summary.html', {
         'shipping_address': shipping_address,
         'billing_address': billing_address,
         'cart_items': cart_items,
         'total_price': total_price,
     })
+
 
 
 def confirm_order(request):
@@ -229,12 +249,13 @@ def confirm_order(request):
                 product.stock_availability -= item['quantity']
                 product.save()
 
-            # Vytvoření položky objednávky
+            # Uložení poznámky spolu s dalšími údaji do záznamu OrderProduct
             OrderProduct.objects.create(
                 order=order,
                 product=product,
                 quantity=item['quantity'],
                 price_per_item=item['price'],
+                note=item.get('note', ''),  # Přidání poznámky
             )
 
     # Vymazání session
@@ -243,6 +264,9 @@ def confirm_order(request):
 
     messages.success(request, f'Děkujeme za objednávku #{order.id}!')
     return redirect('thank_you', order_id=order.id)
+
+
+
 
 def thank_you(request, order_id):
     if request.user.is_authenticated:
@@ -264,10 +288,10 @@ def thank_you(request, order_id):
     payment_details = {
         'bank_account': bank_account,
         'variable_symbol': variable_symbol,
-        'total_price': order.total_price,
+        'total_price': total_price,
     }
 
-    #QRs
+    # QR kód
     qr_data = f"SPD*1.0*ACC:{bank_account}*AM:{total_price:.2f}*CC:CZK*X-VS:{variable_symbol}"
     qr_code_img = qrcode.make(qr_data)
 
@@ -276,13 +300,14 @@ def thank_you(request, order_id):
     buffer.seek(0)
     qr_code_base64 = base64.b64encode(buffer.read()).decode('utf-8')
 
-
+    # Přidání poznámky do položek
     items_with_totals = [
         {
             'product_name': item.product.product_name,
             'quantity': item.quantity,
             'price_per_item': item.price_per_item,
             'total_price': item.quantity * item.price_per_item,
+            'note': getattr(item, 'note', ''),  # Přidání poznámky
         }
         for item in order.items.all()
     ]
@@ -294,6 +319,7 @@ def thank_you(request, order_id):
         'payment_details': payment_details,
         'qr_code_base64': qr_code_base64,
     })
+
 
 
 @login_required

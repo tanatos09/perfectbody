@@ -28,7 +28,8 @@ from products.views import products, product, producer, services, service, train
     add_trainer_review, add_service_review, add_product_review
 from accounts.views import edit_profile, profile_view, change_password, register, login_view, logout_view, \
     TrainerRegistrationWizard, registration_success
-from viewer.views import view_cart, add_to_cart, remove_from_cart, home, user_profile_view, search, update_cart_ajax
+from viewer.views import view_cart, add_to_cart, remove_from_cart, home, user_profile_view, search, update_cart_ajax, \
+    update_note_in_cart
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -104,5 +105,6 @@ urlpatterns = [
     path('trainer/<int:pk>/add_review/', add_trainer_review, name='add_trainer_review'),
     path('service/<int:pk>/add_review/', add_service_review, name='add_service_review'),
     path('product/<int:pk>/add_review/', add_product_review, name='add_product_review'),
+    path('cart/update_note/<int:product_id>/', update_note_in_cart, name='update_note_in_cart'),
 
 ]

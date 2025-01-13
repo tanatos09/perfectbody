@@ -15,5 +15,9 @@ class Command(BaseCommand):
         self.stdout.write("Nahrávám fixtury...")
         call_command("loaddata", "products/fixtures/products_fixtures.json")
         call_command("loaddata", "accounts/fixtures/users_fixtures.json")
+        call_command("loaddata", "products/fixtures/users_fixtures.json")
+        call_command("loaddata", "products/fixtures/products_review_fixtures.json")
+        call_command("loaddata", "products/fixtures/trainer_reviews_fixtures.json")
+
 
         self.stdout.write("Databáze byla úspěšně nastavena!")

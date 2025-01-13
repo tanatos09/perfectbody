@@ -1,0 +1,157 @@
+[
+    {
+        "model": "accounts.userprofile",
+        "pk": 99,
+        "fields": {
+            "username": "takovy_user",
+            "email": "takovy@example.com",
+            "first_name": "Tákový",
+            "last_name": "Uživatel",
+            "is_active": true,
+            "password": "pbkdf2_sha256$260000$abcd1234$hashedpassworddata",
+            "date_joined": "2024-08-31T15:34:34",
+            "created_at": "2024-05-08T15:23:58"
+        }
+    },
+
+    {
+        "model": "accounts.userprofile",
+        "pk": 100,
+        "fields": {
+            "username": "user100",
+            "email": "user100@example.com",
+            "first_name": "Jan",
+            "last_name": "Novák",
+            "is_active": true,
+            "password": "pbkdf2_sha256$260000$abcd1234$hashedpassworddata",
+            "date_joined": "2024-07-15T10:20:30",
+            "created_at": "2024-06-01T12:15:10"
+        }
+    },
+    {
+        "model": "accounts.userprofile",
+        "pk": 101,
+        "fields": {
+            "username": "user101",
+            "email": "user101@example.com",
+            "first_name": "Petr",
+            "last_name": "Svoboda",
+            "is_active": true,
+            "password": "pbkdf2_sha256$260000$efgh5678$hashedpassworddata",
+            "date_joined": "2024-06-20T08:45:15",
+            "created_at": "2024-05-28T10:05:50"
+        }
+    },
+    {
+        "model": "accounts.userprofile",
+        "pk": 102,
+        "fields": {
+            "username": "user102",
+            "email": "user102@example.com",
+            "first_name": "Anna",
+            "last_name": "Dvořáková",
+            "is_active": true,
+            "password": "pbkdf2_sha256$260000$ijkl9101$hashedpassworddata",
+            "date_joined": "2024-09-05T13:30:25",
+            "created_at": "2024-08-15T11:10:20"
+        }
+    },
+    {
+        "model": "accounts.userprofile",
+        "pk": 103,
+        "fields": {
+            "username": "user103",
+            "email": "user103@example.com",
+            "first_name": "Lucie",
+            "last_name": "Horáková",
+            "is_active": true,
+            "password": "pbkdf2_sha256$260000$mnop1112$hashedpassworddata",
+            "date_joined": "2024-10-10T09:15:40",
+            "created_at": "2024-09-20T07:25:30"
+        }
+    },
+    {
+        "model": "accounts.userprofile",
+        "pk": 104,
+        "fields": {
+            "username": "user104",
+            "email": "user104@example.com",
+            "first_name": "Martin",
+            "last_name": "Kučera",
+            "is_active": true,
+            "password": "pbkdf2_sha256$260000$qrst1314$hashedpassworddata",
+            "date_joined": "2024-05-15T14:45:00",
+            "created_at": "2024-04-20T13:30:20"
+        }
+    },
+    {
+        "model": "accounts.userprofile",
+        "pk": 105,
+        "fields": {
+            "username": "user105",
+            "email": "user105@example.com",
+            "first_name": "Eva",
+            "last_name": "Benešová",
+            "is_active": true,
+            "password": "pbkdf2_sha256$260000$uvwx1516$hashedpassworddata",
+            "date_joined": "2024-07-01T12:00:00",
+            "created_at": "2024-06-15T09:45:30"
+        }
+    },
+    {
+        "model": "accounts.userprofile",
+        "pk": 106,
+        "fields": {
+            "username": "user106",
+            "email": "user106@example.com",
+            "first_name": "Michaela",
+            "last_name": "Králová",
+            "is_active": true,
+            "password": "pbkdf2_sha256$260000$yzab1718$hashedpassworddata",
+            "date_joined": "2024-08-25T10:10:10",
+            "created_at": "2024-07-30T08:40:00"
+        }
+    },
+    {
+        "model": "accounts.userprofile",
+        "pk": 107,
+        "fields": {
+            "username": "user107",
+            "email": "user107@example.com",
+            "first_name": "Tomáš",
+            "last_name": "Veselý",
+            "is_active": true,
+            "password": "pbkdf2_sha256$260000$cdef1920$hashedpassworddata",
+            "date_joined": "2024-11-01T11:15:00",
+            "created_at": "2024-10-10T09:05:15"
+        }
+    },
+    {
+        "model": "accounts.userprofile",
+        "pk": 108,
+        "fields": {
+            "username": "user108",
+            "email": "user108@example.com",
+            "first_name": "Barbora",
+            "last_name": "Váchová",
+            "is_active": true,
+            "password": "pbkdf2_sha256$260000$ghij2122$hashedpassworddata",
+            "date_joined": "2024-12-20T14:30:45",
+            "created_at": "2024-12-01T12:20:20"
+        }
+    },
+    {
+        "model": "accounts.userprofile",
+        "pk": 109,
+        "fields": {
+            "username": "user109",
+            "email": "user109@example.com",
+            "first_name": "Filip",
+            "last_name": "Růžička",
+            "is_active": true,
+            "password": "pbkdf2_sha256$260000$klmn2324$hashedpassworddata",
+            "date_joined": "2024-06-10T08:00:00",
+            "created_at": "2024-05-20T07:45:10"
+        }
+    }
+]

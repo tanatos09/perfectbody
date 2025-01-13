@@ -1,11 +1,12 @@
 /* Základní styl pro tělo a stránku */
 body {
-    margin: 0;
     font-family: Arial, sans-serif;
     background-image: url('/static/images/mw_background.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -19,28 +20,30 @@ header {
 }
 .sticky-top {
     position: sticky;
+    padding: 0;
+    margin: 0;
     top: 0;
     z-index: 1020;
     background-color: #007bff; /* Barva pozadí */
 }
 /* Main styling */
 main {
-    width: 80%;
+    width: 85%;
     flex-grow: 1;
     overflow-y: auto; /* Posuvník pouze v hlavním obsahu */
-    padding: 20px;
-    margin: auto;
+    padding:0 20px 70px 20px;
+    margin: 0 auto;
 }
 
 /* Obsah hlavního bloku */
 .content-container {
-    max-width: 100%;
-    margin: auto;
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Obsah vyplní celý main */
+    background-color: rgba(255, 255, 255, 0.8); /* Poloprůhledné pozadí */
+    padding: 20px; /* Vnitřní odsazení */
+    border-radius: 10px; /* Zaoblené rohy */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Stín kolem obsahu */
 }
+
 
 /* Zarovnání nameday a weather doprava
 .weather {

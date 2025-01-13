@@ -11,6 +11,13 @@ body {
     flex-direction: column;
     min-height: 100vh;
 }
+header {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    position: relative;
+    z-index: 1000;
+}
 header.fixed-top {
     margin: 0;
     padding: 0;
@@ -19,8 +26,13 @@ header.fixed-top {
     z-index: 1030;
     height: 100vh;
 }
-header.sticky-top {
+.sticky-top {
+    position: sticky;
     z-index: 1040;
+    padding: 0px;
+    margin: 0;
+    top: 0;
+    background-color: #27ec55;
 }
 
 /* Main styling */
@@ -90,10 +102,7 @@ main li {
     margin-top: 0;
     z-index: 1050;
 }
-.navbar {
-    height: 60px;
-    padding: 0 15px;
-}
+
 
 /* Responsivní navbar */
 .navbar-toggler {
@@ -144,8 +153,7 @@ main li {
     align-items: center;
     width: 100%; /* Kontejner pokryje celou šířku */
     margin: 0 auto;
-    padding: 10px 0;
-    gap: 10px; /* Mezera mezi vyhledáváním a ikonou */
+    gap: 0px; /* Mezera mezi vyhledáváním a ikonou */
 }
 #search-results {
     position: absolute;
@@ -161,15 +169,15 @@ main li {
     font-size: 0.8rem;
 }
 #search-input {
-    width: 100%; /* Vyplní dostupný prostor */
+    flex: 1;
     padding: 10px; /* Zvýšení čitelnosti */
     font-size: 0.9rem;
 }
 #search-form button {
-    padding: 8px 12px;
-    margin-left: 5px;
+    padding: 8px 15px;
     font-size: 0.9rem;
     border-radius: 5px;
+    display: inline-block;
 }
 
 /* === style icon === */
@@ -179,4 +187,79 @@ main li {
     display: inline-block;
     vertical-align: middle; /* Zarovnání na střed s textem */
     margin-left: 10px; /* Mezera vpravo od vyhledávacího pole */
+}
+
+#search-results ul{
+    padding: 10px;
+}
+#search-form {
+    width: 60%;
+    position: relative;
+}
+
+/* === Alert === */
+/* Alert container */
+.alert-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%; /* Roztažení na celou šířku main */
+    margin-top: 20px; /* Odstup od horního okraje */
+    margin-bottom: 10px; /* Odstup od obsahu */
+    z-index: 1050; /* Zajištění viditelnosti nad obsahem */
+}
+
+/* Alerty */
+.alert {
+    width: 90%; /* Zabírá většinu šířky stránky */
+    max-width: 500px; /* Maximální šířka */
+    margin-bottom: 10px; /* Odstup mezi jednotlivými alerty */
+    border-radius: 8px; /* Jemné zaoblení rohů */
+    text-align: center;
+    transition: opacity 0.15s linear;
+}
+
+/* Specifické styly pro typy alertů */
+.alert-success {
+    background-color: #d4edda; /* Zelené pozadí */
+    color: #155724; /* Tmavě zelený text */
+}
+
+.alert-danger {
+    background-color: #f8d7da; /* Červené pozadí */
+    color: #721c24; /* Tmavě červený text */
+}
+
+/* Tlačítko pro zavření alertu */
+.alert-dismissible .btn-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+/* === Footer === */
+footer {
+    font-size: 0.8rem;
+    background-color: #f8f9fa !important; /* Světle šedá barva */
+    color: #6c757d; /* Šedé písmo */
+    text-align: center;
+    padding: 20px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    line-height: initial;
+}
+footer a {
+    color: #6c757d; /* Šedé odkazy */
+    background-color: #ffffff; /* Bílé podbarvení odkazů */
+    border-radius: 5px;
+    text-decoration: none;
+    padding: 0 5px;
+}
+
+footer a:hover {
+    color: #ffffff; /* Bílé písmo při najetí myší */
+    background-color: #6c757d; /* Šedé podbarvení při najetí myší */
+
 }

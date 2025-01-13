@@ -28,7 +28,7 @@ header.fixed-top {
 .sticky-top {
     position: sticky;
     z-index: 1040;
-    padding: 0px;
+    padding: 0;
     margin: 0;
     top: 0;
 }
@@ -249,13 +249,15 @@ main a:hover {
     list-style-type: none; /* Odebere tečky z odrážek */
     margin: 0;
     padding: 0;
+}
 
 .nav-link:hover {
     background-color: #609fff;
 }
 #search-results ul li {
     list-style-position: outside;
-    border-bottom: 1px solid #f1f1f1; /* Oddělí jednotlivé položky linkou */}
+    border-bottom: 1px solid #f1f1f1; /* Oddělí jednotlivé položky linkou */
+}
 
 #search-results li:last-child {
     border-bottom: none; /* Odstraní spodní linku u poslední položky */

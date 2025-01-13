@@ -32,7 +32,6 @@ header.fixed-top {
     padding: 0px;
     margin: 0;
     top: 0;
-    background-color: #27ec55;
 }
 
 /* Main styling */
@@ -45,6 +44,16 @@ main {
 }
 main li {
     list-style-type: square;
+}
+main a {
+    color: #6c757d; /* Šedá barva odkazu */
+    font-weight: bold; /* Tučné písmo */
+    text-decoration: none; /* Bez podtržení */
+    transition: color 0.2s ease; /* Plynulý přechod barvy při najetí */
+}
+
+main a:hover {
+    color:darkred; /* Červená barva při najetí */
 }
 .logo-container {
     position: relative;
@@ -167,6 +176,8 @@ main li {
     overflow-y: auto;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     font-size: 0.8rem;
+    padding: 0 10px;
+    list-style: none;
 }
 #search-input {
     flex: 1;
@@ -179,7 +190,47 @@ main li {
     border-radius: 5px;
     display: inline-block;
 }
+#search-results ul {
+    list-style-position: outside;
+    list-style-type: none; /* Odebere tečky z odrážek */
+    margin: 0;
+    padding: 0;
 
+}
+#search-results ul li {
+    list-style-position: outside;
+    border-bottom: 1px solid #f1f1f1; /* Oddělí jednotlivé položky linkou */}
+
+#search-results li:last-child {
+    border-bottom: none; /* Odstraní spodní linku u poslední položky */
+}
+#search-results a {
+    font-weight: bold;
+    padding: 0 5px; /* Zvýšení čitelnosti */
+    border-radius: 5px; /* Zaoblené okraje odkazu */
+    text-decoration: none; /* Bez podtržení */
+    transition: background-color 0.2s ease, color 0.2s ease; /* Plynulý efekt při najetí */
+    color: #6c757d; /* Šedé odkazy */
+
+    }
+
+#search-results a:hover {
+    color:darkred;
+}
+#search-results h3{
+    background-color: #6c757d;
+    color: white;
+    font-weight: bold;
+    font-size: 17px;
+    padding: 3px 10px;
+}
+#search-results ul{
+    padding: 10px;
+}
+#search-form {
+    width: 60%;
+    position: relative;
+}
 /* === style icon === */
 .icon-size {
     width: 1.5em; /* Nastavení stejné šířky */

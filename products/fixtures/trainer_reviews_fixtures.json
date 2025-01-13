@@ -1,0 +1,122 @@
+[
+    {
+        "model": "products.trainerreview",
+        "pk": 1,
+        "fields": {
+            "trainer_id": 1,
+            "reviewer": 100,
+            "rating": 5,
+            "comment": "Trenér byl skvělý, jeho lekce mi hodně pomohly.",
+            "review_creation_datetime": "2024-01-01T10:00:00",
+            "review_updated_datetime": "2024-01-01T10:00:00"
+        }
+    },
+    {
+        "model": "products.trainerreview",
+        "pk": 2,
+        "fields": {
+            "trainer_id": 1,
+            "reviewer": 101,
+            "rating": 4,
+            "comment": "Lekce byly dobré, ale pár věcí by se dalo zlepšit.",
+            "review_creation_datetime": "2024-01-02T10:00:00",
+            "review_updated_datetime": "2024-01-02T10:00:00"
+        }
+    },
+    {
+        "model": "products.trainerreview",
+        "pk": 3,
+        "fields": {
+            "trainer_id": 1,
+            "reviewer": 102,
+            "rating": 3,
+            "comment": "Bylo to v pořádku, splnilo mé očekávání.",
+            "review_creation_datetime": "2024-01-03T10:00:00",
+            "review_updated_datetime": "2024-01-03T10:00:00"
+        }
+    },
+    {
+        "model": "products.trainerreview",
+        "pk": 4,
+        "fields": {
+            "trainer_id": 1,
+            "reviewer": 103,
+            "rating": 2,
+            "comment": "Trenér má dost nedostatků, nejsem spokojený.",
+            "review_creation_datetime": "2024-01-04T10:00:00",
+            "review_updated_datetime": "2024-01-04T10:00:00"
+        }
+    },
+    {
+        "model": "products.trainerreview",
+        "pk": 5,
+        "fields": {
+            "trainer_id": 1,
+            "reviewer": 104,
+            "rating": 1,
+            "comment": "Trénink mě zklamal, nebylo to, co jsem očekával.",
+            "review_creation_datetime": "2024-01-05T10:00:00",
+            "review_updated_datetime": "2024-01-05T10:00:00"
+        }
+    },
+    {
+        "model": "products.trainerreview",
+        "pk": 6,
+        "fields": {
+            "trainer_id": 1,
+            "reviewer": 105,
+            "rating": 4,
+            "comment": "Většina věcí byla skvělá, ale pár detailů bych zlepšil.",
+            "review_creation_datetime": "2024-01-06T10:00:00",
+            "review_updated_datetime": "2024-01-06T10:00:00"
+        }
+    },
+    {
+        "model": "products.trainerreview",
+        "pk": 7,
+        "fields": {
+            "trainer_id": 2,
+            "reviewer": 106,
+            "rating": 5,
+            "comment": "Trenér byl úžasný, lekce mě posunuly dál.",
+            "review_creation_datetime": "2024-01-07T10:00:00",
+            "review_updated_datetime": "2024-01-07T10:00:00"
+        }
+    },
+    {
+        "model": "products.trainerreview",
+        "pk": 8,
+        "fields": {
+            "trainer_id": 2,
+            "reviewer": 107,
+            "rating": 3,
+            "comment": "Bylo to průměrné, ale užitečné.",
+            "review_creation_datetime": "2024-01-08T10:00:00",
+            "review_updated_datetime": "2024-01-08T10:00:00"
+        }
+    },
+    {
+        "model": "products.trainerreview",
+        "pk": 9,
+        "fields": {
+            "trainer_id": 2,
+            "reviewer": 108,
+            "rating": 2,
+            "comment": "Trénink měl dost nedostatků, nesplnil má očekávání.",
+            "review_creation_datetime": "2024-01-09T10:00:00",
+            "review_updated_datetime": "2024-01-09T10:00:00"
+        }
+    },
+    {
+        "model": "products.trainerreview",
+        "pk": 10,
+        "fields": {
+            "trainer_id": 2,
+            "reviewer": 109,
+            "rating": 1,
+            "comment": "Byl jsem zklamaný, trénink mi vůbec nepomohl.",
+            "review_creation_datetime": "2024-01-10T10:00:00",
+            "review_updated_datetime": "2024-01-10T10:00:00"
+        }
+    }
+]

@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models import Model, DateTimeField, CharField, URLField, ForeignKey, SET_NULL, BooleanField, \
-    IntegerField, EmailField, TextField, DateField, UniqueConstraint, CASCADE
+    IntegerField, EmailField, TextField, DateField, UniqueConstraint, CASCADE, Avg
 
 from perfectbody.settings import AUTH_USER_MODEL
 
@@ -22,6 +23,13 @@ class UserProfile(AbstractUser):
     date_of_birth = DateField(blank=True, null=True)
     created_at = DateTimeField(auto_now_add=True) # datum vytvoreni uctu
     account_type = CharField(max_length=15, choices=ACCOUNT_TYPES, default='registered')
+
+    def calculate_average_rating(self):
+        reviews = self.trainer_reviews.all()
+        if not reviews.exists():
+            return 0.0
+        average = reviews.aggregate(Avg('rating'))['rating__avg']
+        return round(average, 2) if average is not None else 0.0
 
     class Meta:
         ordering = ['first_name', 'last_name']

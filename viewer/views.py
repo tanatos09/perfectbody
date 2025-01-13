@@ -6,6 +6,8 @@ import unicodedata
 from django.urls import reverse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.views.decorators.csrf import csrf_exempt
+
 from products.models import Product
 from accounts.models import UserProfile, TrainersServices, Address
 from django.http import JsonResponse
@@ -130,9 +132,11 @@ def add_to_cart(request, product_id):
             return redirect('product', pk=product_id)
     else:
         cart[product_id_str] = {
-            'name': product.product_name,
+            'product_name': product.product_name,
+            'product_type': product.product_type,
             'price': float(product.price),
             'quantity': 1,
+            'note': '',
         }
 
     # Uložení košíku do session
@@ -362,3 +366,46 @@ def search(request):
         'services': services,
         'trainers': filtered_trainers,
     })
+
+
+def update_note_in_cart(request, product_id):
+    if request.method == "POST":
+        note = request.POST.get('note', '').strip()
+        cart = request.session.get('cart', {})
+
+        if str(product_id) in cart:
+            cart[str(product_id)]['note'] = note  # Uložení poznámky
+            request.session['cart'] = cart
+            return JsonResponse({'success': True, 'note': note})
+
+        return JsonResponse({'success': False, 'error': 'Produkt není v košíku.'})
+
+    return JsonResponse({'success': False, 'error': 'Neplatná metoda.'})
+
+def custom_404(request, exception):
+    """Zpracování chyby 404 - Stránka nenalezena."""
+    return render(request, '404.html', status=404)
+
+def custom_500(request):
+    """Zpracování chyby 500 - Interní chyba serveru."""
+    return render(request, '500.html', status=500)
+
+def custom_403(request, exception):
+    """Zpracování chyby 403 - Přístup zamítnut."""
+    return render(request, '403.html', status=403)
+
+def custom_400(request, exception):
+    """Zpracování chyby 400 - Špatný požadavek."""
+    return render(request, '400.html', status=400)
+
+def custom_503(request):
+    """Volitelná funkce pro chybu 503 - Služba nedostupná."""
+    return render(request, '503.html', status=503)
+
+def custom_429(request):
+    """Volitelná funkce pro chybu 429 - Příliš mnoho požadavků."""
+    return render(request, '429.html', status=429)
+
+def custom_408(request, exception):
+    """Zpracování chyby 408 - Časový limit vypršel."""
+    return render(request, '408.html', status=408)

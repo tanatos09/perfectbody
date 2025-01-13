@@ -4,36 +4,55 @@
     <h1 style="text-align: center;">Váš košík</h1>
 
     {% if cart %}
-        <table style="width: 80%; margin: auto; border-spacing: 10px;">
-            <thead>
-            <tr>
-                <th style="text-align: left;">Produkt</th>
-                <th style="text-align: center;">Množství</th>
-                <th style="text-align: center;">Cena za kus</th>
-                <th style="text-align: center;">Celkem</th>
-                <th style="text-align: center;">Akce</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for product_id, item in cart.items %}
-                <tr>
-                    <td style="padding: 5px;">{{ item.name }}</td>
-                    <td style="padding: 5px; text-align: center;">
-                        <form data-product-id="{{ product_id }}">
-                            {% csrf_token %}
-                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1"
-                                   style="width: 50px;">
-                        </form>
-                    </td>
-                    <td style="padding: 5px; text-align: center;">{{ item.price }} Kč</td>
-                    <td style="padding: 5px; text-align: center;" id="total-{{ product_id }}">{{ item.total }} Kč</td>
-                    <td style="padding: 5px; text-align: center;">
-                        <a href="{% url 'remove_from_cart' product_id=product_id %}">Odstranit</a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+       <table style="width: 80%; margin: 20px auto; border-spacing: 0; text-align: left;">
+    <thead>
+    <tr>
+        <th style="text-align: left;">Produkt</th>
+        <th style="text-align: center;">Množství</th>
+        <th style="text-align: center;">Cena za kus</th>
+        <th style="text-align: center;">Celkem</th>
+        <th style="text-align: center;">Poznámka</th>
+        <th style="text-align: center;">Akce</th>
+    </tr>
+</thead>
+<tbody>
+{% for product_id, item in cart.items %}
+    <tr>
+        <td style="padding: 15px;">
+            {% if item.product_type == 'service' %}
+                <a href="{% url 'service' pk=product_id %}" style="color: blue; text-decoration: none;">
+                    {{ item.product_name }}
+                </a>
+            {% else %}
+                <a href="{% url 'product' pk=product_id %}" style="color: blue; text-decoration: none;">
+                    {{ item.product_name }}
+                </a>
+            {% endif %}
+        </td>
+        <td style="text-align: center; padding: 15px;">
+            <form data-product-id="{{ product_id }}">
+                {% csrf_token %}
+                <input type="number" name="quantity" value="{{ item.quantity }}" min="1"
+                       style="width: 50px; text-align: center; border: 1px solid #ccc;">
+            </form>
+        </td>
+        <td style="text-align: center;">{{ item.price }} Kč</td>
+        <td style="text-align: center;" id="total-{{ product_id }}">{{ item.total }} Kč</td>
+        <td style="padding: 15px;">
+            <textarea name="note" class="note-input" data-product-id="{{ product_id }}"
+                      style="width: 100%; border: 1px solid #ccc; resize: none;">{{ item.note }}</textarea>
+        </td>
+        <td style="text-align: center;">
+            <a href="{% url 'remove_from_cart' product_id=product_id %}" style="text-decoration: none;">
+                Odstranit
+            </a>
+        </td>
+    </tr>
+{% endfor %}
+</tbody>
+</table>
+
+
 
         <div style="margin: 20px auto; text-align: right; width: 80%;">
             <p><strong>Celková cena:</strong> <span id="cart-total">{{ total }} Kč</span></p>
@@ -85,6 +104,35 @@
 
             initializeQuantityListeners();
         });
-    </script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Odesílání poznámek
+        document.querySelectorAll('.note-input').forEach(noteInput => {
+            noteInput.addEventListener('change', function () {
+                const productId = this.dataset.productId;
+                const note = this.value;
+
+                fetch(`/cart/update_note/${productId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: `note=${encodeURIComponent(note)}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.success) {
+                        alert(data.error || 'Nepodařilo se uložit poznámku.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Chyba:', error);
+                    alert('Nastala chyba při ukládání poznámky.');
+                });
+            });
+        });
+    });
+</script>
 
 {% endblock %}

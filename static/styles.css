@@ -67,7 +67,6 @@ body {
     margin-top: 2rem;
 }
 
-
 .jumbotron {
     padding: 2rem;
     background-color: #ffffff;
@@ -88,9 +87,95 @@ body {
     color: #6c757d;
 }
 
-
 .container {
     width: 90%;
     max-width: 1200px;
     margin: 2rem auto;
+}
+
+textarea {
+    resize: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+}
+
+button {
+    background-color: #3788ff;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0065ff;
+}
+
+/* === Hvězdičky (umístěno dole) === */
+.average-rating {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.rating-stars {
+    display: flex;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.rating-stars .filled {
+    color: #f5b301; /* Zlatá barva */
+}
+
+.rating-stars .half-filled {
+    position: relative;
+    color: #ccc; /* Základní šedá barva */
+}
+
+.rating-stars .half-filled::before {
+    content: "★";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%; /* Pouze levá polovina */
+    height: 100%;
+    overflow: hidden;
+    color: #f5b301; /* Zlatá barva pro levou část */
+    z-index: 1;
+}
+
+.rating-stars .empty {
+    color: #ccc; /* Šedá barva */
+}
+
+/* Hvězdičky ve formuláři */
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 5px;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    font-size: 30px;
+    color: gray;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+.rating label:hover,
+.rating label:hover ~ label {
+    color: gold;
+}
+
+.rating input:checked ~ label {
+    color: gold;
 }

@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="d-flex justify-content-end align-items-center mb-4">
+<!-- weather + nameday -->
+<div class="d-flex justify-content-end align-items-center mb-4 weather">
     <div class="nameday me-3 border">
         <p>Dnes má svátek: <strong>{{ name_day }}</strong></p>
     </div>
-    <div class="weather border" >
+    <div class=" border" >
         {% if weather_data %}
             <ul style="list-style: none; padding: 0;">
                 <li style="list-style-type: none"><strong>Aktuální počasí</strong></li>
@@ -21,7 +22,6 @@
             <p>Počasí není dostupné.</p>
         {% endif %}
     </div>
-
 </div>
 
 <div class="toggle-info d-block d-md-none text-end">

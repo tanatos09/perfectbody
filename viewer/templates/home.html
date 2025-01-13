@@ -2,32 +2,31 @@
 
 {% block content %}
 <!-- weather + nameday -->
-<div class="d-flex justify-content-end align-items-center mb-4 weather">
-    <div class="nameday me-3 border">
-        <p>Dnes má svátek: <strong>{{ name_day }}</strong></p>
+<div class="d-flex justify-content-between align-items-center mb-4 border weather p-2" style="background-color: #6c757d; color: white; font-size: 0.8rem; border-radius: 5px;">
+    <div class="nameday">
+        <p class="m-0">Dnes má svátek: <strong>{{ name_day }}</strong></p>
     </div>
-    <div class=" border" >
+    <div>
         {% if weather_data %}
-            <ul style="list-style: none; padding: 0;">
-                <li style="list-style-type: none"><strong>Aktuální počasí</strong></li>
+            <p class="m-0">
+                <strong>Aktuálně:</strong>
                 {% for weather in weather_data %}
-                    <li>
-                        <strong>{{ weather.city|default:"Neznámé město" }}:</strong>
-                        {{ weather.temperature }}°C, {{ weather.description|default:"Neznámý popis" }},
-                        Vlhkost: {{ weather.humidity|default:"?" }}%
-                    </li>
+                    {{ weather.city|default:"Neznámé město" }}:
+                    {{ weather.temperature }}°C,
+                    {{ weather.description|default:"Neznámý popis" }}
                 {% endfor %}
-            </ul>
+            </p>
         {% else %}
-            <p>Počasí není dostupné.</p>
+            <p class="m-0">Počasí není dostupné.</p>
         {% endif %}
     </div>
+    <div class="toggle-info d-block d-md-none">
+        <button class="btn btn-secondary btn-sm" onclick="toggleInfo()" style="background-color: #6c757d; color: white; border: none;">
+            Počasí a svátek
+        </button>
+    </div>
 </div>
-
-<div class="toggle-info d-block d-md-none text-end">
-    <button class="btn btn-secondary nameday" onclick="toggleInfo()">Počasí a svátek</button>
-</div>
-
+<!-- Hlavní obsah -->
 <div>
     <h1 class="text-center mb-4">Vítejte v <span class="highlight">PerfectBody</span>!</h1>
     <p class="lead text-center">Jsme váš spolehlivý partner na cestě ke zdravému a aktivnímu životnímu stylu.</p>

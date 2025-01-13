@@ -20,13 +20,13 @@
 
 <body class="d-flex flex-column min-vh-100">
 <!-- Header s NavbarTop a Navbar -->
-<header class="sticky-top">
+<header class="fixed-top">
     <nav class="bg-primary text-white">
         {% include "navbartop.html" %}
         {% include "navbar.html" %}
     </nav>
 </header>
-<main class="flex-grow-1 d-flex flex-column align-items-center"><!-- Alerty -->
+<main class="flex-grow-1 d-flex flex-column align-items-center "><!-- Alerty -->
     {% if messages %}
         <div class="alert-container">
             {% for message in messages %}
@@ -46,7 +46,7 @@
 </main>
 
 <!-- Footer -->
-<footer class="bg-light text-dark text-center py-3">
+<footer class="bg-light text-dark text-center py-3 fixed-bottom">
     {% include "footer.html" %}
 </footer>
 <script>

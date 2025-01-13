@@ -11,21 +11,15 @@ body {
     flex-direction: column;
     min-height: 100vh;
 }
-header {
+header.fixed-top {
     margin: 0;
     padding: 0;
     width: 100%;
-    position: relative;
-    z-index: 1000;
+    position: fixed;
+    z-index: 1030;
+    height: 100vh;
 }
-.sticky-top {
-    position: sticky;
-    padding: 0;
-    margin: 0;
-    top: 0;
-    z-index: 1020;
-    background-color: #007bff; /* Barva pozadí */
-}
+
 /* Main styling */
 main {
     width: 85%;
@@ -116,12 +110,12 @@ main {
     }
 
     .toggle-info button {
-        background-color: #6c757d;
-        color: white;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 5px;
-        cursor: pointer;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
     }
     .toggle-info button:hover {
     background-color: #5a6268; /* Tmavší šedá při najetí */

@@ -29,7 +29,7 @@ from products.views import products, product, producer, services, service, train
 from accounts.views import edit_profile, profile_view, change_password, register, login_view, logout_view, \
     TrainerRegistrationWizard, registration_success
 from viewer.views import view_cart, add_to_cart, remove_from_cart, home, user_profile_view, search, update_cart_ajax, \
-    update_note_in_cart
+    update_note_in_cart, custom_400, custom_403, custom_404, custom_408, custom_429, custom_500, custom_503
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -108,3 +108,12 @@ urlpatterns = [
     path('cart/update_note/<int:product_id>/', update_note_in_cart, name='update_note_in_cart'),
 
 ]
+
+handler404 = 'viewer.views.custom_404'
+handler500 = 'viewer.views.custom_500'
+handler403 = 'viewer.views.custom_403'
+handler400 = 'viewer.views.custom_400'
+handler408 = 'viewer.views.custom_408,'
+handler500 = 'viewer.views.custom_429'
+handler500 = 'viewer.views.custom_503'
+

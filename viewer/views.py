@@ -381,3 +381,31 @@ def update_note_in_cart(request, product_id):
         return JsonResponse({'success': False, 'error': 'Produkt není v košíku.'})
 
     return JsonResponse({'success': False, 'error': 'Neplatná metoda.'})
+
+def custom_404(request, exception):
+    """Zpracování chyby 404 - Stránka nenalezena."""
+    return render(request, '404.html', status=404)
+
+def custom_500(request):
+    """Zpracování chyby 500 - Interní chyba serveru."""
+    return render(request, '500.html', status=500)
+
+def custom_403(request, exception):
+    """Zpracování chyby 403 - Přístup zamítnut."""
+    return render(request, '403.html', status=403)
+
+def custom_400(request, exception):
+    """Zpracování chyby 400 - Špatný požadavek."""
+    return render(request, '400.html', status=400)
+
+def custom_503(request):
+    """Volitelná funkce pro chybu 503 - Služba nedostupná."""
+    return render(request, '503.html', status=503)
+
+def custom_429(request):
+    """Volitelná funkce pro chybu 429 - Příliš mnoho požadavků."""
+    return render(request, '429.html', status=429)
+
+def custom_408(request, exception):
+    """Zpracování chyby 408 - Časový limit vypršel."""
+    return render(request, '408.html', status=408)

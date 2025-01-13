@@ -75,8 +75,7 @@
                         <li><a class="dropdown-item" href="{% url 'trainers' %}">Seznam všech trenérů</a></li>
                         <!-- Dynamické načítání jednotlivých schválených trenérů -->
                         {% for trainer in approved_trainers %}
-                            <div class="dropdown-divider"></div>
-                            <li><a class="dropdown-item"
+                               <li><a class="dropdown-item"
                                    href="{% url 'trainer' trainer.pk %}">{{ trainer.full_name }}</a></li>
                         {% endfor %}
                     </ul>

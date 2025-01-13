@@ -1,6 +1,43 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+    <!-- Breadcrumbs navigace -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="display: flex; list-style: none; padding: 0;">
+            <!-- Domů -->
+            <li class="breadcrumb-item">
+                <a href="{% url 'home' %}">Domů</a>
+            </li>
+
+            <!-- Oddělovač -->
+            <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+
+            <!-- Hlavní kategorie produktů -->
+            {% if category %}
+                <li class="breadcrumb-item">
+                    <a href="{% url 'products' %}">Kategorie produktů</a>
+                </li>
+            {% else %}
+                <li class="breadcrumb-item active" aria-current="page">Kategorie produktů</li>
+            {% endif %}
+
+            <!-- Rodičovská kategorie, pokud existuje -->
+            {% if category and category.category_parent %}
+                <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'products' category.category_parent.pk %}">{{ category.category_parent.category_name }}</a>
+                </li>
+            {% endif %}
+
+            <!-- Aktuální kategorie -->
+            {% if category %}
+                <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ category.category_name }}</li>
+            {% endif %}
+        </ol>
+    </nav>
+
     {% if category is None %}
         <!-- Zobrazení hlavních kategorií -->
         <h1>Kategorie produktů</h1>
@@ -101,19 +138,14 @@
             </div>
 
             <!-- Tlačítka pro filtrování -->
-            {% if ladies or gentlemans %}
-                <div>
-                    <strong>Filtrovat:</strong>
-                    <a href="?gender=ladies{% if sort_by %}&sort_by={{ sort_by }}{% endif %}"
-                       class="{% if gender_filter == 'ladies' %}active{% endif %}">Dámské</a>
-                    |
-                    <a href="?gender=gentlemans{% if sort_by %}&sort_by={{ sort_by }}{% endif %}"
-                       class="{% if gender_filter == 'gentlemans' %}active{% endif %}">Pánské</a>
-                    |
-                    <a href="?{% if sort_by %}sort_by={{ sort_by }}{% endif %}"
-                       class="{% if not gender_filter %}active{% endif %}">Vše</a>
-                </div>
-            {% endif %}
+            <div>
+                <strong>Filtrovat:</strong>
+                <a href="?gender=ladies{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Dámské</a>
+                |
+                <a href="?gender=gentlemans{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Pánské</a>
+                |
+                <a href="?{% if sort_by %}sort_by={{ sort_by }}{% endif %}">Vše</a>
+            </div>
 
             <ul>
                 {% for product in products %}
@@ -174,6 +206,11 @@
 
                     {% if products.has_next %}
                         <a href="?page=
+
+
+
+
+
                                 {{ products.next_page_number }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Další</a>
                         <a href="?page=
                                 {{ products.paginator.num_pages }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Poslední &raquo;</a>
@@ -186,4 +223,5 @@
             <p style="color: red;">Žádné podkategorie ani produkty nejsou k dispozici.</p>
         {% endif %}
     {% endif %}
+
 {% endblock %}

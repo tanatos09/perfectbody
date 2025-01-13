@@ -9,14 +9,13 @@ from products.models import Category, Producer, Product
 from accounts.models import UserProfile, TrainersServices
 
 
-from django.db.models import Q
-
 def products(request, pk=None):
+    # Getting parameters from URL.
     sort_by = request.GET.get('sort_by', 'name')
     gender_filter = request.GET.get('gender', None)
     page_number = request.GET.get('page', 1)
 
-    # Validace vstupů
+    # Input validation.
     valid_sort_by = ['name', 'price_asc', 'price_desc']
     if sort_by not in valid_sort_by:
         sort_by = 'name'
@@ -25,7 +24,7 @@ def products(request, pk=None):
         gender_filter = None
 
     if pk is None:
-        # Hlavní kategorie
+        # Main categories with merchantdise product type products filter.
         main_categories = Category.objects.filter(
             category_parent=None
         ).filter(
@@ -38,29 +37,38 @@ def products(request, pk=None):
             'subcategories': None,
             'products': None,
             'sort_by': sort_by,
+            'gender_filter': gender_filter,
+            'gender_availability': None,    # not applicable for main categories
         }
 
     else:
-        # Načtení kategorie
+        # Getting current category by primary key or return 404.
         category = get_object_or_404(Category, pk=pk)
 
+        # Subcategories with merchantdise product type products filter.
         subcategories = category.subcategories.filter(
             Q(categories__product_type='merchantdise') | Q(subcategories__categories__product_type='merchantdise')
         ).distinct()
 
-        # Filtrování produktů
+        # Filtering products by category.
         products_list = Product.objects.filter(
             category=category,
             product_type='merchantdise'
         ).select_related('category')
 
-        # Dynamické filtrování podle pohlaví
+        # Checking the availability of filtering by gender.
+        gender_availability = {
+            'ladies': products_list.filter(product_name__icontains='dámské').exists(),
+            'gentlemans': products_list.filter(product_name__icontains='pánské').exists(),
+        }
+
+        # Dynamic filtering by gender for products from the sportswear main category.
         if gender_filter == 'ladies':
             products_list = products_list.filter(product_name__icontains='dámské')
         elif gender_filter == 'gentlemans':
             products_list = products_list.filter(product_name__icontains='pánské')
 
-        # Třídění produktů
+        # Products sorting.
         if sort_by == 'price_asc':
             products_list = products_list.order_by('price')
         elif sort_by == 'price_desc':
@@ -68,13 +76,9 @@ def products(request, pk=None):
         else:
             products_list = products_list.order_by('product_name')
 
-        # Stránkování
-        paginator = Paginator(products_list, 10)  # 10 produktů na stránku
+        # Pagination.
+        paginator = Paginator(products_list, 10)    # 10 products per 1 page
         page_obj = paginator.get_page(page_number)
-
-        # Kontrola dostupnosti filtrování podle pohlaví
-        ladies = products_list.filter(product_name__icontains='dámské').exists()
-        gentlemans = products_list.filter(product_name__icontains='pánské').exists()
 
         context = {
             'main_categories': None,
@@ -82,9 +86,8 @@ def products(request, pk=None):
             'subcategories': subcategories,
             'products': page_obj,
             'sort_by': sort_by,
-            'ladies': ladies,
-            'gentlemans': gentlemans,
             'gender_filter': gender_filter,
+            'gender_availability': gender_availability,
         }
 
     return render(request, 'products.html', context)
@@ -123,13 +126,21 @@ def producer(request, pk):
 
 
 def services(request, pk=None):
+    # Getting parameters from URL.
     sort_by = request.GET.get('sort_by', 'name')
+    page_number = request.GET.get('page', 1)
+
+    # Input validation.
+    valid_sort_by = ['name', 'price_asc', 'price_desc']
+    if sort_by not in valid_sort_by:
+        sort_by = 'name'
 
     if pk is None:
-        # Získání hlavních kategorií, které mají přes podkategorie služby typu 'service'
+        # Main categories with service product type filter.
         main_categories = Category.objects.filter(
-            category_parent=None,  # Hlavní kategorie
-            subcategories__categories__product_type='service'  # Služby v podkategoriích typu 'service'
+            category_parent=None
+        ).filter(
+            Q(categories__product_type='service') | Q(subcategories__categories__product_type='service')
         ).distinct()
 
         context = {
@@ -140,31 +151,52 @@ def services(request, pk=None):
             'sort_by': sort_by,
         }
     else:
-        # Načtení aktuální kategorie
+        # Getting current category by primary key or return 404.
         category = get_object_or_404(Category, pk=pk)
 
-        # Načtení podkategorií a služeb
-        subcategories = category.subcategories.all()
+        # Subcategories with service product type filter.
+        subcategories = category.subcategories.filter(
+            Q(categories__product_type='service') | Q(subcategories__categories__product_type='service')
+        ).distinct()
 
-        # Řazení produktů na základě parametru sort_by
+        # Filtering services by category.
+        services_list = Product.objects.filter(
+            category=category,
+            product_type='service'
+        ).select_related('category')
+
+        # Services sorting.
         if sort_by == 'price_asc':
-            services = Product.objects.filter(category=category, product_type='service').order_by('price')
+            services_list = services_list.order_by('price')
         elif sort_by == 'price_desc':
-            services = Product.objects.filter(category=category, product_type='service').order_by('-price')
+            services_list = services_list.order_by('-price')
         else:
-            services = Product.objects.filter(category=category, product_type='service').order_by('product_name')
+            services_list = services_list.order_by('product_name')
 
-        # Kontrola schválených trenérů pro každou službu
-        for service in services:
-            service.has_approved_trainers = TrainersServices.objects.filter(service=service, is_approved=True).exists()
+        # Pagination.
+        paginator = Paginator(services_list, 10)    # 10 services per 1 page
+        page_obj = paginator.get_page(page_number)
+
+        # Creating a map of approved trainers services for quick lookup.
+        approved_trainers_map = {
+            service_id: True
+            for service_id in TrainersServices.objects.filter(
+                service__in=page_obj, is_approved=True
+            ).values_list('service_id', flat=True)
+        }
+
+        # Assign the has_approved_trainers flag to each service.
+        for service in page_obj:
+            service.has_approved_trainers = approved_trainers_map.get(service.id, False)
 
         context = {
             'main_categories': None,
             'category': category,
             'subcategories': subcategories,
-            'services': services,
+            'services': page_obj,
             'sort_by': sort_by,
         }
+
     return render(request, 'services.html', context)
 
 

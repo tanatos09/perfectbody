@@ -70,8 +70,20 @@
         <p>{{ product.product_long_description }}</p>
     </div>
 
+    <!-- Odkaz na výrobce -->
+    {% if product.producer %}
+            <p>
+                <strong>Výrobce:</strong>
+                <a href="{% url 'producer' product.producer.pk %}">
+                    {{ product.producer.producer_name }}
+                </a>
+            </p>
+    {% endif %}
+
     <!-- Zobrazení skladové dostupnosti -->
     <p><strong>{{ stock_message }}</strong></p>
+    <p><strong>Cena:</strong> {{ product.price }} Kč</p>
+
 
     <!-- Tlačítko pro přidání do košíku -->
     {% if can_add_to_cart %}

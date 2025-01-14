@@ -463,22 +463,23 @@ ol.breadcrumb>li>a:hover {
 
 /* === Footer === */
 footer {
-    font-size: 0.8rem;
+    font-size: 0.8em;
     background-color: #f8f9fa !important; /* Světle šedá barva */
-    color: #6c757d; /* Šedé písmo */
+    color: #333333; /* Šedé písmo */
     text-align: center;
-    padding: 20px 0;
+    padding: 0.5rem 0;
     position: fixed;
+    margin: 0;
     bottom: 0;
     width: 100%;
-    line-height: initial;
+    line-height: 1rem;
 }
 footer a {
     color: #6c757d; /* Šedé odkazy */
     background-color: #ffffff; /* Bílé podbarvení odkazů */
     border-radius: 5px;
     text-decoration: none;
-    padding: 0 5px;
+    padding: 0 0.5rem;
 }
 
 footer a:hover {

@@ -498,3 +498,95 @@ button:hover {
 .rating input:checked ~ label {
     color: gold;
 }
+
+#cart-wrapper {
+    position: relative; /* Umožní správné zarovnání dropdownu vůči ikoně košíku */
+}
+
+#cart-dropdown {
+    display: none; /* Skrytý ve výchozím stavu */
+    position: absolute;
+    top: 100%; /* Zarovná dropdown přímo pod ikonou */
+    right: 0; /* Zarovná dropdown k pravé straně rodičovského prvku */
+    min-width: 400px; /* Zvýšení minimální šířky */
+    max-width: 500px; /* Zvýšení maximální šířky */
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1050;
+    padding: 20px; /* Více prostoru uvnitř */
+    overflow-y: auto;
+    max-height: 500px; /* Zvýšení výšky pro více položek */
+    border-radius: 8px; /* Zaoblené okraje */
+}
+
+/* Dropdown se zobrazí při hoveru nad rodičem */
+#cart-wrapper:hover #cart-dropdown {
+    display: block;
+}
+
+/* Styl jednotlivých položek košíku */
+#cart-items li {
+    margin-bottom: 10px;
+    font-size: 16px; /* Větší písmo pro lepší čitelnost */
+}
+
+/* Přidání vizuálního oddělení mezi položkami */
+#cart-items li:not(:last-child) {
+    border-bottom: 1px solid #f1f1f1;
+    padding-bottom: 10px;
+}
+
+/* Zabezpečení proti přetékání mimo obrazovku */
+@media (max-width: 768px) {
+    #cart-dropdown {
+        left: 0; /* Zarovná dropdown k levému okraji na malých obrazovkách */
+        right: auto; /* Zruší zarovnání doprava */
+        min-width: 90%; /* Dropdown zabírá většinu šířky na menších obrazovkách */
+    }
+}
+
+#cart-dropdown a {
+    font-weight: bold;
+    padding: 5px 10px; /* Zvýšení čitelnosti */
+    border-radius: 5px; /* Zaoblené okraje odkazu */
+    text-decoration: none; /* Bez podtržení */
+    transition: background-color 0.2s ease, color 0.2s ease; /* Plynulý efekt při najetí */
+    color: #6c757d; /* Šedé odkazy */
+}
+
+#cart-dropdown a:hover {
+    color: darkred; /* Červené při najetí */
+    background-color: #f8f9fa; /* Světle šedé pozadí při najetí */
+}
+.cart-link {
+    display: block;
+    text-align: center;
+    background-color: #6c757d; /* Výchozí šedé pozadí */
+    color: white !important; /* Bílé písmo */
+    padding: 10px; /* Odsazení kolem textu */
+    border-radius: 5px; /* Zaoblené rohy */
+    text-decoration: none; /* Bez podtržení */
+    margin-top: 10px; /* Mezera nad odkazem */
+    font-weight: bold; /* Tučné písmo */
+    transition: color 0.3s ease, background-color 0.3s ease; /* Plynulý efekt */
+}
+
+.cart-link:hover {
+    background-color: #5a6268 !important; /* Ztmavené šedé pozadí při najetí */
+}
+
+.admin-dashboard-link {
+    background-color: #ffdf03 !important;
+    font-weight: bold; /* Tučný text */
+    margin-left: 10px; /* Odsazení od ostatních položek */
+    text-decoration: none !important; /* Bez podtržení */
+}
+
+
+.admin-dashboard-link:hover {
+    background-color: #f5c6cb !important; /* Lehce tmavší červená při hoveru */
+    color: #491217; /* Tmavší text při hoveru */
+    text-decoration: none; /* Bez podtržení při hoveru */
+}
+

@@ -106,45 +106,51 @@ logger = logging.getLogger(__name__)
 
 
 def add_to_cart(request, product_id):
-    # Načtení košíku ze session
+    # Načtení košíku ze session (pokud neexistuje, vytvoří prázdný)
     cart = request.session.get('cart', {})
     product_id_str = str(product_id)
     product = get_object_or_404(Product, id=product_id)
 
+    # Pokud je produkt typu "service"
     if product.product_type == 'service':
         # Kontrola, zda má služba schválené trenéry
         has_approved_trainers = TrainersServices.objects.filter(service=product, is_approved=True).exists()
         if not has_approved_trainers:
             messages.error(request, "Pro tuto službu nejsou k dispozici schválení trenéři.")
             return redirect('service', pk=product_id)
+
+    # Pokud je produkt typu "merchantdise"
     else:
-        # Kontrola skladové dostupnosti pro zboží
+        # Kontrola skladové dostupnosti
         if product.available_stock() <= 0:
             messages.error(request, "Produkt není skladem.")
             return redirect('product', pk=product_id)
 
     # Přidání produktu nebo služby do košíku
     if product_id_str in cart:
+        # Zvýšení množství, pokud je to možné
         if product.product_type == 'service' or cart[product_id_str]['quantity'] < product.available_stock():
             cart[product_id_str]['quantity'] += 1
         else:
             messages.error(request, "Nelze přidat více, než je dostupné množství.")
             return redirect('product', pk=product_id)
     else:
+        # Vytvoření nové položky v košíku
         cart[product_id_str] = {
             'product_name': product.product_name,
             'product_type': product.product_type,
             'price': float(product.price),
             'quantity': 1,
-            'note': '',
+            'note': '',  # Inicializace poznámky
         }
 
     # Uložení košíku do session
     request.session['cart'] = cart
+    request.session.modified = True  # Označení session jako změněnou
 
+    # Zobrazení úspěšné zprávy
     messages.success(request, f"{product.product_name} byl přidán do košíku.")
     return redirect('cart')
-
 
 def view_cart(request):
     # Získání košíku ze session
@@ -382,6 +388,31 @@ def update_note_in_cart(request, product_id):
         return JsonResponse({'success': False, 'error': 'Produkt není v košíku.'})
 
     return JsonResponse({'success': False, 'error': 'Neplatná metoda.'})
+
+logger = logging.getLogger(__name__)
+
+def cart_data(request):
+    cart = request.session.get('cart', {})  # Načítání košíku ze session
+    logger.info(f"Cart data: {cart}")  # Výpis obsahu košíku do logu
+    total = sum(item['quantity'] * item['price'] for item in cart.values())  # Výpočet celkové ceny
+
+    cart_items = [
+        {
+            'id': product_id,
+            'name': item['product_name'],
+            'type': item['product_type'],
+            'quantity': item['quantity'],
+            'price': item['price'],
+            'total': item['quantity'] * item['price'],
+        }
+        for product_id, item in cart.items()
+    ]
+
+    return JsonResponse({
+        'items': cart_items,
+        'cart_total': total,
+        'cart_count': sum(item['quantity'] for item in cart.values())  # Počet položek
+    })
 
 def custom_404(request, exception):
     """Zpracování chyby 404 - Stránka nenalezena."""

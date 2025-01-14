@@ -6,22 +6,20 @@
     <div class="search-wrapper">
         <!-- Formulář pro vyhledávání -->
         <form method="get" action="{% url 'search' %}" id="search-form" class="form-inline my-2 my-lg-0 mx-auto position-relative">
-            <div class="input-group">
-                <input id="search-input" class="form-control" type="search" placeholder="Vyhledávání"
-                       aria-label="Search" autocomplete="off">
-                <button class="btn btn-outline-secondary" type="submit">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                         class="icon-size">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </button>
-            </div>
-            <div id="search-results" class="dropdown-menu w-100 shadow mt-1 p-2" style="display: none;"></div>
-        </form>
-
-
+    <div class="input-group">
+        <input id="search-input" class="form-control" type="search" name="q" placeholder="Vyhledávání"
+               aria-label="Search" autocomplete="off">
+        <button class="btn btn-outline-secondary" type="submit">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="icon-size">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+        </button>
+    </div>
+    <div id="search-results" class="dropdown-menu w-100 shadow mt-1 p-2" style="display: none;"></div>
+</form>
         <!-- Uživatelské menu a košík -->
         <ul class="navbar-nav nav-tabs ms-auto">
             <li class="nav-item dropdown">
@@ -32,11 +30,10 @@
                          stroke-linejoin="round" class="icon-size">
                         <path d="M-91.5 213.4c-.8-1.3-1.8-2.5-3-3.5.5-1 .7-2 .7-3.2 0-2.1-.8-4-2.2-5.3-1.4-1.4-3.3-2.2-5.3-2.2s-4 .8-5.3 2.2c-1.4 1.4-2.2 3.3-2.2 5.3 0 1.1.3 2.2.7 3.2-1.2.9-2.3 2.1-3 3.5-.9 1.7-1.5 3.6-1.5 5.6v8.2h22.7V219c-.2-2-.7-3.9-1.6-5.6z"></path>
                     </svg>
-
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                     {% if user.is_authenticated %}
-                        <li><a class="dropdown-item" href="{% url 'profile' %}">{{ user.username }}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'profile' %}">{{ request.user.username }}</a></li>
                         <li><a class="dropdown-item" href="{% url 'logout' %}">Odhlásit se</a></li>
                     {% else %}
                         <li><a class="dropdown-item" href="{% url 'login' %}">Přihlásit se</a></li>
@@ -44,53 +41,139 @@
                     {% endif %}
                 </ul>
             </li>
-            <li class="nav-item">
-                <a class="nav-link d-flex align-items-center" href="/cart/">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-size" viewBox="680.7 197.5 39 28" fill="none"
-                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="m709.9 206-2.8-8.5h-14.2L690 206h-9.3l.5 1.4 6.2 18.1h25.2l6.7-19.5h-9.4z"></path>
-                    </svg>
-                    <span class="ms-2">Košík</span>
-                </a>
-            </li>
-
+            <li class="nav-item dropdown" id="cart-wrapper">
+    <a class="nav-link d-flex align-items-center" href="#" id="cart-toggle">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon-size" viewBox="680.7 197.5 39 28" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m709.9 206-2.8-8.5h-14.2L690 206h-9.3l.5 1.4 6.2 18.1h25.2l6.7-19.5h-9.4z"></path>
+        </svg>
+        <span class="ms-2">Košík (<span id="cart-count">0</span>)</span>
+    </a>
+    <!-- Dropdown -->
+    <div id="cart-dropdown" class="dropdown-menu p-3" style="min-width: 300px;">
+    <h5>Košík</h5>
+    <ul id="cart-items" style="list-style-type: none; padding: 0; margin: 0;"></ul>
+    <p class="mt-2"><strong>Celková cena:</strong> <span id="cart-total">0 Kč</span></p>
+    <a href="/cart/" class="cart-link">Zobrazit košík</a>
+</div>
+</li>
         </ul>
     </div>
 </nav>
+
+<!-- Modální okno pro košík -->
+<div id="cart-modal" style="display: none; position: fixed; top: 10%; left: 50%; transform: translateX(-50%); background: white; border: 1px solid #ccc; padding: 20px; z-index: 1000; width: 300px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+    <h3>Košík</h3>
+    <ul id="cart-items" style="list-style-type: none; padding: 0;"></ul>
+    <p><strong>Celková cena:</strong> <span id="cart-total">0 Kč</span></p>
+    <button id="close-cart" style="background-color: red; color: white; border: none; padding: 10px; cursor: pointer;">Zavřít</button>
+    <a href="/cart/" style="display: block; margin-top: 10px; text-align: center;">Pokračovat k objednávce</a>
+</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // Elementy pro vyhledávání
         const searchInput = document.getElementById('search-input');
         const searchResults = document.getElementById('search-results');
 
-        searchInput.addEventListener('input', () => {
-            const query = searchInput.value.trim();
+        // Elementy pro košík
+        const cartToggle = document.getElementById('cart-toggle');
+        const cartDropdown = document.getElementById('cart-dropdown') || null; // Dropdown košíku
+        const cartItems = document.getElementById('cart-items');
+        const cartTotal = document.getElementById('cart-total');
+        const cartCount = document.getElementById('cart-count');
+        const closeCart = document.getElementById('close-cart') || null; // Pro modální košík, pokud existuje
 
-            if (query.length > 0) {
-                fetch(`/search?q=${encodeURIComponent(query)}`, {
-                    method: 'GET',
-                    headers: {'X-Requested-With': 'XMLHttpRequest'},
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            displayResults(data.results);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Chyba při vyhledávání:', error);
-                    });
+        // ===================
+        // Funkce pro košík
+        // ===================
+
+        // Načítání dat košíku přes AJAX
+       const fetchCartData = () => {
+    fetch('/cart/data/', {
+        method: 'GET',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+    })
+        .then(response => {
+            if (!response.ok) throw new Error('Chyba při načítání dat z košíku.');
+            return response.json();
+        })
+        .then(data => {
+            // Vymazání aktuálního obsahu
+            cartItems.innerHTML = '';
+
+            // Pokud jsou položky v košíku
+            if (data.items.length > 0) {
+                data.items.forEach(item => {
+                    const url = item.type === 'service'
+                        ? `/service/${item.id}`
+                        : `/product/${item.id}`;
+
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <a href="${url}">
+                            ${item.name}
+                        </a> - ${item.quantity} × ${item.price} Kč = ${item.total} Kč
+                    `;
+                    cartItems.appendChild(li);
+                });
             } else {
-                searchResults.style.display = 'none';
+                cartItems.innerHTML = '<li>Košík je prázdný.</li>';
             }
-        });
 
+            // Aktualizace celkové ceny a počtu položek
+            cartTotal.textContent = `${data.cart_total} Kč`;
+            cartCount.textContent = data.cart_count;
+        })
+        .catch(error => console.error('Chyba při načítání košíku:', error));
+};
+
+
+
+
+        // Otevření dropdownu košíku
+        const toggleCartDropdown = () => {
+            if (cartDropdown) {
+                cartDropdown.style.display = cartDropdown.style.display === 'block' ? 'none' : 'block';
+                fetchCartData(); // Načtení dat při každém otevření
+            }
+        };
+
+        // Zavření modálního košíku
+        if (closeCart) {
+            closeCart.addEventListener('click', () => {
+                cartModal.style.display = 'none';
+            });
+        }
+
+        // Připojení eventu na tlačítko košíku
+        if (cartToggle) {
+            cartToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                toggleCartDropdown();
+            });
+        }
+
+        // Skrytí dropdownu při kliknutí mimo
         document.addEventListener('click', (event) => {
-            if (!searchInput.contains(event.target) && !searchResults.contains(event.target)) {
-                searchResults.style.display = 'none';
+            if (
+                cartDropdown &&
+                !cartToggle.contains(event.target) &&
+                !cartDropdown.contains(event.target)
+            ) {
+                cartDropdown.style.display = 'none';
             }
         });
 
-        function displayResults(results) {
+        // Načtení počtu položek při načtení stránky
+        fetchCartData();
+
+        // =========================
+        // Funkce pro vyhledávání
+        // =========================
+
+        // Zobrazení výsledků vyhledávání
+        const displayResults = (results) => {
             let html = '';
 
             if (results.products.length > 0) {
@@ -123,6 +206,37 @@
 
             searchResults.innerHTML = html;
             searchResults.style.display = 'block';
-        }
+        };
+
+        // Vyhledávání přes AJAX
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.trim();
+
+            if (query.length > 0) {
+                fetch(`/search?q=${encodeURIComponent(query)}`, {
+                    method: 'GET',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Chyba při vyhledávání.');
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            displayResults(data.results);
+                        }
+                    })
+                    .catch(error => console.error('Chyba při vyhledávání:', error));
+            } else {
+                searchResults.style.display = 'none';
+            }
+        });
+
+        // Skrytí výsledků při kliknutí mimo
+        document.addEventListener('click', (event) => {
+            if (!searchInput.contains(event.target) && !searchResults.contains(event.target)) {
+                searchResults.style.display = 'none';
+            }
+        });
     });
 </script>

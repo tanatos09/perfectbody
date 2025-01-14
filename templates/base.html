@@ -36,7 +36,7 @@
     {% endif %}
 <main class="flex-grow-1 d-flex flex-column align-items-center ">
     <!-- Hlavní obsah -->
-    <div class="content-container p-4 rounded shadow mt-3">
+    <div class="content-container p-4 rounded shadow">
         {% block content %}
         {% endblock %}
     </div>
@@ -57,7 +57,7 @@
                 alert.classList.remove('show'); // Bootstrap skryje alert
                 alert.classList.add('fade'); // Přidá fade efekt
                 setTimeout(() => alert.remove(), 150); // Odebere alert z DOM
-            }, 50000);
+            }, 3000);
         });
     });
 </script>

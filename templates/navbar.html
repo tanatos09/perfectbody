@@ -1,5 +1,5 @@
 {% load static %}
-<nav class="navbar navbar-expand-sm navbar-light bg-light">
+<nav class="navbar navbar-expand-sm navbar-light bg-light" id="MainNav">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -9,11 +9,11 @@
             <ul class="navbar-nav">
                 <!-- Domů -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Domů</a>
+                    <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Domů</a>
                 </li>
                 <!-- Produkty -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuProducts" role="button"
+                    <a class="nav-link dropdown-toggle  {% if 'product' or 'products' in request.path and not 'services' or 'service' %}active{% endif %}" href="#" id="dropdownMenuProducts" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
                         Produkty
                     </a>
@@ -41,7 +41,7 @@
                 </li>
                 <!-- Služby -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuServices" role="button"
+                    <a class="nav-link dropdown-toggle {% if 'services' in request.path %}active{% endif %}" href="#" id="dropdownMenuServices" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
                         Služby
                     </a>
@@ -66,7 +66,7 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownTrainers" role="button"
+                    <a class="nav-link dropdown-toggle" {% if 'trainers' in request.path %}active{% endif %} href="#" id="dropdownTrainers" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
                         Trenéři
                     </a>

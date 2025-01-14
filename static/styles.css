@@ -165,17 +165,58 @@ main a:hover {
     margin-top: 0;
     z-index: 1050;
 }
+/*TopNav*/
+#TopNav {
+  margin: 0;
 
+}
+/*navbar*/
+#MainNav{
+    border-bottom-color: #6c757d;
+    border-bottom-style: double;
+    margin: 0;
+    padding: 0;
+}
 
+#MainNav .navbar-nav .nav-link {
+    border-left: double 3px #aaa; /* Dvojitá čára na levé straně */
+    border-right: double 3px #aaa; /* Dvojitá čára na pravé straně */
+    border-top: solid 2px #aaa; /* Jednoduchá čára nahoře */
+    border-bottom: none; /* Bez čáry dole */
+    padding: 10px 15px; /* Vnitřní odsazení */
+    margin: 0 10px;
+    color: #333; /* Základní barva textu */
+    background-color: transparent; /* Průhledné pozadí */
+    text-decoration: none; /* Bez podtržení textu */
+    transition: all 0.3s ease; /* Plynulý přechod efektů */
+}
+
+/* Efekt při najetí */
+#MainNav .navbar-nav .nav-link:hover {
+    background-color: #f0f0f0; /* Světle šedé pozadí */
+    color: red; /* Text se zbarví do červena */
+}
+
+/* Efekt při kliknutí */
+#MainNav .navbar-nav .nav-link:active {
+    background-color: #6c757d; /* Tmavě šedé pozadí */
+    color: white; /* Bílý text */
+    font-weight: bold;
+}
+#MainNav .navbar-nav .nav-link.active {
+    background-color: #6c757d; /* Tmavě šedé pozadí */
+    color: white; /* Bílý text */
+    border-color: #6c757d; /* Barva ohraničení odpovídající pozadí */
+}
 /* Responsivní navbar */
-.navbar-toggler {
+#MainNav .navbar-toggler {
     border: none;
     font-size: 1rem;
 }
-.navbar-nav {
+#MainNav .navbar-nav {
     margin-top: 5px;
 }
-.navbar-nav .nav-item {
+#MainNav .navbar-nav .nav-item {
     position: relative;
 }
 .collapse {
@@ -204,7 +245,9 @@ main a:hover {
         height: 2.5em;
     }
 }
-
+.nav-link:hover {
+    background-color: #609fff;
+}
 .nav-item.dropdown:hover .dropdown-menu {
     display: block;
 }
@@ -216,7 +259,8 @@ main a:hover {
     align-items: center;
     width: 100%; /* Kontejner pokryje celou šířku */
     margin: 0 auto;
-    gap: 0px; /* Mezera mezi vyhledáváním a ikonou */
+    gap: 0; /* Mezera mezi vyhledáváním a ikonou */
+    position: relative; /* Zachová relativní pozici pro obsah */
 }
 #search-results {
     position: absolute;
@@ -251,9 +295,7 @@ main a:hover {
     padding: 0;
 }
 
-.nav-link:hover {
-    background-color: #609fff;
-}
+
 #search-results ul li {
     list-style-position: outside;
     border-bottom: 1px solid #f1f1f1; /* Oddělí jednotlivé položky linkou */
@@ -286,7 +328,7 @@ main a:hover {
     padding: 10px;
 }
 #search-form {
-    width: 60%;
+    width: 60%; /*zobrazení formuláře k velikosti stránky */
     position: relative;
 }
 /* === style icon === */
@@ -301,10 +343,7 @@ main a:hover {
 #search-results ul{
     padding: 10px;
 }
-#search-form {
-    width: 60%;
-    position: relative;
-}
+
 
 /* === Alert === */
 /* Alert container */

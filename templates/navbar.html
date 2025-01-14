@@ -13,7 +13,8 @@
                 </li>
                 <!-- Produkty -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle  {% if 'product' or 'products' in request.path and not 'services' or 'service' %}active{% endif %}" href="#" id="dropdownMenuProducts" role="button"
+                    <a class="nav-link dropdown-toggle
+{% if 'product' in request.path or 'products' in request.path %}active{% endif %}" href="#" id="dropdownMenuProducts" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
                         Produkty
                     </a>
@@ -66,7 +67,7 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" {% if 'trainers' in request.path %}active{% endif %} href="#" id="dropdownTrainers" role="button"
+                    <a class="nav-link dropdown-toggle {% if 'trainer' in request.path or 'trainers' in request.path %}active{% endif %}" href="#" id="dropdownTrainers" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
                         Trenéři
                     </a>
@@ -88,9 +89,6 @@
                 </li>
             </ul>
             {% endif %}
-        </div>
-    </div>
-</nav>
         </div>
     </div>
 </nav>

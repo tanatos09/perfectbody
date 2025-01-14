@@ -258,6 +258,9 @@ def manage_users(request):
 def edit_user(request, user_id):
     user_to_edit = get_object_or_404(UserProfile, id=user_id)
 
+    # Ověření, zda je uživatel ve skupině 'trainer'
+    is_trainer = user_to_edit.groups.filter(name='trainer').exists()
+
     if not request.user.is_superuser and (user_to_edit.is_superuser or user_to_edit.is_staff):
         messages.error(request, "Nemáte oprávnění upravovat tohoto uživatele.")
         return redirect("manage_users")
@@ -273,8 +276,10 @@ def edit_user(request, user_id):
 
     return render(request, "edit_user.html", {
         "form": form,
-        "user_to_edit": user_to_edit,  # Předáváme editovaného uživatele
+        "user_to_edit": user_to_edit,
+        "is_trainer": is_trainer,  # Použití proměnné pro šablonu
     })
+
 
 
 

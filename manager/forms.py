@@ -144,6 +144,13 @@ class UserForm(ModelForm):
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
 
+        # Odstraňte pole podle oprávnění uživatele
         if user and not user.is_superuser:
             self.fields.pop('is_staff', None)
             self.fields.pop('is_superuser', None)
+
+        # Odstraňte pole související s trenéry, pokud uživatel není trenér
+        if not self.instance.groups.filter(name='trainer').exists():
+            self.fields.pop('trainer_short_description', None)
+            self.fields.pop('trainer_long_description', None)
+

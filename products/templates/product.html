@@ -14,7 +14,7 @@
             <li class="breadcrumb-item" style="margin: 0 5px;">&raquo;</li>
 
             <!-- Hlavní kategorie produktů -->
-            {% if category %}
+            {% if product.category %}
                 <li class="breadcrumb-item">
                     <a href="{% url 'products' %}">Kategorie produktů</a>
                 </li>
@@ -23,18 +23,30 @@
             {% endif %}
 
             <!-- Rodičovská kategorie, pokud existuje -->
-            {% if category and category.category_parent %}
+            {% if product.category and product.category.category_parent %}
                 <li class="breadcrumb-item" style="margin: 0 5px;">&raquo;</li>
                 <li class="breadcrumb-item">
-                    <a href="{% url 'products' category.category_parent.pk %}">{{ category.category_parent.category_name }}</a>
+                    <a href="{% url 'products' product.category.category_parent.pk %}">
+                        {{ product.category.category_parent.category_name }}
+                    </a>
                 </li>
             {% endif %}
 
             <!-- Aktuální kategorie -->
-            {% if category %}
+            {% if product.category %}
                 <li class="breadcrumb-item" style="margin: 0 5px;">&raquo;</li>
-                <li class="breadcrumb-item active" aria-current="page">{{ category.category_name }}</li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'products' product.category.pk %}">
+                        {{ product.category.category_name }}
+                    </a>
+                </li>
             {% endif %}
+
+            <!-- Název produktu -->
+            <li class="breadcrumb-item" style="margin: 0 5px;">&raquo;</li>
+            <li class="breadcrumb-item active" aria-current="page">
+                {{ product.product_name }}
+            </li>
         </ol>
     </nav>
 

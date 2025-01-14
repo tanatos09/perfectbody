@@ -7,11 +7,22 @@
     {% csrf_token %}
     {{ form.as_p }}
 
+    <!-- Skrytí polí pouze pro superuživatele -->
     {% if not request.user.is_superuser %}
         <script>
             document.querySelector("[name='is_staff']").closest("p").style.display = "none";
             document.querySelector("[name='is_superuser']").closest("p").style.display = "none";
         </script>
+    {% endif %}
+
+    <!-- Kontrola, jestli editovaný uživatel je trenér -->
+    {% if user_to_edit.is_trainer %}
+        <div>
+            <label for="trainer_description">Popis trenéra:</label>
+            <textarea id="trainer_description" name="trainer_description" rows="5" class="form-control">
+                {{ user_to_edit.trainer_description }}
+            </textarea>
+        </div>
     {% endif %}
 
     <button type="submit" class="btn btn-primary">Uložit změny</button>

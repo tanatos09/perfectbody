@@ -254,31 +254,29 @@ def manage_users(request):
     users = UserProfile.objects.all()
     return render(request, 'manage_users.html', {'users': users})
 
-@user_passes_test(is_superuser)
+@user_passes_test(is_admin)
 def edit_user(request, user_id):
     user_to_edit = get_object_or_404(UserProfile, id=user_id)
 
-    if not request.user.is_superuser and user_to_edit.is_superuser:
-        messages.error(request, "Nemáte oprávnění upravovat superuživatele.")
+    if not request.user.is_superuser and (user_to_edit.is_superuser or user_to_edit.is_staff):
+        messages.error(request, "Nemáte oprávnění upravovat tohoto uživatele.")
         return redirect("manage_users")
 
     if request.method == "POST":
         form = UserForm(request.POST, instance=user_to_edit)
         if form.is_valid():
-            is_staff = form.cleaned_data.get("is_staff")
-            is_superuser = form.cleaned_data.get("is_superuser")
-
-            if not request.user.is_superuser and (is_staff or is_superuser):
-                messages.error(request, "Nemáte oprávnění udělit administrátorská nebo superuživatelská práva.")
-                return redirect("manage_users")
-
             form.save()
             messages.success(request, f"Uživatel '{user_to_edit.full_name()}' byl úspěšně upraven.")
             return redirect("manage_users")
     else:
         form = UserForm(instance=user_to_edit)
 
-    return render(request, "edit_user.html", {"form": form, "user": user_to_edit})
+    return render(request, "edit_user.html", {
+        "form": form,
+        "user_to_edit": user_to_edit,  # Předáváme editovaného uživatele
+    })
+
+
 
 @user_passes_test(is_admin)
 def delete_user(request, user_id):

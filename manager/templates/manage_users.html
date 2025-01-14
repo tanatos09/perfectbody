@@ -7,6 +7,7 @@
     <thead>
         <tr>
             <th>Jméno</th>
+            <th>Uživatelské jméno</th>
             <th>Email</th>
             <th>Typ účtu</th>
             <th>Akce</th>
@@ -16,25 +17,39 @@
         {% for user in users %}
             <tr>
                 <td>{{ user.full_name }}</td>
+                <td>{{ user.username }}</td>
                 <td>{{ user.email }}</td>
                 <td>
-                    {% if user.is_staff %}
-                        Admin
-                    {% elif user.is_superuser %}
+                    {% if user.is_superuser %}
                         Superadmin
+                    {% elif user.is_staff %}
+                        Admin
                     {% elif user.trainer_short_description %}
                         Trenér
                     {% else %}
                         Uživatel
                     {% endif %}
                 </td>
-                <td>
-                    <a href="{% url 'edit_user' user.pk %}" class="btn btn-sm btn-warning">Upravit</a>
-                    <form method="post" action="{% url 'delete_user' user.pk %}" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tohoto uživatele?');">Smazat</button>
-                    </form>
-                </td>
+               <td>
+    {% if request.user.is_superuser %}
+        <a href="{% url 'edit_user' user.id %}" class="btn btn-sm btn-warning">Upravit</a>
+        <form method="post" action="{% url 'delete_user' user.id %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-danger"
+                    onclick="return confirm('Opravdu chcete smazat tohoto uživatele?');">Smazat</button>
+        </form>
+    {% elif request.user.is_staff and not user.is_superuser and not user.is_staff %}
+        <a href="{% url 'edit_user' user.id %}" class="btn btn-sm btn-warning">Upravit</a>
+        <form method="post" action="{% url 'delete_user' user.id %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-danger"
+                    onclick="return confirm('Opravdu chcete smazat tohoto uživatele?');">Smazat</button>
+        </form>
+    {% else %}
+        <span class="text-muted">Nelze upravit</span>
+    {% endif %}
+</td>
+
             </tr>
         {% endfor %}
     </tbody>

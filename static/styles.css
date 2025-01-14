@@ -461,48 +461,97 @@ button:hover {
 }
 
 #cart-wrapper {
-    position: relative; /* Umožňuje zarovnání dropdownu relativně k ikoně */
+    position: relative; /* Relativní pozicování vůči rodiči */
 }
 
-#cart-dropdown {
-    display: none; /* Skrytý ve výchozím stavu */
+#navbar-cart-dropdown {
     position: absolute;
-    top: calc(100% + 10px); /* Odsazení dropdownu pod ikonu košíku */
-    right: 0; /* Zarovná dropdown k pravé straně rodiče */
-    min-width: 300px; /* Minimální šířka dropdownu */
-    max-width: 400px; /* Maximální šířka */
-    background: white; /* Bílé pozadí */
-    border: 1px solid #ccc; /* Ohraničení */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Jemný stín */
-    z-index: 1050; /* Zajištění, že dropdown bude nad ostatními prvky */
-    padding: 20px; /* Vnitřní odsazení */
-    overflow-y: auto; /* Povolení posouvání obsahu */
-    max-height: 400px; /* Maximální výška dropdownu */
+    top: calc(100% + 10px); /* Dropdown pod tlačítkem */
+    right: 0; /* Zarovnání k pravé straně */
+    min-width: 250px; /* Minimální šířka */
+    max-width: 350px; /* Maximální šířka */
+    background-color: #ffffff; /* Bílé pozadí */
+    border: 1px solid #ddd; /* Světle šedé ohraničení */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Jemný stín */
     border-radius: 8px; /* Zaoblené rohy */
+    z-index: 1050; /* Viditelnost nad ostatními prvky */
+    padding: 10px 15px; /* Odsazení obsahu */
+    display: none; /* Skryto ve výchozím stavu */
+    overflow-y: auto; /* Povolení posouvání obsahu */
+    max-height: 400px; /* Maximální výška pro posouvání */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Plynulý přechod */
+    transform: translateY(-10px); /* Posunutí při skrytí */
+    opacity: 0; /* Neviditelnost ve výchozím stavu */
 }
 
-/* Při hoveru nebo kliknutí na rodičovský prvek zobraz dropdown */
-#cart-wrapper:hover #cart-dropdown,
-#cart-wrapper.active #cart-dropdown {
+/* Zobrazení dropdownu při hoveru nebo aktivaci */
+#cart-wrapper:hover #navbar-cart-dropdown,
+#cart-wrapper.active #navbar-cart-dropdown {
     display: block;
+    opacity: 1; /* Zviditelnění */
+    transform: translateY(0); /* Posun na původní pozici */
 }
 
-/* Zajištění viditelnosti na menších obrazovkách */
+/* Styl pro položky uvnitř dropdownu */
+#navbar-cart-dropdown ul {
+    list-style: none; /* Bez odrážek */
+    margin: 0;
+    padding: 0;
+}
+
+#navbar-cart-dropdown li {
+    padding: 10px 0; /* Svislé odsazení položek */
+    border-bottom: 1px solid #f1f1f1; /* Oddělení položek */
+    font-size: 0.9rem; /* Menší písmo */
+    color: #6c757d; /* Šedé písmo */
+}
+
+#navbar-cart-dropdown li:last-child {
+    border-bottom: none; /* Odstranění čáry u poslední položky */
+}
+
+/* Styl pro tlačítka nebo odkazy uvnitř dropdownu */
+#navbar-cart-dropdown a {
+    color: #007bff; /* Modré odkazy */
+    text-decoration: none; /* Bez podtržení */
+    transition: color 0.2s ease; /* Přechod barvy */
+}
+
+#navbar-cart-dropdown a:hover {
+    color: #0056b3; /* Tmavší modrá při najetí */
+}
+
+/* Styl pro nadpis a text uvnitř dropdownu */
+#navbar-cart-dropdown h5 {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#navbar-cart-dropdown p {
+    margin: 10px 0 0 0;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+/* Responsivní přizpůsobení */
 @media (max-width: 768px) {
-    #cart-dropdown {
+    #navbar-cart-dropdown {
         right: auto;
         left: 0;
-        width: calc(100vw - 20px); /* Dropdown zabírá téměř celou šířku obrazovky */
+        width: calc(100vw - 20px); /* Téměř celá šířka obrazovky */
         max-width: none;
     }
 }
 
 @media (max-width: 576px) {
-    #cart-dropdown {
+    #navbar-cart-dropdown {
         left: 5%; /* Odsazení od okrajů na mobilních zařízeních */
-        width: 90%; /* Dropdown zabírá 90 % šířky obrazovky */
+        width: 90%;
     }
 }
+
 
 
 .admin-dashboard-link {

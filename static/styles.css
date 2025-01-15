@@ -195,8 +195,8 @@ height: auto; /* Zachování proporcí obrázku */
     margin-top: 0;
     z-index: 1050;
 }
-/*TopNav*/
-#TopNav, #MainNav {
+
+#MainNav {
     padding: 0 !important; /* Odstranit veškerý padding */
     margin: 0 !important;  /* Odstranit veškerý margin */
     height: auto; /* Dynamická úprava výšky */

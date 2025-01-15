@@ -4,6 +4,8 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    backdrop-filter: blur(5px);
+    background-attachment: fixed;
     margin: 0;
     padding: 0;
     display: flex;
@@ -255,6 +257,15 @@ height: auto; /* Zachování proporcí obrázku */
 .collapse {
     display: none;
 }
+.navbar-logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-logo {
+    max-height: 80px;
+    height: auto;
+}
 
 @media (max-width: 768px) {
     #search-form {
@@ -266,6 +277,17 @@ height: auto; /* Zachování proporcí obrázku */
     }
     .collapse {
         display: block;
+    }
+     .navbar-logo {
+        max-height: 50px;
+    }
+
+    .search-wrapper {
+        flex-direction: column;
+    }
+
+    #navbarNav {
+        text-align: left;
     }
 }
 

@@ -58,48 +58,125 @@
     <p class="mt-2"><strong>Celková cena:</strong> <span id="navbar-cart-total">0 Kč</span></p>
     <a href="/cart/" class="cart-link">Zobrazit košík</a>
 </div>
-
 </li>
-
-
-
         </ul>
     </div>
 </nav>
+
+<!-- Modální okno pro košík -->
+<div id="cart-modal" style="display: none; position: fixed; top: 10%; left: 50%; transform: translateX(-50%); background: white; border: 1px solid #ccc; padding: 20px; z-index: 1000; width: 300px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+    <h3>Košík</h3>
+    <ul id="cart-items" style="list-style-type: none; padding: 0;"></ul>
+    <p><strong>Celková cena:</strong> <span id="cart-total">0 Kč</span></p>
+    <button id="close-cart" style="background-color: red; color: white; border: none; padding: 10px; cursor: pointer;">Zavřít</button>
+    <a href="/cart/" style="display: block; margin-top: 10px; text-align: center;">Pokračovat k objednávce</a>
+</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // Elementy pro vyhledávání
         const searchInput = document.getElementById('search-input');
         const searchResults = document.getElementById('search-results');
 
-        searchInput.addEventListener('input', () => {
-            const query = searchInput.value.trim();
+        // Elementy pro košík
+        const cartToggle = document.getElementById('cart-toggle');
+        const cartDropdown = document.getElementById('cart-dropdown') || null; // Dropdown košíku
+        const cartItems = document.getElementById('cart-items');
+        const cartTotal = document.getElementById('cart-total');
+        const cartCount = document.getElementById('cart-count');
+        const closeCart = document.getElementById('close-cart') || null; // Pro modální košík, pokud existuje
 
-            if (query.length > 0) {
-                fetch(`/search?q=${encodeURIComponent(query)}`, {
-                    method: 'GET',
-                    headers: {'X-Requested-With': 'XMLHttpRequest'},
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            displayResults(data.results);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Chyba při vyhledávání:', error);
-                    });
+        // ===================
+        // Funkce pro košík
+        // ===================
+
+        // Načítání dat košíku přes AJAX
+       const fetchCartData = () => {
+    fetch('/cart/data/', {
+        method: 'GET',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+    })
+        .then(response => {
+            if (!response.ok) throw new Error('Chyba při načítání dat z košíku.');
+            return response.json();
+        })
+        .then(data => {
+            // Vymazání aktuálního obsahu
+            cartItems.innerHTML = '';
+
+            // Pokud jsou položky v košíku
+            if (data.items.length > 0) {
+                data.items.forEach(item => {
+                    const url = item.type === 'service'
+                        ? `/service/${item.id}`
+                        : `/product/${item.id}`;
+
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <a href="${url}">
+                            ${item.name}
+                        </a> - ${item.quantity} × ${item.price} Kč = ${item.total} Kč
+                    `;
+                    cartItems.appendChild(li);
+                });
             } else {
                 searchResults.style.display = 'none';
+                cartItems.innerHTML = '<li>Košík je prázdný.</li>';
             }
-        });
 
+            // Aktualizace celkové ceny a počtu položek
+            cartTotal.textContent = `${data.cart_total} Kč`;
+            cartCount.textContent = data.cart_count;
+        })
+        .catch(error => console.error('Chyba při načítání košíku:', error));
+};
+
+
+
+
+        // Otevření dropdownu košíku
+        const toggleCartDropdown = () => {
+            if (cartDropdown) {
+                cartDropdown.style.display = cartDropdown.style.display === 'block' ? 'none' : 'block';
+                fetchCartData(); // Načtení dat při každém otevření
+            }
+        };
+
+        // Zavření modálního košíku
+        if (closeCart) {
+            closeCart.addEventListener('click', () => {
+                cartModal.style.display = 'none';
+            });
+        }
+
+        // Připojení eventu na tlačítko košíku
+        if (cartToggle) {
+            cartToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                toggleCartDropdown();
+            });
+        }
+
+        // Skrytí dropdownu při kliknutí mimo
         document.addEventListener('click', (event) => {
-            if (!searchInput.contains(event.target) && !searchResults.contains(event.target)) {
-                searchResults.style.display = 'none';
+            if (
+                cartDropdown &&
+                !cartToggle.contains(event.target) &&
+                !cartDropdown.contains(event.target)
+            ) {
+                cartDropdown.style.display = 'none';
             }
         });
 
-        function displayResults(results) {
+        // Načtení počtu položek při načtení stránky
+        fetchCartData();
+
+        // =========================
+        // Funkce pro vyhledávání
+        // =========================
+
+        // Zobrazení výsledků vyhledávání
+        const displayResults = (results) => {
             let html = '';
 
             if (results.products.length > 0) {

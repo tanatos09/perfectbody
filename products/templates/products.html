@@ -169,11 +169,16 @@
                         <!-- Add to cart -->
                         {% if product.available_stock > 0 %}
                             <div class="add-to-cart">
-                                <a href="{% url 'add_to_cart' product.id %}">➕ Přidat do košíku</a>
-                            </div>
+                                <form method="post" action="{% url 'add_to_cart' product.id %}" class="add-to-cart">
+                            {% csrf_token %}
+                                    <button type="submit" style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                                        Přidat do košíku
+                                    </button>
+                                </form>
                         {% else %}
                             <p style="color: red;">Nelze objednat</p>
                         {% endif %}
+                        </div>
 
 
                         {% if user.is_staff %}

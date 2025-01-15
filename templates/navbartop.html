@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartDropdown = document.getElementById('navbar-cart-dropdown');
     const cartItems = document.getElementById('navbar-cart-items');
     const cartTotal = document.getElementById('navbar-cart-total');
-    const cartCount = document.getElementById('navbar-cart-count');
+    const cartCount = document.getElementById('cart-count'); // Element pro počet položek
 
     // Funkce pro načtení dat z API
     const fetchCartData = () => {
@@ -160,7 +160,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.items && data.items.length > 0) {
                     data.items.forEach(item => {
                         cartItems.innerHTML += `
-                            <li>${item.name} - ${item.quantity} × ${item.price} Kč</li>
+                            <li>
+                                <a href="${item.url}" class="cart-item-link" style="color: blue; text-decoration: none;">
+                                    ${item.name}
+                                </a> - ${item.quantity} × ${item.price} Kč
+                            </li>
                         `;
                     });
                 } else {
@@ -169,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Aktualizace celkové ceny a počtu položek
                 cartTotal.textContent = `${data.cart_total} Kč`;
-                cartCount.textContent = data.cart_count;
+                cartCount.textContent = data.cart_count; // Dynamická aktualizace počtu položek
             })
             .catch(error => console.error('Chyba při načítání dat z košíku:', error));
     };
@@ -195,6 +199,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Načtení dat při načtení stránky
     fetchCartData();
 });
+
+
+
 
 
 </script>

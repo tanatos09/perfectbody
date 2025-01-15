@@ -423,6 +423,8 @@ def cart_data_navbar(request):
             'quantity': item['quantity'],
             'price': item['price'],
             'total': item['quantity'] * item['price'],
+            # Přidání URL podle typu produktu
+            'url': reverse('service', args=[product_id]) if item['product_type'] == 'service' else reverse('product', args=[product_id]),
         }
         for product_id, item in cart.items()
     ]
@@ -434,6 +436,7 @@ def cart_data_navbar(request):
         'cart_total': cart_total,
         'cart_count': cart_count,
     })
+
 
 def custom_404(request, exception):
     """Zpracování chyby 404 - Stránka nenalezena."""

@@ -5,21 +5,21 @@
     </a>
     <div class="search-wrapper">
         <!-- Formulář pro vyhledávání -->
-        <form method="get" action="{% url 'search' %}" id="search-form" class="form-inline my-2 my-lg-0 mx-auto position-relative">
-            <div class="input-group">
-                <input id="search-input" class="form-control" type="search" placeholder="Vyhledávání"
-                       aria-label="Search" autocomplete="off">
-                <button class="btn btn-outline-secondary" type="submit">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                         class="icon-size">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </button>
-            </div>
-            <div id="search-results" class="dropdown-menu w-100 shadow mt-1 p-2" style="display: none;"></div>
-        </form>
+       <form method="get" action="{% url 'search' %}" id="search-form" class="form-inline my-2 my-lg-0 mx-auto position-relative" style="padding: 0; margin: 0;">
+    <div class="input-group">
+        <input id="search-input" class="form-control" name="q" type="search" placeholder="Vyhledávání"
+               aria-label="Search" autocomplete="off">
+        <button class="btn btn-outline-secondary" type="submit">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="icon-size">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+        </button>
+    </div>
+    <div id="search-results" class="dropdown-menu w-100 shadow mt-1 p-2" style="display: none;"></div>
+</form>
 
 
         <!-- Uživatelské menu a košík -->

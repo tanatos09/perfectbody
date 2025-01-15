@@ -14,14 +14,15 @@
     <title>{% block title %}Perfect Body{% endblock %}</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <link rel="stylesheet" href="{% static 'forms.css' %}">
-
 
 </head>
 
 <body class="d-flex flex-column min-vh-100">
+
+<div id="toast-container" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050;"></div>
+
 <!-- Header s NavbarTop a Navbar -->
 <header class="sticky-top">
     <nav class="bg-primary text-white">
@@ -80,6 +81,74 @@
             }
         });
     });
+
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+        // Toasty - automaticky zavírané
+        const showToast = (message, type = 'success') => {
+            const toastContainer = document.getElementById('toast-container');
+
+            // Vytvoření nové toast komponenty
+            const toastHTML = `
+                <div class="toast align-items-center text-bg-${type} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            ${message}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>`;
+
+            // Přidání do kontejneru
+            const toastElement = document.createElement('div');
+            toastElement.innerHTML = toastHTML;
+            toastContainer.appendChild(toastElement.firstChild);
+
+            // Inicializace a automatické zavření
+            const toast = new bootstrap.Toast(toastContainer.lastElementChild, { delay: 4000 });
+            toast.show();
+
+            // Odebrání z DOM po skrytí
+            toastElement.addEventListener('hidden.bs.toast', () => {
+                toastElement.remove();
+            });
+        };
+
+        // Příklad použití při AJAX volání
+        const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const productId = button.dataset.productId;
+
+                fetch(`/cart/add/${productId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Zobrazení toastu
+                            showToast(data.message, 'success');
+                            // Aktualizace počtu položek
+                            document.getElementById('cart-count').textContent = data.cart_count;
+                            document.getElementById('navbar-cart-total').textContent = data.cart_total;
+                        } else {
+                            showToast(data.error, 'danger');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Chyba při přidávání do košíku:', error);
+                        showToast('Došlo k chybě při přidávání do košíku.', 'danger');
+                    });
+            });
+        });
+    });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

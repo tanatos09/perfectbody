@@ -105,33 +105,39 @@ def get_name_day():
 logger = logging.getLogger(__name__)
 
 
+from django.http import JsonResponse
+from django.contrib import messages
+
 def add_to_cart(request, product_id):
     # Načtení košíku ze session (pokud neexistuje, vytvoří prázdný)
     cart = request.session.get('cart', {})
     product_id_str = str(product_id)
     product = get_object_or_404(Product, id=product_id)
 
-    # Pokud je produkt typu "service"
+    # Kontrola, zda je produkt typu "service" a má schválené trenéry
     if product.product_type == 'service':
-        # Kontrola, zda má služba schválené trenéry
         has_approved_trainers = TrainersServices.objects.filter(service=product, is_approved=True).exists()
         if not has_approved_trainers:
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({'success': False, 'error': "Pro tuto službu nejsou k dispozici schválení trenéři."})
             messages.error(request, "Pro tuto službu nejsou k dispozici schválení trenéři.")
             return redirect('service', pk=product_id)
 
-    # Pokud je produkt typu "merchantdise"
-    else:
-        # Kontrola skladové dostupnosti
+    # Kontrola skladové dostupnosti pro produkty typu "merchantdise"
+    elif product.product_type == 'merchantdise':
         if product.available_stock() <= 0:
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({'success': False, 'error': "Produkt není skladem."})
             messages.error(request, "Produkt není skladem.")
             return redirect('product', pk=product_id)
 
     # Přidání produktu nebo služby do košíku
     if product_id_str in cart:
-        # Zvýšení množství, pokud je to možné
         if product.product_type == 'service' or cart[product_id_str]['quantity'] < product.available_stock():
             cart[product_id_str]['quantity'] += 1
         else:
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({'success': False, 'error': "Nelze přidat více, než je dostupné množství."})
             messages.error(request, "Nelze přidat více, než je dostupné množství.")
             return redirect('product', pk=product_id)
     else:
@@ -146,11 +152,23 @@ def add_to_cart(request, product_id):
 
     # Uložení košíku do session
     request.session['cart'] = cart
-    request.session.modified = True  # Označení session jako změněnou
+    request.session.modified = True
 
-    # Zobrazení úspěšné zprávy
+    # Odpověď na AJAX požadavek
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        total_items = sum(item['quantity'] for item in cart.values())
+        total_price = sum(item['quantity'] * item['price'] for item in cart.values())
+        return JsonResponse({
+            'success': True,
+            'cart_count': total_items,
+            'cart_total': f"{total_price:.2f} Kč",
+            'message': f"{product.product_name} byl přidán do košíku."
+        })
+
+    # Standardní odpověď na HTTP požadavek
     messages.success(request, f"{product.product_name} byl přidán do košíku.")
     return redirect('cart')
+
 
 def view_cart(request):
     # Získání košíku ze session

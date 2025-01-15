@@ -120,7 +120,6 @@
                     cartItems.appendChild(li);
                 });
             } else {
-                searchResults.style.display = 'none';
                 cartItems.innerHTML = '<li>Košík je prázdný.</li>';
             }
 
@@ -209,73 +208,37 @@
 
             searchResults.innerHTML = html;
             searchResults.style.display = 'block';
-        }
+        };
+
+        // Vyhledávání přes AJAX
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.trim();
+
+            if (query.length > 0) {
+                fetch(`/search?q=${encodeURIComponent(query)}`, {
+                    method: 'GET',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Chyba při vyhledávání.');
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            displayResults(data.results);
+                        }
+                    })
+                    .catch(error => console.error('Chyba při vyhledávání:', error));
+            } else {
+                searchResults.style.display = 'none';
+            }
+        });
+
+        // Skrytí výsledků při kliknutí mimo
+        document.addEventListener('click', (event) => {
+            if (!searchInput.contains(event.target) && !searchResults.contains(event.target)) {
+                searchResults.style.display = 'none';
+            }
+        });
     });
-
-document.addEventListener('DOMContentLoaded', () => {
-    const cartToggle = document.getElementById('cart-toggle');
-    const cartDropdown = document.getElementById('navbar-cart-dropdown');
-    const cartItems = document.getElementById('navbar-cart-items');
-    const cartTotal = document.getElementById('navbar-cart-total');
-    const cartCount = document.getElementById('cart-count'); // Element pro počet položek
-
-    // Funkce pro načtení dat z API
-    const fetchCartData = () => {
-        fetch('/cart/data/navbar/', {
-            method: 'GET',
-            headers: { 'X-Requested-With': 'XMLHttpRequest' }
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Data z API:', data); // Debugging
-
-                // Aktualizace položek v dropdownu
-                cartItems.innerHTML = '';
-                if (data.items && data.items.length > 0) {
-                    data.items.forEach(item => {
-                        cartItems.innerHTML += `
-                            <li>
-                                <a href="${item.url}" class="cart-item-link" style="color: blue; text-decoration: none;">
-                                    ${item.name}
-                                </a> - ${item.quantity} × ${item.price} Kč
-                            </li>
-                        `;
-                    });
-                } else {
-                    cartItems.innerHTML = '<li>Košík je prázdný.</li>';
-                }
-
-                // Aktualizace celkové ceny a počtu položek
-                cartTotal.textContent = `${data.cart_total} Kč`;
-                cartCount.textContent = data.cart_count; // Dynamická aktualizace počtu položek
-            })
-            .catch(error => console.error('Chyba při načítání dat z košíku:', error));
-    };
-
-    // Přepínání dropdownu košíku
-    const toggleCartDropdown = () => {
-        cartDropdown.style.display = cartDropdown.style.display === 'block' ? 'none' : 'block';
-        fetchCartData(); // Načtení dat při každém otevření dropdownu
-    };
-
-    // Připojení událostí
-    cartToggle.addEventListener('click', (e) => {
-        e.preventDefault();
-        toggleCartDropdown();
-    });
-
-    document.addEventListener('click', (event) => {
-        if (!cartToggle.contains(event.target) && !cartDropdown.contains(event.target)) {
-            cartDropdown.style.display = 'none';
-        }
-    });
-
-    // Načtení dat při načtení stránky
-    fetchCartData();
-});
-
-
-
-
-
 </script>

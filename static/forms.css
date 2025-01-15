@@ -109,4 +109,43 @@ form.add-to-cart button:disabled {
     background-color: #ccc; /* Šedé tlačítko při deaktivaci */
     cursor: not-allowed; /* Změna kurzoru při deaktivaci */
 }
+/* Styl pro formulář s množstvím */
+form.quantity-form {
+    padding: 0; /* Odstranění paddingu */
+    margin: 0; /* Odstranění marginu */
+    display: inline-block; /* Zajistí, že formulář nezabírá celou šířku */
+    background: none; /* Odstranění pozadí */
+    border: none; /* Odstranění rámečku */
+    box-shadow: none; /* Odstranění stínu */
+}
+/* Formulář pro schvalování služeb */
+form.approve-service-form {
+    padding: 0; /* Odstranění paddingu */
+    margin: 0; /* Odstranění marginu */
+    background: none; /* Žádné pozadí */
+    border: none; /* Bez rámečku */
+    display: inline; /* Zajistí, že formulář nezabírá celou šířku */
+    box-shadow: none; /* Odstranění stínů */
+}
 
+/* Styl tlačítka "Schválit" */
+button.approve-button {
+    margin-bottom: 0.1rem;
+    font-size: 1rem;
+    background-color: #28a745; /* Zelené pozadí */
+    color: white; /* Bílé písmo */
+    border: none; /* Bez rámečku */
+    border-radius: 5px; /* Zaoblené rohy */
+    cursor: pointer; /* Ukazatel ruky při najetí */
+    transition: background-color 0.3s; /* Plynulý přechod */
+}
+button.reject-button {
+    margin-bottom: 0.1rem;
+    font-size: 1rem;
+    background-color: #dc3545; /* Červené pozadí */
+    color: white; /* Bílé písmo */
+    border: none; /* Bez rámečku */
+    border-radius: 5px; /* Zaoblené rohy */
+    cursor: pointer; /* Ukazatel ruky při najetí */
+    transition: background-color 0.3s; /* Plynulý přechod */
+}

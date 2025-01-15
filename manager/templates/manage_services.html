@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div style="text-align: center;">
 
 <h1>Správa služeb</h1>
-<table>
+<table style="margin: 0 auto;">
     <thead>
         <tr>
             <th>Název služby</th>
@@ -31,5 +32,5 @@
 </table>
 
 <a href="{% url 'dashboard' %}" class="btn btn-secondary">Zpět na dashboard</a>
-
+</div>
 {% endblock %}

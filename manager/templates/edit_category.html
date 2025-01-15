@@ -7,7 +7,7 @@
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="btn btn-success">Uložit změny</button>
-    <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">Zpět na dashboard</a>
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary">Zpět na dashboard</a>
 </form>
 
 <hr>

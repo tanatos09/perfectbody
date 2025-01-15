@@ -30,7 +30,7 @@
             {% endif %}
         </td>
         <td style="text-align: center; padding: 15px;">
-            <form data-product-id="{{ product_id }}">
+            <form class="quantity-form" data-product-id="{{ product_id }}">
                 {% csrf_token %}
                 <input type="number" name="quantity" value="{{ item.quantity }}" min="1"
                        style="width: 50px; text-align: center; border: 1px solid #ccc;">

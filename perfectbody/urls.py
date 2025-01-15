@@ -20,9 +20,9 @@ from django.urls import path
 from accounts.forms import TrainerBasicForm, TrainerServicesForm, TrainerDescriptionsForm, TrainerAddressForm, \
     TrainerProfileDescriptionForm
 from manager.views import dashboard, add_product, approve_service, add_category, add_service, edit_product, \
-    admin_dashboard, empty_categories, edit_category, delete_product, manage_products, manage_services, edit_service, \
+    empty_categories, edit_category, delete_product, manage_products, manage_services, edit_service, \
     delete_service, edit_trainer, delete_trainer, delete_category, edit_producer, delete_producer, manage_producers, \
-    add_producer, delete_user, edit_user, manage_users, approve_trainer_content
+    add_producer, delete_user, edit_user, manage_users, approve_trainer_content, all_categories
 from orders.views import start_order, order_summary, confirm_order, thank_you, my_orders, order_detail, cancel_order
 from products.views import products, product, producer, services, service, trainers, trainer, \
     add_trainer_review, add_service_review, add_product_review
@@ -78,14 +78,14 @@ urlpatterns = [
         name='trainer_register'
     ),
     path('register/success/', registration_success, name='registration_success'),
-    path('dashboard', dashboard, name='dashboard'),
+    path('dashboard/', dashboard, name='dashboard'),
     path('add-product/', add_product, name='add_product'),
     path('add-category/', add_category, name='add_category'),
     path('add-service', add_service, name='add_service'),
     path('approve-service', approve_service, name='approve_service'),
     path('edit_product/<int:product_id>/', edit_product, name='edit_product'),
     path('delete-product/<int:product_id>/', delete_product, name='delete_product'),
-    path('dashboard/', admin_dashboard, name='admin_dashboard'),
+    path('all_categories/', all_categories, name='all_categories'),
     path('empty-categories/', empty_categories, name='empty_categories'),
     path('edit-category/<int:pk>/', edit_category, name='edit_category'),
     path('manage-products/', manage_products, name='manage_products'),

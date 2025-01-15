@@ -93,7 +93,7 @@ def edit_product(request, product_id):
     return render(request, 'edit_product.html', {"form": form, "product": product})
 
 @user_passes_test(lambda u: u.is_staff)
-def admin_dashboard(request):
+def all_categories(request):
 
     categories = Category.objects.all()
 
@@ -101,7 +101,7 @@ def admin_dashboard(request):
         category.view_url = reverse('products', args=[category.pk])
         category.edit_url = reverse('edit_category', args=[category.pk])
 
-    return render(request, 'admin_dashboard.html', {'categories': categories})
+    return render(request, 'all_categories.html', {'categories': categories})
 
 
 @user_passes_test(lambda u: u.is_staff)
@@ -124,7 +124,7 @@ def edit_category(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request, "Kategorie byla úspěšně upravena.")
-            return redirect('admin_dashboard')
+            return redirect('dashboard')
     else:
         form = CategoryForm(instance=category)
 

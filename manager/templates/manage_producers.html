@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <div style="text-align: center;">
 <h1>Správa výrobců</h1>
 
-<table class="table">
+<table style="margin: 0 auto;">
     <thead>
         <tr>
             <th>Název</th>
@@ -15,7 +16,7 @@
         {% for producer in producers %}
             <tr>
                 <td>{{ producer.producer_name }}</td>
-                <td>{{ producer.producer_description }}</td>
+                <td>{{ producer.producer_description }}<hr></td>
                 <td>
                     <a href="{% url 'edit_producer' producer.pk %}" class="btn btn-sm btn-warning">Upravit</a>
                     <form method="post" action="{% url 'delete_producer' producer.pk %}" class="delete-button">
@@ -28,5 +29,10 @@
     </tbody>
 </table>
 
-<a href="{% url 'add_producer' %}" class="btn btn-primary">➕ Přidat výrobce</a>
+<a href="{% url 'add_producer' %}" class="btn btn-primary">Přidat výrobce</a>
+    <br><br>
+<div style="text-align: center;">
+<a href="{% url 'dashboard' %}" class="btn btn-secondary">Zpět na Dashboard</a>
+</div>
+</div>
 {% endblock %}

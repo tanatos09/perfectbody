@@ -1,20 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div style="text-align: center;">
 
 <h1>Schválit služby</h1>
 <ul>
     {% for service in pending_services %}
         <li>
             {{ service.trainer.full_name }} - {{ service.service.product_name }}
-            <form method="post" style="display: inline;">
+            <form method="post" class="approve-service-form" style="display: inline;">
                 {% csrf_token %}
                 <input type="hidden" name="service_id" value="{{ service.id }}">
-                <button type="submit">Schválit</button>
+                    <button type="submit" class="approve-button">Schválit</button>
+
             </form>
         </li>
     {% endfor %}
 </ul>
 
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary">Zpět na dashboard</a>
+</div>
 
 {% endblock %}

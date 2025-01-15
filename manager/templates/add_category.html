@@ -1,12 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <div style="text-align: center;">
 
 <h1>Přidat kategorii</h1>
+    </div>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Přidat</button>
 </form>
-
+    <br>
+    <div style="text-align: center;">
+<a href="{% url 'dashboard' %}" class="btn btn-secondary">Zpět na Dashboard</a>
+</div>
 {% endblock %}

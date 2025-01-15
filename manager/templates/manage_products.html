@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div style="text-align: center;">
 
 <h1>Správa produktů</h1>
-<table>
+<table style="margin: 0 auto;">
     <thead>
         <tr>
             <th>Název produktu</th>
@@ -20,7 +21,7 @@
             <td>{{ product.price }} Kč</td>
             <td>
                 <a href="{% url 'edit_product' product.id %}" class="btn btn-sm btn-warning">Upravit</a>
-                <form method="post" action="{% url 'delete_product' product.id %}" style="display:inline;">
+                <form method="post" action="{% url 'delete_product' product.id %}" class="delete-button">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tento produkt?');">Smazat</button>
                 </form>
@@ -31,5 +32,5 @@
 </table>
 
 <a href="{% url 'dashboard' %}" class="btn btn-secondary">Zpět na dashboard</a>
-
+</div>
 {% endblock %}

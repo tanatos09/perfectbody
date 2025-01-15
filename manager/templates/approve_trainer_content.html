@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div style="text-align: center;">
+
 <h1>Schvalování obsahu trenérů</h1>
 
 <h2>Popisky trenérů</h2>
@@ -21,12 +23,12 @@
         <td>{{ trainer.full_name }}</td>
         <td>{{ trainer.pending_trainer_short_description }}</td>
         <td>
-            <form method="post" style="display: inline;">
+            <form method="post" style="display: inline;" class="delete-button ">
                 {% csrf_token %}
                 <input type="hidden" name="content_type" value="trainer_short_description">
                 <input type="hidden" name="content_id" value="{{ trainer.id }}">
-                <button type="submit" name="action" value="approve">Schválit</button>
-                <button type="submit" name="action" value="reject">Zamítnout</button>
+                <button class="approve-button" type="submit" name="action" value="approve">Schválit</button>
+                <button class="reject-button" type="submit" name="action" value="reject">Zamítnout</button>
             </form>
         </td>
     </tr>
@@ -36,12 +38,12 @@
         <td>{{ trainer.full_name }}</td>
         <td>{{ trainer.pending_trainer_long_description }}</td>
         <td>
-            <form method="post" style="display: inline;">
+            <form method="post" style="display: inline;" class="delete-button ">
                 {% csrf_token %}
                 <input type="hidden" name="content_type" value="trainer_long_description">
                 <input type="hidden" name="content_id" value="{{ trainer.id }}">
-                <button type="submit" name="action" value="approve">Schválit</button>
-                <button type="submit" name="action" value="reject">Zamítnout</button>
+                <button class="approve-button" type="submit" name="action" value="approve">Schválit</button>
+                <button class="reject-button" type="submit" name="action" value="reject">Zamítnout</button>
             </form>
         </td>
     </tr>
@@ -93,5 +95,6 @@
 {% else %}
     <p>Žádné popisky služeb čekající na schválení.</p>
 {% endif %}
+<a href="{% url 'dashboard' %}" class="btn btn-secondary">Zpět na Dashboard</a>
 
 {% endblock %}

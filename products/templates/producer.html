@@ -17,7 +17,7 @@
 {% if user.is_staff %}
     <div class="admin-actions">
         <a href="{% url 'edit_producer' producer.pk %}" class="btn btn-sm btn-warning">🖉 Upravit výrobce</a>
-        <form method="post" action="{% url 'delete_producer' producer.pk %}" style="display:inline;">
+        <form method="post" action="{% url 'delete_producer' producer.pk %}" class="delete-button">
             {% csrf_token %}
             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tohoto výrobce?');">🗑️ Smazat výrobce</button>
         </form>

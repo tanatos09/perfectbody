@@ -7,9 +7,9 @@
         <div class="search-wrapper">
             <!-- Formulář pro vyhledávání -->
             <form method="get" action="{% url 'search' %}" id="search-form"
-                  class="form-inline my-2 my-lg-0 mx-auto position-relative">
+                  class="form-inline my-2 my-lg-0 mx-auto position-relative" style="padding: 0; margin: 0;">
                 <div class="input-group">
-                    <input id="search-input" class="form-control" type="search" placeholder="Vyhledávání"
+                    <input id="search-input" class="form-control" name="q" type="search" placeholder="Vyhledávání"
                            aria-label="Search" autocomplete="off">
                     <button class="btn btn-outline-secondary" type="submit">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -22,12 +22,9 @@
                 </div>
                 <div id="search-results" class="dropdown-menu w-100 shadow mt-1 p-2" style="display: none;"></div>
             </form>
-
-
-            <!-- Uživatelské menu a košík -->
-
-
         </div>
+
+
 
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -53,6 +50,7 @@
                         {% for category in products_categories %}
                             {% if not forloop.first %}
                                 <div class="dropdown-divider"></div>
+
                             {% endif %}
                             <li>
                                 <a class="dropdown-item"
@@ -123,8 +121,9 @@
                 </ul>
             {% endif %}
         </div>
-
-        <div >
+ <!-- Uživatelské menu a košík -->
+    <div class="collapse navbar-collapse justify-content-end" id="navbar-cart-dropdown">
+        <div class="collapse navbar-collapse" id="navbarToggler">
             <ul class="navbar-nav nav-tabs ms-auto">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
@@ -166,9 +165,8 @@
                     </div>
                 </li>
             </ul>
-
         </div>
-
+    </div>
     </div>
 </nav>
 <script>

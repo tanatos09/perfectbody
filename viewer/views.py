@@ -414,6 +414,30 @@ def cart_data(request):
         'cart_count': sum(item['quantity'] for item in cart.values())  # Počet položek
     })
 
+def cart_data_navbar(request):
+    cart = request.session.get('cart', {})
+    cart_items = [
+        {
+            'id': product_id,
+            'name': item['product_name'],
+            'quantity': item['quantity'],
+            'price': item['price'],
+            'total': item['quantity'] * item['price'],
+            # Přidání URL podle typu produktu
+            'url': reverse('service', args=[product_id]) if item['product_type'] == 'service' else reverse('product', args=[product_id]),
+        }
+        for product_id, item in cart.items()
+    ]
+    cart_total = sum(item['quantity'] * item['price'] for item in cart.values())
+    cart_count = sum(item['quantity'] for item in cart.values())
+
+    return JsonResponse({
+        'items': cart_items,
+        'cart_total': cart_total,
+        'cart_count': cart_count,
+    })
+
+
 def custom_404(request, exception):
     """Zpracování chyby 404 - Stránka nenalezena."""
     return render(request, '404.html', status=404)

@@ -133,6 +133,28 @@
             });
         });
     });
+
+    document.querySelectorAll('.update-cart').forEach(button => {
+    button.addEventListener('click', () => {
+        // Aktualizace na backendu přes AJAX
+        fetch(button.dataset.url, {
+            method: 'POST',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            body: JSON.stringify({ quantity: button.dataset.quantity }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Aktualizace obsahu stránky `cart.html`
+                document.getElementById('cart-items-container').innerHTML = data.html;
+
+                // Vyvolání události pro aktualizaci dropdownu
+                const event = new Event('cartUpdated');
+                document.dispatchEvent(event);
+            })
+            .catch(error => console.error('Chyba při aktualizaci košíku:', error));
+    });
+});
+
 </script>
 
 {% endblock %}

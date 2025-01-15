@@ -49,7 +49,7 @@
                     {% if user.is_staff %}
                         <!-- Tlačítka pro úpravu a mazání hlavní kategorie -->
                         <a href="{% url 'edit_category' category.pk %}" class="btn btn-sm btn-warning">Upravit</a>
-                        <form method="post" action="{% url 'delete_category' category.pk %}" style="display:inline;">
+                        <form method="post" action="{% url 'delete_category' category.pk %}" class="delete-button">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-sm btn-danger"
                                     onclick="return confirm('Opravdu chcete smazat tuto kategorii?');">Smazat
@@ -78,7 +78,7 @@
         {% if user.is_staff %}
             <!-- Tlačítka pro úpravu a mazání aktuální kategorie -->
             <a href="{% url 'edit_category' category.pk %}" class="btn btn-sm btn-warning">Upravit</a>
-            <form method="post" action="{% url 'delete_category' category.pk %}" style="display:inline;">
+            <form method="post" action="{% url 'delete_category' category.pk %}" class="delete-button">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-sm btn-danger"
                         onclick="return confirm('Opravdu chcete smazat tuto kategorii?');">Smazat
@@ -108,7 +108,7 @@
                             <a href="{% url 'edit_category' subcategory.pk %}"
                                class="btn btn-sm btn-warning">Upravit</a>
                             <form method="post" action="{% url 'delete_category' subcategory.pk %}"
-                                  style="display:inline;">
+                                  class="delete-button">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-sm btn-danger"
                                         onclick="return confirm('Opravdu chcete smazat tuto podkategorii?');">Smazat
@@ -142,7 +142,12 @@
 
                         <div>
                             {% if service.has_approved_trainers %}
-                                <a href="{% url 'add_to_cart' service.pk %}">➕ Přidat do košíku</a>
+                                <form method="post" action="{% url 'add_to_cart' service.pk %}" class="add-to-cart">
+                                {% csrf_token %}
+        <button type="submit" style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Přidat do košíku
+        </button>
+    </form>
                             {% else %}
                                 <p style="color: red;">Nelze objednat</p>
                             {% endif %}
@@ -151,7 +156,7 @@
                         {% if user.is_staff %}
                             <!-- Tlačítka pro úpravu a mazání služby -->
                             <a href="{% url 'edit_service' service.pk %}" class="btn btn-sm btn-warning">Upravit</a>
-                            <form method="post" action="{% url 'delete_service' service.pk %}" style="display:inline;">
+                            <form method="post" action="{% url 'delete_service' service.pk %}" class="delete-button">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-sm btn-danger"
                                         onclick="return confirm('Opravdu chcete smazat tuto službu?');">Smazat

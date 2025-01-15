@@ -1,0 +1,112 @@
+/* Univerzální styl pro formuláře */
+form {
+    max-width: 500px; /* Maximální šířka formuláře */
+    margin: 0 auto; /* Vycentrování formuláře */
+    padding: 20px; /* Vnitřní odsazení */
+    background-color: #f7f7f7; /* Světle šedé pozadí */
+    border: 1px solid #ccc; /* Tenký rámeček */
+    border-radius: 8px; /* Zaoblené rohy */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Jemný stín */
+}
+
+h3 {
+    margin-bottom: 15px; /* Mezera pod nadpisem */
+    font-size: 1.2rem; /* Velikost písma */
+    color: #333; /* Tmavě šedý text */
+}
+
+.form-group {
+    margin-bottom: 15px; /* Mezera mezi prvky formuláře */
+}
+
+label {
+    display: block; /* Každý popisek na samostatném řádku */
+    margin-bottom: 5px; /* Mezera pod popiskem */
+    font-weight: bold; /* Tučné písmo */
+    color: #555; /* Středně šedý text */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+    width: 100%; /* Roztažení přes celou šířku */
+    padding: 10px; /* Vnitřní odsazení */
+    font-size: 1rem; /* Velikost písma */
+    border: 1px solid #ccc; /* Tenký rámeček */
+    border-radius: 4px; /* Zaoblené rohy */
+    box-sizing: border-box; /* Zohlednění paddingu */
+    transition: border-color 0.3s; /* Plynulý přechod změny barvy rámečku */
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #007bff; /* Modrý rámeček při zaostření */
+    outline: none; /* Odstranění výchozího obrysu */
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.25); /* Světle modrý stín */
+}
+
+button {
+    padding: 10px 20px; /* Velikost tlačítka */
+    font-size: 1rem; /* Velikost textu */
+    color: #fff; /* Bílé písmo */
+    background-color: #007bff; /* Modré pozadí */
+    border: none; /* Bez rámečku */
+    border-radius: 4px; /* Zaoblené rohy */
+    cursor: pointer; /* Ukazatel ruky při najetí */
+    transition: background-color 0.3s; /* Plynulý přechod změny barvy */
+}
+
+button:hover {
+    background-color: #0056b3; /* Tmavší modrá při najetí */
+}
+
+button:disabled {
+    background-color: #ccc; /* Šedé tlačítko při deaktivaci */
+    cursor: not-allowed; /* Změna kurzoru při deaktivaci */
+}
+
+.hidden {
+    display: none; /* Skrytí prvku */
+}
+form.delete-button {
+    display: inline;
+    padding: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+
+
+/* Specifické stylování pro formulář s tlačítkem "Přidat do košíku" */
+form.add-to-cart {
+    display: inline; /* Nastaví inline, aby formulář nezabíral celý řádek */
+    padding: 0; /* Odstranění paddingu */
+    background: none; /* Odstranění pozadí */
+    border: none; /* Odstranění rámečku */
+    box-shadow: none; /* Odstranění stínu */
+}
+
+/* Styl tlačítka v "add-to-cart" formuláři */
+form.add-to-cart button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #28a745; /* Zelené pozadí */
+    color: white; /* Bílé písmo */
+    border: none; /* Bez rámečku */
+    border-radius: 5px; /* Zaoblené rohy */
+    cursor: pointer; /* Ukazatel ruky při najetí */
+    transition: background-color 0.3s; /* Plynulý přechod */
+}
+
+form.add-to-cart button:hover {
+    background-color: #218838; /* Tmavší zelená při najetí */
+}
+
+form.add-to-cart button:disabled {
+    background-color: #ccc; /* Šedé tlačítko při deaktivaci */
+    cursor: not-allowed; /* Změna kurzoru při deaktivaci */
+}
+

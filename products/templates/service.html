@@ -27,7 +27,9 @@
 </div>
 <!-- Tlačítko pro přidání do košíku -->
 {% if approved_trainers_services %}
-    <form method="post" action="{% url 'add_to_cart' service.id %}" style="margin-top: 2rem; text-align: center;">
+<div style="margin-top: 2rem; text-align: center;">
+
+    <form method="post" action="{% url 'add_to_cart' service.id %}" class="add-to-cart">
         {% csrf_token %}
         <button type="submit" style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
             Přidat do košíku
@@ -38,14 +40,14 @@
         Tuto službu nelze objednat. Žádný schválený trenér tuto službu nenabízí.
     </p>
 {% endif %}
-
+</div>
 <!-- Možnosti pro administrátora: Upravit a Smazat službu -->
 {% if user.is_staff %}
     <div style="margin-top: 2rem; text-align: center;">
         <a href="{% url 'edit_service' service.id %}" class="btn btn-sm btn-warning" style="margin-right: 1rem;">
             Upravit službu
         </a>
-        <form method="post" action="{% url 'delete_service' service.id %}" style="display: inline;">
+        <form method="post" action="{% url 'delete_service' service.id %}" class="delete-button">
             {% csrf_token %}
             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tuto službu?');">
                 Smazat službu

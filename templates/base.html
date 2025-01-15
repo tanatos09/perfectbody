@@ -18,7 +18,7 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 <header class="sticky-top">
-     <nav class="bg-primary text-white">
+     <nav class="bg-primary">
         {% include "navbar.html" %}
     </nav>
 </header><!-- Alerty -->
@@ -33,16 +33,16 @@
             {% endfor %}
         </div>
     {% endif %}
-<main class="flex-grow-1 d-flex flex-column align-items-center ">
+<main class="flex-grow-1 d-flex flex-column ">
     <!-- Hlavní obsah -->
-    <div class="content-container p-4 rounded shadow">
+    <div class="content-container p-4 shadow">
         {% block content %}
         {% endblock %}
     </div>
 </main>
 
 <!-- Footer -->
-<footer class="bg-light text-dark text-center py-3 fixed-bottom">
+<footer class="bg-light text-dark text-center py-3">
     {% include "footer.html" %}
 </footer>
 <script>

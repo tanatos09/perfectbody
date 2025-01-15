@@ -1,8 +1,11 @@
 {% load static %}
 <nav class="navbar navbar-expand-sm navbar-light bg-light d-flex align-items-center" id="TopNav">
+
     <div class="search-wrapper">
+
         <!-- Formulář pro vyhledávání -->
-        <form method="get" action="{% url 'search' %}" id="search-form" class="form-inline my-2 my-lg-0 mx-auto position-relative">
+        <form method="get" action="{% url 'search' %}" id="search-form"
+              class="form-inline my-2 my-lg-0 mx-auto position-relative">
             <div class="input-group">
                 <input id="search-input" class="form-control" type="search" placeholder="Vyhledávání"
                        aria-label="Search" autocomplete="off">
@@ -42,33 +45,36 @@
                 </ul>
             </li>
             <li class="nav-item dropdown" id="cart-wrapper">
-    <a class="nav-link d-flex align-items-center" href="#" id="cart-toggle">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon-size" viewBox="680.7 197.5 39 28" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m709.9 206-2.8-8.5h-14.2L690 206h-9.3l.5 1.4 6.2 18.1h25.2l6.7-19.5h-9.4z"></path>
-        </svg>
-        <span class="ms-2">Košík (<span id="cart-count">0</span>)</span>
-    </a>
-    <!-- Dropdown -->
-    <div id="navbar-cart-dropdown" class="dropdown-menu p-3" style="min-width: 300px;">
-    <h5>Košík</h5>
-    <ul id="navbar-cart-items" style="list-style-type: none; padding: 0; margin: 0;">
-        <li>Načítám data...</li>
-    </ul>
-    <p class="mt-2"><strong>Celková cena:</strong> <span id="navbar-cart-total">0 Kč</span></p>
-    <a href="/cart/" class="cart-link">Zobrazit košík</a>
-</div>
-</li>
+                <a class="nav-link d-flex align-items-center" href="#" id="cart-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-size" viewBox="680.7 197.5 39 28" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m709.9 206-2.8-8.5h-14.2L690 206h-9.3l.5 1.4 6.2 18.1h25.2l6.7-19.5h-9.4z"></path>
+                    </svg>
+                    <span class="ms-2">Košík (<span id="cart-count">0</span>)</span>
+                </a>
+                <!-- Dropdown -->
+                <div id="navbar-cart-dropdown" class="dropdown-menu p-3" style="min-width: 300px;">
+                    <h5>Košík</h5>
+                    <ul id="navbar-cart-items" style="list-style-type: none; padding: 0; margin: 0;">
+                        <li>Načítám data...</li>
+                    </ul>
+                    <p class="mt-2"><strong>Celková cena:</strong> <span id="navbar-cart-total">0 Kč</span></p>
+                    <a href="/cart/" class="cart-link">Zobrazit košík</a>
+                </div>
+            </li>
         </ul>
     </div>
 </nav>
 
 <!-- Modální okno pro košík -->
-<div id="cart-modal" style="display: none; position: fixed; top: 10%; left: 50%; transform: translateX(-50%); background: white; border: 1px solid #ccc; padding: 20px; z-index: 1000; width: 300px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+<div id="cart-modal"
+     style="display: none; position: fixed; top: 10%; left: 50%; transform: translateX(-50%); background: white; border: 1px solid #ccc; padding: 20px; z-index: 1000; width: 300px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
     <h3>Košík</h3>
     <ul id="cart-items" style="list-style-type: none; padding: 0;"></ul>
     <p><strong>Celková cena:</strong> <span id="cart-total">0 Kč</span></p>
-    <button id="close-cart" style="background-color: red; color: white; border: none; padding: 10px; cursor: pointer;">Zavřít</button>
+    <button id="close-cart" style="background-color: red; color: white; border: none; padding: 10px; cursor: pointer;">
+        Zavřít
+    </button>
     <a href="/cart/" style="display: block; margin-top: 10px; text-align: center;">Pokračovat k objednávce</a>
 </div>
 
@@ -91,46 +97,44 @@
         // ===================
 
         // Načítání dat košíku přes AJAX
-       const fetchCartData = () => {
-    fetch('/cart/data/', {
-        method: 'GET',
-        headers: { 'X-Requested-With': 'XMLHttpRequest' },
-    })
-        .then(response => {
-            if (!response.ok) throw new Error('Chyba při načítání dat z košíku.');
-            return response.json();
-        })
-        .then(data => {
-            // Vymazání aktuálního obsahu
-            cartItems.innerHTML = '';
+        const fetchCartData = () => {
+            fetch('/cart/data/', {
+                method: 'GET',
+                headers: {'X-Requested-With': 'XMLHttpRequest'},
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error('Chyba při načítání dat z košíku.');
+                    return response.json();
+                })
+                .then(data => {
+                    // Vymazání aktuálního obsahu
+                    cartItems.innerHTML = '';
 
-            // Pokud jsou položky v košíku
-            if (data.items.length > 0) {
-                data.items.forEach(item => {
-                    const url = item.type === 'service'
-                        ? `/service/${item.id}`
-                        : `/product/${item.id}`;
+                    // Pokud jsou položky v košíku
+                    if (data.items.length > 0) {
+                        data.items.forEach(item => {
+                            const url = item.type === 'service'
+                                ? `/service/${item.id}`
+                                : `/product/${item.id}`;
 
-                    const li = document.createElement('li');
-                    li.innerHTML = `
+                            const li = document.createElement('li');
+                            li.innerHTML = `
                         <a href="${url}">
                             ${item.name}
                         </a> - ${item.quantity} × ${item.price} Kč = ${item.total} Kč
                     `;
-                    cartItems.appendChild(li);
-                });
-            } else {
-                cartItems.innerHTML = '<li>Košík je prázdný.</li>';
-            }
+                            cartItems.appendChild(li);
+                        });
+                    } else {
+                        cartItems.innerHTML = '<li>Košík je prázdný.</li>';
+                    }
 
-            // Aktualizace celkové ceny a počtu položek
-            cartTotal.textContent = `${data.cart_total} Kč`;
-            cartCount.textContent = data.cart_count;
-        })
-        .catch(error => console.error('Chyba při načítání košíku:', error));
-};
-
-
+                    // Aktualizace celkové ceny a počtu položek
+                    cartTotal.textContent = `${data.cart_total} Kč`;
+                    cartCount.textContent = data.cart_count;
+                })
+                .catch(error => console.error('Chyba při načítání košíku:', error));
+        };
 
 
         // Otevření dropdownu košíku
@@ -217,7 +221,7 @@
             if (query.length > 0) {
                 fetch(`/search?q=${encodeURIComponent(query)}`, {
                     method: 'GET',
-                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                    headers: {'X-Requested-With': 'XMLHttpRequest'},
                 })
                     .then(response => {
                         if (!response.ok) throw new Error('Chyba při vyhledávání.');

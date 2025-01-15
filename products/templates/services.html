@@ -86,15 +86,6 @@
             </form>
         {% endif %}
 
-        {% if category.category_parent %}
-            <p>
-                <strong>Zpět na předchozí kategorii:</strong>
-                <a href="{% url 'services' category.category_parent.pk %}">
-                    {{ category.category_parent.category_name }}
-                </a>
-            </p>
-        {% endif %}
-
         <!-- Podkategorie -->
         {% if subcategories %}
             <h2>Podkategorie</h2>
@@ -169,6 +160,15 @@
                     </li>
                 {% endfor %}
             </ul>
+        {% endif %}
+
+        {% if category.category_parent %}
+            <p>
+                <strong>Zpět na předchozí kategorii:</strong>
+                <a href="{% url 'services' category.category_parent.pk %}">
+                    {{ category.category_parent.category_name }}
+                </a>
+            </p>
         {% endif %}
 
         <!-- Navigace stránkování -->

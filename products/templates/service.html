@@ -4,21 +4,69 @@
 
 {% block content %}
 
-<h1>{{ service.product_name }}</h1>
+    <!-- Breadcrumbs navigace -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="display: flex; list-style: none; padding: 0;">
+            <!-- Domů -->
+            <li class="breadcrumb-item">
+                <a href="{% url 'home' %}">Domů</a>
+            </li>
 
-<!-- Obrázek služby -->
-{% if service.product_view %}
-    <div class="service-image">
-        <img src="{{ service.product_view }}" alt="Obrázek služby {{ service.product_name }}"
-             style="max-width: 450px; height: auto;">
+            <!-- Oddělovač -->
+            <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+
+            <!-- Hlavní kategorie služeb -->
+            {% if service.category %}
+                <li class="breadcrumb-item">
+                    <a href="{% url 'services' %}">Kategorie služeb</a>
+                </li>
+            {% else %}
+                <li class="breadcrumb-item active" aria-current="page">Kategorie služeb</li>
+            {% endif %}
+
+            <!-- Rodičovská kategorie, pokud existuje -->
+            {% if service.category and service.category.category_parent %}
+                <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'services' service.category.category_parent.pk %}">
+                        {{ service.category.category_parent.category_name }}
+                    </a>
+                </li>
+            {% endif %}
+
+            <!-- Aktuální kategorie -->
+            {% if service.category %}
+                <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'services' service.category.pk %}">
+                        {{ service.category.category_name }}
+                    </a>
+                </li>
+            {% endif %}
+
+            <!-- Název služby -->
+            <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+            <li class="breadcrumb-item active" aria-current="page">
+                {{ service.product_name }}
+            </li>
+        </ol>
+    </nav>
+
+    <h1>{{ service.product_name }}</h1>
+
+    <!-- Obrázek služby -->
+    {% if service.product_view %}
+        <div class="service-image">
+            <img src="{{ service.product_view }}" alt="Obrázek služby {{ service.product_name }}"
+                 style="max-width: 450px; height: auto;">
+        </div>
+    {% endif %}
+
+    <!-- Popis služby -->
+    <div>
+        <h2>Popis služby</h2>
+        <p>{{ service.product_long_description }}</p>
     </div>
-{% endif %}
-
-<!-- Popis služby -->
-<div>
-    <h2>Popis služby</h2>
-    <p>{{ service.product_long_description }}</p>
-</div>
 
 <!-- Kategorie a cena -->
 <div>

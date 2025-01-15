@@ -135,7 +135,7 @@
     "fields": {
       "category_name": "Kraťasy",
       "category_description": "Lehké a pohodlné kraťasy vhodné pro trénink i volnočasové aktivity. Dostupné ve špičkových materiálech, které odvádějí pot. Navržené s ohledem na ergonomii a volnost pohybu.",
-      "category_view": "https://i.ibb.co/6sBnDxX/KRATASY.jpg",
+      "category_view": "https://i.ibb.co/NN9gRy6/KRATASY.jpg",
       "category_parent": 11
     }
   },
@@ -1023,6 +1023,130 @@
       "category": 13,
       "producer": 3,
       "stock_availability": 90
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 56,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Elastické kraťasy EasyFlow dámské",
+      "product_short_description": "Lehké a prodyšné kraťasy pro sportovní aktivity i relax.",
+      "product_long_description": "Dámské krátké elastické kraťasy, navrženy pro maximální pohodlí a výkon. Vyrobeny z inovativního materiálu obsahujícího 85 % polyester a 15 % elastan, který zajišťuje dokonalou elasticitu a rychlé schnutí. Ergonomický střih a široký pas poskytují optimální podporu při každém pohybu. Díky technologii odvádění vlhkosti zůstanete svěží i během intenzivních tréninků. Ideální pro běh, jógu nebo domácí cvičení.",
+      "product_view": "https://i.ibb.co/23rpvLy/ELASTICKEKRATASYEASYFLOWDAMSKE.jpg",
+      "price": 699.00,
+      "category": 14,
+      "producer": 9,
+      "stock_availability": 20
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 57,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Sportovní kraťasy LadyBeam dámské",
+      "product_short_description": "Stylové kraťasy s volným střihem pro pohodlné cvičení.",
+      "product_long_description": "Sportovní dvouvrstvé kraťasy kombinují styl a funkčnost. Jsou vyrobeny z prémiové bavlny (90 %) a příměsi spandexu (10 %) pro lehkou pružnost a měkkost. Volný střih zajišťuje volnost pohybu, zatímco boční kapsy přidávají praktické využití. Perfektní volba na letní výlety, pikniky nebo volnočasové aktivity.",
+      "product_view": "https://i.ibb.co/kBph3W1/SPORTOVNIKRATASYLADYBEAMDAMSKE.jpg",
+      "price": 599.00,
+      "category": 14,
+      "producer": 9,
+      "stock_availability": 15
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 58,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Sportovní kraťasy PowerMove pánské",
+      "product_short_description": "Kraťasy pro náročné tréninky.",
+      "product_long_description": "Sportovní kraťasy jsou ideální volbou pro každého, kdo hledá funkčnost a odolnost. Materiál obsahuje 88 % recyklovaného polyesteru a 12 % elastanu, což poskytuje skvělou pružnost a ekologickou udržitelnost. Prodyšné panely na bocích zlepšují cirkulaci vzduchu, zatímco pevný elastický pas zajišťuje stabilitu i při intenzivním pohybu. Kapsy se zipy poskytují bezpečné uložení drobností. Perfektní na posilování, běh nebo HIIT tréninky.",
+      "product_view": "https://i.ibb.co/CKDVFtC/SPORTOVNIKRATASYPOWERMOVEPANSKE.jpg",
+      "price": 899.00,
+      "category": 14,
+      "producer": 9,
+      "stock_availability": 25
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 59,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Lehké kraťasy SummerBreeze pánské",
+      "product_short_description": "Lehké stylové kraťasy na letní dny.",
+      "product_long_description": "Kraťasy SummerBreeze nabízejí jedinečný komfort a lehkost díky 100% organické bavlně. Měkký a prodyšný materiál je šetrný k pokožce a ideální pro horké letní dny. Elegantní střih s nastavitelným páskem dodává stylový vzhled, vhodný jak na pláž, tak na neformální schůzky. K dispozici jsou v neutrálních tónech, které snadno sladíte s dalšími kousky vašeho šatníku.",
+      "product_view": "https://i.ibb.co/b7ZLYwC/LEHKEKRATASYSUMMERBREEZEPANSKE.jpg",
+      "price": 749.00,
+      "category": 14,
+      "producer": 9,
+      "stock_availability": 30
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 60,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Outdoorové kraťasy AdventurePro pánské",
+      "product_short_description": "Odolné kraťasy pro každé dobrodružství.",
+      "product_long_description": "AdventurePro kraťasy byly navrženy pro milovníky outdoorových aktivit. Vyrobeny z kombinace nylonu (70 %) a spandexu (30 %), jsou lehké, pružné a zároveň extrémně odolné proti oděru. Vodoodpudivá úprava vás ochrání před náhlým deštěm. Kraťasy mají více kapes, včetně jedné bezpečnostní kapsy na zip. Perfektní na turistiku, kempování nebo horolezectví.",
+      "product_view": "https://i.ibb.co/1dZcqDm/OUTDOOROVEKRATASYADVENTUREPROPANSKE.jpg",
+      "price": 1099.00,
+      "category": 14,
+      "producer": 9,
+      "stock_availability": 10
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 61,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Běžecké kraťasy SpeedRun pánské",
+      "product_short_description": "Lehké a prodyšné kraťasy navržené pro maximální pohodlí při běhu.",
+      "product_long_description": "Objevte maximální komfort s běžeckými kraťasy SpeedRun Pro, které byly navrženy s ohledem na potřeby náročných sportovců. Díky ultralehkému polyesterovému materiálu a strategicky umístěným ventilačním zónám vám zaručí dokonalé proudění vzduchu a odvod potu i během těch nejintenzivnějších tréninků. Elastický pas se stahovací šňůrkou zajistí, že kraťasy perfektně padnou, ať už běžíte maraton nebo sprintujete. Reflexní prvky na stranách zvýší vaši viditelnost za šera, zatímco malé kapsy na zip umožní bezpečně uložit klíče nebo energetický gel. Zvolte SpeedRun Pro – kraťasy, které vás posunou k lepším výkonům.",
+      "product_view": "https://i.ibb.co/rGZrPxH/BEZECKEKRATASYSPEEDRUNPANSKE.jpg",
+      "price": 899.00,
+      "category": 14,
+      "producer": 9,
+      "stock_availability": 25
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 62,
+    "fields": {
+      "product_type": "merchantdise",
+      "product_name": "Volnočasové kraťasy HybridPro pánské",
+      "product_short_description": "Stylové a pohodlné kraťasy pro sport i každodenní nošení.",
+      "product_long_description": "Kraťasy HybridPro jsou kombinací stylu a výkonu, což je činí ideálními jak na sport, tak na běžné nošení. Vyrobené z prémiového směsového materiálu (80 % bavlna, 20 % elastan) nabízí maximální pohodlí a volnost pohybu. Vnitřní vrstva z měkkého materiálu je jemná k pokožce, zatímco vnější část je odolná vůči opotřebení a zároveň zachovává elegantní vzhled. Kraťasy mají praktické kapsy na zip, ideální pro uložení telefonu nebo peněženky. Jejich decentní design s minimalistickým logem je vhodný pro nošení na trénink i pro posezení s přáteli. S ChillFlex Hybrid se budete cítit dobře v každé situaci.",
+      "product_view": "https://i.ibb.co/VH36wwx/VOLNOCASOVEKRATASYHYBRIDPROPANSKE.jpg",
+      "price": 749.00,
+      "category": 14,
+      "producer": 9,
+      "stock_availability": 30
+    }
+  },
+  {
+    "model": "products.producer",
+    "pk": 9,
+    "fields": {
+      "producer_name": "PulseGear",
+      "producer_description": "PulseGear je značka navržená pro ty, kdo chtějí udržet rytmus svého aktivního života. Naše produkty jsou vytvořeny s důrazem na kvalitu, funkčnost a moderní design. PulseGear věří, že sport není jen o výkonu, ale také o pocitu svobody, energie a odhodlání. V našem portfoliu najdete oblečení a doplňky, které zvyšují váš komfort a podporují vaši výkonnost. Používáme pokročilé materiály, které jsou prodyšné, lehké a odolné. Naše technologie odvádění vlhkosti a rychleschnoucí tkaniny vás udrží v suchu i během těch nejnáročnějších aktivit. PulseGear se zároveň zavazuje k ekologické odpovědnosti. Naše výrobky jsou vyráběny z recyklovaných a obnovitelných materiálů, čímž minimalizujeme dopad na životní prostředí. Spolupracujeme s partnery, kteří sdílejí naši vizi udržitelnosti a etické výroby. Připojte se ke komunitě PulseGear a objevte, jaké to je posouvat hranice vlastních možností. S námi udržíte rytmus a budete vždy o krok napřed.",
+      "producer_view": "https://i.ibb.co/3SZB4S6/PULSEGEAR.jpg"
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 20,
+    "fields": {
+      "category_name": "Mikiny",
+      "category_description": "Pohodlné mikiny pro každou příležitost. Naše kolekce zahrnuje sportovní i volnočasové mikiny, které jsou navrženy s důrazem na pohodlí, moderní design a odolné materiály. Mikiny jsou vybaveny technologiemi pro odvádění vlhkosti, udržení tepla a volnost pohybu, což z nich činí ideální volbu pro trénink, venkovní aktivity i běžné nošení.",
+      "category_view": "https://i.ibb.co/8mbCbYL/MIKINY.jpg",
+      "category_parent": 11
     }
   }
 ]

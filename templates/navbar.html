@@ -18,26 +18,26 @@
                         Produkty
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuProducts">
-    {% for category in products_categories %}
-        {% if not forloop.first %}
-        <div class="dropdown-divider"></div>
-        {% endif %}
-        <li>
-            <a class="dropdown-item"
-               href="{% url 'products' category.pk %}">{{ category.category_name }}</a>
-            {% if category.subcategories.exists %}
-                <ul class="dropdown-submenu list-unstyled">
-                    {% for subcategory in category.subcategories.all %}
-                        <li>
-                            <a class="dropdown-item"
-                               href="{% url 'products' subcategory.pk %}">{{ subcategory.category_name }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        </li>
-    {% endfor %}
-</ul>
+                        {% for category in products_categories %}
+                            {% if not forloop.first %}
+                            <div class="dropdown-divider"></div>
+                            {% endif %}
+                            <li>
+                                <a class="dropdown-item"
+                                   href="{% url 'products' category.pk %}">{{ category.category_name }}</a>
+                                {% if category.subcategories.exists %}
+                                    <ul class="dropdown-submenu list-unstyled">
+                                        {% for subcategory in category.subcategories.all %}
+                                            <li>
+                                                <a class="dropdown-item"
+                                                   href="{% url 'products' subcategory.pk %}">{{ subcategory.category_name }}</a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
                 </li>
                 <!-- Služby -->
                 <li class="nav-item dropdown">

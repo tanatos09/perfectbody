@@ -31,8 +31,11 @@
 
     <form method="post" action="{% url 'add_to_cart' service.id %}" class="add-to-cart">
         {% csrf_token %}
-        <button type="submit" style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
-            Přidat do košíku
+        <button type="button"
+            class="add-to-cart-btn"
+            data-product-id="{{ service.id }}"
+            style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                Přidat do košíku
         </button>
     </form>
 {% else %}

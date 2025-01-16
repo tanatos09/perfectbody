@@ -9,7 +9,7 @@ class Order(Model):
         ('PENDING', 'Čeká na vyřízení'),
         ('SHIPPING', 'Na cestě'),
         ('COMPLETED', 'Dokončeno'),
-        ('CANCELED', 'Zrušeno'),
+        ('CANCELLED', 'Zrušeno'),
     ]
 
     customer = ForeignKey(UserProfile, on_delete=SET_NULL, null=True, blank=True, related_name='orders')

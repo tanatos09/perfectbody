@@ -4,7 +4,55 @@
 
 {% block content %}
 
-<h1>{{ service.product_name }}</h1>
+    <!-- Breadcrumbs navigace -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="display: flex; list-style: none; padding: 0;">
+            <!-- Domů -->
+            <li class="breadcrumb-item">
+                <a href="{% url 'home' %}">Domů</a>
+            </li>
+
+            <!-- Oddělovač -->
+            <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+
+            <!-- Hlavní kategorie služeb -->
+            {% if service.category %}
+                <li class="breadcrumb-item">
+                    <a href="{% url 'services' %}">Kategorie služeb</a>
+                </li>
+            {% else %}
+                <li class="breadcrumb-item active" aria-current="page">Kategorie služeb</li>
+            {% endif %}
+
+            <!-- Rodičovská kategorie, pokud existuje -->
+            {% if service.category and service.category.category_parent %}
+                <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'services' service.category.category_parent.pk %}">
+                        {{ service.category.category_parent.category_name }}
+                    </a>
+                </li>
+            {% endif %}
+
+            <!-- Aktuální kategorie -->
+            {% if service.category %}
+                <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'services' service.category.pk %}">
+                        {{ service.category.category_name }}
+                    </a>
+                </li>
+            {% endif %}
+
+            <!-- Název služby -->
+            <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+            <li class="breadcrumb-item active" aria-current="page">
+                {{ service.product_name }}
+            </li>
+        </ol>
+    </nav>
+
+    <h1>{{ service.product_name }}</h1>
 
 <!-- Obrázek služby -->
 {% if service.product_view %}
@@ -13,25 +61,38 @@
     </div>
 {% endif %}
 
-<!-- Popis služby -->
-<div>
-    <h2>Popis služby</h2>
-    <p>{{ service.product_long_description }}</p>
-</div>
+    <!-- Popis služby -->
+    <div>
+        <h2>Popis služby</h2>
+        <p>{{ service.product_long_description }}</p>
+    </div>
 
-<!-- Kategorie a cena -->
-<div>
-    <p><strong>Kategorie:</strong> <a href="{% url 'services' service.category.pk %}">{{ service.category }}</a></p>
-    <p><strong>Cena:</strong> {{ service.price }} Kč</p>
-</div>
-<!-- Tlačítko pro přidání do košíku -->
-{% if approved_trainers_services %}
-<div>
+    <!-- Kategorie a cena -->
+    <div>
+        <p><strong>Kategorie:</strong> <a href="{% url 'services' service.category.pk %}">{{ service.category }}</a></p>
 
-    <form method="post" action="{% url 'add_to_cart' service.id %}" class="add-to-cart">
-        {% csrf_token %}
-        <button type="submit" >
-            Přidat do košíku
+        <!-- Dostupní trenéři -->
+        {% if approved_trainers_services %}
+            <p>
+                <strong>Trenéři:</strong>
+                {% for trainer_service in approved_trainers_services %}
+                    <a href="{% url 'trainer' trainer_service.trainer.id %}">{{ trainer_service.trainer.full_name }}</a>
+                    {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+        {% else %}
+            <p style="color: red;">Žádní schválení trenéři nejsou k dispozici pro tuto službu.</p>
+        {% endif %}
+
+        <p><strong>Cena:</strong> {{ service.price }} Kč</p>
+    </div>
+    <!-- Tlačítko pro přidání do košíku -->
+    {% if approved_trainers_services %}
+        <form method="post" action="{% url 'add_to_cart' service.id %}" style="margin-top: 2rem; text-align: center;">
+            {% csrf_token %}
+            <button type="submit"
+                    style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                Přidat do košíku
         </button>
     </form>
 {% else %}

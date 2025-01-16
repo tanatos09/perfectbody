@@ -2,7 +2,55 @@
 
 {% block content %}
 
-<h1>{{ product.product_name }}</h1>
+    <!-- Breadcrumbs navigace -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="display: flex; list-style: none; padding: 0;">
+            <!-- Domů -->
+            <li class="breadcrumb-item">
+                <a href="{% url 'home' %}">Domů</a>
+            </li>
+
+            <!-- Oddělovač -->
+            <li class="breadcrumb-item" style="margin: 0 5px;">&raquo;</li>
+
+            <!-- Hlavní kategorie produktů -->
+            {% if product.category %}
+                <li class="breadcrumb-item">
+                    <a href="{% url 'products' %}">Kategorie produktů</a>
+                </li>
+            {% else %}
+                <li class="breadcrumb-item active" aria-current="page">Kategorie produktů</li>
+            {% endif %}
+
+            <!-- Rodičovská kategorie, pokud existuje -->
+            {% if product.category and product.category.category_parent %}
+                <li class="breadcrumb-item" style="margin: 0 5px;">&raquo;</li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'products' product.category.category_parent.pk %}">
+                        {{ product.category.category_parent.category_name }}
+                    </a>
+                </li>
+            {% endif %}
+
+            <!-- Aktuální kategorie -->
+            {% if product.category %}
+                <li class="breadcrumb-item" style="margin: 0 5px;">&raquo;</li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'products' product.category.pk %}">
+                        {{ product.category.category_name }}
+                    </a>
+                </li>
+            {% endif %}
+
+            <!-- Název produktu -->
+            <li class="breadcrumb-item" style="margin: 0 5px;">&raquo;</li>
+            <li class="breadcrumb-item active" aria-current="page">
+                {{ product.product_name }}
+            </li>
+        </ol>
+    </nav>
+
+    <h1>{{ product.product_name }}</h1>
 
 <!-- Obrázek produktu -->
 <div>
@@ -23,16 +71,31 @@
 
 <!-- Zobrazení skladové dostupnosti -->
 <div>
+    <!-- Odkaz na výrobce -->
+    {% if product.producer %}
+            <p>
+                <strong>Výrobce:</strong>
+                <a href="{% url 'producer' product.producer.pk %}">
+                    {{ product.producer.producer_name }}
+                </a>
+            </p>
+    {% endif %}
+
+    <!-- Zobrazení skladové dostupnosti -->
     <p><strong>{{ stock_message }}</strong></p>
-</div>
+    <p><strong>Cena:</strong> {{ product.price }} Kč</p>
+
 
 <!-- Tlačítko pro přidání do košíku -->
 {% if can_add_to_cart %}
 <div>
     <form method="post" action="{% url 'add_to_cart' product.id %}" class="add-to-cart">
         {% csrf_token %}
-        <button type="submit" style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
-            Přidat do košíku
+        <button type="button"
+            class="add-to-cart-btn"
+            data-product-id="{{ product.id }}"
+            style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                Přidat do košíku
         </button>
     </form>
 {% else %}

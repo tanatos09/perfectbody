@@ -85,15 +85,6 @@
             </form>
         {% endif %}
 
-        {% if category.category_parent %}
-            <p>
-                <strong>Zpět na předchozí kategorii:</strong>
-                <a href="{% url 'products' category.category_parent.pk %}">
-                    {{ category.category_parent.category_name }}
-                </a>
-            </p>
-        {% endif %}
-
         <!-- Podkategorie -->
         {% if subcategories %}
             <h2>Podkategorie</h2>
@@ -137,19 +128,16 @@
             </div>
 
             <!-- Tlačítka pro filtrování -->
-         <!-- Tlačítka pro filtrování -->
-{% if gender_availability.ladies or gender_availability.gentlemans %}
-    <div>
-        <strong>Filtrovat:</strong>
-        <a href="?gender=ladies{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Dámské</a>
-        |
-        <a href="?gender=gentlemans{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Pánské</a>
-        |
-        <a href="?{% if sort_by %}sort_by={{ sort_by }}{% endif %}">Vše</a>
-    </div>
-{% endif %}
-
-
+            {% if gender_availability.ladies or gender_availability.gentlemans %}
+                <div>
+                    <strong>Filtrovat:</strong>
+                    <a href="?gender=ladies{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Dámské</a>
+                    |
+                    <a href="?gender=gentlemans{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Pánské</a>
+                    |
+                    <a href="?{% if sort_by %}sort_by={{ sort_by }}{% endif %}">Vše</a>
+                </div>
+            {% endif %}
 
             <ul>
                 {% for product in products %}
@@ -175,8 +163,11 @@
                             <div class="add-to-cart">
                                 <form method="post" action="{% url 'add_to_cart' product.id %}" class="add-to-cart">
                             {% csrf_token %}
-                                    <button type="submit" class="add-to-cart-button" >
-                                        Přidat do košíku
+                                  <button type="button"
+                                        class="add-to-cart-btn"
+                                        data-product-id="{{ product.id }}"
+                                        style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                                            Přidat do košíku
                                     </button>
                                 </form>
                         {% else %}
@@ -198,6 +189,15 @@
                     </li>
                 {% endfor %}
             </ul>
+        {% endif %}
+
+        {% if category.category_parent %}
+            <p>
+                <strong>Zpět na předchozí kategorii:</strong>
+                <a href="{% url 'products' category.category_parent.pk %}">
+                    {{ category.category_parent.category_name }}
+                </a>
+            </p>
         {% endif %}
 
         <!-- Navigace stránkování -->

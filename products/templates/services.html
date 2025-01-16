@@ -86,15 +86,6 @@
             </form>
         {% endif %}
 
-        {% if category.category_parent %}
-            <p>
-                <strong>Zpět na předchozí kategorii:</strong>
-                <a href="{% url 'services' category.category_parent.pk %}">
-                    {{ category.category_parent.category_name }}
-                </a>
-            </p>
-        {% endif %}
-
         <!-- Podkategorie -->
         {% if subcategories %}
             <h2>Podkategorie</h2>
@@ -144,10 +135,13 @@
                             {% if service.has_approved_trainers %}
                                 <form method="post" action="{% url 'add_to_cart' service.pk %}" class="add-to-cart">
                                 {% csrf_token %}
-        <button type="submit" style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
-            Přidat do košíku
-        </button>
-    </form>
+                                    <button type="button"
+                                        class="add-to-cart-btn"
+                                        data-product-id="{{ service.id }}"
+                                        style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                                            Přidat do košíku
+                                    </button>
+                                </form>
                             {% else %}
                                 <p style="color: red;">Nelze objednat</p>
                             {% endif %}
@@ -166,6 +160,15 @@
                     </li>
                 {% endfor %}
             </ul>
+        {% endif %}
+
+        {% if category.category_parent %}
+            <p>
+                <strong>Zpět na předchozí kategorii:</strong>
+                <a href="{% url 'services' category.category_parent.pk %}">
+                    {{ category.category_parent.category_name }}
+                </a>
+            </p>
         {% endif %}
 
         <!-- Navigace stránkování -->

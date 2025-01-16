@@ -129,14 +129,16 @@
             </div>
 
             <!-- Tlačítka pro filtrování -->
-            <div>
-                <strong>Filtrovat:</strong>
-                <a href="?gender=ladies{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Dámské</a>
-                |
-                <a href="?gender=gentlemans{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Pánské</a>
-                |
-                <a href="?{% if sort_by %}sort_by={{ sort_by }}{% endif %}">Vše</a>
-            </div>
+            {% if gender_availability.ladies or gender_availability.gentlemans %}
+                <div>
+                    <strong>Filtrovat:</strong>
+                    <a href="?gender=ladies{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Dámské</a>
+                    |
+                    <a href="?gender=gentlemans{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Pánské</a>
+                    |
+                    <a href="?{% if sort_by %}sort_by={{ sort_by }}{% endif %}">Vše</a>
+                </div>
+            {% endif %}
 
             <ul>
                 {% for product in products %}
@@ -206,6 +208,7 @@
 
                     {% if products.has_next %}
                         <a href="?page=
+
 
 
 

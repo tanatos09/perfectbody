@@ -71,6 +71,20 @@
     <!-- Kategorie a cena -->
     <div>
         <p><strong>Kategorie:</strong> <a href="{% url 'services' service.category.pk %}">{{ service.category }}</a></p>
+
+        <!-- Dostupní trenéři -->
+        {% if approved_trainers_services %}
+            <p>
+                <strong>Trenéři:</strong>
+                {% for trainer_service in approved_trainers_services %}
+                    <a href="{% url 'trainer' trainer_service.trainer.id %}">{{ trainer_service.trainer.full_name }}</a>
+                    {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+        {% else %}
+            <p style="color: red;">Žádní schválení trenéři nejsou k dispozici pro tuto službu.</p>
+        {% endif %}
+
         <p><strong>Cena:</strong> {{ service.price }} Kč</p>
     </div>
     <!-- Tlačítko pro přidání do košíku -->

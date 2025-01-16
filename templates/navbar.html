@@ -6,7 +6,7 @@
 
         <div class="navbar-brand">
             <a class="navbar-brand" href="/">
-            <img src="{% static 'images/PerfectBody_logo_b.png' %}" alt="PerfectBody" class="navbar-logo">
+            <img src="{% static 'images/PerfectBody_log_transp.png' %}" alt="PerfectBody" class="navbar-logo">
             </a>
         </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -130,46 +130,45 @@
 <!-- Uživatelské menu a košík -->
         <div class="d-flex justify-content-end" >
             <div class="collapse navbar-collapse" id="navbarToggler">
-                <!-- Uživatelské menu a košík -->
-                <ul class="navbar-nav nav-tabs ms-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"  data-bs-toggle="dropdown"
-                           aria-expanded="false">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                 viewBox="-112.6 199.2 23 28"
-                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                 stroke-linejoin="round" class="icon-size">
-                                <path d="M-91.5 213.4c-.8-1.3-1.8-2.5-3-3.5.5-1 .7-2 .7-3.2 0-2.1-.8-4-2.2-5.3-1.4-1.4-3.3-2.2-5.3-2.2s-4 .8-5.3 2.2c-1.4 1.4-2.2 3.3-2.2 5.3 0 1.1.3 2.2.7 3.2-1.2.9-2.3 2.1-3 3.5-.9 1.7-1.5 3.6-1.5 5.6v8.2h22.7V219c-.2-2-.7-3.9-1.6-5.6z"></path>
-                            </svg>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            {% if user.is_authenticated %}
-                                <li><a class="dropdown-item" href="{% url 'profile' %}">{{ user.username }}</a></li>
-                                <li><a class="dropdown-item" href="{% url 'logout' %}">Odhlásit se</a></li>
-                            {% else %}
-                                <li><a class="dropdown-item" href="{% url 'login' %}">Přihlásit se</a></li>
-                                <li><a class="dropdown-item" href="{% url 'register' %}">Registrovat</a></li>
-                            {% endif %}
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown cart" id="cart-wrapper" >
-                        <a class="nav-link d-flex align-items-center" href="#" id="cart-toggle">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon-size" viewBox="680.7 197.5 39 28"
-                                 fill="none"
-                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="m709.9 206-2.8-8.5h-14.2L690 206h-9.3l.5 1.4 6.2 18.1h25.2l6.7-19.5h-9.4z"></path>
-                            </svg>
-                            <span class="ms-2">Košík (<span id="cart-count">0</span>)</span>
-                        </a>
-                        <!-- Dropdown -->
-                        <div id="navbar-cart-dropdown" class="dropdown-menu p-3" style="min-width: 300px;">
-                            <h5>Košík</h5>
-                            <ul id="navbar-cart-items" style="list-style-type: none; padding: 0; margin: 0;">
-                                <li>Načítám data...</li>
-                            </ul>
-                            <p class="mt-2"><strong>Celková cena:</strong> <span id="navbar-cart-total">0 Kč</span></p>
-                            <a href="/cart/" class="cart-link">Zobrazit košík</a>
-                        </div>
+               <!-- Uživatelské menu a košík -->
+        <ul class="navbar-nav nav-tabs ms-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="-112.6 199.2 23 28"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round" class="icon-size">
+                        <path d="M-91.5 213.4c-.8-1.3-1.8-2.5-3-3.5.5-1 .7-2 .7-3.2 0-2.1-.8-4-2.2-5.3-1.4-1.4-3.3-2.2-5.3-2.2s-4 .8-5.3 2.2c-1.4 1.4-2.2 3.3-2.2 5.3 0 1.1.3 2.2.7 3.2-1.2.9-2.3 2.1-3 3.5-.9 1.7-1.5 3.6-1.5 5.6v8.2h22.7V219c-.2-2-.7-3.9-1.6-5.6z"></path>
+                    </svg>
+
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    {% if user.is_authenticated %}
+                        <li><a class="dropdown-item" href="{% url 'profile' %}">{{ user.username }}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Odhlásit se</a></li>
+                    {% else %}
+                        <li><a class="dropdown-item" href="{% url 'login' %}">Přihlásit se</a></li>
+                        <li><a class="dropdown-item" href="{% url 'register' %}">Registrovat</a></li>
+                    {% endif %}
+                </ul>
+            </li>
+            <li class="nav-item dropdown" id="cart-wrapper">
+    <a class="nav-link d-flex align-items-center" href="#" id="cart-toggle">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon-size" viewBox="680.7 197.5 39 28" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m709.9 206-2.8-8.5h-14.2L690 206h-9.3l.5 1.4 6.2 18.1h25.2l6.7-19.5h-9.4z"></path>
+        </svg>
+        <span class="ms-2">Košík (<span id="cart-count">0</span>)</span>
+    </a>
+    <!-- Dropdown -->
+    <div id="navbar-cart-dropdown" class="dropdown-menu p-3" style="min-width: 300px;">
+    <h5>Košík</h5>
+    <ul id="navbar-cart-items" style="list-style-type: none; padding: 0; margin: 0;">
+        <li>Načítám data...</li>
+    </ul>
+    <p class="mt-2"><strong>Celková cena:</strong> <span id="navbar-cart-total">0 Kč</span></p>
+    <a href="/cart/" class="cart-link">Zobrazit košík</a>
+</div>
                     </li>
                 </ul>
             </div>
@@ -251,65 +250,148 @@
         }
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const cartToggle = document.getElementById('cart-toggle');
-        const cartDropdown = document.getElementById('navbar-cart-dropdown');
-        const cartItems = document.getElementById('navbar-cart-items');
-        const cartTotal = document.getElementById('navbar-cart-total');
-        const cartCount = document.getElementById('cart-count'); // Element pro počet položek
+ // Dropdown Kosik
+document.addEventListener('DOMContentLoaded', () => {
+    const cartToggle = document.getElementById('cart-toggle');
+    const cartDropdown = document.getElementById('navbar-cart-dropdown');
+    const cartItems = document.getElementById('navbar-cart-items');
+    const cartTotal = document.getElementById('navbar-cart-total');
+    const cartCount = document.getElementById('cart-count');
 
-        // Funkce pro načtení dat z API
-        const fetchCartData = () => {
-            fetch('/cart/data/navbar/', {
-                method: 'GET',
-                headers: {'X-Requested-With': 'XMLHttpRequest'}
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Data z API:', data); // Debugging
+    const fetchCartData = () => {
+        fetch('/cart/data/navbar/', {
+            method: 'GET',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Data z API:', data);
 
-                    // Aktualizace položek v dropdownu
-                    cartItems.innerHTML = '';
-                    if (data.items && data.items.length > 0) {
-                        data.items.forEach(item => {
-                            cartItems.innerHTML += `
+                cartItems.innerHTML = '';
+                if (data.items && data.items.length > 0) {
+                    data.items.forEach(item => {
+                        cartItems.innerHTML += `
                             <li>
                                 <a href="${item.url}" class="cart-item-link" style="color: blue; text-decoration: none;">
                                     ${item.name}
                                 </a> - ${item.quantity} × ${item.price} Kč
                             </li>
                         `;
-                        });
-                    } else {
-                        cartItems.innerHTML = '<li>Košík je prázdný.</li>';
-                    }
+                    });
+                } else {
+                    cartItems.innerHTML = '<li>Košík je prázdný.</li>';
+                }
 
-                    // Aktualizace celkové ceny a počtu položek
-                    cartTotal.textContent = `${data.cart_total} Kč`;
-                    cartCount.textContent = data.cart_count; // Dynamická aktualizace počtu položek
-                })
-                .catch(error => console.error('Chyba při načítání dat z košíku:', error));
-        };
+                cartTotal.textContent = `${data.cart_total} Kč`;
+            })
+            .catch(error => console.error('Chyba při načítání dat z košíku:', error));
+    };
 
-        // Přepínání dropdownu košíku
-        const toggleCartDropdown = () => {
-            cartDropdown.style.display = cartDropdown.style.display === 'block' ? 'none' : 'block';
-            fetchCartData(); // Načtení dat při každém otevření dropdownu
-        };
+    const toggleCartDropdown = () => {
+        cartDropdown.style.display = cartDropdown.style.display === 'block' ? 'none' : 'block';
+    };
 
-        // Připojení událostí
-        cartToggle.addEventListener('click', (e) => {
-            e.preventDefault();
-            toggleCartDropdown();
-        });
-
-        document.addEventListener('click', (event) => {
-            if (!cartToggle.contains(event.target) && !cartDropdown.contains(event.target)) {
-                cartDropdown.style.display = 'none';
-            }
-        });
-
-        // Načtení dat při načtení stránky
-        fetchCartData();
+    cartToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        toggleCartDropdown();
     });
+
+    document.addEventListener('click', (event) => {
+        if (!cartToggle.contains(event.target) && !cartDropdown.contains(event.target)) {
+            cartDropdown.style.display = 'none';
+        }
+    });
+
+    fetchCartData();
+});
+
+
+// Dynamicke pridavani do kosiku bez presmerovani
+document.addEventListener('DOMContentLoaded', () => {
+    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+const showToast = (message, type = 'success') => {
+    const toastContainer = document.getElementById('toast-container');
+    if (!toastContainer) {
+        console.error('Toast container not found!');
+        return;
+    }
+
+    console.log(`Preparing to show toast: ${message}, type: ${type}`);
+
+    const toastHTML = `
+        <div class="toast align-items-center text-bg-${type} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    ${message}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>`;
+
+    const toastElement = document.createElement('div');
+    toastElement.innerHTML = toastHTML.trim();
+    const newToast = toastElement.firstElementChild;
+
+    if (!(newToast instanceof HTMLElement)) {
+        console.error('Invalid toast element created:', newToast);
+        return;
+    }
+
+    toastContainer.appendChild(newToast);
+    console.log('Toast appended to container.');
+
+    try {
+        const toastInstance = new bootstrap.Toast(newToast, { delay: 3000 });
+        toastInstance.show();
+
+        newToast.addEventListener('hidden.bs.toast', () => {
+            newToast.remove();
+        });
+    } catch (error) {
+        console.error('Error showing toast:', error);
+    }
+};
+
+
+
+
+    // Funkce přidání do košíku
+addToCartButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log('Button clicked');
+
+        const productId = button.dataset.productId;
+        console.log('Product ID:', productId);
+
+        fetch(`/cart/add/${productId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+            body: JSON.stringify({}),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response data:', data);
+                if (data.success) {
+                    showToast(data.message, 'success');
+                    document.getElementById('cart-count').textContent = data.cart_count;
+                    document.getElementById('navbar-cart-total').textContent = data.cart_total;
+                } else {
+                    showToast(data.error, 'danger');
+                }
+            })
+            .catch(error => {
+                console.error('Chyba při přidávání do košíku:', error);
+                showToast('Došlo k chybě při přidávání do košíku.', 'danger');
+            });
+    });
+});
+
+});
+
+
 </script>

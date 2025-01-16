@@ -4,14 +4,14 @@
 
     <!-- Breadcrumbs navigace -->
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb" style="display: flex; list-style: none; padding: 0;">
+        <ol class="breadcrumb">
             <!-- Domů -->
             <li class="breadcrumb-item">
                 <a href="{% url 'home' %}">Domů</a>
             </li>
 
             <!-- Oddělovač -->
-            <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+            <li class="breadcrumb-item">&gt;</li>
 
             <!-- Hlavní kategorie produktů -->
             {% if category %}
@@ -24,7 +24,7 @@
 
             <!-- Rodičovská kategorie, pokud existuje -->
             {% if category and category.category_parent %}
-                <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+                <li class="breadcrumb-item">&gt;</li>
                 <li class="breadcrumb-item">
                     <a href="{% url 'products' category.category_parent.pk %}">{{ category.category_parent.category_name }}</a>
                 </li>
@@ -32,7 +32,7 @@
 
             <!-- Aktuální kategorie -->
             {% if category %}
-                <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+                <li class="breadcrumb-item">&gt;</li>
                 <li class="breadcrumb-item active" aria-current="page">{{ category.category_name }}</li>
             {% endif %}
         </ol>
@@ -44,7 +44,7 @@
         <ul>
             {% for category in main_categories %}
                 <li>
-                    <a href="{% url 'products' category.pk %}">{{ category.category_name }}</a>
+                    <a href="{% url 'products' category.pk %}">{{ category.category_name }}<br></a>
 
                     {% if user.is_staff %}
                         <!-- Tlačítka pro úpravu a mazání hlavní kategorie -->
@@ -68,8 +68,7 @@
         <!-- Obrázek kategorie -->
         {% if category.category_view %}
             <div class="category-image">
-                <img src="{{ category.category_view }}" alt="Obrázek kategorie {{ category.category_name }}"
-                     style="max-width: 450px; height: auto;">
+                <img src="{{ category.category_view }}" alt="Obrázek kategorie {{ category.category_name }}">
             </div>
         {% endif %}
 
@@ -138,14 +137,19 @@
             </div>
 
             <!-- Tlačítka pro filtrování -->
-            <div>
-                <strong>Filtrovat:</strong>
-                <a href="?gender=ladies{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Dámské</a>
-                |
-                <a href="?gender=gentlemans{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Pánské</a>
-                |
-                <a href="?{% if sort_by %}sort_by={{ sort_by }}{% endif %}">Vše</a>
-            </div>
+         <!-- Tlačítka pro filtrování -->
+{% if gender_availability.ladies or gender_availability.gentlemans %}
+    <div>
+        <strong>Filtrovat:</strong>
+        <a href="?gender=ladies{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Dámské</a>
+        |
+        <a href="?gender=gentlemans{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Pánské</a>
+        |
+        <a href="?{% if sort_by %}sort_by={{ sort_by }}{% endif %}">Vše</a>
+    </div>
+{% endif %}
+
+
 
             <ul>
                 {% for product in products %}
@@ -160,7 +164,7 @@
                             {% if product.available_stock > 0 %}
                                 {{ product.available_stock }} kusů k dispozici.
                             {% else %}
-                                <span style="color: red;">Produkt není skladem.</span>
+                                <span >Produkt není skladem.</span>
                             {% endif %}
                         </div>
                         <div class="product-price"><b>Cena:</b> {{ product.price }} Kč</div>
@@ -171,12 +175,12 @@
                             <div class="add-to-cart">
                                 <form method="post" action="{% url 'add_to_cart' product.id %}" class="add-to-cart">
                             {% csrf_token %}
-                                    <button type="submit" style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                                    <button type="submit" class="add-to-cart-button" >
                                         Přidat do košíku
                                     </button>
                                 </form>
                         {% else %}
-                            <p style="color: red;">Nelze objednat</p>
+                            <p>Nelze objednat</p>
                         {% endif %}
                         </div>
 
@@ -226,7 +230,7 @@
         {% endif %}
 
         {% if not subcategories and not products %}
-            <p style="color: red;">Žádné podkategorie ani produkty nejsou k dispozici.</p>
+            <p>Žádné podkategorie ani produkty nejsou k dispozici.</p>
         {% endif %}
     {% endif %}
 {% endblock %}

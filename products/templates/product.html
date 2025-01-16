@@ -2,14 +2,13 @@
 
 {% block content %}
 
-<h1 style="text-align: center;">{{ product.product_name }}</h1>
+<h1>{{ product.product_name }}</h1>
 
 <!-- Obrázek produktu -->
-<div style="margin-top: 2rem; text-align: center;">
+<div>
 {% if product.product_view %}
-    <div style="text-align: center; margin-top: 2rem;">
-        <img src="{{ product.product_view }}" alt="Obrázek produktu {{ product.product_name }}"
-             style="max-width: 300px; height: auto; margin-bottom: 1rem;">
+    <div>
+        <img src="{{ product.product_view }}" alt="Obrázek produktu {{ product.product_name }}">
     </div>
 {% else %}
     <p>Obrázek produktu není k dispozici.</p>
@@ -17,19 +16,19 @@
 </div>
 
 <!-- Popis produktu -->
-<div style="margin-top: 2rem; text-align: center;">
+<div>
     <h2>Popis produktu</h2>
     <p>{{ product.product_long_description }}</p>
 </div>
 
 <!-- Zobrazení skladové dostupnosti -->
-<div style="margin-top: 2rem; text-align: center;">
+<div>
     <p><strong>{{ stock_message }}</strong></p>
 </div>
 
 <!-- Tlačítko pro přidání do košíku -->
 {% if can_add_to_cart %}
-<div style="margin-top: 2rem; text-align: center;">
+<div>
     <form method="post" action="{% url 'add_to_cart' product.id %}" class="add-to-cart">
         {% csrf_token %}
         <button type="submit" style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
@@ -42,7 +41,7 @@
 </div>
 
     {% if user.is_staff %}
-    <div style="margin-top: 2rem; text-align: center;">
+    <div>
         <a href="{% url 'edit_product' product.id %}" class="btn btn-sm btn-warning" style="margin-right: 1rem;">
             Upravit produkt
         </a>
@@ -58,7 +57,7 @@
 
 
 <!-- Průměrné hodnocení -->
-<div class="average-rating" style="margin-top: 2rem; text-align: center;">
+<div class="average-rating">
     <h2>Průměrné hodnocení</h2>
     {% if average_rating > 0 %}
         <p><strong>{{ average_rating }} / 5</strong></p>
@@ -74,7 +73,7 @@
 
 <!-- Formulář pro přidání hodnocení -->
 {% if user.is_authenticated %}
-    <div style="margin-top: 2rem; text-align: center;">
+    <div>
         <h2>Hodnocení</h2>
         <form method="post" action="{% url 'add_product_review' product.id %}" style="display: inline-block; text-align: left;">
             {% csrf_token %}
@@ -89,13 +88,12 @@
             </div>
 
             <!-- Komentář -->
-            <label for="comment" style="display: block; text-align: center; margin-top: 1rem;">Komentář:</label>
-            <textarea id="comment" name="comment" required placeholder="Napište svůj komentář..."
-                      style="width: 100%; padding: 0.5rem; margin-bottom: 1rem; font-size: 1rem;"></textarea>
+            <label for="comment" class="comment">Komentář:</label>
+            <textarea id="comment" name="comment" required placeholder="Napište svůj komentář..." ></textarea>
 
             <!-- Tlačítko -->
             <div style="text-align: center;">
-                <button type="submit" style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #3788ff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                <button type="submit">
                     Přidat hodnocení
                 </button>
             </div>
@@ -106,18 +104,18 @@
 {% endif %}
 
 <!-- Zobrazení hodnocení -->
-<div class="product-reviews" style="margin-top: 2rem; text-align: center;">
+<div class="product-reviews">
     <h2>Hodnocení</h2>
     {% if page_reviews %}
         {% for review in page_reviews %}
-            <div class="review" style="margin: 1rem auto; max-width: 600px; padding: 1rem; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9;">
+            <div class="review">
                 <p><strong>Hodnotil:</strong> {{ review.reviewer.username }}</p>
                 <p>
                     {% for i in "12345" %}
                         {% if forloop.counter <= review.rating %}
-                            <span style="color: #f5b301;">★</span>
+                            <span class="stars">★</span>
                         {% else %}
-                            <span style="color: #ccc;">★</span>
+                            <span class="stars">★</span>
                         {% endif %}
                     {% endfor %}
                 </p>

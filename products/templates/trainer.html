@@ -7,7 +7,7 @@
 <!-- Profilový obrázek trenéra -->
 {% if trainer.profile_picture %}
     <div class="trainer-image">
-        <img src="{{ trainer.profile_picture }}" alt="Obrázek trenéra {{ trainer.full_name }}" style="max-width: 450px; height: auto;">
+        <img src="{{ trainer.profile_picture }}" alt="Obrázek trenéra {{ trainer.full_name }}" >
     </div>
 {% endif %}
 
@@ -45,7 +45,7 @@
     <h2>Průměrné hodnocení</h2>
     {% if average_rating > 0 %}
         <p><strong>{{ average_rating }} / 5</strong></p>
-        <div class="rating-stars" style="justify-content: center;">
+        <div class="rating-stars" >
             {% for state in star_states %}
                 <span class="{{ state }}">★</span>
             {% endfor %}
@@ -84,18 +84,18 @@
 {% endif %}
 
 <!-- Zobrazení hodnocení -->
-<div class="trainer-reviews" style="margin-top: 2rem; text-align: center;">
+<div class="trainer-reviews" >
     <h2>Hodnocení</h2>
     {% if page_reviews %}
         {% for review in page_reviews %}
-            <div class="review" style="margin: 1rem auto; max-width: 600px; padding: 1rem; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9;">
+            <div class="review" >
                 <p><strong>Hodnotil:</strong> {{ review.reviewer.username }}</p>
                 <p>
                     {% for i in "12345" %}
                         {% if forloop.counter <= review.rating %}
-                            <span style="color: #f5b301;">★</span>
+                            <span class="stars">★</span>
                         {% else %}
-                            <span style="color: #ccc;">★</span>
+                            <span class="stars">★</span>
                         {% endif %}
                     {% endfor %}
                 </p>

@@ -149,3 +149,4 @@ button.reject-button {
     cursor: pointer; /* Ukazatel ruky při najetí */
     transition: background-color 0.3s; /* Plynulý přechod */
 }
+.stars {color: #f5b301;}

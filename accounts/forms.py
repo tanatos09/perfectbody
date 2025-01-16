@@ -23,6 +23,7 @@ class RegistrationForm(ModelForm):
     city = CharField(max_length=255, required=False, label='Město')
     postal_code = CharField(max_length=255, required=False, label='PSČ')
     country = CharField(max_length=255, required=False, label='Země', initial='Česká republika')
+    phone = CharField(max_length=15, required=False, label='Telefon')
 
     class Meta:
         model = UserProfile

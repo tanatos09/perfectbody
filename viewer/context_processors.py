@@ -29,7 +29,7 @@ def navbar_services_context(request):
     services_categories = Category.objects.filter(
         category_parent=None
     ).filter(
-        Q(subcategories__categories__product_type='service')
+        Q(categories__product_type='service') | Q(subcategories__categories__product_type='service')
     ).prefetch_related('subcategories').distinct()
 
     return {

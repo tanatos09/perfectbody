@@ -95,7 +95,7 @@ main img {
 
 height: auto; /* Zachování proporcí obrázku */
 }
-.logo-container {
+/*.logo-container {
     position: relative;
     height: auto;
     display: flex;
@@ -104,10 +104,10 @@ height: auto; /* Zachování proporcí obrázku */
 }
 
 .logo-img {
-    max-height: 80px; /* maximální výška loga */
+    max-height: 80px;
     height: auto;
-    width: auto; /* Zachování poměru stran */
-}
+    width: auto; /
+}*/
 
 /* Obsah hlavního bloku */
 .category-image {
@@ -225,16 +225,15 @@ height: auto; /* Zachování proporcí obrázku */
     border-right: double 3px #aaa; /* Dvojitá čára na pravé straně */
     border-top: solid 2px #aaa; /* Jednoduchá čára nahoře */
     border-bottom: none; /* Bez čáry dole */
+    border-radius: 5px 5px 0 0;
     padding: 5px 15px; /* Vnitřní odsazení */
     color: #696969; /* Základní barva textu */
     background-color: transparent; /* Průhledné pozadí */
     text-decoration: none; /* Bez podtržení textu */
     transition: all 0.3s ease; /* Plynulý přechod efektů */
-}
-
-#MainNav .navbar-nav .nav-link {
     margin: 0 10px ;
 }
+
 
 .container-fluid {
     padding: 5px 15px 0 0;
@@ -272,7 +271,7 @@ height: auto; /* Zachování proporcí obrázku */
 .collapse {
     display: none;
 }
-.logo-container {
+.navbar-bra {
     display: flex;
     align-items: center;
 }
@@ -299,16 +298,13 @@ height: auto; /* Zachování proporcí obrázku */
 
     .search-wrapper {
         flex-direction: column;
+
     }
 
     #navbarNav {
         text-align: left;
     }
- #search-form-all {
-        width: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-    }
+
     #navbar-cart-dropdown {
         right: 0;
     }
@@ -374,18 +370,16 @@ ol.breadcrumb>li>a:hover {
 #search-form-all {
     position: absolute;
     top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    left: inherit;
+    transform: translateX(-25%);
     z-index: 1050;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: auto;
-}
+        width: 100%;
+           }
 .search-wrapper {
-    display: flex;
-    justify-content: center; /* Zarovnání na střed */
-    align-items: center;
+     align-items: center;
     width: 100%; /* Kontejner pokryje celou šířku */
     margin: 0 auto;
     gap: 0; /* Mezera mezi vyhledáváním a ikonou */
@@ -405,9 +399,10 @@ ol.breadcrumb>li>a:hover {
     font-size: 0.8rem;
     padding: 0 10px;
     list-style: none;
-}
+    }
 #search-input {
-    font-size: 0.8em; /* Menší velikost písma */
+    font-size: 0.7rem; /* Menší velikost písma */
+    font-style: italic;
     padding: 0 10px; /* Odstranění paddingu pro snížení výšky */
 
 }
@@ -415,23 +410,28 @@ ol.breadcrumb>li>a:hover {
     padding: 3px 3px;
     border-radius: 5px;
     display: inline-block;
+
 }
 #search-results ul {
+    text-align: left;
     list-style-position: outside;
     list-style-type: none; /* Odebere tečky z odrážek */
     margin: 0;
     padding: 0;
+
 }
 
 
 #search-results ul li {
     list-style-position: outside;
-    border-bottom: 1px solid #f1f1f1; /* Oddělí jednotlivé položky linkou */
+    border-bottom: 5px solid #f1f1f1; /* Oddělí jednotlivé položky linkou */
 }
 
 #search-results li:last-child {
     border-bottom: none; /* Odstraní spodní linku u poslední položky */
 }
+
+/*noinspection CssInvalidPropertyValue*/
 #search-results a {
     font-weight: bold;
     padding: 0 5px; /* Zvýšení čitelnosti */
@@ -439,7 +439,13 @@ ol.breadcrumb>li>a:hover {
     text-decoration: none; /* Bez podtržení */
     transition: background-color 0.2s ease, color 0.2s ease; /* Plynulý efekt při najetí */
     color: #6c757d; /* Šedé odkazy */
+    display: block;
+    border:double ;
+    }
 
+
+    #search-form {
+        position: relative;
     }
 
 #search-results a:hover {
@@ -450,7 +456,8 @@ ol.breadcrumb>li>a:hover {
     color: white;
     font-weight: bold;
     font-size: 17px;
-    padding: 3px 10px;
+    padding: 3px 5px ;
+    margin-bottom: 0;
 }
 #search-results ul{
     padding: 10px;
@@ -655,8 +662,19 @@ button:hover {
 #cart-wrapper.active {
     display: block;
 }
-#cart-toogle {
-    font-size: 0.8em;
+#userDropdown {
+    font-size: 0.9em;
+    border-left: double 3px #aaa; /* Dvojitá čára na levé straně */
+    border-right: double 3px #aaa; /* Dvojitá čára na pravé straně */
+    border-bottom: solid 2px #aaa; /* Jednoduchá čára nahoře */
+    border-top: none; /* Bez čáry dole */
+    border-radius: 0 0 5px 5px;
+    padding: 5px 15px; /* Vnitřní odsazení */
+    color: #696969; /* Základní barva textu */
+    background-color: transparent; /* Průhledné pozadí */
+    text-decoration: none; /* Bez podtržení textu */
+    transition: all 0.3s ease; /* Plynulý přechod efektů */
+    margin: 0 10px ;
 }
 .add-to-cart a {
     display: inline-block; /* Zajistí vzhled tlačítka */

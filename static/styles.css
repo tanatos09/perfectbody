@@ -210,6 +210,8 @@ height: auto; /* Zachování proporcí obrázku */
 
 /*navbar*/
 #MainNav{
+     position: relative;
+    width: 100%;
     border-bottom-color: #6c757d;
     border-bottom-style: double;
     padding: 0 !important; /* Odstranit veškerý padding */
@@ -217,7 +219,7 @@ height: auto; /* Zachování proporcí obrázku */
     height: auto; /* Dynamická úprava výšky */
 }
 
-#MainNav .navbar-nav .nav-link {
+#MainNav .navbar-nav  .nav-link {
     font-size: 0.9em;
     border-left: double 3px #aaa; /* Dvojitá čára na levé straně */
     border-right: double 3px #aaa; /* Dvojitá čára na pravé straně */
@@ -270,7 +272,7 @@ height: auto; /* Zachování proporcí obrázku */
 .collapse {
     display: none;
 }
-.navbar-logo-container {
+.logo-container {
     display: flex;
     align-items: center;
 }
@@ -302,7 +304,18 @@ height: auto; /* Zachování proporcí obrázku */
     #navbarNav {
         text-align: left;
     }
-
+ #search-form-all {
+        width: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    #navbar-cart-dropdown {
+        right: 0;
+    }
+    #cart-wrapper {
+        left: 50%;
+        transform: translateX(-50%);
+    }
 
 
 }
@@ -358,6 +371,17 @@ ol.breadcrumb>li>a:hover {
     display: none;
 }
 /* === Style search === */
+#search-form-all {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1050;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+}
 .search-wrapper {
     display: flex;
     justify-content: center; /* Zarovnání na střed */
@@ -628,8 +652,8 @@ button:hover {
 
 /*Košík - cart*/
 
-#cart-wrapper {
-    position: relative;
+#cart-wrapper.active {
+    display: block;
 }
 #cart-toogle {
     font-size: 0.8em;
@@ -656,9 +680,12 @@ button:hover {
 }
 
 #navbar-cart-dropdown {
-    position: absolute;
-    top: calc(100%);
-    right: 0;
+        position: absolute;
+    top: 0;
+    right: 10px;
+    z-index: 1100; /* Vyšší než ostatní dropdowny */
+    display: flex;
+    align-items: center;
     min-width: 250px;
     max-width: 350px;
     background-color: white;
@@ -666,9 +693,7 @@ button:hover {
     border: 1px solid red;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
-    z-index: 1050;
     padding: 10px 15px;
-    display: none;
     overflow-y: auto;
     max-height: 400px;
     transition: opacity 0.3s ease, transform 0.3s ease;
@@ -678,11 +703,31 @@ button:hover {
 
 #cart-wrapper:hover #navbar-cart-dropdown,
 #cart-wrapper.active #navbar-cart-dropdown {
-    display: block;
+    position: absolute;
+    bottom: -50px; /* Umístění pod navbar */
+    left: 50%;
+    /*transform: translateX(-50%);*/
+    z-index: 1050;
+    display: none; /* Skryté ve výchozím stavu */
     opacity: 1;
     transform: translateY(0);
 }
-
+#cart-wrapper {
+    position: absolute;
+    bottom: -50px; /* Umístění pod navbar */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1101; /* Vyšší než `navbar-cart-dropdown` */
+    display: none; /* Skryté ve výchozím stavu */
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-width: 300px;
+    padding: 10px;
+}
+#cart-wrapper.active {
+    display: block;
+}
 #navbar-cart-dropdown a {
     color: #6c757d;
     text-decoration: none;
@@ -726,7 +771,14 @@ button:hover {
     color: darkred !important;
     background-color: #f8f9fa;
 }
-
+#navbar-cart-dropdown .dropdown-menu {
+    position: absolute;
+    right: 0;
+    min-width: 300px;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
 
 
 

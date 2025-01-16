@@ -72,71 +72,88 @@
 </form>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
     const guestEmailField = document.getElementById('guest_email');
-    const shippingEmailField = document.querySelector('[name="shipping-email"]'); // Skryté pole email
+    const shippingEmailField = document.querySelector('[name="shipping-email"]');
     const differentBillingCheckbox = document.getElementById('differentBilling');
     const billingForm = document.getElementById('billingForm');
     const shippingFields = document.querySelectorAll('[name^="shipping-"]');
     const billingFields = document.querySelectorAll('[name^="billing-"]');
 
-    // Kopíruje hodnotu emailu do skrytého pole
-    function copyEmailToHiddenFields() {
-        if (guestEmailField && guestEmailField.value) {
-            if (shippingEmailField) {
-                shippingEmailField.value = guestEmailField.value;
-                console.log("Email copied to hidden field:", shippingEmailField.value);
-            }
-        } else {
-            console.warn("Guest email field is empty or not found.");
-        }
+     if (!differentBillingCheckbox || !billingForm || !shippingFields.length || !billingFields.length) {
+        console.error("Některé prvky formuláře nebyly nalezeny!");
+        return;
     }
 
+    // Funkce pro kopírování doručovacích hodnot do fakturačních
     function copyShippingToBilling() {
-        // Kopíruje všechny hodnoty z doručovací adresy do fakturační, včetně emailu
-        shippingFields.forEach((field, index) => {
-            if (billingFields[index]) {
-                billingFields[index].value = field.value;
+        shippingFields.forEach((field) => {
+            const billingField = document.querySelector(
+                `[name="billing-${field.name.split('shipping-')[1]}"]`
+            );
+            if (billingField) {
+                billingField.value = field.value || '';
             }
         });
     }
 
     function toggleBillingForm() {
-        if (differentBillingCheckbox.checked) {
-            billingForm.style.display = 'block';
-        } else {
-            billingForm.style.display = 'none';
-            copyShippingToBilling(); // Zkopíruje hodnoty, pokud fakturační adresa není použita
-        }
-    }
-
-    // Při každé změně emailu v poli hostujícího uživatele
-    if (guestEmailField) {
-        guestEmailField.addEventListener('input', copyEmailToHiddenFields);
-    }
-
-    // Při aktivaci nebo deaktivaci fakturační adresy
-    differentBillingCheckbox.addEventListener('change', () => {
-        toggleBillingForm();
-        if (differentBillingCheckbox.checked) {
-            copyShippingToBilling(); // Zkopíruje hodnoty při zapnutí fakturační adresy
-        }
-    });
-
-    // Kopírování hodnot mezi adresami při změně jednotlivých polí
-    shippingFields.forEach((field, index) => {
-        field.addEventListener('input', () => {
-            if (!differentBillingCheckbox.checked && billingFields[index]) {
-                billingFields[index].value = field.value;
-            }
+    if (differentBillingCheckbox.checked) {
+        billingForm.style.display = 'block';
+        billingFields.forEach((field) => {
+            field.setAttribute('required', 'required');
         });
-    });
+    } else {
+        billingForm.style.display = 'none';
+        billingFields.forEach((field) => {
+            field.removeAttribute('required');
+        });
+        copyShippingToBilling();
+    }
+}
 
-    // Inicializace
-    copyEmailToHiddenFields();
-    toggleBillingForm();
+
+    // Funkce pro synchronizaci e-mailu do skrytého pole
+    function syncEmailField() {
+        if (guestEmailField && shippingEmailField) {
+            shippingEmailField.value = guestEmailField.value || '';
+        }
+    }
+
+    // Inicializace formuláře při načtení stránky
+    function initializeForm() {
+        syncEmailField();
+        toggleBillingForm();
+
+        if (!differentBillingCheckbox.checked) {
+            copyShippingToBilling();
+        }
+    }
+
+    // Události
+    if (guestEmailField) {
+        guestEmailField.addEventListener('input', syncEmailField);
+    }
+
+    differentBillingCheckbox.addEventListener('change', toggleBillingForm);
+
+    shippingFields.forEach((field) => {
+    field.addEventListener('input', () => {
+        if (!differentBillingCheckbox.checked) {
+            const billingField = document.querySelector(
+                `[name="billing-${field.name.split('shipping-')[1]}"]`
+            );
+            if (billingField) {
+                billingField.value = field.value;
+            }
+        }
+    });
 });
 
+
+    initializeForm();
+});
 </script>
+
 
 {% endblock %}

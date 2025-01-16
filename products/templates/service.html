@@ -68,21 +68,31 @@
         <p>{{ service.product_long_description }}</p>
     </div>
 
-<!-- Kategorie a cena -->
-<div>
-    <p><strong>Kategorie:</strong> <a href="{% url 'services' service.category.pk %}">{{ service.category }}</a></p>
-    <p><strong>Cena:</strong> {{ service.price }} Kč</p>
-</div>
-<!-- Tlačítko pro přidání do košíku -->
-{% if approved_trainers_services %}
-<div style="margin-top: 2rem; text-align: center;">
+    <!-- Kategorie a cena -->
+    <div>
+        <p><strong>Kategorie:</strong> <a href="{% url 'services' service.category.pk %}">{{ service.category }}</a></p>
 
-    <form method="post" action="{% url 'add_to_cart' service.id %}" class="add-to-cart">
-        {% csrf_token %}
-        <button type="button"
-            class="add-to-cart-btn"
-            data-product-id="{{ service.id }}"
-            style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        <!-- Dostupní trenéři -->
+        {% if approved_trainers_services %}
+            <p>
+                <strong>Trenéři:</strong>
+                {% for trainer_service in approved_trainers_services %}
+                    <a href="{% url 'trainer' trainer_service.trainer.id %}">{{ trainer_service.trainer.full_name }}</a>
+                    {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+        {% else %}
+            <p style="color: red;">Žádní schválení trenéři nejsou k dispozici pro tuto službu.</p>
+        {% endif %}
+
+        <p><strong>Cena:</strong> {{ service.price }} Kč</p>
+    </div>
+    <!-- Tlačítko pro přidání do košíku -->
+    {% if approved_trainers_services %}
+        <form method="post" action="{% url 'add_to_cart' service.id %}" style="margin-top: 2rem; text-align: center;">
+            {% csrf_token %}
+            <button type="submit"
+                    style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
                 Přidat do košíku
         </button>
     </form>

@@ -15,8 +15,7 @@
     <!-- Zobrazení loga výrobce -->
     {% if producer.producer_view %}
         <div class="producer-logo">
-            <img src="{{ producer.producer_view }}" alt="Logo {{ producer.producer_name }}"
-                 style="max-width: 250px; height: auto;">
+            <img src="{{ producer.producer_view }}" alt="Logo {{ producer.producer_name }}>
         </div>
     {% endif %}
 
@@ -50,7 +49,7 @@
             </ul>
         {% endfor %}
     {% else %}
-        <p style="color: red;">Žádné produkty nejsou k dispozici.</p>
+        <p>Žádné produkty nejsou k dispozici.</p>
     {% endif %}
 
 {% endblock %}

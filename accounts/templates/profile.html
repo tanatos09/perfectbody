@@ -10,7 +10,7 @@
     <p><strong>Dlouhý popis:</strong> {{ user.trainer_long_description|default:"Žádný dlouhý popis není dostupný." }}</p>
     <p><strong>Profilový obrázek:</strong></p>
     {% if user.profile_picture %}
-        <img src="{{ user.profile_picture }}" alt="Profilový obrázek" style="max-width: 150px; height: auto;">
+        <img src="{{ user.profile_picture }}" alt="Profilový obrázek" class="profile-picture">
     {% else %}
         <p>Nemáte nahrán žádný profilový obrázek.</p>
     {% endif %}
@@ -42,7 +42,7 @@
     <p><strong>Telefon:</strong> {{ user.phone }}</p>
     <p><strong>Avatar:</strong></p>
     {% if user.avatar %}
-        <img src="{{ user.avatar }}" alt="Avatar" style="max-width: 150px; height: auto;">
+        <img src="{{ user.avatar }}" alt="Avatar" class="profile-picture">
     {% else %}
         <p>Nemáte nahrán žádný avatar.</p>
     {% endif %}

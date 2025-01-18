@@ -77,6 +77,7 @@ form.delete-button {
     background: none;
     border: none;
     box-shadow: none;
+
 }
 
 
@@ -100,6 +101,17 @@ form.add-to-cart button {
     cursor: pointer; /* Ukazatel ruky při najetí */
     transition: background-color 0.3s; /* Plynulý přechod */
 }
+form button .add-to-cart {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+" padding: 0.5 rem 1 rem;
+}
+
 
 form.add-to-cart button:hover {
     background-color: #218838; /* Tmavší zelená při najetí */
@@ -150,3 +162,19 @@ button.reject-button {
     transition: background-color 0.3s; /* Plynulý přechod */
 }
 .stars {color: #f5b301;}
+
+form label {
+    display: block;
+    text-align: center;
+    margin-bottom: 0.5rem;}
+label div.rating{
+justify-content: center;
+}
+.red
+{color: red;}
+.cart-items {
+    list-style: none;
+    padding: 0; max-height: 200px;
+    overflow-y: auto;}
+hr{
+    margin: 40px 0;}

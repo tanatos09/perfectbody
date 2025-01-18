@@ -4,14 +4,14 @@
 
     <!-- Breadcrumbs navigace -->
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb" style="display: flex; list-style: none; padding: 0;">
+        <ol class="breadcrumb">
             <!-- Domů -->
             <li class="breadcrumb-item">
                 <a href="{% url 'home' %}">Domů</a>
             </li>
 
             <!-- Oddělovač -->
-            <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+            <li class="breadcrumb-item">&gt;</li>
 
             <!-- Hlavní kategorie služeb -->
             {% if category %}
@@ -24,7 +24,7 @@
 
             <!-- Rodičovská kategorie, pokud existuje -->
             {% if category and category.category_parent %}
-                <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+                <li class="breadcrumb-item">&gt;</li>
                 <li class="breadcrumb-item">
                     <a href="{% url 'services' category.category_parent.pk %}">{{ category.category_parent.category_name }}</a>
                 </li>
@@ -32,7 +32,7 @@
 
             <!-- Aktuální kategorie -->
             {% if category %}
-                <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+                <li class="breadcrumb-item">&gt;</li>
                 <li class="breadcrumb-item active" aria-current="page">{{ category.category_name }}</li>
             {% endif %}
         </ol>
@@ -68,8 +68,7 @@
         <!-- Obrázek kategorie -->
         {% if category.category_view %}
             <div class="category-image">
-                <img src="{{ category.category_view }}" alt="Obrázek kategorie {{ category.category_name }}"
-                     style="max-width: 450px; height: auto;">
+                <img src="{{ category.category_view }}" alt="Obrázek kategorie {{ category.category_name }}>
             </div>
         {% endif %}
 
@@ -137,13 +136,12 @@
                                 {% csrf_token %}
                                     <button type="button"
                                         class="add-to-cart-btn"
-                                        data-product-id="{{ service.id }}"
-                                        style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                                        data-product-id="{{ service.id }}">
                                             Přidat do košíku
                                     </button>
                                 </form>
                             {% else %}
-                                <p style="color: red;">Nelze objednat</p>
+                                <pclass="red">Nelze objednat</p>
                             {% endif %}
                         </div>
 
@@ -194,7 +192,7 @@
         {% endif %}
 
         {% if not subcategories and not services %}
-            <p style="color: red;">Žádné podkategorie ani služby nejsou k dispozici.</p>
+            <pclass="red">Žádné podkategorie ani služby nejsou k dispozici.</p>
         {% endif %}
     {% endif %}
 

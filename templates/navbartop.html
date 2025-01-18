@@ -1,11 +1,11 @@
 {% load static %}
 <nav class="navbar navbar-expand-sm navbar-light bg-light d-flex align-items-center">
     <a class="navbar-brand" href="/">
-        <img src="{% static 'images/PerfectBody_logo_b.png' %}" alt="PerfectBody" style="height: 80px;">
+        <img src="{% static 'images/PerfectBody_logo_b.png' %}" alt="PerfectBody">
     </a>
     <div class="search-wrapper">
         <!-- Formulář pro vyhledávání -->
-       <form method="get" action="{% url 'search' %}" id="search-form" class="form-inline my-2 my-lg-0 mx-auto position-relative" style="padding: 0; margin: 0;">
+       <form method="get" action="{% url 'search' %}" id="search-form" class="form-inline my-2 my-lg-0 mx-auto position-relative">
     <div class="input-group">
         <input id="search-input" class="form-control" name="q" type="search" placeholder="Vyhledávání"
                aria-label="Search" autocomplete="off">
@@ -18,7 +18,7 @@
             </svg>
         </button>
     </div>
-    <div id="search-results" class="dropdown-menu w-100 shadow mt-1 p-2" style="display: none;"></div>
+    <div id="search-results" class="dropdown-menu w-100 shadow mt-1 p-2"></div>
 </form>
 
 
@@ -53,9 +53,9 @@
         <span class="ms-2">Košík (<span id="cart-count">0</span>)</span>
     </a>
     <!-- Dropdown -->
-    <div id="navbar-cart-dropdown" class="dropdown-menu p-3" style="min-width: 300px;">
+    <div id="navbar-cart-dropdown" class="dropdown-menu p-3">
     <h5>Košík</h5>
-    <ul id="navbar-cart-items" style="list-style-type: none; padding: 0; margin: 0;">
+    <ul id="navbar-cart-items">
         <li>Načítám data...</li>
     </ul>
     <p class="mt-2"><strong>Celková cena:</strong> <span id="navbar-cart-total">0 Kč</span></p>
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     data.items.forEach(item => {
                         cartItems.innerHTML += `
                             <li>
-                                <a href="${item.url}" class="cart-item-link" style="color: blue; text-decoration: none;">
+                                <a href="${item.url}" class="cart-item-link">
                                     ${item.name}
                                 </a> - ${item.quantity} × ${item.price} Kč
                             </li>

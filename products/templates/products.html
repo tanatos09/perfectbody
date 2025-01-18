@@ -165,9 +165,7 @@
                             {% csrf_token %}
                                   <button type="button"
                                         class="add-to-cart-btn"
-                                        data-product-id="{{ product.id }}"
-                                        style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                                            Přidat do košíku
+                                        data-product-id="{{ product.id }}">                                      Přidat do košíku
                                     </button>
                                 </form>
                         {% else %}

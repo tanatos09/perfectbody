@@ -6,14 +6,14 @@
 
     <!-- Breadcrumbs navigace -->
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb" style="display: flex; list-style: none; padding: 0;">
+        <ol class="breadcrumb">
             <!-- Domů -->
             <li class="breadcrumb-item">
                 <a href="{% url 'home' %}">Domů</a>
             </li>
 
             <!-- Oddělovač -->
-            <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+            <li class="breadcrumb-item">&gt;</li>
 
             <!-- Hlavní kategorie služeb -->
             {% if service.category %}
@@ -26,7 +26,7 @@
 
             <!-- Rodičovská kategorie, pokud existuje -->
             {% if service.category and service.category.category_parent %}
-                <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+                <li class="breadcrumb-item">&gt;</li>
                 <li class="breadcrumb-item">
                     <a href="{% url 'services' service.category.category_parent.pk %}">
                         {{ service.category.category_parent.category_name }}
@@ -36,7 +36,7 @@
 
             <!-- Aktuální kategorie -->
             {% if service.category %}
-                <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+                <li class="breadcrumb-item">&gt;</li>
                 <li class="breadcrumb-item">
                     <a href="{% url 'services' service.category.pk %}">
                         {{ service.category.category_name }}
@@ -45,7 +45,7 @@
             {% endif %}
 
             <!-- Název služby -->
-            <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+            <li class="breadcrumb-item">&gt;</li>
             <li class="breadcrumb-item active" aria-current="page">
                 {{ service.product_name }}
             </li>
@@ -81,17 +81,16 @@
                 {% endfor %}
             </p>
         {% else %}
-            <p style="color: red;">Žádní schválení trenéři nejsou k dispozici pro tuto službu.</p>
+            <p class="red">Žádní schválení trenéři nejsou k dispozici pro tuto službu.</p>
         {% endif %}
 
         <p><strong>Cena:</strong> {{ service.price }} Kč</p>
     </div>
     <!-- Tlačítko pro přidání do košíku -->
     {% if approved_trainers_services %}
-        <form method="post" action="{% url 'add_to_cart' service.id %}" style="margin-top: 2rem; text-align: center;">
+        <form method="post" action="{% url 'add_to_cart' service.id %}">
             {% csrf_token %}
-            <button type="submit"
-                    style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            <button type="submit">
                 Přidat do košíku
         </button>
     </form>

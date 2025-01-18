@@ -1,49 +1,48 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1 style="text-align: center;">Váš košík</h1>
+    <h1>Váš košík</h1>
 
     {% if cart %}
-        <table style="width: 80%; margin: 20px auto; border-spacing: 0; text-align: left;">
+        <table>
             <thead>
             <tr>
-                <th style="text-align: left;">Produkt</th>
-                <th style="text-align: center;">Množství</th>
-                <th style="text-align: center;">Cena za kus</th>
-                <th style="text-align: center;">Celkem</th>
-                <th style="text-align: center;">Poznámka</th>
-                <th style="text-align: center;">Akce</th>
+                <th>Produkt</th>
+                <th>Množství</th>
+                <th>Cena za kus</th>
+                <th>Celkem</th>
+                <th>Poznámka</th>
+                <th>Akce</th>
             </tr>
             </thead>
             <tbody>
             {% for product_id, item in cart.items %}
                 <tr>
-                    <td style="padding: 15px;">
+                    <td>
                         {% if item.product_type == 'service' %}
-                            <a href="{% url 'service' pk=product_id %}" style="color: blue; text-decoration: none;">
+                            <a href="{% url 'service' pk=product_id %}">
                                 {{ item.product_name }}
                             </a>
                         {% else %}
-                            <a href="{% url 'product' pk=product_id %}" style="color: blue; text-decoration: none;">
+                            <a href="{% url 'product' pk=product_id %}">
                                 {{ item.product_name }}
                             </a>
                         {% endif %}
                     </td>
-                    <td style="text-align: center; padding: 15px;">
+                    <td>
                         <form class="quantity-form" data-product-id="{{ product_id }}">
                             {% csrf_token %}
-                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1"
-                                   style="width: 50px; text-align: center; border: 1px solid #ccc;">
+                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
                         </form>
                     </td>
-                    <td style="text-align: center;">{{ item.price }} Kč</td>
-                    <td style="text-align: center;" id="total-{{ product_id }}">{{ item.total }} Kč</td>
-                    <td style="padding: 15px;">
-            <textarea name="note" class="note-input" data-product-id="{{ product_id }}"
-                      style="width: 100%; border: 1px solid #ccc; resize: none;">{{ item.note }}</textarea>
+                    <td>{{ item.price }} Kč</td>
+                    <td id="total-{{ product_id }}">{{ item.total }} Kč</td>
+                    <td>
+            <textarea name="note" class="note-input" data-product-id="{{ product_id }}">
+                {{ item.note }}</textarea>
                     </td>
-                    <td style="text-align: center;">
-                        <a href="{% url 'remove_from_cart' product_id=product_id %}" style="text-decoration: none;">
+                    <td>
+                        <a href="{% url 'remove_from_cart' product_id=product_id %}" >
                             Odstranit
                         </a>
                     </td>
@@ -54,24 +53,23 @@
 
 
 
-        <div style="margin: 20px auto; text-align: right; width: 80%;">
+        <div class="total">
         <p><strong>Celková cena:</strong> <span id="cart-total">{{ total }} Kč</span></p>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-        <div style="flex: 1; text-align: left;">
-            <a href="{% url 'products' %}" style="margin-right: 15px;">Prohlédnout další produkty</a>
+        <div class="cart_a">
+        <div class="cart_">
+            <a href="{% url 'products' %}">Prohlédnout další produkty</a>
             <a href="{% url 'services' %}">Prohlédnout další služby</a>
         </div>
 
         <div>
-            <a href="{% url 'start_order' %}"
-               style="background-color: #007BFF; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px;">
+            <a href="{% url 'start_order' %}" class="start-order">
                 Pokračovat k objednávce
             </a>
         </div>
         </div>
         </div>
     {% else %}
-        <p style="text-align: center; margin-top: 20px;">Váš košík je prázdný. <a href="{% url 'products' %}">Pokračovat
+        <p>Váš košík je prázdný. <a href="{% url 'products' %}">Pokračovat
             v nákupu.</a></p>
     {% endif %}
 

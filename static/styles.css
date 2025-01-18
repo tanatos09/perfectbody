@@ -344,6 +344,9 @@ ol.breadcrumb{
     padding: .5rem !important;
     margin-bottom: 1.5rem !important;
     align-self: flex-start;
+    display: flex;
+    list-style: none;
+
 }
 ol.breadcrumb-item.active {
     color: white;
@@ -351,6 +354,7 @@ ol.breadcrumb-item.active {
 ol.breadcrumb li {
   display: inline;
   font-weight: bold;
+  margin: 0 5px;
 }
 ol.breadcrumb li+li:before {
   padding: 0 ;
@@ -449,9 +453,7 @@ ol.breadcrumb>li>a:hover {
     }
 
 
-    #search-form {
-        position: relative;
-    }
+
 
 #search-results a:hover {
     color:darkred;
@@ -470,7 +472,9 @@ ol.breadcrumb>li>a:hover {
 #search-form {
     width: 60%;
     position: relative;
-}
+    left: 50%;
+    transform:translate(-50%);}
+
 /* uživatel, registrace */
 .form-row {
     margin-bottom: 15px;
@@ -490,10 +494,8 @@ ol.breadcrumb>li>a:hover {
 #search-results ul{
     padding: 10px;
 }
-#search-form {
-    width: 60%;
-    position: relative;
-}
+
+
 
 
 .alert-container {
@@ -917,3 +919,54 @@ h1{display: inline-block
     color: darkred !important;
     background-color: #f8f9fa;
 }
+.trainer-image{
+    max-width: 200px;
+    height: auto;"
+    position: absolute;
+}
+.profile-picture{
+     max-width: 150px; height: auto;
+}
+.form-row {
+margin-bottom: 1em;}
+.error{
+ color: red;
+    margin-top: 0.5em;"
+}
+#search-results{
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translate(-50%);
+    background: white;
+    border: 1px solid #ccc;
+    width: 300px; display: none;
+    z-index: 1000;
+}
+.price{
+    text-align: center;
+    padding: 10px 5px;}
+.table{
+
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;}
+.home{padding: 10px 20px;
+    font-size: 1.2em;}
+.cart_{padding: 10px 20px;
+    font-size: 1.2em;}
+.total{
+    margin: 20px auto;
+    text-align: right;
+    width: 80%;}
+textarea{
+    width: 100%;
+    border: 1px solid #ccc;
+    resize: none;}
+.start-order{color: blue;
+    text-decoration: none;}
+.cart_a{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;}

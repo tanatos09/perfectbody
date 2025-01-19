@@ -54,12 +54,12 @@
 
     <h1>{{ service.product_name }}</h1>
 
-<!-- Obrázek služby -->
-{% if service.product_view %}
-    <div class="service-image">
-        <img src="{{ service.product_view }}" alt="Obrázek služby {{ service.product_name }}">
-    </div>
-{% endif %}
+    <!-- Obrázek služby -->
+    {% if service.product_view %}
+        <div class="service-image">
+            <img src="{{ service.product_view }}" alt="Obrázek služby {{ service.product_name }}>
+        </div>
+    {% endif %}
 
     <!-- Popis služby -->
     <div>
@@ -88,7 +88,7 @@
     </div>
     <!-- Tlačítko pro přidání do košíku -->
     {% if approved_trainers_services %}
-        <form method="post" action="{% url 'add_to_cart' service.id %}">
+        <form method="post" action="{% url 'add_to_cart' service.id %}" class="add-to-cart">
             {% csrf_token %}
             <button type="submit">
                 Přidat do košíku
@@ -191,6 +191,16 @@
                     {% endfor %}
                 </p>
                 <p>{{ review.comment }}</p>
+
+                <!-- Tlačítko pro mazání hodnocení pro administrátory -->
+                {% if user.is_staff %}
+                    <form method="post" action="{% url 'delete_service_review' review.id %}" class="delete-button">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat toto hodnocení?');">
+                            Smazat hodnocení
+                        </button>
+                    </form>
+                {% endif %}
             </div>
         {% endfor %}
 

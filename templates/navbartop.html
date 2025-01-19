@@ -198,90 +198,95 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Dynamicke pridavani do kosiku bez presmerovani
 document.addEventListener('DOMContentLoaded', () => {
+    const cartCount = document.getElementById('cart-count');
     const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
 
-const showToast = (message, type = 'success') => {
-    const toastContainer = document.getElementById('toast-container');
-    if (!toastContainer) {
-        console.error('Toast container not found!');
-        return;
-    }
+    const showToast = (message, type = 'success') => {
+        const toastContainer = document.getElementById('toast-container');
+        if (!toastContainer) return;
 
-    console.log(`Preparing to show toast: ${message}, type: ${type}`);
-
-    const toastHTML = `
-        <div class="toast align-items-center text-bg-${type} border-0" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body">
-                    ${message}
+        const toastHTML = `
+            <div class="toast align-items-center text-bg-${type} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">${message}</div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-        </div>`;
+            </div>`;
+        const toastElement = document.createElement('div');
+        toastElement.innerHTML = toastHTML.trim();
+        const newToast = toastElement.firstElementChild;
 
-    const toastElement = document.createElement('div');
-    toastElement.innerHTML = toastHTML.trim();
-    const newToast = toastElement.firstElementChild;
-
-    if (!(newToast instanceof HTMLElement)) {
-        console.error('Invalid toast element created:', newToast);
-        return;
-    }
-
-    toastContainer.appendChild(newToast);
-    console.log('Toast appended to container.');
-
-    try {
+        if (!newToast) return;
+        toastContainer.appendChild(newToast);
         const toastInstance = new bootstrap.Toast(newToast, { delay: 3000 });
         toastInstance.show();
 
         newToast.addEventListener('hidden.bs.toast', () => {
             newToast.remove();
         });
-    } catch (error) {
-        console.error('Error showing toast:', error);
-    }
-};
+    };
 
-
-
-
-    // Funkce přidání do košíku
-addToCartButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
-        e.preventDefault();
-        console.log('Button clicked');
-
-        const productId = button.dataset.productId;
-        console.log('Product ID:', productId);
-
-        fetch(`/cart/add/${productId}/`, {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}',
-                'X-Requested-With': 'XMLHttpRequest',
-            },
-            body: JSON.stringify({}),
+    const fetchCartData = () => {
+        fetch('/cart/data/navbar/', {
+            method: 'GET',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
         })
             .then(response => response.json())
             .then(data => {
-                console.log('Response data:', data);
-                if (data.success) {
-                    showToast(data.message, 'success');
-                    document.getElementById('cart-count').textContent = data.cart_count;
-                    document.getElementById('navbar-cart-total').textContent = data.cart_total;
+                const cartTotal = document.getElementById('navbar-cart-total');
+                const cartItems = document.getElementById('navbar-cart-items');
+
+                cartCount.textContent = data.cart_count;
+
+                cartItems.innerHTML = '';
+                if (data.items && data.items.length > 0) {
+                    data.items.forEach(item => {
+                        cartItems.innerHTML += `
+                            <li>
+                                <a href="${item.url}" class="cart-item-link" style="color: blue; text-decoration: none;">
+                                    ${item.name}
+                                </a> - ${item.quantity} × ${item.price} Kč
+                            </li>`;
+                    });
+                    cartTotal.textContent = `${data.cart_total} Kč`;
                 } else {
-                    showToast(data.error, 'danger');
+                    cartItems.innerHTML = '<li>Košík je prázdný.</li>';
+                    cartTotal.textContent = '0 Kč';
                 }
             })
-            .catch(error => {
-                console.error('Chyba při přidávání do košíku:', error);
-                showToast('Došlo k chybě při přidávání do košíku.', 'danger');
-            });
+            .catch(error => console.error('Chyba při načítání dat z košíku:', error));
+    };
+
+    fetchCartData();
+
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const productId = button.dataset.productId;
+
+            fetch(`/cart/add/${productId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: JSON.stringify({}),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showToast(data.message, 'success');
+                        fetchCartData();
+                    } else {
+                        showToast(data.error, 'danger');
+                    }
+                })
+                .catch(error => {
+                    console.error('Chyba při přidávání do košíku:', error);
+                    showToast('Došlo k chybě při přidávání do košíku.', 'danger');
+                });
+        });
     });
 });
-
-});
-
 
 </script>

@@ -69,16 +69,14 @@
         <p>{{ product.product_long_description }}</p>
     </div>
 
-    <!-- Zobrazení skladové dostupnosti -->
-    <div>
     <!-- Odkaz na výrobce -->
     {% if product.producer %}
-        <p>
-            <strong>Výrobce:</strong>
-            <a href="{% url 'producer' product.producer.pk %}">
-                {{ product.producer.producer_name }}
-            </a>
-        </p>
+            <p>
+                <strong>Výrobce:</strong>
+                <a href="{% url 'producer' product.producer.pk %}">
+                    {{ product.producer.producer_name }}
+                </a>
+            </p>
     {% endif %}
 
     <!-- Zobrazení skladové dostupnosti -->
@@ -166,6 +164,35 @@
         <p>Pro přidání hodnocení se musíte přihlásit.</p>
     {% endif %}
 
+<!-- Zobrazení hodnocení -->
+<div class="product-reviews" style="margin-top: 2rem; text-align: center;">
+    <h2>Hodnocení</h2>
+    {% if page_reviews %}
+        {% for review in page_reviews %}
+            <div class="review" style="margin: 1rem auto; max-width: 600px; padding: 1rem; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9;">
+                <p><strong>Hodnotil:</strong> {{ review.reviewer.username }}</p>
+                <p>
+                    {% for i in "12345" %}
+                    {% if forloop.counter <= review.rating %}
+                                <span class="stars">★</span>
+                            {% else %}
+                                <span class="stars">★</span>
+                        {% endif %}
+                    {% endfor %}
+                </p>
+                <p>{{ review.comment }}</p>
+
+                {% if user.is_staff %}
+                    <form method="post" action="{% url 'delete_product_review' review.id %}" class="delete-button">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger"
+                                onclick="return confirm('Opravdu chcete smazat toto hodnocení?');">
+                            Smazat hodnocení
+                        </button>
+                    </form>
+                {% endif %}
+            </div>
+        {% endfor %}
     <!-- Zobrazení hodnocení -->
     <div class="product-reviews">
         <h2>Hodnocení</h2>
@@ -186,8 +213,8 @@
                 </div>
             {% endfor %}
 
-            <!-- Navigace stránkování -->
-            <div class="pagination">
+        <!-- Navigace stránkování -->
+        <div class="pagination" style="margin-top: 1.5rem;">
             <span class="step-links">
                 {% if page_reviews.has_previous %}
                     <a href="?page=1">&laquo; První</a>
@@ -201,10 +228,10 @@
                     <a href="?page={{ page_reviews.paginator.num_pages }}">Poslední &raquo;</a>
                 {% endif %}
             </span>
-            </div>
-        {% else %}
-            <p>Zatím zde nejsou žádná hodnocení.</p>
-        {% endif %}
-    </div>
+        </div>
+    {% else %}
+        <p>Zatím zde nejsou žádná hodnocení.</p>
+    {% endif %}
+</div>
 
 {% endblock %}

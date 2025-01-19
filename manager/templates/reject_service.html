@@ -2,7 +2,7 @@
 
 {% block content %}
 <div style="text-align: center;">
-    <h1>Schvalování služeb</h1>
+    <h1>Zamítnutí služeb</h1>
 
     {% if pending_services %}
         <table style="margin: 0 auto; border-collapse: collapse; width: 80%;">
@@ -22,18 +22,11 @@
                     <td style="border: 1px solid #ddd; padding: 8px;">{{ service.service.product_name }}</td>
                     <td style="border: 1px solid #ddd; padding: 8px;">{{ service.trainers_service_description }}</td>
                     <td style="border: 1px solid #ddd; padding: 8px;">
-                        <!-- Odkaz na podrobnosti -->
                         <a href="{% url 'service_details' service.id %}" class="btn btn-info">Detail</a>
                     </td>
                     <td style="border: 1px solid #ddd; padding: 8px;">
-                        <!-- Schválení -->
-                        <form method="post" action="{% url 'approve_service' %}" class="delete-button">
-                            {% csrf_token %}
-                            <input type="hidden" name="service_id" value="{{ service.id }}">
-                            <button class="btn btn-success" type="submit">Schválit</button>
-                        </form>
                         <!-- Zamítnutí -->
-                        <form method="post" action="{% url 'reject_service' %}" class="delete-button">
+                        <form method="post" action="{% url 'reject_service' %}">
                             {% csrf_token %}
                             <input type="hidden" name="service_id" value="{{ service.id }}">
                             <button class="btn btn-danger" type="submit">Zamítnout</button>
@@ -44,7 +37,7 @@
             </tbody>
         </table>
     {% else %}
-        <p>Žádné služby k schválení nejsou k dispozici.</p>
+        <p>Žádné služby k zamítnutí nejsou k dispozici.</p>
     {% endif %}
 
     <a href="{% url 'dashboard' %}" class="btn btn-secondary" style="margin-top: 2rem;">Zpět na Dashboard</a>

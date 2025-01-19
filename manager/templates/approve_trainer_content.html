@@ -73,19 +73,19 @@
                 <td>{{ service.service.product_name }}</td>
                 <td>{{ service.pending_trainers_service_description }}</td>
                 <td>
-                    <form method="post">
+                    <form method="post" style="display: inline;" class="delete-button">
                         {% csrf_token %}
                         <input type="hidden" name="content_type" value="service">
                         <input type="hidden" name="content_id" value="{{ service.id }}">
                         <input type="hidden" name="action" value="approve">
-                        <button type="submit">Schválit</button>
+                        <button class="btn btn-success">Schválit</button>
                     </form>
-                    <form method="post">
+                    <form method="post" style="display: inline;" class="delete-button">
                         {% csrf_token %}
                         <input type="hidden" name="content_type" value="service">
                         <input type="hidden" name="content_id" value="{{ service.id }}">
                         <input type="hidden" name="action" value="reject">
-                        <button type="submit">Zamítnout</button>
+                        <button class="btn btn-danger">Zamítnout</button>
                     </form>
                 </td>
             </tr>

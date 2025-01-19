@@ -1,17 +1,19 @@
 <div>
     <h2>Popis trenéra</h2>
     {% for field in form %}
-        <div class="form-row>
-            {{ field.label_tag }}
-            <br>
-            {{ field }}
-            {% if field.errors %}
-                <div class="error">
-                    {% for error in field.errors %}
-                        <p>{{ error }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        </div>
+        {% if field.name not in "trainer_short_description trainer_long_description" %}
+            <div class="form-row" style="margin-bottom: 1em;">
+                {{ field.label_tag }}
+                <br>
+                {{ field }}
+                {% if field.errors %}
+                    <div class="error" style="color: red; margin-top: 0.5em;">
+                        {% for error in field.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
     {% endfor %}
 </div>

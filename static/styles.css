@@ -117,7 +117,7 @@ height: auto; /* Zachování proporcí obrázku */
      width: 85% !important;
     height: 100vh;
     background-color: rgba(255, 255, 255, 0.8); /* Poloprůhledné pozadí */
-    padding: 20px; /* Vnitřní odsazení */
+    /*padding: 20px;  Vnitřní odsazení */
        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Stín kolem obsahu */
     margin: 0;
 }
@@ -282,8 +282,14 @@ height: auto; /* Zachování proporcí obrázku */
 }
 
 @media (max-width: 768px) {
-    #search-form {
-        width: 80%; /* Širší vyhledávací pole na menších obrazovkách */
+    #search-form-nav {
+        width: 90%; /* Užší šířka na mobilu */
+    }
+
+    #search-form-all {
+        margin-top: 80px;
+        flex-direction: column; /* Formulář pod logem a košíkem */
+        align-items: center;
     }
 
     .logo-img {
@@ -377,16 +383,18 @@ ol.breadcrumb>li>a:hover {
 }
 /* === Style search === */
 #search-form-all {
-    position: absolute;
-    top: 0;
-    left: inherit;
-    transform: translateX(-25%);
-    z-index: 1050;
     display: flex;
     justify-content: center;
-    align-items: center;
-        width: 100%;
-           }
+    position: relative;
+    top: 5px;
+    width: 100%;
+
+   /* left: inherit;
+    transform: translateX(-25%);
+    z-index: 1050;
+    align-items: center;*/
+}
+
 .search-wrapper {
      align-items: center;
     width: 100%; /* Kontejner pokryje celou šířku */
@@ -413,7 +421,9 @@ ol.breadcrumb>li>a:hover {
     font-size: 0.7rem; /* Menší velikost písma */
     font-style: italic;
     padding: 0 10px; /* Odstranění paddingu pro snížení výšky */
-
+    border-radius: 5px 0 0 5px;
+    border: 1px solid #ccc;
+    width: 100%;
 }
 #search-form button {
     padding: 3px 3px;
@@ -469,11 +479,33 @@ ol.breadcrumb>li>a:hover {
 #search-results ul{
     padding: 10px;
 }
-#search-form {
+#search-form-nav {
     width: 60%;
-    position: relative;
+    max-width: 800px;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.8); /* Poloprůhledné pozadí */
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Jemný stín */
+
+
+   /* position: relative;
     left: 50%;
-    transform:translate(-50%);}
+    transform:translate(-50%);*/
+}
+
+#search-form-nav button {
+    border-radius: 0 5px 5px 0;
+    border: 1px solid #ccc;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+#search-form-nav button:hover {
+    background-color: #0056b3;
+}
 
 /* uživatel, registrace */
 .form-row {
@@ -591,7 +623,7 @@ button {
     border: none;
     border-radius: 5px;
     font-size: 1rem;
-    cursor: pointer;
+    cursor: default;
 }
 
 button:hover {
@@ -651,7 +683,7 @@ button:hover {
 .rating label {
     font-size: 30px;
     color: gray;
-    cursor: pointer;
+    cursor: default;
     transition: color 0.2s ease-in-out;
 }
 
@@ -830,7 +862,13 @@ button:hover {
     margin-top: 2rem; text-align: center;}
 }
 button[type="submit"]{
-    padding:0.25rem 0.5rem; font-size: 1rem; background-color: #3788ff; color: white; border: none; border-radius: 5px; cursor: pointer;}
+    padding:0.25rem 0.5rem;
+    font-size: 1rem;
+    background-color: #3788ff;
+    color: white; border: none;
+    border-radius: 5px;
+    cursor: default;
+}
 .redbutton {text-align: center; margin-top: 2rem; color: red;}
 .rating-stars{justify-content: center;}
 .add-review {margin-top: 2rem; text-align: center;}

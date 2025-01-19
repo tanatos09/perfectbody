@@ -2,7 +2,7 @@
 form {
     max-width: 500px; /* Maximální šířka formuláře */
     margin: 0 auto; /* Vycentrování formuláře */
-    padding: 20px; /* Vnitřní odsazení */
+    /*padding: 20px;  Vnitřní odsazení */
     background-color: #f7f7f7; /* Světle šedé pozadí */
     border: 1px solid #ccc; /* Tenký rámeček */
     border-radius: 8px; /* Zaoblené rohy */
@@ -55,7 +55,7 @@ button {
     background-color: #007bff; /* Modré pozadí */
     border: none; /* Bez rámečku */
     border-radius: 4px; /* Zaoblené rohy */
-    cursor: pointer; /* Ukazatel ruky při najetí */
+    cursor: default;
     transition: background-color 0.3s; /* Plynulý přechod změny barvy */
 }
 
@@ -98,7 +98,7 @@ form.add-to-cart button {
     color: white; /* Bílé písmo */
     border: none; /* Bez rámečku */
     border-radius: 5px; /* Zaoblené rohy */
-    cursor: pointer; /* Ukazatel ruky při najetí */
+    cursor: default;
     transition: background-color 0.3s; /* Plynulý přechod */
 }
 form button .add-to-cart {
@@ -108,8 +108,7 @@ form button .add-to-cart {
     color: white;
     border: none;
     border-radius: 5px;
-    cursor: pointer;
-" padding: 0.5 rem 1 rem;
+    cursor: default;
 }
 
 
@@ -148,7 +147,7 @@ button.approve-button {
     color: white; /* Bílé písmo */
     border: none; /* Bez rámečku */
     border-radius: 5px; /* Zaoblené rohy */
-    cursor: pointer; /* Ukazatel ruky při najetí */
+    cursor: default;
     transition: background-color 0.3s; /* Plynulý přechod */
 }
 button.reject-button {
@@ -158,7 +157,7 @@ button.reject-button {
     color: white; /* Bílé písmo */
     border: none; /* Bez rámečku */
     border-radius: 5px; /* Zaoblené rohy */
-    cursor: pointer; /* Ukazatel ruky při najetí */
+    cursor: default;
     transition: background-color 0.3s; /* Plynulý přechod */
 }
 .stars {color: #f5b301;}

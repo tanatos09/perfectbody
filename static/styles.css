@@ -63,7 +63,7 @@ main {
     max-width: 100%; /* Zamezí překročení šířky */
     margin: 0; /* Odstranění okrajů */
     box-sizing: border-box; /* Zahrnuje padding do celkové šířky */
-     min-height: calc(100vh - var(--header-height) - var(--footer-height)); /* Dynamicky určuje výšku */
+   /*  min-height: calc(100vh - var(--header-height) - var(--footer-height));  Dynamicky určuje výšku */
 
 }
 main li {

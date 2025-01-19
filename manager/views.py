@@ -7,7 +7,7 @@ from unicodedata import category
 
 from accounts.models import TrainersServices, UserProfile
 from manager.forms import CategoryForm, ProductForm, ServiceForm, TrainerForm, ProducerForm, UserForm
-from products.models import Product, Category, Producer
+from products.models import Product, Category, Producer, ProductReview, TrainerReview
 
 
 def is_admin(user):
@@ -59,6 +59,28 @@ def approve_service(request):
         service.save()
         return redirect('approve_service')
     return render(request, 'approve_service.html', {"pending_services": pending_services})
+
+
+@user_passes_test(is_admin)
+def reject_service(request):
+    if request.method == "POST":
+        service_id = request.POST.get('service_id')
+        if not service_id:
+            messages.error(request, "Chybí ID služby.")
+            return redirect('approve_service')
+
+        try:
+            service = TrainersServices.objects.get(id=service_id)
+            service_name = service.service.product_name  # Uložení názvu služby pro zprávu
+            service.delete()  # Odstranění služby z databáze
+            messages.success(request, f"Služba '{service_name}' byla zamítnuta a odstraněna.")
+        except TrainersServices.DoesNotExist:
+            messages.error(request, "Služba s tímto ID neexistuje.")
+
+        return redirect('approve_service')
+
+    return redirect('approve_service')
+
 
 @user_passes_test(is_admin)
 def add_service(request):
@@ -349,3 +371,58 @@ def approve_trainer_content(request):
         "pending_trainers": pending_trainers,
         "pending_services": pending_services,
     })
+
+
+@login_required
+def delete_product_review(request, review_id):
+
+    # Ensure the user has admin permissions
+    if not request.user.is_staff:
+        messages.error(request, "Nemáte oprávnění smazat hodnocení.")
+        return redirect('home')
+
+    review = get_object_or_404(ProductReview, pk=review_id)
+
+    product_name = review.product.product_name
+
+    review.delete()
+    messages.success(request, f"Hodnocení pro produkt '{product_name}' bylo úspěšně smazáno.")
+
+    return redirect(request.META.get('HTTP_REFERER', 'home'))
+
+@login_required
+def delete_trainer_review(request, review_id):
+
+    if not request.user.is_staff:
+        messages.error(request, "Nemáte oprávnění smazat hodnocení.")
+        return redirect('home')
+
+    review = get_object_or_404(TrainerReview, pk=review_id)
+
+    trainer_name = review.trainer.full_name()
+
+    review.delete()
+    messages.success(request, f"Hodnocení pro produkt '{trainer_name}' bylo úspěšně smazáno.")
+
+    return redirect(request.META.get('HTTP_REFERER', 'home'))
+
+
+@login_required
+def delete_service_review(request, review_id):
+
+    if not request.user.is_staff:
+        messages.error(request, "Nemáte oprávnění smazat hodnocení.")
+        return redirect('home')
+
+    review = get_object_or_404(ProductReview, pk=review_id)
+    service_name = review.product.product_name
+
+    review.delete()
+    messages.success(request, f"Hodnocení pro službu '{service_name}' bylo úspěšně smazáno.")
+
+    return redirect(request.META.get('HTTP_REFERER', 'home'))
+
+def service_details(request, service_id):
+
+    service = get_object_or_404(TrainersServices, id=service_id)
+    return render(request, 'service_details.html', {'service': service})

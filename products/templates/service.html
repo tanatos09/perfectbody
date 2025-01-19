@@ -89,7 +89,7 @@
     </div>
     <!-- Tlačítko pro přidání do košíku -->
     {% if approved_trainers_services %}
-        <form method="post" action="{% url 'add_to_cart' service.id %}" style="margin-top: 2rem; text-align: center;">
+        <form method="post" action="{% url 'add_to_cart' service.id %}" class="add-to-cart">
             {% csrf_token %}
             <button type="submit"
                     style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
@@ -194,6 +194,16 @@
                     {% endfor %}
                 </p>
                 <p>{{ review.comment }}</p>
+
+                <!-- Tlačítko pro mazání hodnocení pro administrátory -->
+                {% if user.is_staff %}
+                    <form method="post" action="{% url 'delete_service_review' review.id %}" class="delete-button">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat toto hodnocení?');">
+                            Smazat hodnocení
+                        </button>
+                    </form>
+                {% endif %}
             </div>
         {% endfor %}
 
@@ -217,6 +227,5 @@
         <p>Zatím zde nejsou žádná hodnocení.</p>
     {% endif %}
 </div>
-
 
 {% endblock %}

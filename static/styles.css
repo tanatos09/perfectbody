@@ -11,7 +11,10 @@ html, body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-     height: 100%;
+    height: 100%;
+}
+body {
+    overflow-y: auto; /* Povolení automatického scrollu pouze při přetečení */
 }
 header {
     margin: 0;
@@ -28,11 +31,7 @@ header.fixed-top {
     z-index: 1030;
     height: 100vh;
 }
-#content {
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-}
+
 .navbar{
     margin: 0;
     padding: 0;
@@ -54,12 +53,18 @@ table{
 main {
     align-items: center;
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
     overflow-y: auto; /* Posuvník pouze v hlavním obsahu */
     padding: 0 20px ;
     width: 100%; /* Zarovná obsah na šířku stránky */
     max-width: 100%; /* Zamezí překročení šířky */
     margin: 0; /* Odstranění okrajů */
     box-sizing: border-box; /* Zahrnuje padding do celkové šířky */
+     min-height: calc(100vh - var(--header-height) - var(--footer-height)); /* Dynamicky určuje výšku */
+
 }
 main li {
     list-style-type: square;
@@ -114,12 +119,15 @@ height: auto; /* Zachování proporcí obrázku */
 
 }
 .content-container {
-     width: 85% !important;
-    height: 100vh;
-    background-color: rgba(255, 255, 255, 0.8); /* Poloprůhledné pozadí */
+    flex-grow: 1; /* Roztáhne kontejner */
+    box-sizing: border-box;
+    width: 85% !important;
+    background-color: rgba(255, 255, 255, 0.7); /* Poloprůhledné pozadí */
     /*padding: 20px;  Vnitřní odsazení */
-       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Stín kolem obsahu */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /*  Stín kolem obsahu */
     margin: 0;
+    position: relative;
+    z-index: 1;
 }
 
 /* Dropdown menu */
@@ -210,7 +218,12 @@ height: auto; /* Zachování proporcí obrázku */
 
 /*navbar*/
 #MainNav{
-     position: relative;
+     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+    position: relative;
     width: 100%;
     border-bottom-color: #6c757d;
     border-bottom-style: double;
@@ -283,8 +296,11 @@ height: auto; /* Zachování proporcí obrázku */
 
 @media (max-width: 768px) {
     #search-form-nav {
-        width: 90%; /* Užší šířka na mobilu */
+        margin-top: 0;
+        margin-bottom: 10px; /* Malé odsazení pod navbar */
+        display: block; /* Zarovnání pod navbar */
     }
+
 
     #search-form-all {
         margin-top: 80px;
@@ -337,6 +353,19 @@ display: flex;
     }
 }
 
+/* Styl pro větší obrazovky (nad 1024px) */
+@media (min-width: 1024px) {
+    #search-form-nav {
+        margin-top: 50px; /* Odsazení od horní části stránky */
+    }
+}
+
+/* Styl pro střední obrazovky (768px až 1024px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    #search-form-nav {
+        margin-top: 30px; /* Menší odsazení od horní části stránky */
+    }
+}
 .nav-item.dropdown:hover .dropdown-menu {
     display: block;
 }
@@ -480,12 +509,14 @@ ol.breadcrumb>li>a:hover {
     padding: 10px;
 }
 #search-form-nav {
-    width: 60%;
-    max-width: 800px;
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto; /* Vycentrování */
+    padding: 10px;
     display: flex;
     justify-content: center;
     background-color: rgba(255, 255, 255, 0.8); /* Poloprůhledné pozadí */
-    padding: 10px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Jemný stín */
 
@@ -514,7 +545,9 @@ form#search-form-nav {
 }
 
 .input-group {
-    width: 100%;
+    flex-wrap: nowrap;
+
+
 }
 /* uživatel, registrace */
 .form-row {
@@ -595,6 +628,7 @@ footer {
     text-align: center;
     padding: 0.5rem 0;
     position: relative;
+    z-index: 20;
     margin: 0;
     bottom: 0;
     width: 100%;
@@ -1017,3 +1051,98 @@ textarea{
     display: flex;
     justify-content: space-between;
     align-items: center;}
+
+
+
+
+
+/* Univerzální styl pro formuláře */
+form {
+    max-width: 500px; /* Maximální šířka formuláře */
+    margin: 0 auto; /* Vycentrování formuláře */
+    background-color: #f7f7f7; /* Světle šedé pozadí */
+    border: 1px solid #ccc; /* Tenký rámeček */
+    border-radius: 8px; /* Zaoblené rohy */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Jemný stín */
+}
+.form-group {
+    margin-bottom: 15px; /* Mezera mezi prvky formuláře */
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+    width: 100%; /* Roztažení přes celou šířku */
+    padding: 10px; /* Vnitřní odsazení */
+    font-size: 1rem; /* Velikost písma */
+    border: 1px solid #ccc; /* Tenký rámeček */
+    border-radius: 4px; /* Zaoblené rohy */
+    box-sizing: border-box; /* Zohlednění paddingu */
+    transition: border-color 0.3s; /* Plynulý přechod změny barvy rámečku */
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+   border-color: #007bff; /* Modrý rámeček při zaostření */
+    outline: none; /* Odstranění výchozího obrysu */
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.25); /* Světle modrý stín */
+}
+button {
+    padding: 10px 20px; /* Velikost tlačítka */
+    font-size: 1rem; /* Velikost textu */
+    color: #fff; /* Bílé písmo */
+    background-color: #007bff; /* Modré pozadí */
+    border: none; /* Bez rámečku */
+    border-radius: 4px; /* Zaoblené rohy */
+    cursor: default;
+    transition: background-color 0.3s; /* Plynulý přechod změny barvy */
+}
+
+/* Styl tlačítka v "add-to-cart" formuláři */
+form.add-to-cart button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #28a745; /* Zelené pozadí */
+    color: white; /* Bílé písmo */
+    border: none; /* Bez rámečku */
+    border-radius: 5px; /* Zaoblené rohy */
+    cursor: default;
+    transition: background-color 0.3s; /* Plynulý přechod */
+}
+form button .add-to-cart {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: default;
+}
+
+
+form.add-to-cart button:hover {
+    background-color: #218838; /* Tmavší zelená při najetí */
+}
+
+form.add-to-cart button:disabled {
+    background-color: #ccc; /* Šedé tlačítko při deaktivaci */
+    cursor: not-allowed; /* Změna kurzoru při deaktivaci */
+}
+form.delete-button {
+    display: inline;
+    padding: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
+
+}
+/* Specifické stylování pro formulář s tlačítkem "Přidat do košíku" */
+form.add-to-cart {
+    display: inline; /* Nastaví inline, aby formulář nezabíral celý řádek */
+    padding: 0; /* Odstranění paddingu */
+    background: none; /* Odstranění pozadí */
+    border: none; /* Odstranění rámečku */
+    box-shadow: none; /* Odstranění stínu */
+}

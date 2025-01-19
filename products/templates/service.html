@@ -13,7 +13,7 @@
             </li>
 
             <!-- Oddělovač -->
-            <li class="breadcrumb-item">&gt;</li>
+            <li class="breadcrumb-item">&raquo;</li>
 
             <!-- Hlavní kategorie služeb -->
             {% if service.category %}
@@ -26,7 +26,7 @@
 
             <!-- Rodičovská kategorie, pokud existuje -->
             {% if service.category and service.category.category_parent %}
-                <li class="breadcrumb-item">&gt;</li>
+                <li class="breadcrumb-item">&raquo;</li>
                 <li class="breadcrumb-item">
                     <a href="{% url 'services' service.category.category_parent.pk %}">
                         {{ service.category.category_parent.category_name }}
@@ -36,7 +36,7 @@
 
             <!-- Aktuální kategorie -->
             {% if service.category %}
-                <li class="breadcrumb-item">&gt;</li>
+                <li class="breadcrumb-item">&raquo;</li>
                 <li class="breadcrumb-item">
                     <a href="{% url 'services' service.category.pk %}">
                         {{ service.category.category_name }}
@@ -45,7 +45,7 @@
             {% endif %}
 
             <!-- Název služby -->
-            <li class="breadcrumb-item">&gt;</li>
+            <li class="breadcrumb-item">&raquo;</li>
             <li class="breadcrumb-item active" aria-current="page">
                 {{ service.product_name }}
             </li>

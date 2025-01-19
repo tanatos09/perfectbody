@@ -472,14 +472,12 @@ ol.breadcrumb>li>a:hover {
 
 #search-results ul li {
     list-style-position: outside;
-    border-bottom: 5px solid #f1f1f1; /* Oddělí jednotlivé položky linkou */
+    border-bottom: 1px solid #f1f1f1; /* Oddělí jednotlivé položky linkou */
 }
 
 #search-results li:last-child {
     border-bottom: none; /* Odstraní spodní linku u poslední položky */
 }
-
-/*noinspection CssInvalidPropertyValue*/
 #search-results a {
     font-weight: bold;
     padding: 0 5px; /* Zvýšení čitelnosti */
@@ -490,9 +488,6 @@ ol.breadcrumb>li>a:hover {
     display: block;
     border:double ;
     }
-
-
-
 
 #search-results a:hover {
     color:darkred;

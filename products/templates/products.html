@@ -11,7 +11,7 @@
             </li>
 
             <!-- Oddělovač -->
-            <li class="breadcrumb-item">&gt;</li>
+            <li class="breadcrumb-item">&raquo;</li>
 
             <!-- Hlavní kategorie produktů -->
             {% if category %}
@@ -24,7 +24,7 @@
 
             <!-- Rodičovská kategorie, pokud existuje -->
             {% if category and category.category_parent %}
-                <li class="breadcrumb-item">&gt;</li>
+                <li class="breadcrumb-item">&raquo;</li>
                 <li class="breadcrumb-item">
                     <a href="{% url 'products' category.category_parent.pk %}">{{ category.category_parent.category_name }}</a>
                 </li>
@@ -32,7 +32,7 @@
 
             <!-- Aktuální kategorie -->
             {% if category %}
-                <li class="breadcrumb-item">&gt;</li>
+                <li class="breadcrumb-item">&raquo;</li>
                 <li class="breadcrumb-item active" aria-current="page">{{ category.category_name }}</li>
             {% endif %}
         </ol>
@@ -203,7 +203,7 @@
             <div class="pagination">
                 <span class="step-links">
                     {% if products.has_previous %}
-                        <a href="?page=1{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">&laquo; První</a>
+                        <a href="?page=1{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">&raquo První</a>
                         <a href="?page=
                                 {{ products.previous_page_number }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Předchozí</a>
                     {% endif %}

@@ -506,7 +506,16 @@ ol.breadcrumb>li>a:hover {
 #search-form-nav button:hover {
     background-color: #0056b3;
 }
+form#search-form-nav {
+    padding: 0 !important; /* Odstranění paddingu */
+    margin: 0 auto; /* Vycentrování */
+    display: flex;
+    justify-content: space-between; /* Rovnoměrné rozložení */
+}
 
+.input-group {
+    width: 100%;
+}
 /* uživatel, registrace */
 .form-row {
     margin-bottom: 15px;

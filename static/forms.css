@@ -2,7 +2,6 @@
 form {
     max-width: 500px; /* Maximální šířka formuláře */
     margin: 0 auto; /* Vycentrování formuláře */
-    /*padding: 20px;  Vnitřní odsazení */
     background-color: #f7f7f7; /* Světle šedé pozadí */
     border: 1px solid #ccc; /* Tenký rámeček */
     border-radius: 8px; /* Zaoblené rohy */

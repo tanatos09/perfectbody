@@ -12,6 +12,7 @@ html, body {
     flex-direction: column;
     min-height: 100vh;
     height: 100%;
+    font-size: 0.9em;
 }
 body {
     overflow-y: auto; /* Povolení automatického scrollu pouze při přetečení */
@@ -32,10 +33,6 @@ header.fixed-top {
     height: 100vh;
 }
 
-.navbar{
-    margin: 0;
-    padding: 0;
-}
 .sticky-top {
     position: sticky;
     z-index: 1040;
@@ -48,6 +45,9 @@ td {
 }
 table{
     margin-bottom: 20px;
+}
+.review{
+    text-align: center;
 }
 /* Main styling */
 main {
@@ -67,7 +67,7 @@ main {
 
 }
 main li {
-    list-style-type: square;
+    list-style-type: none; /*square*/
 }
 main a {
     color: #6c757d; /* Šedá barva odkazu */
@@ -82,20 +82,25 @@ main a:hover {
 
 main h1 {
     color: darkred;
-    font-size:1.5em;
+    font-size:1.6em;
     margin:0 0 1.2em 0;
+    font-weight: bold;
+    border-bottom: darkred 1px solid;
 
 
 }
 main h2 {
+    background: dimgrey;
+    color: white;
     font-size: 1.3em;
+    padding: 5px 10px;
 
 }
 main img {
     float: left;
     margin-right: 20px; /* Mezera mezi obrázkem a textem */
-    margin-bottom: 20px; /* Mezera pod obrázkem */
-    max-width: 300px; /* Maximální šířka obrázku */
+
+    max-width: 400px; /* Maximální šířka obrázku */
 
 
 height: auto; /* Zachování proporcí obrázku */
@@ -132,6 +137,7 @@ height: auto; /* Zachování proporcí obrázku */
 
 /* Dropdown menu */
 .dropdown-menu {
+    font-size: 0.8em;
     padding: 0; /* Odstranění výchozích odsazení */
     max-width: 350px; /* Maximální šířka menu */
     max-height: 350px; /* Maximální výška menu */
@@ -220,9 +226,7 @@ height: auto; /* Zachování proporcí obrázku */
 #MainNav{
      display: flex;
     justify-content: space-between;
-    align-items: center;
     background-color: #f8f9fa;
-    border-bottom: 1px solid #ddd;
     position: relative;
     width: 100%;
     border-bottom-color: #6c757d;
@@ -319,13 +323,13 @@ height: auto; /* Zachování proporcí obrázku */
     }
 
     .search-wrapper {
-display: flex;
-    justify-content: center; /* Zarovnání na střed */
-    align-items: center;
-    width: 100%; /* Kontejner pokryje celou šířku */
-    margin: 0 auto;
-    padding: 10px 0;
-    gap: 10px; /* Mezera mezi vyhledáváním a ikonou */
+        display: flex;
+        justify-content: center; /* Zarovnání na střed */
+        align-items: center;
+        width: 100%; /* Kontejner pokryje celou šířku */
+        margin: 0 auto;
+        padding: 10px 0;
+        gap: 10px; /* Mezera mezi vyhledáváním a ikonou */
     }
 
     #navbarNav {
@@ -339,7 +343,19 @@ display: flex;
         left: 50%;
         transform: translateX(-50%);
     }
+    .weather {
+        display: none; /* Skryto na mobilech ve výchozím stavu */
+    }
 
+    .toggle-info {
+        display: block; /* Zobrazení tlačítka pouze na mobilním zobrazení */
+    }
+    #toggle-button {
+        cursor: default; /* Výchozí ukazatel myši */
+    }
+   .collapse.show {
+        display: flex !important; /* Přepsání stylu pro viditelnost při aktivaci */
+    }
 
 }
 
@@ -352,7 +368,18 @@ display: flex;
         height: 2.5em;
     }
 }
+@media (min-width: 769px) {
+    .toggle-info {
+        display: none; /* Skryté na desktopu */
+    }
 
+    .weather {
+        display: flex; /* Viditelné na větších obrazovkách */
+    }
+    .toggle-info {
+        display: none; /* Tlačítko skryté na desktopu */
+    }
+}
 /* Styl pro větší obrazovky (nad 1024px) */
 @media (min-width: 1024px) {
     #search-form-nav {
@@ -404,11 +431,19 @@ ol.breadcrumb>li>a:hover {
   font-weight: bold;
 }
 .weather{
-    background-color: #6c757d;
+ background-color: #6c757d;
     color: white;
     font-size: 0.8rem;
     border-radius: 5px;
     display: none;
+}
+.m-0{
+    background-color: #6c757d;
+    color: white;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    padding: 0 !important;
+
 }
 /* === Style search === */
 #search-form-all {
@@ -496,9 +531,15 @@ ol.breadcrumb>li>a:hover {
     background-color: #6c757d;
     color: white;
     font-weight: bold;
-    font-size: 17px;
+    font-size: 1em;
     padding: 3px 5px ;
     margin-bottom: 0;
+}
+main li h3 {
+    list-style: none;
+    margin: 0.5em 0;
+    text-align: left;
+    color: darkred;
 }
 #search-results ul{
     padding: 10px;
@@ -758,9 +799,9 @@ button:hover {
     background-color: #6c757d; /* Šedé pozadí */
     color: white; /* Bílé písmo */
     text-decoration: none; /* Odstraní podtržení odkazu */
-    padding: 10px 15px; /* Vnitřní odsazení pro větší klikací oblast */
+    padding: 5px 5px; /* Vnitřní odsazení pro větší klikací oblast */
     border-radius: 5px; /* Zaoblené rohy */
-    font-size: 1rem; /* Velikost písma */
+    font-size: 0.6rem; /* Velikost písma */
     font-weight: normal;
     transition: background-color 0.3s ease, color 0.3s ease; /* Plynulý efekt při najetí */
 }
@@ -913,13 +954,20 @@ button[type="submit"]{
 .rating {justify-content: center;}
 .rating1 {display: block; text-align: center; margin-bottom: 0.5rem;}
 #trainer{width: 100%; margin-bottom: 1rem; padding: 0.5rem; font-size: 1rem;}
+
 .comment{display:block; text-align: center; margin-top: 1rem;}
 .inline{display: inline-block; text-align: left;}
 textarea #comment{width: 100%; padding: 0.5rem; margin-bottom: 1rem; font-size: 1rem;}
 h1{display: inline-block
 }
 .review{margin: 1rem auto; max-width: 600px; padding: 1rem; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9;}
-
+p {
+    font-size: 1rem; /* Velikost písma */
+    line-height: 1.6; /* Výška řádku pro lepší čitelnost */
+    text-align: justify; /* Zarovnání do bloku */
+    margin-bottom: 1em; /* Mezera mezi odstavci */
+    color: #333; /* Barva textu */
+}
 #cart-wrapper {
     position: relative;
 }
@@ -1000,6 +1048,10 @@ h1{display: inline-block
     height: auto;"
     position: absolute;
 }
+.trainer-reviews > h2{
+    color: white;
+    text-align: center;
+}
 .profile-picture{
      max-width: 150px; height: auto;
 }
@@ -1030,6 +1082,7 @@ margin-bottom: 1em;}
     border: 1px solid #ccc;}
 .home{padding: 10px 20px;
     font-size: 1.2em;}
+#home{display: block;}
 .cart_{padding: 10px 20px;
     font-size: 1.2em;}
 .total{
@@ -1108,7 +1161,7 @@ form.add-to-cart button {
 }
 form button .add-to-cart {
     padding: 0.5rem 1rem;
-    font-size: 1rem;
+    font-size: 0.8rem;
     background-color: #28a745;
     color: white;
     border: none;

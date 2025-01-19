@@ -224,10 +224,10 @@ height: auto; /* Zachování proporcí obrázku */
 
 /*navbar*/
 #MainNav{
-     display: flex;
+    display: flex;
     justify-content: space-between;
     background-color: #f8f9fa;
-    position: relative;
+    align-items: flex-end;
     width: 100%;
     border-bottom-color: #6c757d;
     border-bottom-style: double;
@@ -235,7 +235,6 @@ height: auto; /* Zachování proporcí obrázku */
     margin: 0 !important;  /* Odstranit veškerý margin */
     height: auto; /* Dynamická úprava výšky */
 }
-
 #MainNav .navbar-nav  .nav-link {
     font-size: 0.9em;
     border-left: double 3px #aaa; /* Dvojitá čára na levé straně */
@@ -250,6 +249,7 @@ height: auto; /* Zachování proporcí obrázku */
     transition: all 0.3s ease; /* Plynulý přechod efektů */
     margin: 0 10px ;
 }
+
 
 
 .container-fluid {
@@ -334,6 +334,9 @@ height: auto; /* Zachování proporcí obrázku */
 
     #navbarNav {
         text-align: left;
+        align-items: flex-end;
+        margin: 0;
+        padding: 0;
     }
 
     #navbar-cart-dropdown {

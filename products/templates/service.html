@@ -6,14 +6,14 @@
 
     <!-- Breadcrumbs navigace -->
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
+        <ol class="breadcrumb" style="display: flex; list-style: none; padding: 0;">
             <!-- Domů -->
             <li class="breadcrumb-item">
                 <a href="{% url 'home' %}">Domů</a>
             </li>
 
             <!-- Oddělovač -->
-            <li class="breadcrumb-item">&raquo;</li>
+            <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
 
             <!-- Hlavní kategorie služeb -->
             {% if service.category %}
@@ -26,7 +26,7 @@
 
             <!-- Rodičovská kategorie, pokud existuje -->
             {% if service.category and service.category.category_parent %}
-                <li class="breadcrumb-item">&raquo;</li>
+                <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
                 <li class="breadcrumb-item">
                     <a href="{% url 'services' service.category.category_parent.pk %}">
                         {{ service.category.category_parent.category_name }}
@@ -36,7 +36,7 @@
 
             <!-- Aktuální kategorie -->
             {% if service.category %}
-                <li class="breadcrumb-item">&raquo;</li>
+                <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
                 <li class="breadcrumb-item">
                     <a href="{% url 'services' service.category.pk %}">
                         {{ service.category.category_name }}
@@ -45,7 +45,7 @@
             {% endif %}
 
             <!-- Název služby -->
-            <li class="breadcrumb-item">&raquo;</li>
+            <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
             <li class="breadcrumb-item active" aria-current="page">
                 {{ service.product_name }}
             </li>
@@ -57,7 +57,8 @@
     <!-- Obrázek služby -->
     {% if service.product_view %}
         <div class="service-image">
-            <img src="{{ service.product_view }}" alt="Obrázek služby {{ service.product_name }}>
+            <img src="{{ service.product_view }}" alt="Obrázek služby {{ service.product_name }}"
+                 style="max-width: 450px; height: auto;">
         </div>
     {% endif %}
 
@@ -81,7 +82,7 @@
                 {% endfor %}
             </p>
         {% else %}
-            <p class="red">Žádní schválení trenéři nejsou k dispozici pro tuto službu.</p>
+            <p style="color: red;">Žádní schválení trenéři nejsou k dispozici pro tuto službu.</p>
         {% endif %}
 
         <p><strong>Cena:</strong> {{ service.price }} Kč</p>
@@ -90,20 +91,21 @@
     {% if approved_trainers_services %}
         <form method="post" action="{% url 'add_to_cart' service.id %}" class="add-to-cart">
             {% csrf_token %}
-            <button type="submit">
+            <button type="submit"
+                    style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
                 Přidat do košíku
         </button>
     </form>
 {% else %}
-    <p class="redbutton">
+    <p style="text-align: center; margin-top: 2rem; color: red;">
         Tuto službu nelze objednat. Žádný schválený trenér tuto službu nenabízí.
     </p>
 {% endif %}
 </div>
 <!-- Možnosti pro administrátora: Upravit a Smazat službu -->
 {% if user.is_staff %}
-    <div>
-        <a href="{% url 'edit_service' service.id %}" class="btn btn-sm btn-warning">
+    <div style="margin-top: 2rem; text-align: center;">
+        <a href="{% url 'edit_service' service.id %}" class="btn btn-sm btn-warning" style="margin-right: 1rem;">
             Upravit službu
         </a>
         <form method="post" action="{% url 'delete_service' service.id %}" class="delete-button">
@@ -116,31 +118,31 @@
 {% endif %}
 <!-- Průměrné hodnocení -->
 <div class="average-rating">
-    <h2>Průměrné hodnocení</h2>
+    <h2 style="text-align: center;">Průměrné hodnocení</h2>
     {% if average_rating > 0 %}
-        <p>
+        <p style="text-align: center;">
             <strong>{{ average_rating }} / 5</strong>
         </p>
-        <div class="rating-stars" >
+        <div class="rating-stars" style="justify-content: center;">
             {% for state in star_states %}
                 <span class="{{ state }}">★</span>
             {% endfor %}
         </div>
     {% else %}
-        <p>Zatím žádné hodnocení</p>
+        <p style="text-align: center;">Zatím žádné hodnocení</p>
     {% endif %}
 </div>
 
 <!-- Formulář pro přidání hodnocení -->
 {% if user.is_authenticated %}
-    <div class="add-review" >
+    <div class="add-review" style="margin-top: 2rem; text-align: center;">
         <h2>Hodnocení</h2>
-        <form method="post" action="{% url 'add_service_review' service.id %}" class="inline">
+        <form method="post" action="{% url 'add_service_review' service.id %}" style="display: inline-block; text-align: left;">
             {% csrf_token %}
 
             <!-- Hvězdičky pro hodnocení -->
-            <label for="rating1" >Hodnocení:</label>
-            <div class="rating">
+            <label for="rating" style="display: block; text-align: center; margin-bottom: 0.5rem;">Hodnocení:</label>
+            <div class="rating" style="justify-content: center;">
                 {% for i in "54321" %}
                     <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}">
                     <label for="star{{ i }}" title="{{ i }} hvězdiček">★</label>
@@ -148,8 +150,8 @@
             </div>
 
             <!-- Výběr trenéra -->
-            <label for="trainer" >Trenér:</label>
-            <select id="trainer" name="trainer" required >
+            <label for="trainer" style="display: block; text-align: center; margin-top: 1rem;">Trenér:</label>
+            <select id="trainer" name="trainer" required style="width: 100%; margin-bottom: 1rem; padding: 0.5rem; font-size: 1rem;">
                 {% for trainer_service in approved_trainers_services %}
                     <option value="{{ trainer_service.trainer.id }}">{{ trainer_service.trainer.full_name }}</option>
                 {% empty %}
@@ -158,35 +160,36 @@
             </select>
 
             <!-- Komentář -->
-            <label for="comment" class="comment">Komentář:</label>
-            <textarea id="comment" name="comment" required placeholder="Napište svůj komentář..."></textarea>
+            <label for="comment" style="display: block; text-align: center; margin-top: 1rem;">Komentář:</label>
+            <textarea id="comment" name="comment" required placeholder="Napište svůj komentář..."
+                      style="width: 100%; padding: 0.5rem; margin-bottom: 1rem; font-size: 1rem;"></textarea>
 
             <!-- Tlačítko -->
-            <div>
-                <button type="submit" >
+            <div style="text-align: center;">
+                <button type="submit" style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #3788ff; color: white; border: none; border-radius: 5px; cursor: pointer;">
                     Přidat hodnocení
                 </button>
             </div>
         </form>
     </div>
 {% else %}
-    <p>Pro přidání hodnocení se musíte přihlásit.</p>
+    <p style="text-align: center;">Pro přidání hodnocení se musíte přihlásit.</p>
 {% endif %}
 
 
 <!-- Zobrazení hodnocení -->
-<div class="service-reviews" >
+<div class="service-reviews" style="margin-top: 2rem; text-align: center;">
     <h2>Hodnocení</h2>
     {% if page_reviews %}
         {% for review in page_reviews %}
-            <div class="review">
+            <div class="review" style="margin: 1rem auto; max-width: 600px; padding: 1rem; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9;">
                 <p><strong>Hodnotil:</strong> {{ review.reviewer.username }}</p>
                 <p>
                     {% for i in "12345" %}
                         {% if forloop.counter <= review.rating %}
-                            <span class="stars">★</span>
+                            <span style="color: #f5b301;">★</span>
                         {% else %}
-                            <span class="stars">★</span>>
+                            <span style="color: #ccc;">★</span>
                         {% endif %}
                     {% endfor %}
                 </p>
@@ -205,7 +208,7 @@
         {% endfor %}
 
         <!-- Navigace stránkování -->
-        <div class="pagination">
+        <div class="pagination" style="margin-top: 1.5rem;">
             <span class="step-links">
                 {% if page_reviews.has_previous %}
                     <a href="?page=1">&laquo; První</a>
@@ -224,6 +227,5 @@
         <p>Zatím zde nejsou žádná hodnocení.</p>
     {% endif %}
 </div>
-
 
 {% endblock %}

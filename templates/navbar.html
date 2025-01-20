@@ -1,181 +1,181 @@
 {% load static %}
 <nav class="navbar navbar-expand-sm navbar-light bg-light" id="MainNav">
 
-   <!--<div class="container-fluid">-->
+    <!--<div class="container-fluid">-->
 
 
-        <div class="navbar-brand">
-            <a class="navbar-brand" href="/">
+    <div class="navbar-brand">
+        <a class="navbar-brand" href="/">
             <img src="{% static 'images/PerfectBody_log_transp.png' %}" alt="PerfectBody" class="navbar-logo">
-            </a>
-        </div>
+        </a>
+    </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
     <div class="collapse navbar-collapse justify-content-center align-items-end" id="navbarNav">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <!-- Domů -->
-                <li class="nav-item">
-                    <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Domů</a>
-                </li>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <!-- Domů -->
+            <li class="nav-item">
+                <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Domů</a>
+            </li>
 
-                <!-- Produkty -->
-                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuProducts" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        Produkty
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuProducts">
-    {% for category in products_categories %}
-        {% if not forloop.first %}
-        <div class="dropdown-divider"></div>
-        {% endif %}
-        <li>
-            <a class="dropdown-item"
-               href="{% url 'products' category.pk %}">{{ category.category_name }}</a>
-            {% if category.subcategories.exists %}
-                <ul class="dropdown-submenu list-unstyled">
-                    {% for subcategory in category.subcategories.all %}
-                        {% if subcategory.categories.exists %}
+            <!-- Produkty -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuProducts" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    Produkty
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuProducts">
+                    {% for category in products_categories %}
+                        {% if not forloop.first %}
+                            <div class="dropdown-divider"></div>
+                        {% endif %}
                         <li>
                             <a class="dropdown-item"
-                               href="{% url 'products' subcategory.pk %}">{{ subcategory.category_name }}</a>
-                        </li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        </li>
-    {% endfor %}
-</ul>
-                </li>
-                <!-- Služby -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle {% if 'services' in request.path %}active{% endif %}" href="#"
-                       id="dropdownMenuServices" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        Služby
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuServices">
-                        {% for category in services_categories %}
-                            <div class="dropdown-divider"></div>
-                            <li>
-                                <a class="dropdown-item"
-                                   href="{% url 'services' category.pk %}">{{ category.category_name }}</a>
-                                {% if category.subcategories.exists %}
-                                    <ul class="dropdown-submenu">
-                                        {% for subcategory in category.subcategories.all %}
+                               href="{% url 'products' category.pk %}">{{ category.category_name }}</a>
+                            {% if category.subcategories.exists %}
+                                <ul class="dropdown-submenu list-unstyled">
+                                    {% for subcategory in category.subcategories.all %}
+                                        {% if subcategory.categories.exists %}
                                             <li>
                                                 <a class="dropdown-item"
-                                                   href="{% url 'services' subcategory.pk %}">{{ subcategory.category_name }}</a>
+                                                   href="{% url 'products' subcategory.pk %}">{{ subcategory.category_name }}</a>
                                             </li>
-                                        {% endfor %}
-                                    </ul>
-                                {% endif %}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle {% if 'trainer' in request.path or 'trainers' in request.path %}active{% endif %}"
-                       href="#" id="dropdownTrainers" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        Trenéři
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownTrainers">
-                        <!-- Odkaz na stránku se seznamem všech trenérů -->
-                        <li><a class="dropdown-item" href="{% url 'trainers' %}">Seznam všech trenérů</a></li>
-                        <!-- Dynamické načítání jednotlivých schválených trenérů -->
-                        {% for trainer in approved_trainers %}
-                            <li><a class="dropdown-item"
-                                   href="{% url 'trainer' trainer.pk %}">{{ trainer.full_name }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <!-- Služby -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle {% if 'services' in request.path %}active{% endif %}" href="#"
+                   id="dropdownMenuServices" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    Služby
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuServices">
+                    {% for category in services_categories %}
+                        <div class="dropdown-divider"></div>
+                        <li>
+                            <a class="dropdown-item"
+                               href="{% url 'services' category.pk %}">{{ category.category_name }}</a>
+                            {% if category.subcategories.exists %}
+                                <ul class="dropdown-submenu">
+                                    {% for subcategory in category.subcategories.all %}
+                                        <li>
+                                            <a class="dropdown-item"
+                                               href="{% url 'services' subcategory.pk %}">{{ subcategory.category_name }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle {% if 'trainer' in request.path or 'trainers' in request.path %}active{% endif %}"
+                   href="#" id="dropdownTrainers" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    Trenéři
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownTrainers">
+                    <!-- Odkaz na stránku se seznamem všech trenérů -->
+                    <li><a class="dropdown-item" href="{% url 'trainers' %}">Seznam všech trenérů</a></li>
+                    <!-- Dynamické načítání jednotlivých schválených trenérů -->
+                    {% for trainer in approved_trainers %}
+                        <li><a class="dropdown-item"
+                               href="{% url 'trainer' trainer.pk %}">{{ trainer.full_name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
             <li class="nav-item">{% if user.is_staff %}
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link admin-dashboard-link" href="{% url 'dashboard' %}">|Admin|</a>
+                        <a class="nav-link admin-dashboard-link" href="{% url 'dashboard' %}">|Admin Panel|</a>
                     </li>
                 </ul>
             {% endif %}</li>
-            </ul>
+        </ul>
 
-        </div>
+    </div>
 
 
-        <div class="search-wrapper d-flex align-items-center" id="search-form-all">
-            <!-- Formulář pro vyhledávání -->
-            <form method="get" action="{% url 'search' %}" id="search-form-nav" class="form-inline mx-auto">
-                <div class="input-group">
-                    <input id="search-input" class="form-control" name="q" type="search" placeholder="Vyhledávání"
-                           aria-label="Search" autocomplete="off">
-                    <button class="btn btn-outline-secondary" type="submit">
-                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                     class="icon-size">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        </svg>
-                    </button>
-                </div>
-                <div id="search-results" class="dropdown-menu w-100 shadow mt-1 p-2"></div>
-            </form>
-        </div>
-
-<!-- Uživatelské menu a košík -->
-        <div class="d-flex justify-content-end" >
-            <div class="collapse navbar-collapse" id="navbarToggler">
-               <!-- Uživatelské menu a košík -->
-        <ul class="navbar-nav nav-tabs ms-auto">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
-                   aria-expanded="false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="-112.6 199.2 23 28"
-                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                         stroke-linejoin="round" class="icon-size">
-                        <path d="M-91.5 213.4c-.8-1.3-1.8-2.5-3-3.5.5-1 .7-2 .7-3.2 0-2.1-.8-4-2.2-5.3-1.4-1.4-3.3-2.2-5.3-2.2s-4 .8-5.3 2.2c-1.4 1.4-2.2 3.3-2.2 5.3 0 1.1.3 2.2.7 3.2-1.2.9-2.3 2.1-3 3.5-.9 1.7-1.5 3.6-1.5 5.6v8.2h22.7V219c-.2-2-.7-3.9-1.6-5.6z"></path>
+    <div class="search-wrapper d-flex align-items-center" id="search-form-all">
+        <!-- Formulář pro vyhledávání -->
+        <form method="get" action="{% url 'search' %}" id="search-form-nav" class="form-inline mx-auto">
+            <div class="input-group">
+                <input id="search-input" class="form-control" name="q" type="search" placeholder="Vyhledávání"
+                       aria-label="Search" autocomplete="off">
+                <button class="btn btn-outline-secondary" type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                         class="icon-size">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
-
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                    {% if user.is_authenticated %}
-                        <li><a class="dropdown-item" href="{% url 'profile' %}">{{ user.username }}</a></li>
-                        <li><a class="dropdown-item" href="{% url 'logout' %}">Odhlásit se</a></li>
-                    {% else %}
-                        <li><a class="dropdown-item" href="{% url 'login' %}">Přihlásit se</a></li>
-                        <li><a class="dropdown-item" href="{% url 'register' %}">Registrovat</a></li>
-                    {% endif %}
-                </ul>
-            </li>
-            <li class="nav-item dropdown" id="cart-wrapper">
-    <a class="nav-link d-flex align-items-center" href="#" id="cart-toggle">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon-size" viewBox="680.7 197.5 39 28" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m709.9 206-2.8-8.5h-14.2L690 206h-9.3l.5 1.4 6.2 18.1h25.2l6.7-19.5h-9.4z"></path>
-        </svg>
-        <span class="ms-2">Košík (<span id="cart-count">0</span>)</span>
-    </a>
-    <!-- Dropdown -->
-    <div id="navbar-cart-dropdown" class="dropdown-menu p-3">
-    <h5>Košík</h5>
-    <ul id="navbar-cart-items">
-        <li>Načítám data...</li>
-    </ul>
-    <p class="mt-2"><strong>Celková cena:</strong> <span id="navbar-cart-total">0 Kč</span></p>
-    <a href="/cart/" class="cart-link">Zobrazit košík</a>
-</div>
-                    </li>
-                </ul>
+                </button>
             </div>
+            <div id="search-results" class="dropdown-menu w-100 shadow mt-1 p-2"></div>
+        </form>
+    </div>
+
+    <!-- Uživatelské menu a košík -->
+    <div class="d-flex justify-content-end">
+        <div class="collapse navbar-collapse" id="navbarToggler">
+            <!-- Uživatelské menu a košík -->
+            <ul class="navbar-nav nav-tabs ms-auto">
+                <div class="navbar-end">
+                <!-- Uživatelské menu -->
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="-112.6 199.2 23 28"
+                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                             stroke-linejoin="round" class="icon-size">
+                            <path d="M-91.5 213.4c-.8-1.3-1.8-2.5-3-3.5.5-1 .7-2 .7-3.2 0-2.1-.8-4-2.2-5.3-1.4-1.4-3.3-2.2-5.3-2.2s-4 .8-5.3 2.2c-1.4 1.4-2.2 3.3-2.2 5.3 0 1.1.3 2.2.7 3.2-1.2.9-2.3 2.1-3 3.5-.9 1.7-1.5 3.6-1.5 5.6v8.2h22.7V219c-.2-2-.7-3.9-1.6-5.6z"></path>
+                        </svg>
+                    </a>
+                    <ul class="navbar-nav dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        {% if user.is_authenticated %}
+                            <li><a class="dropdown-item" href="{% url 'profile' %}">{{ user.username }}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Odhlásit se</a></li>
+                        {% else %}
+                            <li><a class="dropdown-item" href="{% url 'login' %}">Přihlásit se</a></li>
+                            <li><a class="dropdown-item" href="{% url 'register' %}">Registrovat</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="nav-item dropdown" id="cart-wrapper">
+                    <a class="nav-link d-flex align-items-center" href="#" id="cart-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon-size" viewBox="680.7 197.5 39 28"
+                             fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m709.9 206-2.8-8.5h-14.2L690 206h-9.3l.5 1.4 6.2 18.1h25.2l6.7-19.5h-9.4z"></path>
+                        </svg>
+                        <span class="ms-2">Košík (<span id="cart-count">0</span>)</span>
+                    </a>
+                    <!-- Dropdown -->
+                    <div id="navbar-cart-dropdown" class="dropdown-menu p-3">
+                        <h5>Košík</h5>
+                        <ul id="navbar-cart-items">
+                            <li>Načítám data...</li>
+                        </ul>
+                        <p class="mt-2"><strong>Celková cena:</strong> <span id="navbar-cart-total">0 Kč</span></p>
+                        <a href="/cart/" class="cart-link">Zobrazit košík</a>
+                    </div>
+                </div>
+            </ul>
         </div>
+    </div>
 
 
-
-  <!--  </div> -->
-
+    <!--  </div> -->
 
 
 </nav>
@@ -248,76 +248,76 @@
         }
     });
 
- // Dropdown Kosik
-document.addEventListener('DOMContentLoaded', () => {
-    const cartToggle = document.getElementById('cart-toggle');
-    const cartDropdown = document.getElementById('navbar-cart-dropdown');
-    const cartItems = document.getElementById('navbar-cart-items');
-    const cartTotal = document.getElementById('navbar-cart-total');
-    const cartCount = document.getElementById('cart-count');
+    // Dropdown Kosik
+    document.addEventListener('DOMContentLoaded', () => {
+        const cartToggle = document.getElementById('cart-toggle');
+        const cartDropdown = document.getElementById('navbar-cart-dropdown');
+        const cartItems = document.getElementById('navbar-cart-items');
+        const cartTotal = document.getElementById('navbar-cart-total');
+        const cartCount = document.getElementById('cart-count');
 
-    const fetchCartData = () => {
-        fetch('/cart/data/navbar/', {
-            method: 'GET',
-            headers: { 'X-Requested-With': 'XMLHttpRequest' }
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Data z API:', data);
+        const fetchCartData = () => {
+            fetch('/cart/data/navbar/', {
+                method: 'GET',
+                headers: {'X-Requested-With': 'XMLHttpRequest'}
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Data z API:', data);
 
-                cartItems.innerHTML = '';
-                if (data.items && data.items.length > 0) {
-                    data.items.forEach(item => {
-                        cartItems.innerHTML += `
+                    cartItems.innerHTML = '';
+                    if (data.items && data.items.length > 0) {
+                        data.items.forEach(item => {
+                            cartItems.innerHTML += `
                             <li>
                                 <a href="${item.url}" class="cart-item-link">
                                     ${item.name}
                                 </a> - ${item.quantity} × ${item.price} Kč
                             </li>
                         `;
-                    });
-                } else {
-                    cartItems.innerHTML = '<li>Košík je prázdný.</li>';
-                }
+                        });
+                    } else {
+                        cartItems.innerHTML = '<li>Košík je prázdný.</li>';
+                    }
 
-                cartTotal.textContent = `${data.cart_total} Kč`;
-            })
-            .catch(error => console.error('Chyba při načítání dat z košíku:', error));
-    };
+                    cartTotal.textContent = `${data.cart_total} Kč`;
+                })
+                .catch(error => console.error('Chyba při načítání dat z košíku:', error));
+        };
 
-    const toggleCartDropdown = () => {
-        cartDropdown.style.display = cartDropdown.style.display === 'block' ? 'none' : 'block';
-    };
+        const toggleCartDropdown = () => {
+            cartDropdown.style.display = cartDropdown.style.display === 'block' ? 'none' : 'block';
+        };
 
-    cartToggle.addEventListener('click', (e) => {
-        e.preventDefault();
-        toggleCartDropdown();
+        cartToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleCartDropdown();
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!cartToggle.contains(event.target) && !cartDropdown.contains(event.target)) {
+                cartDropdown.style.display = 'none';
+            }
+        });
+
+        fetchCartData();
     });
 
-    document.addEventListener('click', (event) => {
-        if (!cartToggle.contains(event.target) && !cartDropdown.contains(event.target)) {
-            cartDropdown.style.display = 'none';
-        }
-    });
 
-    fetchCartData();
-});
+    // Dynamicke pridavani do kosiku bez presmerovani
+    document.addEventListener('DOMContentLoaded', () => {
+        const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
 
+        const showToast = (message, type = 'success') => {
+            const toastContainer = document.getElementById('toast-container');
+            if (!toastContainer) {
+                console.error('Toast container not found!');
+                return;
+            }
 
-// Dynamicke pridavani do kosiku bez presmerovani
-document.addEventListener('DOMContentLoaded', () => {
-    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+            console.log(`Preparing to show toast: ${message}, type: ${type}`);
 
-const showToast = (message, type = 'success') => {
-    const toastContainer = document.getElementById('toast-container');
-    if (!toastContainer) {
-        console.error('Toast container not found!');
-        return;
-    }
-
-    console.log(`Preparing to show toast: ${message}, type: ${type}`);
-
-    const toastHTML = `
+            const toastHTML = `
         <div class="toast align-items-center text-bg-${type} border-0" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
                 <div class="toast-body">
@@ -327,69 +327,67 @@ const showToast = (message, type = 'success') => {
             </div>
         </div>`;
 
-    const toastElement = document.createElement('div');
-    toastElement.innerHTML = toastHTML.trim();
-    const newToast = toastElement.firstElementChild;
+            const toastElement = document.createElement('div');
+            toastElement.innerHTML = toastHTML.trim();
+            const newToast = toastElement.firstElementChild;
 
-    if (!(newToast instanceof HTMLElement)) {
-        console.error('Invalid toast element created:', newToast);
-        return;
-    }
+            if (!(newToast instanceof HTMLElement)) {
+                console.error('Invalid toast element created:', newToast);
+                return;
+            }
 
-    toastContainer.appendChild(newToast);
-    console.log('Toast appended to container.');
+            toastContainer.appendChild(newToast);
+            console.log('Toast appended to container.');
 
-    try {
-        const toastInstance = new bootstrap.Toast(newToast, { delay: 3000 });
-        toastInstance.show();
+            try {
+                const toastInstance = new bootstrap.Toast(newToast, {delay: 3000});
+                toastInstance.show();
 
-        newToast.addEventListener('hidden.bs.toast', () => {
-            newToast.remove();
-        });
-    } catch (error) {
-        console.error('Error showing toast:', error);
-    }
-};
-
-
+                newToast.addEventListener('hidden.bs.toast', () => {
+                    newToast.remove();
+                });
+            } catch (error) {
+                console.error('Error showing toast:', error);
+            }
+        };
 
 
-    // Funkce přidání do košíku
-addToCartButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
-        e.preventDefault();
-        console.log('Button clicked');
+        // Funkce přidání do košíku
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('Button clicked');
 
-        const productId = button.dataset.productId;
-        console.log('Product ID:', productId);
+                const productId = button.dataset.productId;
+                console.log('Product ID:', productId);
 
-        fetch(`/cart/add/${productId}/`, {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}',
-                'X-Requested-With': 'XMLHttpRequest',
-            },
-            body: JSON.stringify({}),
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Response data:', data);
-                if (data.success) {
-                    showToast(data.message, 'success');
-                    document.getElementById('cart-count').textContent = data.cart_count;
-                    document.getElementById('navbar-cart-total').textContent = data.cart_total;
-                } else {
-                    showToast(data.error, 'danger');
-                }
-            })
-            .catch(error => {
-                console.error('Chyba při přidávání do košíku:', error);
-                showToast('Došlo k chybě při přidávání do košíku.', 'danger');
+                fetch(`/cart/add/${productId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                    body: JSON.stringify({}),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Response data:', data);
+                        if (data.success) {
+                            showToast(data.message, 'success');
+                            document.getElementById('cart-count').textContent = data.cart_count;
+                            document.getElementById('navbar-cart-total').textContent = data.cart_total;
+                        } else {
+                            showToast(data.error, 'danger');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Chyba při přidávání do košíku:', error);
+                        showToast('Došlo k chybě při přidávání do košíku.', 'danger');
+                    });
             });
-    });
-});
+        });
 
-});
+    });
 
 
 </script>

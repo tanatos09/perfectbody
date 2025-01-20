@@ -95,11 +95,6 @@ form label {
 label div.rating{
 justify-content: center;
 }
-.red
-{color: red;}
-.cart-items {
-    list-style: none;
-    padding: 0; max-height: 200px;
-    overflow-y: auto;}
+
 hr{
     margin: 40px 0;}

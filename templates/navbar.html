@@ -4,11 +4,11 @@
     <!--<div class="container-fluid">-->
 
 
-    <div class="navbar-brand">
+
         <a class="navbar-brand" href="/">
             <img src="{% static 'images/PerfectBody_log_transp.png' %}" alt="PerfectBody" class="navbar-logo">
         </a>
-    </div>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -102,7 +102,6 @@
                 </ul>
             {% endif %}</li>
         </ul>
-
     </div>
 
 
@@ -126,22 +125,19 @@
     </div>
 
     <!-- Uživatelské menu a košík -->
-    <div class="d-flex justify-content-end">
-        <div class="collapse navbar-collapse" id="navbarToggler">
-            <!-- Uživatelské menu a košík -->
-            <ul class="navbar-nav nav-tabs ms-auto">
-                <div class="navbar-end">
+    <div class="navbar-end d-flex align-items-center"> <!-- d-flex justify-content-end-->
                 <!-- Uživatelské menu -->
-                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                <div id="userDropdown" class="nav-item dropdown me-3" >
+                    <a class="nav-link dropdown-toggle" href="#" role="button"
                        data-bs-toggle="dropdown"
                        aria-expanded="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="-112.6 199.2 23 28"
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-112.6 199.2 23 28"
                              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                              stroke-linejoin="round" class="icon-size">
                             <path d="M-91.5 213.4c-.8-1.3-1.8-2.5-3-3.5.5-1 .7-2 .7-3.2 0-2.1-.8-4-2.2-5.3-1.4-1.4-3.3-2.2-5.3-2.2s-4 .8-5.3 2.2c-1.4 1.4-2.2 3.3-2.2 5.3 0 1.1.3 2.2.7 3.2-1.2.9-2.3 2.1-3 3.5-.9 1.7-1.5 3.6-1.5 5.6v8.2h22.7V219c-.2-2-.7-3.9-1.6-5.6z"></path>
                         </svg>
                     </a>
-                    <ul class="navbar-nav dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                         {% if user.is_authenticated %}
                             <li><a class="dropdown-item" href="{% url 'profile' %}">{{ user.username }}</a></li>
                             <li><a class="dropdown-item" href="{% url 'logout' %}">Odhlásit se</a></li>
@@ -151,7 +147,8 @@
                         {% endif %}
                     </ul>
                 </div>
-                <div class="nav-item dropdown" id="cart-wrapper">
+            <!-- Košík -->
+                <div id="cart-wrapper" class="nav-item dropdown">
                     <a class="nav-link d-flex align-items-center" href="#" id="cart-toggle">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon-size" viewBox="680.7 197.5 39 28"
                              fill="none"
@@ -170,12 +167,11 @@
                         <a href="/cart/" class="cart-link">Zobrazit košík</a>
                     </div>
                 </div>
-            </ul>
-        </div>
+            </div>
     </div>
 
 
-    <!--  </div> -->
+ </div>
 
 
 </nav>

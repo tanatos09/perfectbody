@@ -164,7 +164,14 @@ height: auto; /* Zachování proporcí obrázku */
     display: block; /* Zajištění, že odkaz zabírá celý řádek */
     border-bottom: 1px solid #ddd; /* Spodní čára mezi kategoriemi */
 }
-
+.dropdown-menu > h5 {
+    background-color: #6c757d; /* Tmavě šedé pozadí */
+    color: white; /* Bílé písmo */
+    font-weight: bold; /* Tučné písmo */
+    padding: 10px 15px; /* Vnitřní odsazení */
+    display: block; /* Zajištění, že odkaz zabírá celý řádek */
+    border-bottom: 1px solid #ddd; /* Spodní čára mezi kategoriemi */
+}
 /* Hover efekt pro kategorie */
 .dropdown-menu > li > a:hover {
     background-color: #5a6268; /* Tmavší šedé pozadí při najetí */
@@ -733,7 +740,7 @@ button:hover {
 
 #navbar-cart-dropdown {
     position: absolute;
-    top: calc(100% + 5px);
+
     right: 0;
     min-width: 250px;
     max-width: 90%;
@@ -754,10 +761,6 @@ button:hover {
 }
 #userDropdown {
     font-size: 0.9em;
-    border-left: double 3px #aaa; /* Dvojitá čára na levé straně */
-    border-right: double 3px #aaa; /* Dvojitá čára na pravé straně */
-    border-bottom: solid 2px #aaa; /* Jednoduchá čára nahoře */
-    border-top: none; /* Bez čáry dole */
     border-radius: 0 0 5px 5px;
     padding: 5px 15px; /* Vnitřní odsazení */
     color: #696969; /* Základní barva textu */
@@ -765,6 +768,13 @@ button:hover {
     text-decoration: none; /* Bez podtržení textu */
     transition: all 0.3s ease; /* Plynulý přechod efektů */
     margin: 0 10px ;
+}
+#userDropdown, #cart-wrapper {
+    margin-right: 10px; /* Mezera mezi prvky */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; /* Pro dropdown menu */
 }
 .add-to-cart a {
     display: inline-block; /* Zajistí vzhled tlačítka */
@@ -973,10 +983,28 @@ textarea{
     display: flex;
     justify-content: space-between;
     align-items: center;}
+.stars {color: #f5b301;}
+.icon-size {
+    width: 2em; /* Zvýšená šířka ikony */
+    height: 2em; /* Zvýšená výška ikony */
+    vertical-align: middle; /* Zarovnání na střed s textem */
+}
+.navbar-end {
+    display: flex;
+    justify-content: flex-end; /* Zarovnání doprava */
+   gap: 15px; /* Mezera mezi ikonami */
+    align-items: flex-end; /* Zarovná obsah na spodní stranu */
+    height: 100%; /* Výška kontejneru */
+    position: relative; /* Umístění relativně k rodiči */
+}
 
+#userDropdown {
+    order: 1; /* Uživatelské menu se zobrazí jako první */
+}
 
-
-
+#cart-wrapper {
+    order: 2; /* Košík se zobrazí za uživatelským menu */
+}
 
 /* Univerzální styl pro formuláře */
 form {
@@ -1074,13 +1102,7 @@ form.add-to-cart {
 .red
 {color: red;}
 
-.navbar-end {
-    display: flex; /* Flexbox pro horizontální zarovnání */
-    justify-content: flex-end; /* Zarovná obsah doprava */
-    align-items: flex-end; /* Zarovná obsah na spodní stranu */
-    height: 100%; /* Výška kontejneru */
-    position: relative; /* Umístění relativně k rodiči */
-}
+
 
 
 @media (max-width: 768px) {

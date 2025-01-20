@@ -146,6 +146,16 @@
         });
     });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const emailLink = document.getElementById('emailLink');
+    const email = 'example'; // Část před zavináčem
+    const domain = 'example.com'; // Doména
+    emailLink.setAttribute('href', `mailto:${email}@${domain}`);
+    emailLink.textContent = 'Napište nám';
+});
+
+</script>
 
 </body>
 </html>

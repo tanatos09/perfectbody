@@ -123,6 +123,7 @@
     <hr>
 
     <button type="submit">Registrovat</button>
+    <hr><a href="{% url 'trainer_register' %}">Registrovat se jako trenér</a>
 </form>
 
 <script>
@@ -138,6 +139,6 @@
         toggleAddressFields();
     });
 </script>
-            <hr><hr><a href="{% url 'trainer_register' %}">Registrovat se jako trenér</a>
+
 
 {% endblock %}

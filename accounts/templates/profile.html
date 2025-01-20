@@ -1,39 +1,41 @@
 {% extends "base.html" %}
-
 {% block content %}
-<h2>Váš profil</h2>
+    
+<h2 class="text-center">Váš profil</h2>
 <!-- Trenérské informace (pouze pokud je uživatel trenér) -->
 {% if is_trainer %}
-<div>
-    <h3>Trenérský profil</h3>
-    <p><strong>Krátký popis:</strong> {{ user.trainer_short_description|default:"Žádný krátký popis není dostupný." }}</p>
-    <p><strong>Dlouhý popis:</strong> {{ user.trainer_long_description|default:"Žádný dlouhý popis není dostupný." }}</p>
-    <p><strong>Profilový obrázek:</strong></p>
-    {% if user.profile_picture %}
-        <img src="{{ user.profile_picture }}" alt="Profilový obrázek" class="profile-picture">
-    {% else %}
-        <p>Nemáte nahrán žádný profilový obrázek.</p>
-    {% endif %}
+    <div class="mb-4">
+        <h3>Trenérský profil</h3>
+        <p><strong>Krátký
+            popis:</strong> {{ user.trainer_short_description|default:"Žádný krátký popis není dostupný." }}</p>
+        <p><strong>Dlouhý
+            popis:</strong> {{ user.trainer_long_description|default:"Žádný dlouhý popis není dostupný." }}</p>
+        <p><strong>Profilový obrázek:</strong></p>
+        {% if user.profile_picture %}
+            <img src="{{ user.profile_picture }}" alt="Profilový obrázek" class="profile-picture img-fluid rounded w-50">
+        {% else %}
+            <p>Nemáte nahrán žádný profilový obrázek.</p>
+        {% endif %}
 
-    <!-- Schválené služby -->
-    <h3>Nabízené služby</h3>
-    {% if approved_services %}
-        <ul>
-        {% for service in approved_services %}
-            <li>
-                <strong>{{ service.service.product_name }}</strong>: {{ service.trainers_service_description }}
-            </li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>Nemáte žádné schválené služby.</p>
-    {% endif %}
-</div>
-<hr>
+        <!-- Schválené služby -->
+        <h3>Nabízené služby</h3>
+        {% if approved_services %}
+            <ul>
+                {% for service in approved_services %}
+                    <li>
+                        <strong>{{ service.service.product_name }}</strong>: {{ service.trainers_service_description }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Nemáte žádné schválené služby.</p>
+        {% endif %}
+    </div>
+    <hr>
 {% endif %}
 
 <!-- Osobní informace -->
-<div>
+<div class="mb-4">
     <h3>Osobní informace</h3>
     <p><strong>Uživatelské jméno:</strong> {{ user.username }}</p>
     <p><strong>Jméno:</strong> {{ user.first_name }}</p>
@@ -54,19 +56,19 @@
 
 
 <!-- Objednávky -->
-<div>
+<div class="mb-4">
     <h3>Moje objednávky</h3>
     {% if recent_orders %}
         <ul>
-        {% for order in recent_orders %}
-            <li>
-                <a href="{% url 'order_detail' order.id %}">
-                    {% with order.id|stringformat:"08d" as formatted_id %}
-                        Objednávka #{{ formatted_id }} - {{ order.get_order_state_display }}
-                    {% endwith %}
-                </a> ({{ order.order_creation_datetime|date:"d.m.Y H:i" }})
-            </li>
-        {% endfor %}
+            {% for order in recent_orders %}
+                <li>
+                    <a href="{% url 'order_detail' order.id %}">
+                        {% with order.id|stringformat:"08d" as formatted_id %}
+                            Objednávka #{{ formatted_id }} - {{ order.get_order_state_display }}
+                        {% endwith %}
+                    </a> ({{ order.order_creation_datetime|date:"d.m.Y H:i" }})
+                </li>
+            {% endfor %}
         </ul>
         <a href="{% url 'my_orders' %}">Zobrazit všechny objednávky</a>
     {% else %}

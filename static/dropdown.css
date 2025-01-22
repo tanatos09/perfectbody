@@ -1,4 +1,5 @@
 /* Dropdown menu */
+
 .dropdown-menu {
     font-size: 0.8em;
     padding: 0; /* Odstranění výchozích odsazení */
@@ -11,7 +12,6 @@
     border: 1px solid #ccc; /* Ohraničení menu */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Jemný stín */
 }
-
 /* Kategorie (hlavní položky v dropdownu) */
 .dropdown-menu > li > a {
     background-color: #6c757d; /* Tmavě šedé pozadí */
@@ -114,21 +114,89 @@
 }
 
 #userDropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white; /* Bílé pozadí */
+    font-weight: bold; /* Tučné písmo */
+    border-radius: 4px; /* Zaoblené rohy */
+    transition: all 0.3s ease; /* Přidá plynulé přechody */
     font-size: 0.9em;
-    border-radius: 0 0 5px 5px;
     padding: 5px 15px; /* Vnitřní odsazení */
     color: #696969; /* Základní barva textu */
-    background-color: transparent; /* Průhledné pozadí */
     text-decoration: none; /* Bez podtržení textu */
-    transition: all 0.3s ease; /* Plynulý přechod efektů */
     margin: 0 10px ;
+    order: 1; /* Uživatelské menu se zobrazí jako první */
 }
+#userDropdown:hover {
+    background-color: #F8F9FA; /* Světle šedé pozadí při najetí */
+    color: darkred; /* Červený text při najetí */
+}
+#userDropdown.active {
+    background-color: #6C757D; /* Tmavě šedé pozadí při aktivním stavu */
+    color: white; /* Bílý text při aktivním stavu */
+    border-color: #6C757D; /* Barva okraje odpovídající pozadí */
+}
+/* Dropdown menu pro uživatele */
+#userDropdown .dropdown-menu {
+    position: absolute;
+    top: calc(100%);
+    right: 0;
+    min-width: 250px;
+    background-color: white;
+    color: #6C757D !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    z-index: 1050;
+    padding: 5px 15px;
+    display: none;
+    overflow-y: auto;
+    max-height: 400px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(-10px);
+    opacity: 0;
+}
+/* Zobrazení dropdown menu při hoveru */
+#userDropdown:hover .dropdown-menu,
+#userDropdown.active .dropdown-menu {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+#userDropdown .dropdown-menu a {
+    color: #6C757D;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+#userDropdown .dropdown-menu a:hover {
+    color: darkred;
+    background-color: #F8F9FA;
+}
+#userDropdown .dropdown-menu h5 {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: white;
+    background-color: #6C757D;
+    padding: 3px 10px;
+    border-radius: 5px;
+}
+#userDropdown .dropdown-menu p {
+    margin: 10px 0 0 0;
+    font-size: 0.9rem;
+    color: #333;
 #userDropdown, #cart-wrapper {
-
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative; /* Pro dropdown menu */
+}
+#userDropdown > .dropdown-menu > li > a{
+    background-color: white;
+    color:green;/*snaha o */
 }
 #navbar-cart-dropdown h5 {
     font-size: 1.1rem;
@@ -198,12 +266,10 @@
     font-size: 0.9rem;
     color: #333;
 }
+
 #navbar-cart-dropdown ul li:hover a {
     color: darkred !important;
     background-color: #f8f9fa;
-}
-#userDropdown {
-    order: 1; /* Uživatelské menu se zobrazí jako první */
 }
 
 

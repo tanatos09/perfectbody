@@ -9,12 +9,6 @@ form {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Jemný stín */
 }
 
-h3 {
-    margin-bottom: 15px; /* Mezera pod nadpisem */
-    font-size: 1.2rem; /* Velikost písma */
-    color: #333; /* Tmavě šedý text */
-}
-
 .form-group {
     margin-bottom: 15px; /* Mezera mezi prvky formuláře */
 }

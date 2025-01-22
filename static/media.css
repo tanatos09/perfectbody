@@ -1,15 +1,7 @@
 
 @media (max-width: 768px) {
-    #search-form-nav {
-        margin-top: 0;
-        margin-bottom: 10px; /* Malé odsazení pod navbar */
-        display: block; /* Zarovnání pod navbar */
-        max-width: 200px; /* Přizpůsobte podle potřeby */
-    }
-    #search-form-all {
-        margin-top: 50px;
-        flex-direction: column; /* Formulář pod logem a košíkem */
-        align-items: center;
+      #search-form {
+        width: 80%; /* Širší vyhledávací pole na menších obrazovkách */
     }
 
     .logo-img {
@@ -21,15 +13,35 @@
      .navbar-logo {
         max-height: 50px;
     }
+        #navbar-cart-dropdown {
+        left: 10px;
+        right: 10px;
+        max-width: calc(100% - 20px);
+    }
+        .toggle-info {
+        display: block; /* Zobrazení tlačítka pouze na mobilním zobrazení */
+    }
+    /* #search-form-nav {
+        margin-top: 0;
+        margin-bottom: 10px;
+        display: block;
+        max-width: 200px;
+    }
+    #search-form-all {
+        margin-top: 50px;
+        flex-direction: column;
+        align-items: center;
+    }
+
 
     .search-wrapper {
         display: flex;
-        justify-content: center; /* Zarovnání na střed */
+        justify-content: center;
         align-items: center;
-        width: 100%; /* Kontejner pokryje celou šířku */
+        width: 100%;
         margin: 0 auto;
         padding: 10px 0;
-        gap: 10px; /* Mezera mezi vyhledáváním a ikonou */
+        gap: 10px;
     }
 
     #navbarNav {
@@ -39,26 +51,20 @@
         padding: 0;
     }
 
-    #navbar-cart-dropdown {
-           left: 10px; /* Odsazení od levého okraje */
-        right: 10px; /* Odsazení od pravého okraje */
-        max-width: calc(100% - 20px); /* Dynamická šířka pro mobilní zařízení */
-    }
+
 
     .weather {
-        display: none; /* Skryto na mobilech ve výchozím stavu */
+        display: none;
     }
 
-    .toggle-info {
-        display: block; /* Zobrazení tlačítka pouze na mobilním zobrazení */
-    }
+
     #toggle-button {
-        cursor: default; /* Výchozí ukazatel myši */
+        cursor: default;
     }
    .collapse.show {
-        display: flex !important; /* Přepsání stylu pro viditelnost při aktivaci */
+        display: flex !important;
     }
-
+*/
 }
 
 @media (min-width: 768px) {

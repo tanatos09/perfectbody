@@ -40,6 +40,11 @@ header {
     margin: 0;
     top: 0;
 }
+.category-image{
+    max-width: 450px;
+    height: auto;
+
+}
 td {
     padding-right: 20px;
 }
@@ -73,9 +78,14 @@ main a {
     text-decoration: none; /* Bez podtržení */
     transition: color 0.2s ease; /* Plynulý přechod barvy při najetí */
 }
-
+main h3 a{
+    color: darkred;
+}
+main h3 a:hover{
+    color: #6c757d;
+}
 main a:hover {
-    color:darkred; /* Červená barva při najetí */
+    color:darkred;
 }
 
 h1 {
@@ -100,19 +110,19 @@ h2 {
 main img {
     float: left;
     margin-right: 20px; /* Mezera mezi obrázkem a textem */
-
     max-width: 400px; /* Maximální šířka obrázku */
-
-
-height: auto; /* Zachování proporcí obrázku */
+    height: auto; /* Zachování proporcí obrázku */
 }
-
+.category-image+p+h2 {
+    margin-top: 50px; /* Odsazení nadpisu od obrázku */
+    clear: left;
+}
 /* Obsah hlavního bloku */
 .content-container {
     flex-grow: 1; /* Roztáhne kontejner */
     box-sizing: border-box;
     width: 85% !important;
-    background-color: rgba(255, 255, 255, 0.7); /* Poloprůhledné pozadí */
+    background-color: rgba(255, 255, 255, 0.8); /* Poloprůhledné pozadí */
     /*padding: 20px;  Vnitřní odsazení */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /*  Stín kolem obsahu */
     margin: 0;
@@ -179,7 +189,10 @@ height: auto; /* Zachování proporcí obrázku */
 /* Responsivní navbar */
 #MainNav .navbar-toggler {
     border: none;
-    font-size: 1rem;
+    font-size: 1em; /* Velikost textu */
+    background-color: white;
+    color: darkred;
+    margin-left: 10px; /* Odsazení od ikony */
 }
 #MainNav .navbar-nav {
     margin-top: 0 !important; /* Odstranění horního okraje */
@@ -343,7 +356,7 @@ ol.breadcrumb>li>a:hover {
 
 main li h3 {
     list-style: none;
-    margin: 0.5em 0;
+    margin: 1.5em 0 0.5em 0;
     text-align: left;
     color: darkred;
     border-top: solid 1px darkred;
@@ -353,8 +366,6 @@ h3 {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-}
-h3 {
     margin-bottom: 15px; /* Mezera pod nadpisem */
     font-size: 1.2rem; /* Velikost písma */
     color: #333; /* Tmavě šedý text */
@@ -381,15 +392,24 @@ h3 {
     padding: 10px;
 }
 .alert-container {
-    display: flex;
+    display: fixed;
+    left: 50%; /* Horizontální zarovnání na střed */
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    width: 100%; /* Roztažení na celou šířku main */
     margin-top: 20px; /* Odstup od horního okraje */
     margin-bottom: 10px; /* Odstup od obsahu */
     z-index: 1050; /* Zajištění viditelnosti nad obsahem */
-
+    position: fixed; /* Překryv nad stránkou */
+    top: 70px; /* Vzdálenost od horního okraje */
+    left: 50%; /* Horizontální zarovnání na střed */
+    transform: translateX(-50%); /* Zarovnání středu elementu */
+    z-index: 1050; /* Zajištění, že se zobrazí nad obsahem stránky */
+    width: auto; /* Přizpůsobení šířky obsahu */
+    white-space: nowrap;
+    max-width: 90%; /* Maximální šířka pro menší obrazovky */
+    padding: 10px; /* Vnitřní odsazení */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Jemný stín */
 }
 
 /* Alerty */
@@ -485,12 +505,11 @@ button:hover {
 
 /*Košík - cart*/
 #MainNav #cart-wrapper{
-   position: absolute;
-
+    position: absolute;
     border: 0;
     border-radius: 0 0 5px 5px;
 }
-#cart-wrapper {
+#cart-wrapper{
     top:0;
     display: flex; /* Flexbox pro správné zarovnání obsahu */
     align-items: center; /* Zarovná obsah vertikálně na střed */
@@ -516,11 +535,24 @@ button:hover {
     overflow-y: auto;
 }
 
-#cart-toggle span {
-    font-size: 0.8em; /* Velikost textu */
-    color: darkred; /* Černý text */
-    margin-left: 10px; /* Odsazení od ikony */
+#cart-toggle {
+    display: flex;
+    align-items: center;
+    position: relative;
 }
+
+#cart-toggle .cart-info {
+    position: absolute;
+    left: -100px; /* Posune div vlevo od ikony */
+    top: 50%;
+    transform: translateY(-50%); /* Vertikální zarovnání na střed ikony */
+    color: darkred;
+    background-color: white;
+    padding: 5px 10px; /* Vnitřní odsazení */
+    font-size: 0.9rem; /* Velikost textu */
+    white-space: nowrap; /* Zabrání zalomení textu */
+}
+
 
 
 .add-to-cart a {
@@ -609,10 +641,10 @@ p {
 
 
 .trainer-image{
-    max-width: 200px;
+    max-width: 450px;
     height: auto;
-    position: absolute;
 }
+
 .trainer-reviews > h2{
     color: white;
     text-align: center;
@@ -672,8 +704,7 @@ textarea{
 }
 .navbar-end {
     display: flex;
-    justify-content: flex-end; /* Zarovnání doprava */
-   gap: 15px; /* Mezera mezi ikonami */
+    gap: 20px; /* Mezera mezi ikonami */
     align-items: flex-end; /* Zarovná obsah na spodní stranu */
     height: 100%; /* Výška kontejneru */
     position: relative; /* Umístění relativně k rodiči */
@@ -871,12 +902,7 @@ label {
     opacity: 1;
     transform: translateY(0);
 }
-#cart-toggle span {
-    font-size: 20px; /* Velikost textu */
-   background-color: white;
-    color: darkred;
-    margin-left: 10px; /* Odsazení od ikony */
-}
+
 #navbar-cart-dropdown a {
     color: #6c757d;
     text-decoration: none;
@@ -920,79 +946,7 @@ label {
     color: darkred !important;
     background-color: #f8f9fa;
 }
-#userDropdown {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 15px; /* Přidá padding pro větší klikací oblast */
-    background-color: white; /* Bílé pozadí */
-    color: #6C757D; /* Šedý text */
-    font-weight: bold; /* Tučné písmo */
-    border-radius: 4px; /* Zaoblené rohy */
-    transition: all 0.3s ease; /* Přidá plynulé přechody */
-    cursor: pointer; /* Změní kurzor na ručičku */
-}
-#userDropdown:hover {
-    background-color: #F8F9FA; /* Světle šedé pozadí při najetí */
-    color: darkred; /* Červený text při najetí */
-}
-#userDropdown.active {
-    background-color: #6C757D; /* Tmavě šedé pozadí při aktivním stavu */
-    color: white; /* Bílý text při aktivním stavu */
-    border-color: #6C757D; /* Barva okraje odpovídající pozadí */
-}
-/* Dropdown menu pro uživatele */
-#userDropdown .dropdown-menu {
-    position: absolute;
-    top: calc(100%);
-    right: 0;
-    min-width: 250px;
-    background-color: white;
-    color: #6C757D !important;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-    z-index: 1050;
-    padding: 10px 15px;
-    display: none;
-    overflow-y: auto;
-    max-height: 400px;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    transform: translateY(-10px);
-    opacity: 0;
-}
-/* Zobrazení dropdown menu při hoveru */
-#userDropdown:hover .dropdown-menu,
-#userDropdown.active .dropdown-menu {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
-}
-#userDropdown .dropdown-menu a {
-    color: #6C757D;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 10px;
-    border-radius: 4px;
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
-#userDropdown .dropdown-menu a:hover {
-    color: darkred;
-    background-color: #F8F9FA;
-}
-#userDropdown .dropdown-menu h5 {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: white;
-    background-color: #6C757D;
-    padding: 3px 10px;
-    border-radius: 5px;
-}
-#userDropdown .dropdown-menu p {
-    margin: 10px 0 0 0;
-    font-size: 0.9rem;
-    color: #333;
-}
+
 
 label div.rating{
     justify-content: center;

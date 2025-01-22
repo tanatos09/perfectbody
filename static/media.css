@@ -1,0 +1,105 @@
+
+@media (max-width: 768px) {
+    #search-form-nav {
+        margin-top: 0;
+        margin-bottom: 10px; /* Malé odsazení pod navbar */
+        display: block; /* Zarovnání pod navbar */
+        max-width: 200px; /* Přizpůsobte podle potřeby */
+    }
+    #search-form-all {
+        margin-top: 50px;
+        flex-direction: column; /* Formulář pod logem a košíkem */
+        align-items: center;
+    }
+
+    .logo-img {
+        max-height: 50%; /* Zmenší logo na polovinu při mobilním zobrazení */
+    }
+    .collapse {
+        display: block;
+    }
+     .navbar-logo {
+        max-height: 50px;
+    }
+
+    .search-wrapper {
+        display: flex;
+        justify-content: center; /* Zarovnání na střed */
+        align-items: center;
+        width: 100%; /* Kontejner pokryje celou šířku */
+        margin: 0 auto;
+        padding: 10px 0;
+        gap: 10px; /* Mezera mezi vyhledáváním a ikonou */
+    }
+
+    #navbarNav {
+        text-align: left;
+        align-items: flex-end;
+        margin: 0;
+        padding: 0;
+    }
+
+    #navbar-cart-dropdown {
+           left: 10px; /* Odsazení od levého okraje */
+        right: 10px; /* Odsazení od pravého okraje */
+        max-width: calc(100% - 20px); /* Dynamická šířka pro mobilní zařízení */
+    }
+
+    .weather {
+        display: none; /* Skryto na mobilech ve výchozím stavu */
+    }
+
+    .toggle-info {
+        display: block; /* Zobrazení tlačítka pouze na mobilním zobrazení */
+    }
+    #toggle-button {
+        cursor: default; /* Výchozí ukazatel myši */
+    }
+   .collapse.show {
+        display: flex !important; /* Přepsání stylu pro viditelnost při aktivaci */
+    }
+
+}
+
+@media (min-width: 768px) {
+    .icon-size-md {
+        width: 1.5em;
+        height: 1.5em;
+    }
+}
+
+@media (min-width: 992px) {
+    .icon-size-lg {
+        width: 2em;
+        height: 2em;
+    }
+}
+
+@media (min-width: 769px) {
+    .toggle-info {
+        display: none; /* Skryté na desktopu */
+    }
+
+    .weather {
+        display: flex; /* Viditelné na větších obrazovkách */
+    }
+    .toggle-info {
+        display: none; /* Tlačítko skryté na desktopu */
+    }
+}
+
+@media (min-width: 1200px) {
+     #search-form {
+        width: 50%; /* Užší na extra velkých obrazovkách */
+    }
+    .icon-size {
+        width: 2.5em;
+        height: 2.5em;
+    }
+}
+/* Styl pro střední obrazovky (768px až 1024px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    #search-form-nav {
+        margin-top: 30px; /* Menší odsazení od horní části stránky */
+    }
+}

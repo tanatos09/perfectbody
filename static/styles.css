@@ -53,6 +53,12 @@ table{
 }
 .review{
     text-align: center;
+    margin: 1rem auto;
+    max-width: 600px;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
 }
 /* Main styling */
 main {
@@ -105,7 +111,7 @@ h2 {
     color: white;
     font-size: 1.3em;
     padding: 5px 10px;
-
+    box-sizing: border-box; /* Zahrnutí paddingu do šířky */
 }
 main img {
     float: left;
@@ -117,6 +123,7 @@ main img {
     margin-top: 50px; /* Odsazení nadpisu od obrázku */
     clear: left;
 }
+
 /* Obsah hlavního bloku */
 .content-container {
     flex-grow: 1; /* Roztáhne kontejner */
@@ -602,7 +609,8 @@ button:hover {
 }
 .pagination{margin-top: 1.5rem;
 .service-reviews{
-    margin-top: 2rem; text-align: center;
+    margin-top: 2rem;
+    text-align: center;
 }
 button[type="submit"]{
     padding:0.25rem 0.5rem;
@@ -630,7 +638,7 @@ button[type="submit"]{
 .inline{display: inline-block; text-align: left;}
 textarea #comment{width: 100%; padding: 0.5rem; margin-bottom: 1rem; font-size: 1rem;}
 
-.review{margin: 1rem auto; max-width: 600px; padding: 1rem; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9;}
+
 p {
     font-size: 1rem; /* Velikost písma */
     line-height: 1.6; /* Výška řádku pro lepší čitelnost */
@@ -956,6 +964,16 @@ label div.rating{
     margin-top: 1rem;
     text-align: center;
 }
+.styled-link h2 {
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: 5px solid transparent;
+    transition: border-color 0.3s, color 0.3s;
+}
+
+.styled-link:hover h2 {
+    border-bottom-color: darkred;
+}
 
 .rating-stars {
     display: flex;
@@ -1014,4 +1032,23 @@ label div.rating{
 
 .rating input:checked ~ label {
     color: gold;
+}
+
+/* Styl pro odkazy vedle H2 */
+#services-links {
+    font-size: 0.6em; /* Menší velikost písma */
+    font-style: italic ;
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: 3px solid darkred;
+    transition: border-color 0.3s, color 0.3s;
+}
+
+#services-links > a {
+    color: white;
+}
+
+#services-links > a:hover {
+    border-bottom-color: red;
+    transition: color 0.3s ease;
 }

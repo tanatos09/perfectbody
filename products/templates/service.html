@@ -77,8 +77,7 @@
             <p>
                 <strong>Trenéři:</strong>
                 {% for trainer_service in approved_trainers_services %}
-                    <a href="{% url 'trainer' trainer_service.trainer.id %}">{{ trainer_service.trainer.full_name }}</a>
-                    {% if not forloop.last %}, {% endif %}
+                    <a href="{% url 'trainer' trainer_service.trainer.id %}">{{ trainer_service.trainer.full_name }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
             </p>
         {% else %}
@@ -118,7 +117,7 @@
 {% endif %}
 <!-- Průměrné hodnocení -->
 <div class="average-rating">
-    <h2 style="text-align: center;">Průměrné hodnocení</h2>
+    <h2>Průměrné hodnocení</h2>
     {% if average_rating > 0 %}
         <p style="text-align: center;">
             <strong>{{ average_rating }} / 5</strong>
@@ -182,7 +181,7 @@
     <h2>Hodnocení</h2>
     {% if page_reviews %}
         {% for review in page_reviews %}
-            <div class="review" style="margin: 1rem auto; max-width: 600px; padding: 1rem; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9;">
+            <div class="review">
                 <p><strong>Hodnotil:</strong> {{ review.reviewer.username }}</p>
                 <p>
                     {% for i in "12345" %}

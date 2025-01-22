@@ -109,3 +109,36 @@
         margin-top: 30px; /* Menší odsazení od horní části stránky */
     }
 }
+
+
+/*od Evy*/
+
+@media (max-width: 768px) {
+    #search-form {
+        width: 80%; /* Širší vyhledávací pole na menších obrazovkách */
+    }
+
+    .logo-img {
+        max-height: 50%; /* Zmenší logo na polovinu při mobilním zobrazení */
+    }
+    .collapse {
+        display: block;
+    }
+}
+
+@media (min-width: 1200px) {
+     #search-form {
+        width: 50%; /* Užší na extra velkých obrazovkách */
+    }
+    .icon-size {
+        width: 2.5em;
+        height: 2.5em;
+    }
+}
+@media (max-width: 768px) {
+    #cart-dropdown {
+        left: 0; /* Zarovná dropdown k levému okraji na malých obrazovkách */
+        right: auto; /* Zruší zarovnání doprava */
+        min-width: 90%; /* Dropdown zabírá většinu šířky na menších obrazovkách */
+    }
+}

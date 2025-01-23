@@ -6,14 +6,14 @@
 
     <!-- Breadcrumbs navigace -->
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb" style="display: flex; list-style: none; padding: 0;">
+        <ol class="breadcrumb">
             <!-- Domů -->
             <li class="breadcrumb-item">
                 <a href="{% url 'home' %}">Domů</a>
             </li>
 
             <!-- Oddělovač -->
-            <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+            <li class="breadcrumb-item">&#187;</li>
 
             <!-- Hlavní kategorie služeb -->
             {% if service.category %}
@@ -26,7 +26,7 @@
 
             <!-- Rodičovská kategorie, pokud existuje -->
             {% if service.category and service.category.category_parent %}
-                <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+                <li class="breadcrumb-item">&#187;</li>
                 <li class="breadcrumb-item">
                     <a href="{% url 'services' service.category.category_parent.pk %}">
                         {{ service.category.category_parent.category_name }}
@@ -36,7 +36,7 @@
 
             <!-- Aktuální kategorie -->
             {% if service.category %}
-                <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+                <li class="breadcrumb-item">&gt;</li>
                 <li class="breadcrumb-item">
                     <a href="{% url 'services' service.category.pk %}">
                         {{ service.category.category_name }}
@@ -45,7 +45,7 @@
             {% endif %}
 
             <!-- Název služby -->
-            <li class="breadcrumb-item" style="margin: 0 5px;">&gt;</li>
+            <li class="breadcrumb-item">&gt;</li>
             <li class="breadcrumb-item active" aria-current="page">
                 {{ service.product_name }}
             </li>
@@ -218,7 +218,7 @@
 
                 {% if page_reviews.has_next %}
                     <a href="?page={{ page_reviews.next_page_number }}">Další</a>
-                    <a href="?page={{ page_reviews.paginator.num_pages }}">Poslední &raquo;</a>
+                    <a href="?page={{ page_reviews.paginator.num_pages }}">Poslední &#187;</a>
                 {% endif %}
             </span>
         </div>

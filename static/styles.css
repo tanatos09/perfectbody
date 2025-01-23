@@ -60,6 +60,15 @@ table{
     border-radius: 5px;
     background-color: #f9f9f9;
 }
+.service-reviews{
+    margin-top: 2rem;
+    text-align: center;
+}
+.add-review {
+    margin-top: 2rem;
+    text-align: center;
+}
+
 /* Main styling */
 main {
     align-items: center;
@@ -608,10 +617,7 @@ button:hover {
     padding: 0;
 }
 .pagination{margin-top: 1.5rem;
-.service-reviews{
-    margin-top: 2rem;
-    text-align: center;
-}
+
 button[type="submit"]{
     padding:0.25rem 0.5rem;
     font-size: 1rem;
@@ -624,11 +630,6 @@ button[type="submit"]{
     text-align: center;
     margin-top: 2rem;
     color: red;}
-}
-
-.add-review {
-    margin-top: 2rem;
-    text-align: center;
 }
 
 
@@ -815,7 +816,7 @@ form.add-to-cart {
 }
 
 .red
-{color: red;}
+{color: darkred;}
 /* Styl pro formulář s množstvím */
 form.quantity-form {
     padding: 0; /* Odstranění paddingu */

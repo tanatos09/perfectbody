@@ -93,7 +93,7 @@ main {
     max-width: 100%; /* Zamezí překročení šířky */
     margin: 0; /* Odstranění okrajů */
     box-sizing: border-box; /* Zahrnuje padding do celkové šířky */
-    /*  min-height: calc(100vh - var(--header-height) - var(--footer-height));  Dynamicky určuje výšku */
+    min-height: calc(100vh - var(--header-height) - var(--footer-height));
 }
 
 main li {
@@ -507,9 +507,9 @@ h3 {
 
 /* === Footer === */
 footer {
-    font-size: 0.8em;
-    background-color: #f8f9fa !important; /* Světle šedá barva */
-    color: #696969; /* Šedé písmo */
+    font-size: 0.8rem;
+    background-color: #f8f9fa;
+    color: #696969;
     text-align: center;
     padding: 0.5rem 0;
     position: relative;
@@ -527,12 +527,12 @@ footer a {
     border: double #6c757d;
     border-radius: 5px;
     text-decoration: none;
-    padding: 0 0.5rem;
+    padding: 0 0.8rem;
 }
 
 footer a:hover {
-    color: #ffffff; /* Bílé písmo při najetí myší */
-    background-color: #6c757d; /* Šedé podbarvení při najetí myší */
+    color: #ffffff;
+    background-color: #6c757d;
 
 }
 
@@ -870,7 +870,6 @@ select {
     border-radius: 4px; /* Zaoblené rohy */
     box-sizing: border-box; /* Zohlednění paddingu */
     transition: border-color 0.3s; /* Plynulý přechod změny barvy rámečku */
-    margin: 0 10px;
 }
 
 input:focus,
@@ -1037,7 +1036,7 @@ button:disabled {
 
 label div.rating {
     justify-content: center;
-    font-size: 1em;
+    font-size: 0.8em;
 }
 
 .average-rating {

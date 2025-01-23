@@ -1,5 +1,4 @@
 /* Dropdown menu */
-
 .dropdown-menu {
     font-size: 0.8em;
     padding: 0; /* Odstranění výchozích odsazení */
@@ -70,10 +69,7 @@
 
 .dropdown-item:hover {
     background-color: darkred;
-
 }
-
-
 .dropdown:hover .dropdown-menu {
     display: block;
 }
@@ -99,7 +95,7 @@
     right: 0;
     min-width: 250px;
     max-width: 90%;
-    background-color: white;
+    background-color: #ffffff;
     color: #6c757d;
     border: 1px solid #ccc;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -126,7 +122,7 @@
     padding: 5px 15px; /* Vnitřní odsazení */
     color: #696969; /* Základní barva textu */
     text-decoration: none; /* Bez podtržení textu */
-    margin: 0 10px ;
+    margin: 0 10px;
     order: 1; /* Uživatelské menu se zobrazí jako první */
 }
 #userDropdown:hover {
@@ -145,7 +141,7 @@
     right: 0;
     min-width: 250px;
     background-color: white;
-    color: #6C757D !important;
+    color: #6C757D;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     z-index: 1050;
@@ -192,11 +188,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative; /* Pro dropdown menu */
+    position: relative;
 }
 #userDropdown > .dropdown-menu > li > a{
     background-color: white;
-    color:green;/*snaha o */
+    color:green;
 }
 #navbar-cart-dropdown h5 {
     font-size: 1.1rem;
@@ -267,8 +263,7 @@
     color: #333;
 }
 
-#navbar-cart-dropdown ul li:hover a {
-    color: darkred !important;
+#navbar-cart-dropdown ul li:hover a{
+    color: darkred;
     background-color: #f8f9fa;
-
 }

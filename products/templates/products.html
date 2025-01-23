@@ -163,9 +163,7 @@
                             <div class="add-to-cart">
                                 <form method="post" action="{% url 'add_to_cart' product.id %}" class="add-to-cart">
                             {% csrf_token %}
-                                  <button type="button"
-                                        class="add-to-cart-btn"
-                                        data-product-id="{{ product.id }}">Přidat do košíku
+                                  <button type="button" class="add-to-cart-btn" data-product-id="{{ product.id }}">Přidat do košíku
                                     </button>
                                 </form>
                         {% else %}

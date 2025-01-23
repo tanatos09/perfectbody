@@ -4,14 +4,14 @@
 
     <!-- Breadcrumbs navigace -->
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb" style="display: flex; list-style: none; padding: 0;">
+        <ol class="breadcrumb">
             <!-- Domů -->
             <li class="breadcrumb-item">
                 <a href="{% url 'home' %}">Domů</a>
             </li>
 
             <!-- Oddělovač -->
-            <li class="breadcrumb-item" style="margin: 0 5px;">&#187;</li>
+            <li class="breadcrumb-item">&#187;</li>
 
             <!-- Hlavní kategorie produktů -->
             {% if product.category %}
@@ -24,7 +24,7 @@
 
             <!-- Rodičovská kategorie, pokud existuje -->
             {% if product.category and product.category.category_parent %}
-                <li class="breadcrumb-item" style="margin: 0 5px;">&#187;</li>
+                <li class="breadcrumb-item">&#187;</li>
                 <li class="breadcrumb-item">
                     <a href="{% url 'products' product.category.category_parent.pk %}">
                         {{ product.category.category_parent.category_name }}
@@ -34,7 +34,7 @@
 
             <!-- Aktuální kategorie -->
             {% if product.category %}
-                <li class="breadcrumb-item" style="margin: 0 5px;">&#187;</li>
+                <li class="breadcrumb-item">&#187;</li>
                 <li class="breadcrumb-item">
                     <a href="{% url 'products' product.category.pk %}">
                         {{ product.category.category_name }}
@@ -43,21 +43,20 @@
             {% endif %}
 
             <!-- Název produktu -->
-            <li class="breadcrumb-item" style="margin: 0 5px;">&#187;</li>
+            <li class="breadcrumb-item">&#187;</li>
             <li class="breadcrumb-item active" aria-current="page">
                 {{ product.product_name }}
             </li>
         </ol>
     </nav>
 
-    <h1 style="text-align: center;">{{ product.product_name }}</h1>
+    <h1>{{ product.product_name }}</h1>
 
     <!-- Obrázek produktu -->
-    <div style="margin-top: 2rem; text-align: center;">
+    <div>
         {% if product.product_view %}
-            <div style="text-align: center; margin-top: 2rem;">
-                <img src="{{ product.product_view }}" alt="Obrázek produktu {{ product.product_name }}"
-                     style="max-width: 300px; height: auto; margin-bottom: 1rem;">
+            <div>
+                <img src="{{ product.product_view }}" alt="Obrázek produktu {{ product.product_name }}">
             </div>
         {% else %}
             <p>Obrázek produktu není k dispozici.</p>
@@ -65,7 +64,7 @@
     </div>
 
     <!-- Popis produktu -->
-    <div style="margin-top: 2rem; text-align: center;">
+    <div>
         <h2>Popis produktu</h2>
         <p>{{ product.product_long_description }}</p>
     </div>
@@ -87,24 +86,23 @@
 
 <!-- Tlačítko pro přidání do košíku -->
 {% if can_add_to_cart %}
-<div style="margin-top: 2rem; text-align: center;">
+<div>
     <form method="post" action="{% url 'add_to_cart' product.id %}" class="add-to-cart">
         {% csrf_token %}
         <button type="button"
             class="add-to-cart-btn"
-            data-product-id="{{ product.id }}"
-            style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            data-product-id="{{ product.id }}">
                 Přidat do košíku
         </button>
     </form>
 {% else %}
-    <p style="color: red;"><strong>{{ stock_message }}</strong></p>
+    <p class="red"><strong>{{ stock_message }}</strong></p>
 {% endif %}
 </div>
 
     {% if user.is_staff %}
-    <div style="margin-top: 2rem; text-align: center;">
-        <a href="{% url 'edit_product' product.id %}" class="btn btn-sm btn-warning" style="margin-right: 1rem;">
+    <div>
+        <a href="{% url 'edit_product' product.id %}" class="btn btn-sm btn-warning">
             Upravit produkt
         </a>
         <form method="post" action="{% url 'delete_product' product.id %}" class="delete-button">
@@ -119,11 +117,11 @@
 
 
 <!-- Průměrné hodnocení -->
-<div class="average-rating" style="margin-top: 2rem; text-align: center;">
+<div class="average-rating">
     <h2>Průměrné hodnocení</h2>
     {% if average_rating > 0 %}
         <p><strong>{{ average_rating }} / 5</strong></p>
-        <div class="rating-stars" style="justify-content: center;">
+        <div class="rating-stars">
             {% for state in star_states %}
                 <span class="{{ state }}">★</span>
             {% endfor %}
@@ -135,14 +133,14 @@
 
 <!-- Formulář pro přidání hodnocení -->
 {% if user.is_authenticated %}
-    <div style="margin-top: 2rem; text-align: center;">
+    <div>
         <h2>Hodnocení</h2>
-        <form method="post" action="{% url 'add_product_review' product.id %}" style="display: inline-block; text-align: left;">
+        <form method="post" action="{% url 'add_product_review' product.id %}">
             {% csrf_token %}
 
             <!-- Hvězdičky -->
-            <label for="rating" style="display: block; text-align: center; margin-bottom: 0.5rem;">Hodnocení:</label>
-            <div class="rating" style="justify-content: center;">
+            <label for="rating">Hodnocení:</label>
+            <div class="rating">
                 {% for i in "54321" %}
                     <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}">
                     <label for="star{{ i }}" title="{{ i }} hvězdiček">★</label>
@@ -150,9 +148,8 @@
             </div>
 
             <!-- Komentář -->
-            <label for="comment" style="display: block; text-align: center; margin-top: 1rem;">Komentář:</label>
-            <textarea id="comment" name="comment" required placeholder="Napište svůj komentář..."
-                      style="width: 100%; padding: 0.5rem; margin-bottom: 1rem; font-size: 1rem;"></textarea>
+            <label for="comment">Komentář:</label>
+            <textarea id="comment" name="comment" required placeholder="Napište svůj komentář..."></textarea>
 
             <!-- Tlačítko -->
             <div style="text-align: center;">

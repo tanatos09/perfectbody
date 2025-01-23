@@ -54,7 +54,7 @@
     <div class="average-rating">
         <h2>Průměrné hodnocení</h2>
         {% if average_rating > 0 %}
-            <p><strong>{{ average_rating }} / 5</strong></p>
+            <p style="text-align: center"><strong>{{ average_rating }} / 5</strong></p>
             <div class="rating-stars">
                 {% for state in star_states %}
                     <span class="{{ state }}">★</span>

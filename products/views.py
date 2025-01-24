@@ -15,6 +15,8 @@ from django.urls import reverse
 from products.models import Category, Producer, Product, TrainerReview, ProductReview
 from accounts.models import UserProfile, TrainersServices
 
+import czech_sort
+
 
 def products(request, pk=None):
     # Getting parameters from URL.
@@ -38,6 +40,12 @@ def products(request, pk=None):
             Q(categories__product_type='merchantdise') | Q(subcategories__categories__product_type='merchantdise')
         ).distinct()
 
+        # Czech sort for main categories
+        main_categories = sorted(
+            main_categories,
+            key=lambda category: czech_sort.key(category.category_name)
+        )
+
         context = {
             'main_categories': main_categories,
             'category': None,
@@ -56,6 +64,12 @@ def products(request, pk=None):
         subcategories = category.subcategories.filter(
             Q(categories__product_type='merchantdise') | Q(subcategories__categories__product_type='merchantdise')
         ).distinct()
+
+        # Czech sort for subcategories
+        subcategories = sorted(
+            subcategories,
+            key=lambda subcategory: czech_sort.key(subcategory.category_name)
+        )
 
         # Filtering products by category.
         products_list = Product.objects.filter(
@@ -81,7 +95,11 @@ def products(request, pk=None):
         elif sort_by == 'price_desc':
             products_list = products_list.order_by('-price')
         else:
-            products_list = products_list.order_by('product_name')
+            products_list = list(products_list)  # Convert queryset to list for Czech sorting
+            products_list = sorted(
+                products_list,
+                key=lambda product: czech_sort.key(product.product_name)
+            )
 
         # Pagination.
         paginator = Paginator(products_list, 10)    # 10 products per 1 page
@@ -145,8 +163,17 @@ def product(request, pk):
 def producer(request, pk):
     producer_detail = get_object_or_404(Producer, id=pk)
 
-    # Seřazení produktů podle kategorie a následně podle názvu
-    products = Product.objects.filter(producer=producer_detail).select_related('category').order_by('category__category_name', 'product_name')
+    # Seřazení produktů podle kategorie a následně podle názvu produktu
+    products = Product.objects.filter(producer=producer_detail).select_related('category')
+
+    # Czech sort for categories and products
+    products = sorted(
+        products,
+        key=lambda product: (
+            czech_sort.key(product.category.category_name) if product.category else "",
+            czech_sort.key(product.product_name)
+        )
+    )
 
     # Skupinové seskupení produktů podle kategorií
     grouped_products = {}
@@ -154,9 +181,11 @@ def producer(request, pk):
         grouped_products[category] = list(items)
 
     # Získání všech výrobců pro seznam a odstranění mezer z názvů
-    all_producers = Producer.objects.all().order_by('producer_name')
-    for producer in all_producers:
-        producer.producer_name = producer.producer_name.strip()
+    all_producers = Producer.objects.all()
+    all_producers = sorted(
+        all_producers,
+        key=lambda producer: czech_sort.key(producer.producer_name.strip())
+    )
 
     context = {
         'producer': producer_detail,
@@ -277,12 +306,23 @@ def service(request, pk):
     return render(request, "service.html", context)
 
 def trainers(request):
+    # Získání skupiny trenérů
     trainer_group = Group.objects.filter(name='trainer').first()
     if trainer_group:
-        # Checking whether the user from trainer group has at least one approved service.
-        approved_trainers = UserProfile.objects.filter(groups=trainer_group, services__is_approved=True).distinct()
+        # Načtení schválených trenérů (s alespoň jednou schválenou službou)
+        approved_trainers = UserProfile.objects.filter(
+            groups=trainer_group,
+            services__is_approved=True
+        ).distinct()
+
+        # Řazení trenérů podle české abecedy pomocí czech_sort
+        approved_trainers = sorted(
+            approved_trainers,
+            key=lambda trainer: czech_sort.key(trainer.full_name())
+        )
     else:
-        approved_trainers = []  # If the group does not exist, the list will be empty.
+        approved_trainers = []  # Pokud skupina neexistuje, seznam bude prázdný
+
     return render(request, 'trainers.html', {'approved_trainers': approved_trainers})
 
 def trainer(request, pk):
@@ -397,5 +437,3 @@ def add_service_review(request, pk):
 def calculate_average_rating(queryset):
     average_rating = queryset.aggregate(Avg('rating'))['rating__avg']
     return round(average_rating, 1) if average_rating else 0
-
-

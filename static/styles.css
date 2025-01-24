@@ -491,15 +491,7 @@ h3 {
     transition: opacity 0.15s linear;
     border: 1px #555;
 }
-button[type="submit"] {
-    padding: 0.25rem 0.5rem;
-    font-size: 1rem;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: default;
-}
+
 /* Specifické styly pro typy alertů */
 .alert-success {
     background-color: #d4edda; /* Zelené pozadí */

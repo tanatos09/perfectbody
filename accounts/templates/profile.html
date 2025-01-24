@@ -4,8 +4,8 @@
 <h2 class="text-center">Váš profil</h2>
 <!-- Trenérské informace (pouze pokud je uživatel trenér) -->
 {% if is_trainer %}
-    <div class="mb-4">
-        <h3>Trenérský profil</h3>
+    <div class="text-center w-100 ps-3 pe-3">
+        <h3 class="info">Trenérský profil</h3>
         <p><strong>Krátký
             popis:</strong> {{ user.trainer_short_description|default:"Žádný krátký popis není dostupný." }}</p>
         <p><strong>Dlouhý
@@ -18,7 +18,7 @@
         {% endif %}
 
         <!-- Schválené služby -->
-        <h3>Nabízené služby</h3>
+        <h3 class="info">Nabízené služby</h3>
         {% if approved_services %}
             <ul>
                 {% for service in approved_services %}
@@ -35,8 +35,9 @@
 {% endif %}
 
 <!-- Osobní informace -->
-<div class="mb-4">
-    <h3>Osobní informace</h3>
+
+<h3 class="info">Osobní informace</h3>
+<div class="text-center w-100 ps-3 pe-3">
     <p><strong>Uživatelské jméno:</strong> {{ user.username }}</p>
     <p><strong>Jméno:</strong> {{ user.first_name }}</p>
     <p><strong>Příjmení:</strong> {{ user.last_name }}</p>
@@ -52,12 +53,10 @@
     <p><strong>Typ účtu:</strong> {{ user.get_account_type_display }}</p>
 </div>
 
-<hr>
-
-
 <!-- Objednávky -->
-<div class="mb-4">
-    <h3>Moje objednávky</h3>
+
+<h3 class="info">Moje objednávky</h3>
+<div class="text-center w-100 ps-2 pe-2">
     {% if recent_orders %}
         <ul>
             {% for order in recent_orders %}
@@ -77,8 +76,9 @@
 </div>
 
 <!-- Používaná adresa -->
-<div>
-    <h3>Používaná adresa</h3>
+
+<h3 class="info">Používaná adresa</h3>
+<div class="text-center w-100 ps-3 pe-3">
     {% if primary_address %}
         <p>
             {{ primary_address.first_name }} {{ primary_address.last_name }}<br>
@@ -92,10 +92,9 @@
     {% endif %}
 </div>
 
-<hr>
 
 <!-- Akce -->
-<div>
+<div class="text-center w-100 ps-3 pe-3">
     <a href="{% url 'edit_profile' %}">Upravit profil</a> |
     <a href="{% url 'change_password' %}">Změnit heslo</a> |
     <a href="{% url 'logout' %}">Odhlásit se</a>

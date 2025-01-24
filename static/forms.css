@@ -30,36 +30,39 @@ input[type="email"],
 input[type="password"],
 textarea,
 select {
-    width: 100%; /* Roztažení přes celou šířku */
-    padding: 10px; /* Vnitřní odsazení */
+    width: 100%;
+    padding: 3px 10px; /* Vnitřní odsazení */
     font-size: 1rem; /* Velikost písma */
     border: 1px solid #ccc; /* Tenký rámeček */
     border-radius: 4px; /* Zaoblené rohy */
     box-sizing: border-box; /* Zohlednění paddingu */
+    margin: 4px;
     transition: border-color 0.3s; /* Plynulý přechod změny barvy rámečku */
 }
 
 input:focus,
 textarea:focus,
 select:focus {
-    border-color: #28a745; /* Modrý rámeček při zaostření */
-    outline: none; /* Odstranění výchozího obrysu */
-    box-shadow: 0 0 4px rgb(108, 117, 125); /* Světle modrý stín */
+    border-color: #28a745;
+    outline: none;
+    box-shadow: 0 0 4px rgb(108, 117, 125);
 }
 
 button {
     padding: 10px 20px; /* Velikost tlačítka */
-    font-size: 1rem; /* Velikost textu */
     color: #fff; /* Bílé písmo */
-    background-color: #28a745; /* Modré pozadí */
+    background-color: #28a745;
     border: none; /* Bez rámečku */
     border-radius: 4px; /* Zaoblené rohy */
-    cursor: pointer; /* Ukazatel ruky při najetí */
+    cursor: default;
     transition: background-color 0.3s; /* Plynulý přechod změny barvy */
 }
-
+button a {
+    color:white;
+}
 button:hover {
     background-color: #218838;
+    color: #fff;
 }
 
 button:disabled {

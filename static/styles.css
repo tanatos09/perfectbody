@@ -522,6 +522,7 @@ h3 {
 
 /* === Footer === */
 footer {
+    border-top: double;
     font-size: 0.8rem;
     background-color: #f8f9fa;
     color: #696969;
@@ -532,7 +533,7 @@ footer {
     bottom: 0;
     width: 100%;
     font-weight: normal;
-    line-height: 1rem;
+    line-height: 1.5rem;
 }
 
 footer a {

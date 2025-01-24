@@ -56,16 +56,15 @@
         <div class="total">
         <p><strong>Celková cena:</strong> <span id="cart-total">{{ total }} Kč</span></p>
         <div class="cart_a">
-        <div class="cart_">
-            <a href="{% url 'products' %}">Prohlédnout další produkty</a>
-            <a href="{% url 'services' %}">Prohlédnout další služby</a>
-        </div>
-
-        <div>
-            <a href="{% url 'start_order' %}" class="start-order">
-                Pokračovat k objednávce
-            </a>
-        </div>
+            <button class="btn-success">
+                <a href="{% url 'start_order' %}" class="start-order">
+                    Pokračovat k objednávce
+                </a>
+            </button>
+            <ul>
+                <li><a href="{% url 'products' %}">Prohlédnout další produkty</a></li>
+                <li><a href="{% url 'services' %}">Prohlédnout další služby</a></li>
+            </ul>
         </div>
         </div>
     {% else %}

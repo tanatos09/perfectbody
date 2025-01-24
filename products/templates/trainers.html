@@ -2,27 +2,39 @@
 
 {% block content %}
 
-<h1>Naši trenéři</h1>
+    <h1>Naši trenéři</h1>
 
-{% if approved_trainers %}
-    <ul>
-        {% for trainer in approved_trainers %}
-            <li>
-                <a href="{% url 'trainer' trainer.id %}"><h2>{{ trainer.full_name }}</h2></a>
-                <p>Představení trenéra: {{ trainer.trainer_short_description }}</p>
+    {% if approved_trainers %}
+        <ul>
+            {% for trainer in approved_trainers %}
+                <li>
+                    <a href="{% url 'trainer' trainer.id %}"><h2>{{ trainer.full_name }}</h2></a>
+                        <span>
+                        {% if approved_services %}
+                            {% for service in approved_services %}
+                                <a href="{% url 'service' service.service.id %}">{{ service.service.product_name }}</a>
+                                {% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <p>Trenér zatím nemá schválené služby.</p>
+                        {% endif %}
+                        </span>
+                    <p>Představení trenéra: {{ trainer.trainer_short_description }}</p>
 
-                {% if user.is_staff %}
-                    <a href="{% url 'edit_trainer' trainer.id %}" class="btn btn-sm btn-warning">Upravit</a>
-                    <form method="post" action="{% url 'delete_trainer' trainer.id %}" class="delete-button">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tohoto trenéra?');">Smazat</button>
-                    </form>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>Trenéři nejsou k dispozici.</p>
-{% endif %}
+                    {% if user.is_staff %}
+                        <a href="{% url 'edit_trainer' trainer.id %}" class="btn btn-sm btn-warning">Upravit</a>
+                        <form method="post" action="{% url 'delete_trainer' trainer.id %}" class="delete-button">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Opravdu chcete smazat tohoto trenéra?');">Smazat
+                            </button>
+                        </form>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Trenéři nejsou k dispozici.</p>
+    {% endif %}
 
 {% endblock %}

@@ -60,7 +60,7 @@
 <!-- Potvrzení -->
 <form method="post">
     {% csrf_token %}
-    <button type="submit" class="btn btn-primary">Potvrdit objednávku</button>
+    <button type="submit" class="btn btn-danger">Potvrdit objednávku</button>
     <a href="{% url 'order_summary' %}" class="btn btn-secondary">Zpět na úpravu objednávky</a>
 </form>
 {% endblock %}

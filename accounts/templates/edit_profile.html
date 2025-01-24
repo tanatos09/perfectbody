@@ -14,7 +14,7 @@
     <!-- Obrázek -->
     <div class="trainer-image">
         {% if user.profile_picture %}
-            <img src="{{ user.profile_picture }}" alt="Profilová fotka" style="max-width: 200px; height: auto;">
+            <img src="{{ user.profile_picture }}" alt="Profilová fotka">
         {% else %}
             <p class="text-muted">Žádný obrázek není aktuálně nastaven.</p>
         {% endif %}
@@ -36,7 +36,7 @@
         {{ trainer_form.pending_trainer_long_description }}
     </div>
 
-    <button type="submit" name="form_type" value="trainer_form" class="btn btn-primary">Uložit informace o trenérovi</button>
+    <button type="submit" name="form_type" value="trainer_form" class="btn btn-danger">Uložit informace o trenérovi</button>
 </form>
 {% endif %}
 
@@ -46,7 +46,7 @@
     {% csrf_token %}
     <h3>Popisky nabízených služeb</h3>
     {{ service_form.as_p }}
-    <button type="submit" name="form_type" value="service_form" class="btn btn-primary">Uložit popisky služeb</button>
+    <button type="submit" name="form_type" value="service_form" class="btn btn-danger">Uložit popisky služeb</button>
 </form>
 {% endif %}
 
@@ -58,7 +58,7 @@
     {% csrf_token %}
     <h3>Osobní údaje</h3>
     {{ user_form.as_p }}
-    <button type="submit" name="form_type" value="user_form" class="btn btn-primary">Uložit osobní údaje</button>
+    <button type="submit" name="form_type" value="user_form" class="btn btn-danger">Uložit osobní údaje</button>
 </form>
 
 <!-- Doručovací adresa -->
@@ -66,7 +66,7 @@
     {% csrf_token %}
     <h3>Doručovací adresa</h3>
     {{ shipping_form.as_p }}
-    <button type="submit" name="form_type" value="shipping_form" class="btn btn-primary">Uložit doručovací adresu</button>
+    <button type="submit" name="form_type" value="shipping_form" class="btn btn-danger">Uložit doručovací adresu</button>
 </form>
 
 <a href="{% url 'profile' %}" class="btn btn-secondary mt-3">Zpět na profil</a>

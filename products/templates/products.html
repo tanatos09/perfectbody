@@ -4,14 +4,14 @@
 
     <!-- Breadcrumbs navigace -->
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb" style="display: flex; list-style: none; padding: 0;">
+        <ol class="breadcrumb">
             <!-- Domů -->
             <li class="breadcrumb-item">
                 <a href="{% url 'home' %}">Domů</a>
             </li>
 
             <!-- Oddělovač -->
-            <li class="breadcrumb-item" style="margin: 0 5px;">&raquo;</li>
+            <li class="breadcrumb-item">&#187;</li>
 
             <!-- Hlavní kategorie produktů -->
             {% if category %}
@@ -24,7 +24,7 @@
 
             <!-- Rodičovská kategorie, pokud existuje -->
             {% if category and category.category_parent %}
-                <li class="breadcrumb-item" style="margin: 0 5px;">&raquo;</li>
+                <li class="breadcrumb-item">&#187;</li>
                 <li class="breadcrumb-item">
                     <a href="{% url 'products' category.category_parent.pk %}">{{ category.category_parent.category_name }}</a>
                 </li>
@@ -32,7 +32,7 @@
 
             <!-- Aktuální kategorie -->
             {% if category %}
-                <li class="breadcrumb-item" style="margin: 0 5px;">&raquo;</li>
+                <li class="breadcrumb-item">&#187;</li>
                 <li class="breadcrumb-item active" aria-current="page">{{ category.category_name }}</li>
             {% endif %}
         </ol>
@@ -44,7 +44,7 @@
         <ul>
             {% for category in main_categories %}
                 <li>
-                    <a href="{% url 'products' category.pk %}">{{ category.category_name }}</a>
+                    <a href="{% url 'products' category.pk %}">{{ category.category_name }}<br></a>
 
                     {% if user.is_staff %}
                         <!-- Tlačítka pro úpravu a mazání hlavní kategorie -->
@@ -68,8 +68,7 @@
         <!-- Obrázek kategorie -->
         {% if category.category_view %}
             <div class="category-image">
-                <img src="{{ category.category_view }}" alt="Obrázek kategorie {{ category.category_name }}"
-                     style="max-width: 450px; height: auto;">
+                <img src="{{ category.category_view }}" alt="Obrázek kategorie {{ category.category_name }}">
             </div>
         {% endif %}
 
@@ -140,7 +139,7 @@
                 </div>
             {% endif %}
 
-            <ul>
+            <ul class="no-bullets">
                 {% for product in products %}
                     <li>
                         <a href="{% url 'product' product.pk %}">
@@ -153,7 +152,7 @@
                             {% if product.available_stock > 0 %}
                                 {{ product.available_stock }} kusů k dispozici.
                             {% else %}
-                                <span style="color: red;">Produkt není skladem.</span>
+                                <span >Produkt není skladem.</span>
                             {% endif %}
                         </div>
                         <div class="product-price"><b>Cena:</b> {{ product.price }} Kč</div>
@@ -164,15 +163,11 @@
                             <div class="add-to-cart">
                                 <form method="post" action="{% url 'add_to_cart' product.id %}" class="add-to-cart">
                             {% csrf_token %}
-                                    <button type="button"
-                                        class="add-to-cart-btn"
-                                        data-product-id="{{ product.id }}"
-                                        style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                                            Přidat do košíku
+                                  <button type="button" class="add-to-cart-btn" data-product-id="{{ product.id }}">Přidat do košíku
                                     </button>
                                 </form>
                         {% else %}
-                            <p style="color: red;">Nelze objednat</p>
+                            <p>Nelze objednat</p>
                         {% endif %}
                         </div>
 
@@ -206,7 +201,7 @@
             <div class="pagination">
                 <span class="step-links">
                     {% if products.has_previous %}
-                        <a href="?page=1{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">&laquo; První</a>
+                        <a href="?page=1{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">&raquo První</a>
                         <a href="?page=
                                 {{ products.previous_page_number }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Předchozí</a>
                     {% endif %}
@@ -222,17 +217,16 @@
 
 
 
-
                                 {{ products.next_page_number }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Další</a>
                         <a href="?page=
-                                {{ products.paginator.num_pages }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Poslední &raquo;</a>
+                                {{ products.paginator.num_pages }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Poslední &#187;</a>
                     {% endif %}
                 </span>
             </div>
         {% endif %}
 
         {% if not subcategories and not products %}
-            <p style="color: red;">Žádné podkategorie ani produkty nejsou k dispozici.</p>
+            <p>Žádné podkategorie ani produkty nejsou k dispozici.</p>
         {% endif %}
     {% endif %}
 {% endblock %}

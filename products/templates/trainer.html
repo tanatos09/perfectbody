@@ -100,6 +100,15 @@
                     {% endfor %}
                 </p>
                 <p>{{ review.comment }}</p>
+
+                {% if user.is_staff %}
+                    <form method="post" action="{% url 'delete_trainer_review' review.id %}" class="delete-button">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat toto hodnocení?');">
+                            Smazat hodnocení
+                        </button>
+                    </form>
+                {% endif %}
             </div>
         {% endfor %}
 
@@ -123,8 +132,4 @@
         <p>Zatím zde nejsou žádná hodnocení.</p>
     {% endif %}
 </div>
-
-
-
-
 {% endblock %}

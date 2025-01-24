@@ -8,6 +8,7 @@ from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.forms import ModelForm, CharField, Form, PasswordInput, BooleanField, TextInput, EmailInput, Textarea, \
     ModelMultipleChoiceField, CheckboxSelectMultiple, DateField, DateInput, EmailField, FileInput, URLInput
+from django.utils.timezone import now
 
 from accounts.models import UserProfile, Address, TrainersServices
 from products.models import Product
@@ -22,6 +23,7 @@ class RegistrationForm(ModelForm):
     city = CharField(max_length=255, required=False, label='Město')
     postal_code = CharField(max_length=255, required=False, label='PSČ')
     country = CharField(max_length=255, required=False, label='Země', initial='Česká republika')
+    phone = CharField(max_length=15, required=False, label='Telefon')
 
     class Meta:
         model = UserProfile
@@ -35,6 +37,12 @@ class RegistrationForm(ModelForm):
             'username': TextInput(attrs={'placeholder': 'Uživatelské jméno'}),
             'date_of_birth': DateInput(attrs={'type': 'date'}),
         }
+
+    def clean_date_of_birth(self):
+        date_of_birth = self.cleaned_data.get('date_of_birth')
+        if date_of_birth and date_of_birth > now().date():
+            raise ValidationError('Datum narození nemůže být v budoucnosti.')
+        return date_of_birth
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
@@ -151,6 +159,12 @@ class TrainerRegistrationForm(RegistrationForm):
                 raise ValidationError('PSČ musí obsahovat pouze číslice')
         return postal_code
 
+    def clean_date_of_birth(self):
+        date_of_birth = self.cleaned_data.get('date_of_birth')
+        if date_of_birth and date_of_birth > now().date():
+            raise ValidationError('Datum narození nemůže být v budoucnosti.')
+        return date_of_birth
+
     def clean(self):
         cleaned_data = super().clean()
         services = cleaned_data.get('services')
@@ -235,6 +249,12 @@ class TrainerBasicForm(Form):
         if UserProfile.objects.filter(email=email).exists():
             raise ValidationError('Tento e-mail je již používán.')
         return email
+
+    def clean_date_of_birth(self):
+        date_of_birth = self.cleaned_data.get('date_of_birth')
+        if date_of_birth and date_of_birth > now().date():
+            raise ValidationError('Datum narození nemůže být v budoucnosti.')
+        return date_of_birth
 
     def clean(self):
         cleaned_data = super().clean()

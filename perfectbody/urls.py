@@ -22,7 +22,8 @@ from accounts.forms import TrainerBasicForm, TrainerServicesForm, TrainerDescrip
 from manager.views import dashboard, add_product, approve_service, add_category, add_service, edit_product, \
     empty_categories, edit_category, delete_product, manage_products, manage_services, edit_service, \
     delete_service, edit_trainer, delete_trainer, delete_category, edit_producer, delete_producer, manage_producers, \
-    add_producer, delete_user, edit_user, manage_users, approve_trainer_content, all_categories
+    add_producer, delete_user, edit_user, manage_users, approve_trainer_content, all_categories, delete_product_review, \
+    delete_trainer_review, delete_service_review, service_details, reject_service
 from orders.views import start_order, order_summary, confirm_order, thank_you, my_orders, order_detail, cancel_order
 from products.views import products, product, producer, services, service, trainers, trainer, \
     add_trainer_review, add_service_review, add_product_review
@@ -109,6 +110,11 @@ urlpatterns = [
     path('cart/update_note/<int:product_id>/', update_note_in_cart, name='update_note_in_cart'),
     path('cart/data/', cart_data, name='cart_data'),
     path('cart/data/navbar/', cart_data_navbar, name='cart_data_navbar'),
+    path('delete_product_review-review/<int:review_id>/', delete_product_review, name='delete_product_review'),
+    path('delete_trainer_review-review/<int:review_id>/', delete_trainer_review, name='delete_trainer_review'),
+    path('delete_service_review-review/<int:review_id>/', delete_service_review, name='delete_service_review'),
+    path('service-details/<int:service_id>/', service_details, name='service_details'),
+    path('reject-service/', reject_service, name='reject_service'),
 
 ]
 

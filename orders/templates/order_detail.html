@@ -38,7 +38,7 @@
 
 <!-- Tlačítko zrušit objednávku -->
 {% if order.order_state == 'PENDING' %}
-    <form method="post" action="{% url 'cancel_order' order.id %}">
+    <form method="post" action="{% url 'cancel_order' order.id %}" class="delete-button">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger" onclick="return confirm('Opravdu chcete zrušit tuto objednávku?');">
             Zrušit objednávku

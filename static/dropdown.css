@@ -1,52 +1,49 @@
 /* Dropdown menu */
 .dropdown-menu {
-    font-size: 0.8em;
-    padding: 0; /* Odstranění výchozích odsazení */
-    max-width: 350px; /* Maximální šířka menu */
-    max-height: 350px; /* Maximální výška menu */
+    font-size: 0.9rem;
+    padding: 0;
+    max-width: 350px; 
+    max-height: 300px;
     overflow-y: auto; /* Povolení posouvání, pokud je obsah vyšší než 350px */
-    column-count: auto; /* Rozdělení položek do dvou sloupců */
-    column-gap: 20px; /* Mezera mezi sloupci */
     background-color: white; /* Bílé pozadí pro celé menu */
-    border: 1px solid #ccc; /* Ohraničení menu */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Jemný stín */
+    border: 1px solid #ccc; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 /* Kategorie (hlavní položky v dropdownu) */
 .dropdown-menu > li > a {
-    background-color: #6c757d; /* Tmavě šedé pozadí */
-    color: white; /* Bílé písmo */
-    font-weight: bold; /* Tučné písmo */
-    padding: 10px 15px; /* Vnitřní odsazení */
-    display: block; /* Zajištění, že odkaz zabírá celý řádek */
+    background-color: #6c757d; 
+    color: white;
+    font-weight: bold; 
+    padding: 1rem 1.5rem;
+    display: block; 
     border-bottom: 1px solid #ddd; /* Spodní čára mezi kategoriemi */
 }
 .dropdown-menu > h5 {
-    background-color: #6c757d; /* Tmavě šedé pozadí */
-    color: white; /* Bílé písmo */
-    font-weight: bold; /* Tučné písmo */
-    padding: 10px 15px; /* Vnitřní odsazení */
-    display: block; /* Zajištění, že odkaz zabírá celý řádek */
+    background-color: #6c757d;
+    color: white;
+    font-weight: bold;
+    display: block; 
     border-bottom: 1px solid #ddd; /* Spodní čára mezi kategoriemi */
 }
 /* Hover efekt pro kategorie */
 .dropdown-menu > li > a:hover {
-    background-color: #5a6268; /* Tmavší šedé pozadí při najetí */
-    color: white; /* Bílé písmo */
+    background-color: #5a6268;
+    color: white;
 }
 
-/* Subkategorie (vnořené položky) */
+/* Subkategorie (vnořené položky)
 .dropdown-menu .dropdown-submenu > li > a {
-    background-color: white; /* Bílé pozadí pro subkategorie */
-    color: #6c757d; /* Šedé písmo */
-    font-weight: normal; /* Normální písmo */
-    padding: 8px 15px; /* Menší vnitřní odsazení */
+    background-color: white;
+    color: #6c757d; 
+    font-weight: normal; 
+    padding: 8px 15px; 
 }
 
-/* Hover efekt pro subkategorie */
+
 .dropdown-menu .dropdown-submenu > li > a:hover {
-    background-color: #f8f9fa; /* Světle šedé pozadí při najetí */
-    color: #6c757d; /* Šedé písmo */
-}
+    background-color: #f8f9fa;
+    color: #6c757d; 
+}*/
 
 /* Odstranění odrážek z dropdownu */
 .dropdown-menu ul {
@@ -57,18 +54,18 @@
 /* Čára nad dalšími položkami */
 .dropdown-divider {
     border-top: 1px solid #ddd; /* Světle šedá čára */
-    margin: 10px 0; /* Mezery kolem čáry */
+    margin: 10px 0;
 }
 /* Styl pro položky menu */
 .dropdown-item {
-    padding: 10px 15px; /* Přidání odsazení položek */
-    color: #333; /* Standardní šedý text */
+    padding: 1rem 1.5rem;
+    color: #333;
     text-decoration: none; /* Bez podtržení */
     transition: background-color 0.3s ease, color 0.3s ease; /* Efekt při najetí */
 }
 
 .dropdown-item:hover {
-    background-color: darkred;
+    color: darkred;
 }
 .dropdown:hover .dropdown-menu {
     display: block;
@@ -94,58 +91,100 @@
     position: absolute;
     right: 0;
     min-width: 250px;
-    max-width: 90%;
-    background-color: #ffffff;
-    color: #6c757d;
+    max-width: 350px;
     border: 1px solid #ccc;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
-    padding: 10px;
-   /* display: none;*/
     overflow-y: auto;
     max-height: 400px;
     z-index: 1050;
     box-sizing: border-box; /* Zohlednění paddingu do šířky */
-    display: block;
+    top: calc(100%);
+    background-color: white;
+    color: #6c757d !important;
+    padding: 1rem 1.5rem;
+    display: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(-10px);
+    opacity: 0;
 }
 
+
+#cart-wrapper:hover #navbar-cart-dropdown,
+#cart-wrapper.active #navbar-cart-dropdown {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#navbar-cart-dropdown a {
+    color: #6c757d;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0 5px;
+    border-radius: 5px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+#navbar-cart-dropdown a:hover {
+    color: darkred;
+    background-color: #f8f9fa;
+}
+#navbar-cart-dropdown p {
+    margin: 10px 0 0 0;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+#navbar-cart-dropdown ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f1f1;
+    list-style: none;
+}
+
+#navbar-cart-dropdown ul li:last-child {
+    border-bottom: none;
+}
+
+#navbar-cart-dropdown ul li:hover a {
+    color: darkred !important;
+    background-color: #f8f9fa;
+}
 #userDropdown {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: white; /* Bílé pozadí */
-    font-weight: bold; /* Tučné písmo */
-    border-radius: 4px; /* Zaoblené rohy */
-    transition: all 0.3s ease; /* Přidá plynulé přechody */
+    background-color: white;
+    font-weight: bold; 
+    border-radius: 4px;
+    transition: all 0.3s ease;
     font-size: 0.9em;
-    padding: 5px 15px; /* Vnitřní odsazení */
-    color: #696969; /* Základní barva textu */
-    text-decoration: none; /* Bez podtržení textu */
+    padding: 1rem 1.5rem;
+    color: #696969;
+    text-decoration: none;
     margin: 0 10px;
     order: 1; /* Uživatelské menu se zobrazí jako první */
 }
 #userDropdown:hover {
-    background-color: #F8F9FA; /* Světle šedé pozadí při najetí */
-    color: darkred; /* Červený text při najetí */
+    background-color: #F8F9FA;
+    color: darkred;
 }
-#userDropdown.active {
-    background-color: #6C757D; /* Tmavě šedé pozadí při aktivním stavu */
-    color: white; /* Bílý text při aktivním stavu */
-    border-color: #6C757D; /* Barva okraje odpovídající pozadí */
-}
+/*#userDropdown.active {
+    background-color: #6C757D;
+    color: white;
+    border-color: #6C757D;
+}*/
 /* Dropdown menu pro uživatele */
 #userDropdown .dropdown-menu {
+    background-color: white;
     position: absolute;
     top: calc(100%);
     right: 0;
-    min-width: 250px;
-    background-color: white;
-    color: #6C757D;
+    min-width: 100px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     z-index: 1050;
-    padding: 5px 15px;
     display: none;
     overflow-y: auto;
     max-height: 400px;
@@ -164,7 +203,6 @@
     color: #6C757D;
     text-decoration: none;
     font-weight: bold;
-    padding: 10px;
     border-radius: 4px;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
@@ -181,18 +219,20 @@
     border-radius: 5px;
 }
 #userDropdown .dropdown-menu p {
-    margin: 10px 0 0 0;
+    margin: 1rem 0 0 0;
     font-size: 0.9rem;
     color: #333;
+}
 #userDropdown, #cart-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
 }
+
 #userDropdown > .dropdown-menu > li > a{
     background-color: white;
-    color:green;
+    font-weight: bold;
 }
 #navbar-cart-dropdown h5 {
     font-size: 1.1rem;
@@ -228,13 +268,6 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-#cart-wrapper:hover #navbar-cart-dropdown,
-#cart-wrapper.active #navbar-cart-dropdown {
-    display: block;
-   /* opacity: 1;
-    transform: translateY(0);*/
-}
-
 #navbar-cart-dropdown a {
     color: #6c757d;
     text-decoration: none;
@@ -244,26 +277,7 @@
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-#navbar-cart-dropdown a:hover {
-    color: darkred;
-    background-color: #f8f9fa;
-}
-#navbar-cart-dropdown h5 {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: white;
-    background-color: #6c757d;
-    padding: 3px 10px;
-    border-radius: 5px;
-}
-
-#navbar-cart-dropdown p {
-    margin: 10px 0 0 0;
-    font-size: 0.9rem;
-    color: #333;
-}
-
-#navbar-cart-dropdown ul li:hover a{
+#navbar-cart-dropdown ul li:hover a {
     color: darkred;
     background-color: #f8f9fa;
 }

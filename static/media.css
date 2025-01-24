@@ -1,99 +1,148 @@
-
 @media (max-width: 768px) {
-      #search-form {
-        width: 80%; /* Širší vyhledávací pole na menších obrazovkách */
-    }
-
-    .logo-img {
-        max-height: 50%; /* Zmenší logo na polovinu při mobilním zobrazení */
-    }
-    .collapse {
-        display: block;
-    }
-     .navbar-logo {
-        max-height: 50px;
-    }
-        #navbar-cart-dropdown {
-        left: 10px;
-        right: 10px;
-        max-width: calc(100% - 20px);
-    }
-        .toggle-info {
-        display: block; /* Zobrazení tlačítka pouze na mobilním zobrazení */
-    }
-    /* #search-form-nav {
-        margin-top: 0;
-        margin-bottom: 10px;
-        display: block;
-        max-width: 200px;
-    }
-    #search-form-all {
-        margin-top: 50px;
-        flex-direction: column;
+     #MainNav {
+        display: flex;
+        justify-content: space-between;
         align-items: center;
+        padding: 10px;
     }
 
+    /* Logo vlevo, toggler vpravo */
+    .navbar-logo {
+        max-height: 50px;
+        height: auto;
+    }
 
-    .search-wrapper {
+    .navbar-toggler {
+        order: 3; /* Toggler je napravo */
+        display: block;
+        margin-left: auto;
+    }
+
+    /* Zobrazí rozbalené menu pod navbar */
+    .navbar-collapse {
+        display: none;
+        flex-direction: column;
+        list-style: none;
+        padding: 10px;
+        margin: 0 auto;
+        width: 95%;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-toggler[aria-expanded="true"] + .navbar-collapse {
+        display: flex;
+    }
+
+    .navbar-collapse a {
+        text-decoration: none;
+        padding: 10px;
+        font-size: 1rem;
+        color: #6c757d;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+    }
+
+    .navbar-collapse a:hover {
+        color: darkred;
+        background-color: #f0f0f0;
+    }
+
+    /* Vyhledávací menu */
+    #search-form-nav {
+        position: static;
         display: flex;
         justify-content: center;
-        align-items: center;
-        width: 100%;
-        margin: 0 auto;
-        padding: 10px 0;
-        gap: 10px;
+        margin: 20px auto;
+        padding: 10px;
+        width: 95%;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    #search-results {
+        display: none !important; /* Skrytí našeptávače */
+    }
+    /* Košík bez dropdown menu */
+    #cart-wrapper {
+        order: 2; /* Košík je druhý zprava */
+        margin: 0 5px;
     }
 
-    #navbarNav {
-        text-align: left;
-        align-items: flex-end;
-        margin: 0;
+    #cart-wrapper .dropdown-menu {
+        display: none !important; /* Skrytí dropdown menu */
+    }
+
+    #cart-wrapper a {
+        display: inline-block;
+        text-decoration: none;
+        color: darkred;
+        font-size: 1.2rem;
+    }
+
+    /* Uživatelské menu */
+    #userDropdown {
+        order: 1; /* Uživatelská ikona je vlevo od košíku */
+        margin-right: 10px;
+    }
+
+    #userDropdown a {
+        display: inline-block;
+        text-decoration: none;
+        color: #6c757d;
+        font-size: 1.2rem;
+    }
+
+    /* Hlavní obsah */
+    main {
+        width: 100%;
         padding: 0;
     }
 
-
-
-    .weather {
-        display: none;
+    .content-container {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+    }
+    /* Footer zůstává dole */
+    footer {
+        color: #212529;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap; /* Pokud se nevejdou, přejdou na další řádek */
+        padding: 2px;
+        text-overflow: ellipsis;
     }
 
+    footer a {
+        font-size: 0.9rem;
+        color: #8b0000;
+        font-weight: bold;
+        background: none; /* Bez pozadí */
+        border: none; /* Bez ohraničení */
+        padding: 0 0.5rem 0 0.5rem;
+        margin: 0;
+        transition: color 0.3s ease;
+    }
 
-    #toggle-button {
-        cursor: default;
+    footer a:hover {
+        color: #212529;
+        background: none; /* Žádné pozadí na hover */
     }
-   .collapse.show {
-        display: flex !important;
-    }
-*/
 }
-
-@media (min-width: 768px) {
-    .icon-size-md {
-        width: 1.5em;
-        height: 1.5em;
-    }
-}
-
 @media (min-width: 992px) {
     .icon-size-lg {
         width: 2em;
         height: 2em;
     }
 }
-
-@media (min-width: 769px) {
-    .toggle-info {
-        display: none; /* Skryté na desktopu */
-    }
-
-    .weather {
-        display: flex; /* Viditelné na větších obrazovkách */
-    }
-    .toggle-info {
-        display: none; /* Tlačítko skryté na desktopu */
-    }
-}
-
 @media (min-width: 1200px) {
      #search-form {
         width: 50%; /* Užší na extra velkých obrazovkách */
@@ -101,44 +150,5 @@
     .icon-size {
         width: 2.5em;
         height: 2.5em;
-    }
-}
-/* Styl pro střední obrazovky (768px až 1024px) */
-@media (min-width: 768px) and (max-width: 1023px) {
-    #search-form-nav {
-        margin-top: 30px; /* Menší odsazení od horní části stránky */
-    }
-}
-
-
-/*od Evy*/
-
-@media (max-width: 768px) {
-    #search-form {
-        width: 80%; /* Širší vyhledávací pole na menších obrazovkách */
-    }
-
-    .logo-img {
-        max-height: 50%; /* Zmenší logo na polovinu při mobilním zobrazení */
-    }
-    .collapse {
-        display: block;
-    }
-}
-
-@media (min-width: 1200px) {
-     #search-form {
-        width: 50%; /* Užší na extra velkých obrazovkách */
-    }
-    .icon-size {
-        width: 2.5em;
-        height: 2.5em;
-    }
-}
-@media (max-width: 768px) {
-    #cart-dropdown {
-        left: 0; /* Zarovná dropdown k levému okraji na malých obrazovkách */
-        right: auto; /* Zruší zarovnání doprava */
-        min-width: 90%; /* Dropdown zabírá většinu šířky na menších obrazovkách */
     }
 }

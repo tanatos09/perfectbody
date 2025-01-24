@@ -12,7 +12,6 @@
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse justify-content-center align-items-end" id="navbarNav">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <!-- Domů -->
@@ -29,7 +28,7 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuProducts">
                     {% for category in products_categories %}
                         {% if not forloop.first %}
-                            <div class="dropdown-divider"></div>
+
                         {% endif %}
                         <li>
                             <a class="dropdown-item"
@@ -59,7 +58,6 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuServices">
                     {% for category in services_categories %}
-                        <div class="dropdown-divider"></div>
                         <li>
                             <a class="dropdown-item"
                                href="{% url 'services' category.pk %}">{{ category.category_name }}</a>
@@ -107,16 +105,16 @@
     <div class="search-wrapper position-absolute top-0 start-50 translate-middle-x" id="search-form-all">
         <!-- Formulář pro vyhledávání -->
         <form method="get" action="{% url 'search' %}" id="search-form-nav" class="input-group">
-                <input id="search-input" class="form-control" name="q" type="search" placeholder="Vyhledávání"
-                       aria-label="Search" autocomplete="off">
-                <button class="btn btn-outline-secondary" type="submit">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </button>
-             <div id="search-results" class="dropdown-menu w-100 shadow mt-1"></div>
+            <input id="search-input" class="form-control" name="q" type="search" placeholder="Vyhledávání"
+                   aria-label="Search" autocomplete="off">
+            <button class="btn btn-outline-secondary" type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </button>
+            <div id="search-results" class="dropdown-menu w-100 shadow mt-1"></div>
         </form>
     </div>
 

@@ -48,15 +48,18 @@
         color: darkred;
         background-color: #f0f0f0;
     }
-
+    main img {
+        max-width: 100%;
+        height: auto;
+    }
     /* Vyhledávací menu */
     #search-form-nav {
         position: static;
         display: flex;
         justify-content: center;
-        margin: 20px auto;
-        padding: 10px;
-        width: 95%;
+        margin: 4.5em 0 0 0;
+        padding: 0;
+        width: 100%;
         background-color: #f8f9fa;
         border-radius: 5px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -67,7 +70,7 @@
     /* Košík bez dropdown menu */
     #cart-wrapper {
         order: 2; /* Košík je druhý zprava */
-        margin: 0 5px;
+        margin: 0;
     }
 
     #cart-wrapper .dropdown-menu {
@@ -102,9 +105,13 @@
 
     .content-container {
         width: 100%;
-        margin: 0;
+        margin: 2.5rem 0 0 0;
         padding: 0;
         box-shadow: none;
+    }
+    .alert-container {
+        top: auto; /* Resetuje vertikální zarovnání */
+        bottom: 80px; /* Posune nad footer (upravit podle výšky footeru) */
     }
     /* Footer zůstává dole */
     footer {

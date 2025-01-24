@@ -172,7 +172,7 @@ main img {
     margin: 0;
     position: relative;
     z-index: 1;
-    padding-bottom: 20px;
+    bottom: 4rem;
 }
 
 .content-container ul {
@@ -462,35 +462,6 @@ h3 {
     padding: 10px;
 }
 
-.alert-container {
-    display: flex;
-    left: 50%; /* Horizontální zarovnání na střed */
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    margin-top: 1.3rem; /* Odstup od horního okraje */
-    margin-bottom: 0.8rem; /* Odstup od obsahu */
-    position: fixed; /* Překryv nad stránkou */
-    top: 70px; /* Vzdálenost od horního okraje */
-    transform: translateX(-50%); /* Zarovnání středu elementu */
-    z-index: 1200; /* Zajištění, že se zobrazí nad obsahem stránky */
-    width: auto; /* Přizpůsobení šířky obsahu */
-    white-space: nowrap;
-    max-width: 90%; /* Maximální šířka pro menší obrazovky */
-    padding: 0.8rem; /* Vnitřní odsazení */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Jemný stín */
-}
-
-/* Alerty */
-.alert {
-    width: 90%; /* Zabírá většinu šířky stránky */
-    max-width: 500px; /* Maximální šířka */
-    margin-bottom: 10px; /* Odstup mezi jednotlivými alerty */
-    border-radius: 8px; /* Jemné zaoblení rohů */
-    text-align: center;
-    transition: opacity 0.15s linear;
-    border: 1px #555;
-}
 button[type="submit"] {
     padding: 0.25rem 0.5rem;
     font-size: 1rem;
@@ -500,15 +471,39 @@ button[type="submit"] {
     border-radius: 5px;
     cursor: default;
 }
-/* Specifické styly pro typy alertů */
+.alert-container {
+    left: 50%;
+    top: 20%;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 0.8rem;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    z-index: 1200;
+    width: auto;
+    white-space: nowrap;
+    max-width: 90%;
+    padding: 0.8rem;
+    pointer-events: none;
+}
+
+
+.alert {
+    margin-bottom: 1rem; /* Mezera mezi alerty */
+    border-radius: 0.5rem; /* Jemné zaoblení */
+    border-radius: 8px;
+    transition: opacity 0.15s linear;
+    border: 1px #555;
+}
+
 .alert-success {
-    background-color: #d4edda; /* Zelené pozadí */
-    color: #155724; /* Tmavě zelený text */
+    background-color: #d4edda;
+    color: #155724;
 }
 
 .alert-danger, .alert-error {
-    background-color: #f8d7da; /* Červené pozadí */
-    color: #721c24; /* Tmavě červený text */
+    background-color: #f8d7da;
+    color: #721c24;
 }
 
 .alert-info {
@@ -521,12 +516,6 @@ button[type="submit"] {
     color: #ff9800;
 }
 
-/* Tlačítko pro zavření alertu */
-.alert-dismissible .btn-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
 
 /* === Footer === */
 footer {
@@ -622,12 +611,11 @@ main .start-order a:hover {
 
 #cart-toggle .cart-info {
     position: absolute;
-    left: -65px; /* Posune div vlevo od ikony */
+    left: -70px; /* Posune div vlevo od ikony */
     top: 50%;
     padding: 5px 10px;
     transform: translateY(-40%); /* Vertikální zarovnání na střed ikony */
     color: darkred;
-     /* Vnitřní odsazení */
     font-size: 0.9rem; /* Velikost textu */
     border-radius: 5px; /* Zaoblení rohů */
     white-space: nowrap; /* Zabrání zalomení textu */
@@ -684,7 +672,7 @@ main .start-order a:hover {
 
 .pagination {
     width: 100%;
-    margin: 1.5rem 0;
+    margin: 1rem 0;
     justify-content: center;
 }
 

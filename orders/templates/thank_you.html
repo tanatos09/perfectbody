@@ -1,77 +1,67 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Děkujeme za vaši objednávku!</h2>
-<p>Vaše objednávka byla úspěšně dokončena. Detaily objednávky naleznete níže.</p>
+    <h2>Děkujeme za vaši objednávku!</h2>
+    <div class="ps-3 pe-3">
+        <p>Vaše objednávka byla úspěšně dokončena. Detaily objednávky naleznete níže.</p>
 
-<!-- Detaily objednávky -->
-<div>
-    <h3>Objednávka #{{ formatted_order_id }}</h3>
-    <table >
-        <tr>
-            <td><strong>Celková cena:</strong></td>
-            <td>{{ order.total_price }} Kč</td>
-        </tr>
-        <tr>
-            <td><strong>Stav objednávky:</strong></td>
-            <td>{{ order.get_order_state_display }}</td>
-        </tr>
-    </table>
-</div>
+        <!-- Detaily objednávky -->
+        <h3>Objednávka #{{ formatted_order_id }}</h3>
+        <table>
+            <tr>
+                <td><strong>Celková cena:</strong></td>
+                <td>{{ order.total_price }} Kč</td>
+            </tr>
+            <tr>
+                <td><strong>Stav objednávky:</strong></td>
+                <td>{{ order.get_order_state_display }}</td>
+            </tr>
+        </table>
 
-<hr>
+        <!-- Obsah objednávky -->
 
-<!-- Obsah objednávky -->
-<div>
-    <h3>Obsah objednávky</h3>
-    <table>
-        <thead>
-    <tr>
-        <th>Produkt</th>
-        <th class="price">Množství</th>
-        <th class="price">Cena za kus</th>
-        <th class="price">Celkem</th>
-        <th>Poznámka</th> <!-- Sloupec poznámky -->
-    </tr>
-</thead>
-<tbody>
-    {% for item in items_with_totals %}
-    <tr>
-        <td>{{ item.product_name }}</td>
-        <td class="price">{{ item.quantity }}</td>
-        <td class="price">{{ item.price_per_item }} Kč</td>
-        <td class="price">{{ item.total_price }} Kč</td>
-        <td>{{ item.note|default:"-" }}</td> <!-- Zobrazení poznámky -->
-    </tr>
-    {% endfor %}
-</tbody>
-    </table>
-</div>
+        <h3>Obsah objednávky</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Produkt</th>
+                <th class="price">Množství</th>
+                <th class="price">Cena za kus</th>
+                <th class="price">Celkem</th>
+                <th>Poznámka</th> <!-- Sloupec poznámky -->
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in items_with_totals %}
+                <tr>
+                    <td>{{ item.product_name }}</td>
+                    <td class="price">{{ item.quantity }}</td>
+                    <td class="price">{{ item.price_per_item }} Kč</td>
+                    <td class="price">{{ item.total_price }} Kč</td>
+                    <td>{{ item.note|default:"-" }}</td> <!-- Zobrazení poznámky -->
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-<hr>
 
-<!-- Pokyny pro platbu -->
-<div>
-    <h3>Pokyny pro platbu převodem</h3>
-    <p>Pro dokončení objednávky prosím proveďte platbu na níže uvedené údaje:</p>
-    <ul>
-        <li><strong>Číslo účtu:</strong> {{ payment_details.bank_account }}</li>
-        <li><strong>Variabilní symbol:</strong> {{ payment_details.variable_symbol }}</li>
-        <li><strong>Částka k úhradě:</strong> {{ payment_details.total_price }} Kč</li>
-    </ul>
-    <p>Po přijetí platby bude vaše objednávka zpracována. Děkujeme za pochopení!</p>
+        <!-- Pokyny pro platbu -->
 
-    <!-- QR kód -->
-    <div>
-        <h4>QR kód pro platbu</h4>
-        <img src="data:image/png;base64,{{ qr_code_base64 }}" alt="QR kód pro platbu">
+        <h3>Pokyny pro platbu převodem</h3>
+        <p>Pro dokončení objednávky prosím proveďte platbu na níže uvedené údaje:</p>
+        <ul>
+            <li><strong>Číslo účtu:</strong> {{ payment_details.bank_account }}</li>
+            <li><strong>Variabilní symbol:</strong> {{ payment_details.variable_symbol }}</li>
+            <li><strong>Částka k úhradě:</strong> {{ payment_details.total_price }} Kč</li>
+        </ul>
+        <p>Po přijetí platby bude vaše objednávka zpracována. Děkujeme za pochopení!</p>
+
+        <!-- QR kód -->
+        <div class="text-center ps-3 pe-3 d-flex flex-column align-items-center">
+            <h4>QR kód pro platbu</h4>
+            <img src="data:image/png;base64,{{ qr_code_base64 }}" alt="QR kód pro platbu">
+            <!-- Tlačítko zpět -->
+            <a href="{% url 'home' %}" class="btn btn-secondary home">Zpět na úvodní stránku</a>
+        </div>
     </div>
-</div>
-
-<hr>
-
-<!-- Tlačítko zpět -->
-<div>
-    <a href="{% url 'home' %}" class="btn btn-primary home" >Zpět na úvodní stránku</a>
-</div>
 {% endblock %}

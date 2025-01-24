@@ -93,7 +93,7 @@
                     <li>
                         <a href="{% url 'products' subcategory.pk %}">{{ subcategory.category_name }}</a>
 
-                        {% if user.is_staff %}
+                            {% if user.is_staff %}
                             <!-- Tlačítka pro úpravu a mazání podkategorie -->
                             <a href="{% url 'edit_category' subcategory.pk %}"
                                class="btn btn-sm btn-warning">Upravit</a>
@@ -152,20 +152,18 @@
                             {% if product.available_stock > 0 %}
                                 {{ product.available_stock }} kusů k dispozici.
                             {% else %}
-                                <span >Produkt není skladem.</span>
+                                <span>Produkt není skladem.</span>
                             {% endif %}
                         </div>
                         <div class="product-price"><b>Cena:</b> {{ product.price }} Kč</div>
 
-                        <br>
-                        <!-- Add to cart -->
+                        <br><!-- Add to cart -->
+                        <div class="add-to-cart">
                         {% if product.available_stock > 0 %}
-                            <div class="add-to-cart">
-                                <form method="post" action="{% url 'add_to_cart' product.id %}" class="add-to-cart">
-                            {% csrf_token %}
-                                  <button type="button" class="add-to-cart-btn" data-product-id="{{ product.id }}">Přidat do košíku
-                                    </button>
-                                </form>
+                            <form method="post" action="{% url 'add_to_cart' product.id %}" class="add-to-cart">
+                                {% csrf_token %}
+                                <button type="submit" class="add-to-cart-btn" data-product-id="{{ product.id }}">Přidat do košíku</button>
+                            </form>
                         {% else %}
                             <p>Nelze objednat</p>
                         {% endif %}
@@ -186,24 +184,23 @@
                 {% endfor %}
             </ul>
         {% endif %}
-
-        {% if category.category_parent %}
-            <p>
-                <strong>Zpět na předchozí kategorii:</strong>
-                <a href="{% url 'products' category.category_parent.pk %}">
-                    {{ category.category_parent.category_name }}
-                </a>
-            </p>
-        {% endif %}
-
+            <div>
+                {% if category.category_parent %}
+                    <p>
+                        <strong>Zpět na předchozí kategorii:</strong>
+                        <a href="{% url 'products' category.category_parent.pk %}">
+                            {{ category.category_parent.category_name }}
+                        </a>
+                    </p>
+                {% endif %}
+        </div>
         <!-- Navigace stránkování -->
         {% if products %}
             <div class="pagination">
                 <span class="step-links">
                     {% if products.has_previous %}
                         <a href="?page=1{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">&raquo První</a>
-                        <a href="?page=
-                                {{ products.previous_page_number }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Předchozí</a>
+                        <a href="?page={{ products.previous_page_number }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Předchozí</a>
                     {% endif %}
 
                     <span class="current">
@@ -212,12 +209,7 @@
 
                     {% if products.has_next %}
                         <a href="?page=
-
-
-
-
-
-                                {{ products.next_page_number }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Další</a>
+                            {{ products.next_page_number }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Další</a>
                         <a href="?page=
                                 {{ products.paginator.num_pages }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Poslední &#187;</a>
                     {% endif %}

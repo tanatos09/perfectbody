@@ -522,10 +522,10 @@ h3 {
 
 /* === Footer === */
 footer {
-    border-top: double;
+    border-top: double #6C757D;
     font-size: 0.8rem;
     background-color: #f8f9fa;
-    color: #696969;
+    color: #6C757D;
     text-align: center;
     padding: 0;
     position: relative;

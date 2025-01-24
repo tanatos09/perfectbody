@@ -28,8 +28,7 @@
             {% endfor %}
         </tbody>
     </table>
-
-    <div>
+    <div class="text-right">
         <strong>Celková cena: {{ total_price }} Kč</strong>
     </div>
 </div>
@@ -62,7 +61,7 @@
 <hr>
 
 <!-- Akce -->
-<div>
+<div class="text-right">
     <a href="{% url 'confirm_order' %}" class="btn btn-danger">Potvrdit objednávku</a>
     <a href="{% url 'start_order' %}" class="btn btn-secondary">Zpět na úpravu objednávky</a>
 </div>

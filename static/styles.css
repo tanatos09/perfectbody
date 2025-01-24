@@ -463,7 +463,7 @@ h3 {
 }
 
 .alert-container {
-    display: fixed;
+    display: flex;
     left: 50%; /* Horizontální zarovnání na střed */
     flex-direction: column;
     align-items: center;
@@ -491,7 +491,15 @@ h3 {
     transition: opacity 0.15s linear;
     border: 1px #555;
 }
-
+button[type="submit"] {
+    padding: 0.25rem 0.5rem;
+    font-size: 1rem;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: default;
+}
 /* Specifické styly pro typy alertů */
 .alert-success {
     background-color: #d4edda; /* Zelené pozadí */
@@ -614,12 +622,12 @@ main .start-order a:hover {
 
 #cart-toggle .cart-info {
     position: absolute;
-    left: -110px; /* Posune div vlevo od ikony */
+    left: -65px; /* Posune div vlevo od ikony */
     top: 50%;
-    transform: translateY(-50%); /* Vertikální zarovnání na střed ikony */
+    padding: 5px 10px;
+    transform: translateY(-40%); /* Vertikální zarovnání na střed ikony */
     color: darkred;
-    background-color: white;
-    padding: 5px 10px; /* Vnitřní odsazení */
+     /* Vnitřní odsazení */
     font-size: 0.9rem; /* Velikost textu */
     border-radius: 5px; /* Zaoblení rohů */
     white-space: nowrap; /* Zabrání zalomení textu */
@@ -679,15 +687,7 @@ main .start-order a:hover {
     margin: 1.5rem 0;
     justify-content: center;
 }
-button[type="submit"] {
-    padding: 0.25rem 0.5rem;
-    font-size: 1rem;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: default;
-}
+
 
 .redbutton {
     text-align: center;

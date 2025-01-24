@@ -9,16 +9,6 @@
             {% for trainer in approved_trainers %}
                 <li>
                     <a href="{% url 'trainer' trainer.id %}"><h2>{{ trainer.full_name }}</h2></a>
-                        <span>
-                        {% if approved_services %}
-                            {% for service in approved_services %}
-                                <a href="{% url 'service' service.service.id %}">{{ service.service.product_name }}</a>
-                                {% if not forloop.last %}, {% endif %}
-                            {% endfor %}
-                        {% else %}
-                            <p>Trenér zatím nemá schválené služby.</p>
-                        {% endif %}
-                        </span>
                     <p>Představení trenéra: {{ trainer.trainer_short_description }}</p>
 
                     {% if user.is_staff %}

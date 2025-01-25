@@ -88,8 +88,7 @@
 {% if approved_trainers_services %}
     <form method="post" action="{% url 'add_to_cart' service.id %}" class="add-to-cart">
         {% csrf_token %}
-        <button type="submit" class="add-to-cart-btn">
-            Přidat do košíku
+        <button type="submit" class="add-to-cart-btn" data-product-id="{{ service.id }}">Přidat do košíku</button>
         </button>
     </form>
 {% else %}
@@ -100,7 +99,7 @@
 
 <!-- Možnosti pro administrátora: Upravit a Smazat službu -->
 {% if user.is_staff %}
-    <div class="review">
+    <div>
         <a href="{% url 'edit_service' service.id %}" class="btn btn-sm btn-warning">
             Upravit službu
         </a>

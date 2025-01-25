@@ -462,40 +462,37 @@ h3 {
     padding: 10px;
 }
 
-button[type="submit"] {
-    padding: 0.25rem 0.5rem;
-    font-size: 1rem;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: default;
-}
 .alert-container {
-    left: 50%;
-    top: 20%;
+    display: flex;
+    left: 50%; /* Horizontální zarovnání na střed */
+    flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    margin-bottom: 0.8rem;
-    position: fixed;
-    transform: translate(-50%, -50%);
-    z-index: 1200;
-    width: auto;
+    margin-top: 1.3rem; /* Odstup od horního okraje */
+    margin-bottom: 0.8rem; /* Odstup od obsahu */
+    position: fixed; /* Překryv nad stránkou */
+    top: 70px; /* Vzdálenost od horního okraje */
+    transform: translateX(-50%); /* Zarovnání středu elementu */
+    z-index: 1200; /* Zajištění, že se zobrazí nad obsahem stránky */
+    width: auto; /* Přizpůsobení šířky obsahu */
     white-space: nowrap;
-    max-width: 90%;
-    padding: 0.8rem;
-    pointer-events: none;
+    max-width: 90%; /* Maximální šířka pro menší obrazovky */
+    padding: 0.8rem; /* Vnitřní odsazení */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Jemný stín */
 }
 
-
+/* Alerty */
 .alert {
-    margin-bottom: 1rem; /* Mezera mezi alerty */
-    border-radius: 0.5rem; /* Jemné zaoblení */
-    border-radius: 8px;
+    width: 90%; /* Zabírá většinu šířky stránky */
+    max-width: 500px; /* Maximální šířka */
+    margin-bottom: 10px; /* Odstup mezi jednotlivými alerty */
+    border-radius: 8px; /* Jemné zaoblení rohů */
+    text-align: center;
     transition: opacity 0.15s linear;
     border: 1px #555;
 }
 
+/* Specifické styly pro typy alertů */
 .alert-success {
     background-color: #d4edda;
     color: #155724;
@@ -611,11 +608,12 @@ main .start-order a:hover {
 
 #cart-toggle .cart-info {
     position: absolute;
-    left: -70px; /* Posune div vlevo od ikony */
+    left: -65px; /* Posune div vlevo od ikony */
     top: 50%;
     padding: 5px 10px;
     transform: translateY(-40%); /* Vertikální zarovnání na střed ikony */
     color: darkred;
+     /* Vnitřní odsazení */
     font-size: 0.9rem; /* Velikost textu */
     border-radius: 5px; /* Zaoblení rohů */
     white-space: nowrap; /* Zabrání zalomení textu */

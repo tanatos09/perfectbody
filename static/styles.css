@@ -170,6 +170,7 @@ main img {
     /*padding: 20px;  Vnitřní odsazení */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /*  Stín kolem obsahu */
     margin: 0;
+    margin-top: 60px;
     position: relative;
     z-index: 1;
     bottom: 4rem;
@@ -263,6 +264,14 @@ main img {
 
 
 /*Breadcrumb*/
+#breadcrumbs {
+    margin-top: 15px; /* Odsazení od navbaru */
+    padding: 10px 15px; /* Vnitřní odsazení breadcrumbs */
+    background-color: #f8f9fa; /* Světle šedé pozadí */
+    border-bottom: 1px solid #ddd; /* Jemná čára pod breadcrumbs */
+    position: relative; /* Zajistí, že zůstane v proudu obsahu */
+    z-index: 1; /* Zajistí viditelnost breadcrumbs */
+}
 ol.breadcrumb {
     background-color: #6c757d;
     color: white;

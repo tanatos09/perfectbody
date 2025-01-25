@@ -1,200 +1,204 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-    <!-- Breadcrumbs navigace -->
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <!-- Domů -->
-            <li class="breadcrumb-item">
-                <a href="{% url 'home' %}">Domů</a>
-            </li>
-
-            <!-- Oddělovač -->
-            <li class="breadcrumb-item">&#187;</li>
-
-            <!-- Hlavní kategorie produktů -->
-            {% if product.category %}
+    <div>
+        <!-- Breadcrumbs navigace -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <!-- Domů -->
                 <li class="breadcrumb-item">
-                    <a href="{% url 'products' %}">Kategorie produktů</a>
+                    <a href="{% url 'home' %}">Domů</a>
                 </li>
+
+                <!-- Oddělovač -->
+                <li class="breadcrumb-item">&#187;</li>
+
+                <!-- Hlavní kategorie produktů -->
+                {% if product.category %}
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'products' %}">Kategorie produktů</a>
+                    </li>
+                {% else %}
+                    <li class="breadcrumb-item active" aria-current="page">Kategorie produktů</li>
+                {% endif %}
+
+                <!-- Rodičovská kategorie, pokud existuje -->
+                {% if product.category and product.category.category_parent %}
+                    <li class="breadcrumb-item">&#187;</li>
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'products' product.category.category_parent.pk %}">
+                            {{ product.category.category_parent.category_name }}
+                        </a>
+                    </li>
+                {% endif %}
+
+                <!-- Aktuální kategorie -->
+                {% if product.category %}
+                    <li class="breadcrumb-item">&#187;</li>
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'products' product.category.pk %}">
+                            {{ product.category.category_name }}
+                        </a>
+                    </li>
+                {% endif %}
+
+                <!-- Název produktu -->
+                <li class="breadcrumb-item">&#187;</li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    {{ product.product_name }}
+                </li>
+            </ol>
+        </nav>
+
+        <h1>{{ product.product_name }}</h1>
+
+        <!-- Obrázek produktu -->
+        <div>
+            {% if product.product_view %}
+                <div>
+                    <img src="{{ product.product_view }}" alt="Obrázek produktu {{ product.product_name }}">
+                </div>
             {% else %}
-                <li class="breadcrumb-item active" aria-current="page">Kategorie produktů</li>
+                <p>Obrázek produktu není k dispozici.</p>
             {% endif %}
+        </div>
 
-            <!-- Rodičovská kategorie, pokud existuje -->
-            {% if product.category and product.category.category_parent %}
-                <li class="breadcrumb-item">&#187;</li>
-                <li class="breadcrumb-item">
-                    <a href="{% url 'products' product.category.category_parent.pk %}">
-                        {{ product.category.category_parent.category_name }}
-                    </a>
-                </li>
-            {% endif %}
+        <!-- Popis produktu -->
+        <div>
+            <h2>Popis produktu</h2>
+            <p>{{ product.product_long_description }}</p>
+        </div>
 
-            <!-- Aktuální kategorie -->
-            {% if product.category %}
-                <li class="breadcrumb-item">&#187;</li>
-                <li class="breadcrumb-item">
-                    <a href="{% url 'products' product.category.pk %}">
-                        {{ product.category.category_name }}
-                    </a>
-                </li>
-            {% endif %}
-
-            <!-- Název produktu -->
-            <li class="breadcrumb-item">&#187;</li>
-            <li class="breadcrumb-item active" aria-current="page">
-                {{ product.product_name }}
-            </li>
-        </ol>
-    </nav>
-
-    <h1>{{ product.product_name }}</h1>
-
-    <!-- Obrázek produktu -->
-    <div>
-        {% if product.product_view %}
-            <div>
-                <img src="{{ product.product_view }}" alt="Obrázek produktu {{ product.product_name }}">
-            </div>
-        {% else %}
-            <p>Obrázek produktu není k dispozici.</p>
-        {% endif %}
-    </div>
-
-    <!-- Popis produktu -->
-    <div>
-        <h2>Popis produktu</h2>
-        <p>{{ product.product_long_description }}</p>
-    </div>
-
-    <!-- Odkaz na výrobce -->
-    {% if product.producer %}
+        <!-- Odkaz na výrobce -->
+        {% if product.producer %}
             <p>
                 <strong>Výrobce:</strong>
                 <a href="{% url 'producer' product.producer.pk %}">
                     {{ product.producer.producer_name }}
                 </a>
             </p>
-    {% endif %}
+        {% endif %}
 
-    <!-- Zobrazení skladové dostupnosti -->
-    <p><strong>{{ stock_message }}</strong></p>
-    <p><strong>Cena:</strong> {{ product.price }} Kč</p>
-
-
-<!-- Tlačítko pro přidání do košíku -->
-{% if can_add_to_cart %}
-<div>
-    <form method="post" action="{% url 'add_to_cart' product.id %}" class="add-to-cart">
-        {% csrf_token %}
-        <button type="button"
-            class="add-to-cart-btn"
-            data-product-id="{{ product.id }}">
-                Přidat do košíku
-        </button>
-    </form>
-{% else %}
-    <p class="red"><strong>{{ stock_message }}</strong></p>
-{% endif %}
-</div>
-
-    {% if user.is_staff %}
-    <div>
-        <a href="{% url 'edit_product' product.id %}" class="btn btn-sm btn-warning">
-            Upravit produkt
-        </a>
-        <form method="post" action="{% url 'delete_product' product.id %}" class="delete-button">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat tento produkt?');">
-                Smazat produkt
-            </button>
-        </form>
-    </div>
-{% endif %}
+        <!-- Zobrazení skladové dostupnosti -->
+        <p><strong>{{ stock_message }}</strong></p>
+        <p><strong>Cena:</strong> {{ product.price }} Kč</p>
 
 
-
-<!-- Průměrné hodnocení -->
-<div class="average-rating">
-    <h2>Průměrné hodnocení</h2>
-    {% if average_rating > 0 %}
-        <p><strong>{{ average_rating }} / 5</strong></p>
-        <div class="rating-stars">
-            {% for state in star_states %}
-                <span class="{{ state }}">★</span>
-            {% endfor %}
+        <!-- Tlačítko pro přidání do košíku -->
+        <div>
+            {% if can_add_to_cart %}
+                <form method="post" action="{% url 'add_to_cart' product.id %}" class="add-to-cart">
+                    {% csrf_token %}
+                    <button type="button"
+                            class="add-to-cart-btn"
+                            data-product-id="{{ product.id }}">
+                        Přidat do košíku
+                    </button>
+                </form>
+            {% else %}
+                <p class="red"><strong>{{ stock_message }}</strong></p>
+            {% endif %}
         </div>
-    {% else %}
-        <p>Zatím žádné hodnocení</p>
-    {% endif %}
-</div>
+        <div>
+            {% if user.is_staff %}
 
-<!-- Formulář pro přidání hodnocení -->
-{% if user.is_authenticated %}
-    <div>
-        <h2>Hodnocení</h2>
-        <form method="post" action="{% url 'add_product_review' product.id %}">
-            {% csrf_token %}
+                <a href="{% url 'edit_product' product.id %}" class="btn btn-sm btn-warning">
+                    Upravit produkt
+                </a>
+                <form method="post" action="{% url 'delete_product' product.id %}" class="delete-button">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger"
+                            onclick="return confirm('Opravdu chcete smazat tento produkt?');">
+                        Smazat produkt
+                    </button>
+                </form>
+                </div>
+            {% endif %}
 
-            <!-- Hvězdičky -->
-            <label for="rating">Hodnocení:</label>
-            <div class="rating">
-                {% for i in "54321" %}
-                    <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}">
-                    <label for="star{{ i }}" title="{{ i }} hvězdiček">★</label>
-                {% endfor %}
-            </div>
 
-            <!-- Komentář -->
-            <label for="comment">Komentář:</label>
-            <textarea id="comment" name="comment" required placeholder="Napište svůj komentář..."></textarea>
-
-            <!-- Tlačítko -->
-            <div style="text-align: center;">
-                <button type="submit" style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #3788ff; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                    Přidat hodnocení
-                </button>
-            </div>
-        </form>
-    </div>
-{% else %}
-    <p style="text-align: center;">Pro přidání hodnocení se musíte přihlásit.</p>
-{% endif %}
-
-<!-- Zobrazení hodnocení -->
-<div class="product-reviews" style="margin-top: 2rem; text-align: center;">
-    <h2>Hodnocení</h2>
-    {% if page_reviews %}
-        {% for review in page_reviews %}
-            <div class="review" style="margin: 1rem auto; max-width: 600px; padding: 1rem; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9;">
-                <p><strong>Hodnotil:</strong> {{ review.reviewer.username }}</p>
-                <p>
-                    {% for i in "12345" %}
-                        {% if forloop.counter <= review.rating %}
-                            <span style="color: #f5b301;">★</span>
-                        {% else %}
-                            <span style="color: #ccc;">★</span>
-                        {% endif %}
+        <!-- Průměrné hodnocení -->
+        <div class="average-rating">
+            <h2>Průměrné hodnocení</h2>
+            {% if average_rating > 0 %}
+                <p><strong>{{ average_rating }} / 5</strong></p>
+                <div class="rating-stars">
+                    {% for state in star_states %}
+                        <span class="{{ state }}">★</span>
                     {% endfor %}
-                </p>
-                <p>{{ review.comment }}</p>
+                </div>
+            {% else %}
+                <p>Zatím žádné hodnocení</p>
+            {% endif %}
+        </div>
 
-                {% if user.is_staff %}
-                    <form method="post" action="{% url 'delete_product_review' review.id %}" class="delete-button">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm btn-danger"
-                                onclick="return confirm('Opravdu chcete smazat toto hodnocení?');">
-                            Smazat hodnocení
+        <!-- Formulář pro přidání hodnocení -->
+        <div>
+            {% if user.is_authenticated %}
+
+                <h2>Hodnocení</h2>
+                <form method="post" action="{% url 'add_product_review' product.id %}">
+                    {% csrf_token %}
+
+                    <!-- Hvězdičky -->
+                    <label for="rating">Hodnocení:</label>
+                    <div class="rating">
+                        {% for i in "54321" %}
+                            <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}">
+                            <label for="star{{ i }}" title="{{ i }} hvězdiček">★</label>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Komentář -->
+                    <label for="comment">Komentář:</label>
+                    <textarea id="comment" name="comment" required placeholder="Napište svůj komentář..."></textarea>
+
+                    <!-- Tlačítko -->
+                    <div style="text-align: center;">
+                        <button type="submit"
+                                style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #3788ff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                            Přidat hodnocení
                         </button>
-                    </form>
-                {% endif %}
-            </div>
-        {% endfor %}
+                    </div>
+                </form>
+                </div>
+            {% else %}
+                <p style="text-align: center;">Pro přidání hodnocení se musíte přihlásit.</p>
+            {% endif %}
 
-        <!-- Navigace stránkování -->
-        <div class="pagination" style="margin-top: 1.5rem;">
+        <!-- Zobrazení hodnocení -->
+        <div class="product-reviews" style="margin-top: 2rem; text-align: center;">
+            <h2>Hodnocení</h2>
+            {% if page_reviews %}
+                {% for review in page_reviews %}
+                    <div class="review"
+                         style="margin: 1rem auto; max-width: 600px; padding: 1rem; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9;">
+                        <p><strong>Hodnotil:</strong> {{ review.reviewer.username }}</p>
+                        <p>
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= review.rating %}
+                                    <span style="color: #f5b301;">★</span>
+                                {% else %}
+                                    <span style="color: #ccc;">★</span>
+                                {% endif %}
+                            {% endfor %}
+                        </p>
+                        <p>{{ review.comment }}</p>
+
+                        {% if user.is_staff %}
+                            <form method="post" action="{% url 'delete_product_review' review.id %}"
+                                  class="delete-button">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Opravdu chcete smazat toto hodnocení?');">
+                                    Smazat hodnocení
+                                </button>
+                            </form>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <!-- Navigace stránkování -->
+                <div class="pagination" style="margin-top: 1.5rem;">
             <span class="step-links">
                 {% if page_reviews.has_previous %}
                     <a href="?page=1">&laquo; První</a>
@@ -208,11 +212,10 @@
                     <a href="?page={{ page_reviews.paginator.num_pages }}">Poslední &#187;</a>
                 {% endif %}
             </span>
+                </div>
+            {% else %}
+                <p>Zatím zde nejsou žádná hodnocení.</p>
+            {% endif %}
         </div>
-    {% else %}
-        <p>Zatím zde nejsou žádná hodnocení.</p>
-    {% endif %}
-</div>
-
-
+    </div>
 {% endblock %}

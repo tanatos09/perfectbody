@@ -38,8 +38,7 @@
                     <td>{{ item.price }} Kč</td>
                     <td id="total-{{ product_id }}">{{ item.total }} Kč</td>
                     <td>
-            <textarea name="note" class="note-input" data-product-id="{{ product_id }}">
-                {{ item.note }}</textarea>
+            <textarea name="note" class="note-input" data-product-id="{{ product_id }}">{{ item.note }}</textarea>
                     </td>
                     <td>
                         <a href="{% url 'remove_from_cart' product_id=product_id %}" >

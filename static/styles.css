@@ -1032,3 +1032,21 @@ label div.rating {
     border-bottom-color: red;
     transition: color 0.3s ease;
 }
+.category-header {
+    display: flex; /* Obrázek a popis budou vedle sebe */
+    flex-wrap: wrap; /* Pokud nebude dostatek místa, přejdou pod sebe */
+    gap: 20px; /* Mezera mezi obrázkem a popisem */
+    margin-bottom: 20px; /* Odsazení dolů pro zbytek stránky */
+}
+
+.category-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px; /* Zaoblené rohy obrázku, pokud chceš */
+}
+
+.category-description {
+    flex: 1; /* Zajistí, že popis zabere zbývající místo */
+    display: flex;
+    align-items: center; /* Vertikální zarovnání obsahu */
+}

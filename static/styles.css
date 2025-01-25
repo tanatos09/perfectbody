@@ -892,6 +892,7 @@ form.approve-service-form {
     box-shadow: none; /* Odstranění stínů */
 }
 
+
 /* Styl tlačítka "Schválit" */
 button.approve-button {
     margin-bottom: 0.1rem;
@@ -923,22 +924,13 @@ button.reject-button {
 
 
 button:disabled {
-    background-color: #ccc; /* Šedé tlačítko při deaktivaci */
-    cursor: not-allowed; /* Změna kurzoru při deaktivaci */
+    background-color: #ccc;
+    cursor: not-allowed;
 }
 
 .hidden {
-    display: none; /* Skrytí prvku */
+    display: none;
 }
-
-
-/*form button[type="submit"] {
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-}*/
-
-
 
 label div.rating {
     justify-content: center;
@@ -946,11 +938,21 @@ label div.rating {
 }
 
 .average-rating {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin-top: 1rem;
     text-align: center;
 }
-
+.average-rating h2 {
+    width: 100%;
+    text-align: center;
+    background-color: #6c757d;
+    color: white;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
 .styled-link h2 {
     text-decoration: none;
     padding-bottom: 2px;

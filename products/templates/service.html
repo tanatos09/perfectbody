@@ -51,7 +51,7 @@
 </nav>
 
 <h1>{{ service.product_name }}</h1>
-
+<div>
 <!-- Obrázek služby -->
 {% if service.product_view %}
     <div class="service-image">
@@ -84,6 +84,7 @@
 
     <p><strong>Cena:</strong> {{ service.price }} Kč</p>
 </div>
+</div><br><hr>
 <!-- Tlačítko pro přidání do košíku -->
 {% if approved_trainers_services %}
     <form method="post" action="{% url 'add_to_cart' service.id %}" class="add-to-cart">

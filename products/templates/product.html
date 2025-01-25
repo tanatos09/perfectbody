@@ -51,7 +51,7 @@
     </nav>
 
     <h1>{{ product.product_name }}</h1>
-
+<div>
     <!-- Obrázek produktu -->
     <div>
         {% if product.product_view %}
@@ -61,7 +61,7 @@
         {% else %}
             <p>Obrázek produktu není k dispozici.</p>
         {% endif %}
-    </div>
+    </div><br>
 
     <!-- Popis produktu -->
     <div>
@@ -83,7 +83,7 @@
     <p><strong>{{ stock_message }}</strong></p>
     <p><strong>Cena:</strong> {{ product.price }} Kč</p>
 
-
+</div><br><hr>
 <!-- Tlačítko pro přidání do košíku -->
 {% if can_add_to_cart %}
 <div>

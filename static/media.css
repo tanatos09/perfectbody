@@ -102,11 +102,11 @@
         width: 100%;
         padding: 0;
     }
-
     .content-container {
         width: 100%;
-        margin: 2.5rem 0 0 0;
-        padding: 0;
+        /*margin: 2.5rem 0 0 0;*/
+        padding: 0 0 20px 0;
+        margin-bottom:50px;
         box-shadow: none;
     }
     .alert-container {
@@ -116,15 +116,14 @@
     /* Footer zůstává dole */
     footer {
         color: #212529;
-        position: fixed;
-        bottom: 0;
+        bottom:0;
         left: 0;
         width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-wrap: wrap; /* Pokud se nevejdou, přejdou na další řádek */
-        padding: 2px;
+        padding: 0.5rem ;
         text-overflow: ellipsis;
     }
 
@@ -134,7 +133,7 @@
         font-weight: bold;
         background: none; /* Bez pozadí */
         border: none; /* Bez ohraničení */
-        padding: 0 0.5rem 0 0.5rem;
+        padding:0 ;
         margin: 0;
         transition: color 0.3s ease;
     }
@@ -142,6 +141,11 @@
     footer a:hover {
         color: #212529;
         background: none; /* Žádné pozadí na hover */
+    }
+    footer a:not(:last-child)::after {
+    content: "|"; /* Svislá čárka */
+    color: #6c757d;
+    margin-left: 2px;
     }
 }
 @media (min-width: 992px) {

@@ -88,7 +88,7 @@ main {
     flex-direction: column;
     justify-content: flex-start;
     overflow-y: auto; /* Posuvník pouze v hlavním obsahu */
-    padding: 0 1.5rem;
+    padding-bottom: 1rem;
     width: 100%; /* Zarovná obsah na šířku stránky */
     max-width: 100%; /* Zamezí překročení šířky */
     margin: 0; /* Odstranění okrajů */
@@ -165,14 +165,13 @@ main img {
 .content-container {
     flex-grow: 1; /* Roztáhne kontejner */
     box-sizing: border-box;
-    width: 85% !important;
+    width: 90% !important;
     background-color: rgba(255, 255, 255, 0.8); /* Poloprůhledné pozadí */
-    /*padding: 20px;  Vnitřní odsazení */
+    padding: 1.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /*  Stín kolem obsahu */
     margin: 0;
-    position: relative;
     z-index: 1;
-    bottom: 4rem;
+
 }
 
 .content-container ul {
@@ -670,7 +669,7 @@ main .start-order a:hover {
 
 .pagination {
     width: 100%;
-    margin: 1rem 0;
+    margin: 1.5rem 0;
     justify-content: center;
 }
 

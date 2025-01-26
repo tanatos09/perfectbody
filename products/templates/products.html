@@ -66,14 +66,16 @@
         <h1>{{ category.category_name }}</h1>
 
         <!-- Obrázek kategorie -->
-        {% if category.category_view %}
+        <div class="category-header">
+            {% if category.category_view %}
             <div class="category-image">
                 <img src="{{ category.category_view }}" alt="Obrázek kategorie {{ category.category_name }}">
             </div>
         {% endif %}
-
+        <div class="category-description">
         <p>{{ category.category_description }}</p>
-
+        </div>
+        </div>
         {% if user.is_staff %}
             <!-- Tlačítka pro úpravu a mazání aktuální kategorie -->
             <a href="{% url 'edit_category' category.pk %}" class="btn btn-sm btn-warning">Upravit</a>

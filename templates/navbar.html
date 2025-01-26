@@ -28,17 +28,20 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuProducts">
                     {% for category in products_categories %}
                         {% if not forloop.first %}
+
                         {% endif %}
                         <li>
                             <a class="dropdown-item"
                                href="{% url 'products' category.pk %}">{{ category.category_name }}</a>
-                            {% if category.sorted_subcategories %}
+                            {% if category.subcategories.exists %}
                                 <ul class="dropdown-submenu list-unstyled">
-                                    {% for subcategory in category.sorted_subcategories %}
-                                        <li>
-                                            <a class="dropdown-item"
-                                               href="{% url 'products' subcategory.pk %}">{{ subcategory.category_name }}</a>
-                                        </li>
+                                    {% for subcategory in category.subcategories.all %}
+                                        {% if subcategory.categories.exists %}
+                                            <li>
+                                                <a class="dropdown-item"
+                                                   href="{% url 'products' subcategory.pk %}">{{ subcategory.category_name }}</a>
+                                            </li>
+                                        {% endif %}
                                     {% endfor %}
                                 </ul>
                             {% endif %}

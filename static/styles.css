@@ -160,10 +160,7 @@ main img {
     margin-top: 50px; /* Odsazení nadpisu pod obrázku */
     clear: left;
 }
-/*.category-image  p  h2{
-    margin-top: 50px;
-    clear: left;
-} */
+
 /* Obsah hlavního bloku */
 .content-container {
     flex-grow: 1; /* Roztáhne kontejner */
@@ -781,22 +778,13 @@ button.reject-button {
 
 
 button:disabled {
-    background-color: #ccc; /* Šedé tlačítko při deaktivaci */
-    cursor: not-allowed; /* Změna kurzoru při deaktivaci */
+    background-color: #ccc;
+    cursor: not-allowed;
 }
 
 .hidden {
-    display: none; /* Skrytí prvku */
+    display: none;
 }
-
-
-/*form button[type="submit"] {
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-}*/
-
-
 
 label div.rating {
     justify-content: center;
@@ -804,11 +792,21 @@ label div.rating {
 }
 
 .average-rating {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin-top: 1rem;
     text-align: center;
 }
-
+.average-rating h2 {
+    width: 100%;
+    text-align: center;
+    background-color: #6c757d;
+    color: white;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
 .styled-link h2 {
     text-decoration: none;
     padding-bottom: 2px;
@@ -898,4 +896,22 @@ label div.rating {
 #services-links > a:hover {
     border-bottom-color: red;
     transition: color 0.3s ease;
+}
+.category-header {
+    display: flex; /* Obrázek a popis budou vedle sebe */
+    flex-wrap: wrap; /* Pokud nebude dostatek místa, přejdou pod sebe */
+    gap: 20px; /* Mezera mezi obrázkem a popisem */
+    margin-bottom: 20px; /* Odsazení dolů pro zbytek stránky */
+}
+
+.category-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px; /* Zaoblené rohy obrázku, pokud chceš */
+}
+
+.category-description {
+    flex: 1; /* Zajistí, že popis zabere zbývající místo */
+    display: flex;
+    align-items: center; /* Vertikální zarovnání obsahu */
 }

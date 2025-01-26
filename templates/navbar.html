@@ -33,9 +33,9 @@
                         <li>
                             <a class="dropdown-item"
                                href="{% url 'products' category.pk %}">{{ category.category_name }}</a>
-                            {% if category.subcategories.exists %}
+                            {% if category.sorted_subcategories %}
                                 <ul class="dropdown-submenu list-unstyled">
-                                    {% for subcategory in category.subcategories.all %}
+                                    {% for subcategory in category.sorted_subcategories %}
                                         {% if subcategory.categories.exists %}
                                             <li>
                                                 <a class="dropdown-item"

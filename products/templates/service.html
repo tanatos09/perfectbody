@@ -74,8 +74,7 @@
         <p>
             <strong>Trenéři:</strong>
             {% for trainer_service in approved_trainers_services %}
-                <a href="{% url 'trainer' trainer_service.trainer.id %}">{{ trainer_service.trainer.full_name }}</a>
-                {% if not forloop.last %}, {% endif %}
+                <a href="{% url 'trainer' trainer_service.trainer.id %}">{{ trainer_service.trainer.full_name }}</a>{% if not forloop.last %}, {% endif %}
             {% endfor %}
         </p>
     {% else %}

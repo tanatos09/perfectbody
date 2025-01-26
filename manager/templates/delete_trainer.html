@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <div class="manage">
 <h1>Smazat trenéra</h1>
 <p>Opravdu chcete smazat trenéra <strong>{{ trainer.full_name }}</strong>?</p>
 <form method="post">
@@ -8,4 +9,5 @@
     <button type="submit" class="btn btn-danger">Ano, smazat</button>
 </form>
 <a href="{% url 'trainers' %}" class="btn btn-secondary">Zrušit</a>
+</div>
 {% endblock %}

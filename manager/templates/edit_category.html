@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+  <div class="manage">
 <h1>Úprava kategorie: {{ category.category_name }}</h1>
 
 <form method="post">
@@ -23,4 +24,5 @@
         <li>Žádné podkategorie nejsou dostupné.</li>
     {% endfor %}
 </ul>
+    </div>
 {% endblock %}

@@ -228,7 +228,22 @@
 
 }
 
-@media (min-width: 992px) {
+@media (min-width: 860px) {
+     .category-header {
+        display: block; /* Změna na blokový layout */
+    }
+
+    .category-image {
+        float: left; /* Obrázek bude obtékaný textem */
+        margin-right: 20px; /* Mezera mezi obrázkem a textem */
+        margin-bottom: 10px;
+        max-width: 50%; /* Nastaví šířku obrázku na polovinu šířky rodiče */
+    }
+
+    .category-description {
+        display: block; /* Text pod obrázkem bude blokový */
+        align-items: unset; /* Resetuje vertikální zarovnání */
+    }
     .icon-size-lg {
         width: 2em;
         height: 2em;

@@ -93,7 +93,9 @@ main {
     max-width: 100%; /* Zamezí překročení šířky */
     margin: 0; /* Odstranění okrajů */
     box-sizing: border-box; /* Zahrnuje padding do celkové šířky */
+    height: 100%;
 }
+
 main li {
     list-style-type: none;
     list-style-position:outside ;
@@ -914,4 +916,17 @@ label div.rating {
     flex: 1; /* Zajistí, že popis zabere zbývající místo */
     display: flex;
     align-items: center; /* Vertikální zarovnání obsahu */
+}
+.manage{
+    padding:0 0 1.5rem 0;
+
+}
+
+.manage h2{
+    margin-top:1.5rem;
+}
+.center-button {
+    position: absolute;
+    top: 50%; /* Nastaví tlačítko na 50% výšky */
+    left: 50%; /* Nastaví tlačítko na 50% šířky */
 }

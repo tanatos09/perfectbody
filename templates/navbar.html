@@ -227,6 +227,16 @@
             searchResults.style.display = 'block';
         }
     });
+    // odklik Login
+        document.addEventListener('DOMContentLoaded', () => {
+        const userIcon = document.getElementById('userDropdown'); // Ikona uživatele
+
+        userIcon.addEventListener('click', (event) => {
+           if (!event.target.closest('.dropdown-menu')) {
+                window.location.href = '/login/';
+            }
+        });
+    });
     // odklik Kosik
         document.addEventListener('DOMContentLoaded', () => {
         const cartLink = document.getElementById('cartDropdown');

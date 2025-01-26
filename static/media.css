@@ -42,13 +42,8 @@
         }
 
 
-    #user-menu .dropdown-menu {
-        right: 0;
-        min-width: 195px;
 
-    }
-
-    #cart-menu .dropdown-menu{
+    #user-menu, #cart-menu .dropdown-menu{
     display: none; /* Skryje dropdown menu */
     }
 
@@ -99,7 +94,9 @@
     #cart-wrapper .dropdown-menu {
         display: none !important; /* Skrytí dropdown menu */
     }
-
+    #user-wrapper .dropdown-menu {
+        display: none !important;
+    }
     #cart-wrapper a {
         display: inline-block;
         text-decoration: none;
@@ -115,12 +112,7 @@
         margin-right: 10px;
     }
 
-    #userDropdown a {
-        display: inline-block;
-        text-decoration: none;
-        color: #6c757d;
-        font-size: 1.2rem;
-    }
+
 
     /* Hlavní obsah */
     main {
@@ -230,7 +222,9 @@
         width: 1.3rem;
         height: 1.3rem;
     }
-
+     #user-menu .dropdown-menu {
+        display: none !important; /* Skryje dropdown */
+    }
 
 }
 

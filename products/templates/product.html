@@ -136,7 +136,7 @@
 
             <!-- Formulář pro přidání hodnocení -->
             {% if user.is_authenticated %}
-                <div>
+                <div class="add-review">
                     <h2>Hodnocení</h2>
                     <form method="post" action="{% url 'add_product_review' product.id %}">
                         {% csrf_token %}
@@ -157,8 +157,7 @@
 
                         <!-- Tlačítko -->
                         <div style="text-align: center;">
-                            <button type="submit"
-                                    style="padding: 0.5rem 1rem; font-size: 1rem; background-color: #3788ff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                            <button type="submit">
                                 Přidat hodnocení
                             </button>
                         </div>

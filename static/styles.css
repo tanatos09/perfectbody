@@ -156,11 +156,14 @@ main img {
     height: auto; /* Zachování proporcí obrázku */
 }
 
-.category-image + p + h2 {
+.category-image + p + h2{
     margin-top: 50px; /* Odsazení nadpisu pod obrázku */
     clear: left;
 }
-
+/*.category-image  p  h2{
+    margin-top: 50px;
+    clear: left;
+} */
 /* Obsah hlavního bloku */
 .content-container {
     flex-grow: 1; /* Roztáhne kontejner */
@@ -190,7 +193,6 @@ main img {
 /* Responsivní navbar */
 #MainNav .navbar-toggler {
     border: none;
-    font-size: 1em; /* Velikost textu */
     background-color: white;
     color: darkred;
     margin-left: 10px; /* Odsazení od ikony */
@@ -337,10 +339,6 @@ h3 {
     display: inline-block;
     vertical-align: middle; /* Zarovnání na střed s textem */
 
-}
-
-#search-results ul {
-    padding: 10px;
 }
 
 .alert-container {

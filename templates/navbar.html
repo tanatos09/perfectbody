@@ -12,7 +12,7 @@
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse justify-content-center align-items-end" id="navbarNav">
+    <div class="collapse navbar-collapse justify-content-start" id="navbarNav">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <!-- Domů -->
             <li class="nav-item">
@@ -138,7 +138,7 @@
 
         <!-- Košík -->
         <div class="nav-item dropdown" id="cart-menu">
-            <a class="nav-link d-flex align-items-center" href="#" id="cartDropdown" role="button"
+            <a href="#" class="nav-link d-flex align-items-center" id="cartDropdown" role="button"
                data-bs-toggle="dropdown" aria-expanded="false">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="680.7 197.5 39 28" fill="none" stroke="currentColor"
                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-size">
@@ -226,6 +226,17 @@
             searchResults.innerHTML = html;
             searchResults.style.display = 'block';
         }
+    });
+    // odklik Kosik
+        document.addEventListener('DOMContentLoaded', () => {
+        const cartLink = document.getElementById('cartDropdown');
+
+        cartLink.addEventListener('click', (event) => {
+            // Pokud uživatel klikne na samotnou ikonu nebo text
+            if (!event.target.closest('.dropdown-menu')) {
+                window.location.href = '/cart/';
+            }
+        });
     });
 
     // Dropdown Kosik

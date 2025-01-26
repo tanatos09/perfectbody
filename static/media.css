@@ -1,55 +1,75 @@
 @media (max-width: 768px) {
-     #MainNav {
-        display: flex;
-        justify-content: space-between;
-        /*align-items: center;*/
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 0.8rem;
-    }
-    /* Logo vlevo, toggler vpravo */
-    .navbar-logo {
-        max-height: 50px;
-        height: auto;
-    }
-
-    .navbar-toggler {
-        order: 3; /* Toggler je napravo */
-        display: block;
-        margin-left: auto;
-    }
 
     /* Zobrazí rozbalené menu pod navbar */
     .navbar-collapse {
         display: none;
         flex-direction: column;
         list-style: none;
-        padding: 10px;
-        margin: 0 auto;
-        width: 95%;
+        padding: 5px;
+        margin: 2px auto;
+        width: auto;
         background-color: #f8f9fa;
         border-radius: 5px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 1030;
+        align-items: flex-start; /* Zarovná vše vlevo */
+        top: 100%;
+        left: 0;
+        position: absolute;
+
     }
-.navbar-nav {
+    #MainNav .navbar-nav .nav-link {
+        border: none;
+    }
+    .navbar-nav {
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
     }
+    .navbar-nav .dropdown-menu {
+        left: 0; /* Zarovnání k levé straně */
+        box-shadow: none; /* Odstranění stínu */
+        background-color: #ffffff;
+        z-index: 1050;
+        position: relative; /* Zůstane uvnitř rodiče, ale nezpůsobí posun */
+        top: auto; /* Reset vertikálního umístění */
+        /* top:  calc(100% + 10px); Umístí dropdown přímo pod navigační lištu */
+        width: 100%; /* Zajistí šířku přes celý navbar */
+        border: none !important;
+}
 
-    #search-form-nav {
-        width: 100%;
-        margin: 10px 0;
-    }
+     .navbar-end .nav-item {
+            margin:0 1rem ; /* Mezera mezi položkami */
+        }
 
-    #cart-menu .dropdown-menu,
+
     #user-menu .dropdown-menu {
-        right: auto;
-        left: 0;
-        width: 100%;
+        right: 0;
+        min-width: 195px;
+
     }
+
+    #cart-menu .dropdown-menu{
+    display: none; /* Skryje dropdown menu */
+    }
+
+    /* Ikony uživatele a košíku blíže k sobě */
+    #user-menu, #cart-menu {
+        margin: 0;
+        padding: 0;
+        display: inline-flex;
+        gap: 5px; /* Menší mezera mezi ikonami */
+    }
+     /*klik na košík*/
+     #cart-menu a {
+        display: inline-block;
+        text-decoration: none;
+    }
+
+
     .navbar-toggler[aria-expanded="true"] + .navbar-collapse {
-        display: flex;
+        display: flex; /* Zobrazí menu */
+        position: absolute; /* Vyjme jej z normálního toku */
+        top: 100%; /* Umístí jej pod navigační panel */
     }
 
     .navbar-collapse a {
@@ -61,26 +81,12 @@
         text-align: left;
     }
 
-    .navbar-collapse a:hover {
-        color: darkred;
-        background-color: #f0f0f0;
-    }
+
     main img {
         max-width: 100%;
         height: auto;
     }
-    /* Vyhledávací menu */
-    #search-form-nav {
-        position: static;
-        display: flex;
-        justify-content: center;
-        margin: 4.5em 0 0 0;
-        padding: 0;
-        width: 100%;
-        background-color: #f8f9fa;
-        border-radius: 5px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
+
     #search-results {
         display: none !important; /* Skrytí našeptávače */
     }
@@ -100,7 +106,9 @@
         color: darkred;
         font-size: 1.2rem;
     }
-
+    #cart-menu a:hover {
+        color: darkred; /* Hover efekt pro zvýraznění */
+    }
     /* Uživatelské menu */
     #userDropdown {
         order: 1; /* Uživatelská ikona je vlevo od košíku */
@@ -160,11 +168,77 @@
         background: none; /* Žádné pozadí na hover */
     }
     footer a:not(:last-child)::after {
-    content: "|"; /* Svislá čárka */
-    color: #6c757d;
-    margin-left: 2px;
+        content: "|"; /* Svislá čárka */
+        color: #6c757d;
+        margin-left: 2px;
+    }
+    #MainNav {
+        display: flex;
+        flex-direction: row; /* Horizontální zarovnání loga a vyhledávání */
+        align-items: center;
+        height: auto; /* Výška loga je výškou navbaru */
+        justify-content: space-between;
+    }
+
+    /* Logo vlevo nahoře */
+    .navbar-brand {
+        order: 1;
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        margin-right: 10px; /* Mezera mezi logem a ostatními prvky */
+    }
+
+    .navbar-logo {
+        max-height: 60px; /* Výška loga */
+        height: auto;
+    }
+
+    /* Vyhledávací pole vedle loga */
+    #search-form-nav {
+        order: 2;
+        flex: 1; /* Zajistí vyplnění prostoru mezi logem a togglerem */
+        display: flex;
+        width: 60%;
+        left: 5rem;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    .search-wrapper {
+        padding:0.1rem;
+    }
+    /* Navbar-end a toggler na spodní hraně */
+    .navbar-end {
+        order: 3;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        gap: 10px;
+        width: auto;
+        top:1.2rem;
+    }
+
+    .navbar-toggler {
+        order: 4;
+        flex: 0 0 auto; /* Zabírá jen prostor, který potřebuje */
+        margin-left: 10px; /* Vzdálenost od vyhledávání */
+        align-self: flex-end;
+
+
+    }
+
+    .icon-size{
+        width: 1.3rem;
+        height: 1.3rem;
+    }
+    .breadcrumb {
+    display: none; /* Skrytí breadcrumb */
+    }
+     .weather {
+        display: none; /* Skryto na mobilech ve výchozím stavu */
     }
 }
+
 @media (min-width: 992px) {
     .icon-size-lg {
         width: 2em;

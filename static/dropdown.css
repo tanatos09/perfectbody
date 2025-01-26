@@ -2,7 +2,7 @@
 .dropdown-menu {
     font-size: 0.9rem;
     padding: 0;
-    max-width: 350px; 
+    max-width: 100%;
     max-height: 300px;
     overflow-y: auto; /* Povolení posouvání, pokud je obsah vyšší než 350px */
     background-color: white; /* Bílé pozadí pro celé menu */

@@ -31,6 +31,7 @@
 }
 
 
+
 /*tlačítka produkty, služby,...*/
 #MainNav .navbar-nav .nav-link {
     font-weight: bold;
@@ -99,8 +100,7 @@
 }
 
 .navbar-nav .dropdown-menu > li > a:hover {
-    color:darkred;
-
+    color: #bdbdbd;
 }
 
 .navbar-nav .dropdown-menu > li:last-child > a {
@@ -121,10 +121,11 @@
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/*.navbar-nav .dropdown-submenu .dropdown-item:hover {
-    background-color: darkred;
-    color: white;
-}*/
+.navbar-nav .dropdown-submenu .dropdown-item:hover {
+    background-color: rgb(189, 189, 189);
+    color: darkred;
+}
+
 
 /* Košík a Uživatelské Menu */
 #cart-menu,
@@ -303,3 +304,4 @@
     margin-bottom: 0;
     display: block;
 }
+

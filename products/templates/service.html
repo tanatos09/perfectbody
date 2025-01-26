@@ -78,8 +78,7 @@
                     <p>
                         <strong>Trenéři:</strong>
                         {% for trainer_service in approved_trainers_services %}
-                            <a href="{% url 'trainer' trainer_service.trainer.id %}">{{ trainer_service.trainer.full_name }}</a>
-                            {% if not forloop.last %}, {% endif %}
+                            <a href="{% url 'trainer' trainer_service.trainer.id %}">{{ trainer_service.trainer.full_name }}</a>{% if not forloop.last %}, {% endif %}
                         {% endfor %}
                     </p>
                 {% else %}
@@ -124,7 +123,7 @@
             <div class="average-rating">
                 <h2>Průměrné hodnocení</h2>
                 {% if average_rating > 0 %}
-                    <p style="text-align: center">
+                    <p>
                         <strong>{{ average_rating }} / 5</strong>
                     </p>
                     <div class="rating-stars">
@@ -177,7 +176,7 @@
                     </form>
                 </div>
             {% else %}
-                <p>Pro přidání hodnocení se musíte přihlásit.</p>
+                <p style="text-align: center;">Pro přidání hodnocení se musíte přihlásit.</p>
             {% endif %}
 
 

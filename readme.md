@@ -169,6 +169,141 @@ Projekt PerfectBody je moderní e-commerce platforma zaměřená na fitness a zd
 - **Podpora více typů produktů:** Produkty (merchandise) a služby.
 - **Vlastní chybové stránky:** Pro chyby 400, 403, 404, 408, 429, 500 a 503.
 
+
+## Project Setup Guide (EN)
+
+This document outlines the steps required to run the project.
+
+### Requirements
+- **Python 3.12**
+- **Django 5.1.3** (including additional dependencies, see `requirements.txt`)
+- Virtual Environment (`venv`)
+- SQLite database server
+
+### Key Packages and Versions
+Below is a list of important libraries used in the project:
+- `asgiref==3.8.1`
+- `django-formtools==2.5.1`
+- `pillow==11.0.0`
+- `python-dotenv==1.0.1`
+- `qrcode==8.0`
+- `requests==2.32.3`
+- For more, see [requirements.txt](requirements.txt)
+
+### Steps to Run the Project
+First, clone the project repository to your computer using the command:
+```bash
+git clone https://github.com/Galdrakona/perfectbody
+```
+If the project contains multiple branches, switch to the desired branch:
+```bash
+git checkout master
+```
+Next, create a virtual environment in the root directory of the project:
+```bash
+python -m venv .venv
+```
+Activate the virtual environment. On Windows, use the command:
+```bash
+.\.venv\Scripts\Activate
+```
+On macOS or Linux, use the command:
+```bash
+source .venv/bin/activate
+```
+After activating the virtual environment, install all required packages from the requirements.txt file:
+```bash
+pip install -r requirements.txt
+```
+In the root directory of the project, create an .env file and add the application's secret key:
+```bash
+SECRET_KEY=your_secret_key
+```
+To set up the database, run the command:
+```bash
+python manage.py setup_database
+```
+This command will automatically create test products, services, users, and reviews. If you don’t want to populate the database with test data, proceed with the following command instead:
+```bash
+python manage.py setup_server
+```
+You can now start the development server using the command:
+```bash
+python manage.py runserver
+```
+If you need to create an admin account, run the command:
+```bash
+python manage.py createsuperuser
+```
+And that's it! 🎉 The e-shop is now ready to launch!
+
+## Návod na spuštění projektu (CZ)
+
+Tento dokument popisuje kroky potřebné pro spuštění projektu.
+
+### Požadavky
+- **Python 3.12**
+- **Django 5.1.3** (včetně dalších závislostí, viz `requirements.txt`)
+- Virtuální prostředí (`venv`)
+- Databázový server SQLite
+
+### Klíčové balíčky a verze
+Níže je seznam důležitých knihoven použitých v projektu:
+- `asgiref==3.8.1`
+- `django-formtools==2.5.1`
+- `pillow==11.0.0`
+- `python-dotenv==1.0.1`
+- `qrcode==8.0`
+- `requests==2.32.3`
+- Další viz [requirements.txt](requirements.txt)
+
+### Kroky pro spuštění
+Nejprve naklonuj repozitář projektu na svůj počítač pomocí příkazu:
+```bash
+git clone https://github.com/Galdrakona/perfectbody
+```
+Pokud projekt obsahuje více větví, přepni se na požadovanou větev:
+```bash
+git checkout master
+```
+Dále vytvoř virtuální prostředí v kořenové složce projektu:
+```bash
+python -m venv .venv
+```
+Aktivuj virtuální prostředí. Na Windows použij příkaz:
+```bash
+.\.venv\Scripts\Activate
+```
+Na macOS nebo Linuxu použij příkaz:
+```bash
+source .venv/bin/activate
+```
+Po aktivaci virtuálního prostředí nainstaluj všechny potřebné balíčky ze souboru requirements.txt:
+```bash
+pip install -r requirements.txt
+```
+V kořenové složce projektu vytvoř soubor .env a přidej do něj `secret key` aplikace:
+```bash
+SECRET_KEY=tvůj_secret_key
+```
+Pro nastavení databáze spusť příkaz:
+```bash
+python manage.py setup_database
+```
+Tento příkaz automaticky vytvoří testovací produkty, služby, uživatele a hodnocení. Pokud nechceš databázi naplnit testovacími daty, postupuj následovně:
+```bash
+python manage.py setup_server
+```
+Nyní můžeš spustit vývojový server pomocí příkazu:
+```bash
+python manage.py runserver
+```
+Pokud potřebuješ vytvořit administrátorský účet, spusť příkaz:
+```bash
+python manage.py createsuperuser
+```
+A je hotovo! 🎉 E-shop je nyní připraven ke spuštění!
+
 ## Database
 
 - [x] user_profile

@@ -31,37 +31,23 @@
     color: white;
 }
 
-/* Subkategorie (vnořené položky)
-.dropdown-menu .dropdown-submenu > li > a {
-    background-color: white;
-    color: #6c757d; 
-    font-weight: normal; 
-    padding: 8px 15px; 
-}
-
-
-.dropdown-menu .dropdown-submenu > li > a:hover {
-    background-color: #f8f9fa;
-    color: #6c757d; 
-}*/
-
-/* Odstranění odrážek z dropdownu */
+ /* Odstranění odrážek z dropdownu */
 .dropdown-menu ul {
-    list-style: none; /* Odstranění odrážek */
-    margin: 0; /* Odstranění vnějších okrajů */
-    padding: 0; /* Odstranění vnitřních odsazení */
+    list-style: none;
+    margin: 0;
+    padding: 0; /
 }
 /* Čára nad dalšími položkami */
 .dropdown-divider {
-    border-top: 1px solid #ddd; /* Světle šedá čára */
+    border-top: 1px solid #ddd;
     margin: 10px 0;
 }
 /* Styl pro položky menu */
 .dropdown-item {
     padding: 1rem 1.5rem;
     color: #333;
-    text-decoration: none; /* Bez podtržení */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Efekt při najetí */
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .dropdown-item:hover {
@@ -87,8 +73,6 @@
 .nav-item.dropdown:hover .dropdown-menu {
     display: block;
 }
-
-
 
 #cart-wrapper:hover #navbar-cart-dropdown,
 #cart-wrapper.active #navbar-cart-dropdown {

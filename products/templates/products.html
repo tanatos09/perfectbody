@@ -198,8 +198,8 @@
                 {% endif %}
         </div>
         <!-- Navigace stránkování -->
-        {% if products %}
-            <div class="pagination">
+        <div class="pagination">
+            {% if products %}
                 <span class="step-links">
                     {% if products.has_previous %}
                         <a href="?page=1{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">&raquo První</a>

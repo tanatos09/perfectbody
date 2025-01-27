@@ -15,8 +15,8 @@
         top: 100%;
         left: 0;
         position: absolute;
-
     }
+
     #MainNav .navbar-nav .nav-link {
         border: none;
     }
@@ -26,22 +26,19 @@
         gap: 10px;
     }
     .navbar-nav .dropdown-menu {
-        left: 0; /* Zarovnání k levé straně */
-        box-shadow: none; /* Odstranění stínu */
+        left: 0;
+        box-shadow: none;
         background-color: #ffffff;
         z-index: 1050;
-        position: relative; /* Zůstane uvnitř rodiče, ale nezpůsobí posun */
-        top: auto; /* Reset vertikálního umístění */
-        /* top:  calc(100% + 10px); Umístí dropdown přímo pod navigační lištu */
-        width: 100%; /* Zajistí šířku přes celý navbar */
+        position: relative;
+        top: auto;
+        width: 100%;
         border: none !important;
-}
+    }
 
      .navbar-end .nav-item {
-            margin:0 1rem ; /* Mezera mezi položkami */
-        }
-
-
+            margin:0 1rem ;
+     }
 
     #user-menu, #cart-menu .dropdown-menu{
     display: none; /* Skryje dropdown menu */
@@ -60,7 +57,6 @@
         text-decoration: none;
     }
 
-
     .navbar-toggler[aria-expanded="true"] + .navbar-collapse {
         display: flex; /* Zobrazí menu */
         position: absolute; /* Vyjme jej z normálního toku */
@@ -75,7 +71,6 @@
         border-bottom: 1px solid #ddd;
         text-align: left;
     }
-
 
     main img {
         max-width: 100%;
@@ -112,8 +107,6 @@
         margin-right: 10px;
     }
 
-
-
     /* Hlavní obsah */
     main {
         width: 100%;
@@ -127,7 +120,7 @@
         box-shadow: none;
     }
     .alert-container {
-        top: auto; /* Resetuje vertikální zarovnání */
+        top: auto;
         bottom: 80px; /* Posune nad footer (upravit podle výšky footeru) */
     }
     /* Footer zůstává dole */
@@ -157,7 +150,7 @@
 
     footer a:hover {
         color: #212529;
-        background: none; /* Žádné pozadí na hover */
+        background: none;
     }
     footer a:not(:last-child)::after {
         content: "|"; /* Svislá čárka */
@@ -215,31 +208,42 @@
         flex: 0 0 auto; /* Zabírá jen prostor, který potřebuje */
         margin-left: 10px; /* Vzdálenost od vyhledávání */
         align-self: flex-end;
-
-
     }
+
     .icon-size{
         width: 1.3rem;
         height: 1.3rem;
     }
+
      #user-menu .dropdown-menu {
         display: none !important; /* Skryje dropdown */
     }
 
 }
 
-@media (min-width: 992px) {
+@media (min-width: 860px) {
+     .category-header {
+        display: block; /* Změna na blokový layout */
+    }
+
+    .category-image {
+        float: left; /* Obrázek bude obtékaný textem */
+        margin-right: 20px; /* Mezera mezi obrázkem a textem */
+        margin-bottom: 10px;
+        max-width: 50%; /* Nastaví šířku obrázku na polovinu šířky rodiče */
+    }
+
+    .category-description {
+        display: block; /* Text pod obrázkem bude blokový */
+        align-items: unset; /* Resetuje vertikální zarovnání */
+    }
     .icon-size-lg {
-        width: 2em;
-        height: 2em;
+        width: 2rem;
+        height: 2rem;
     }
 }
 @media (min-width: 1200px) {
      #search-form {
         width: 50%; /* Užší na extra velkých obrazovkách */
-    }
-    .icon-size {
-        width: 2.5em;
-        height: 2.5em;
     }
 }

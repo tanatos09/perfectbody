@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-        <div>
+        <div class="manage">
 <h1>Přidat výrobce</h1>
-        </div>
+
 
 <!-- Formulář pro přidání výrobce -->
 <form method="post" enctype="multipart/form-data">
@@ -12,7 +12,7 @@
     <button type="submit" class="btn btn-primary">Přidat výrobce</button>
 </form>
 <br>
-<div>
+
 <a href="{% url 'dashboard' %}" class="btn btn-secondary">Zpět na Dashboard</a>
 </div>
 {% endblock %}

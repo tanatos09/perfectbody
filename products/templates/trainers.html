@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<div class="manage">
     <h1>Naši trenéři</h1>
 
     {% if approved_trainers %}
@@ -27,4 +27,5 @@
         <p>Trenéři nejsou k dispozici.</p>
     {% endif %}
 
+</div>
 {% endblock %}

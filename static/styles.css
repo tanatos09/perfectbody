@@ -880,3 +880,6 @@ label div.rating {
     top: 50%; /* Nastaví tlačítko na 50% výšky */
     left: 50%; /* Nastaví tlačítko na 50% šířky */
 }
+main .start-order a {
+    color:white;
+}

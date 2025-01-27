@@ -63,4 +63,9 @@
     justify-content: center;
     gap: 10px;
 }
-
+ a .bila {
+    color:white;
+}
+main .start-order a {
+    color:white;
+}

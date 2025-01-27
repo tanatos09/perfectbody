@@ -169,7 +169,6 @@ Projekt PerfectBody je moderní e-commerce platforma zaměřená na fitness a zd
 - **Podpora více typů produktů:** Produkty (merchandise) a služby.
 - **Vlastní chybové stránky:** Pro chyby 400, 403, 404, 408, 429, 500 a 503.
 
-
 ## Project Setup Guide (EN)
 
 This document outlines the steps required to run the project.

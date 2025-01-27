@@ -15,7 +15,7 @@ html, body {
 }
 
 body {
-    overflow-y: auto; /* Povolení automatického scrollu pouze při přetečení */
+    overflow-y: auto;
 }
 
 header {
@@ -46,7 +46,6 @@ header {
 .category-image {
     max-width: 450px;
     height: auto;
-
 }
 
 td {
@@ -56,8 +55,8 @@ td {
 table {
     width: 100%;
     margin-bottom: 20px;
+    border-bottom: 2px solid #212529;
 }
-
 .review {
     display: block;
     text-align: center;
@@ -87,12 +86,12 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    overflow-y: auto; /* Posuvník pouze v hlavním obsahu */
+    overflow-y: auto;
     padding-bottom: 1rem;
-    width: 100%; /* Zarovná obsah na šířku stránky */
-    max-width: 100%; /* Zamezí překročení šířky */
-    margin: 0; /* Odstranění okrajů */
-    box-sizing: border-box; /* Zahrnuje padding do celkové šířky */
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    box-sizing: border-box;
     height: 100%;
 }
 
@@ -111,10 +110,10 @@ main li {
 
 
 main a {
-    color: #6c757d; /* Šedá barva odkazu */
-    font-weight: bold; /* Tučné písmo */
-    text-decoration: none; /* Bez podtržení */
-    transition: color 0.2s ease; /* Plynulý přechod barvy při najetí */
+    color: #6c757d;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.2s ease;
 }
 
 main h3 a {
@@ -138,8 +137,6 @@ h1 {
     border-top: darkred 1px solid;
     display: block;
     padding: 0.3em 0;
-
-
 }
 
 h2 {
@@ -153,13 +150,13 @@ h2 {
 
 main img {
     float: left;
-    margin-right: 20px; /* Mezera mezi obrázkem a textem */
-    max-width: 400px; /* Maximální šířka obrázku */
-    height: auto; /* Zachování proporcí obrázku */
+    margin-right: 20px;
+    max-width: 400px;
+    height: auto;
 }
 
 .category-image + p + h2{
-    margin-top: 50px; /* Odsazení nadpisu pod obrázku */
+    margin-top: 50px;
     clear: left;
 }
 
@@ -168,9 +165,9 @@ main img {
     flex-grow: 1; /* Roztáhne kontejner */
     box-sizing: border-box;
     width: 90% !important;
-    background-color: rgba(255, 255, 255, 0.8); /* Poloprůhledné pozadí */
+    background-color: rgba(255, 255, 255, 0.8);
     padding: 1.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /*  Stín kolem obsahu */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin: 0;
     z-index: 1;
 
@@ -194,12 +191,12 @@ main img {
     border: none;
     background-color: white;
     color: darkred;
-    margin-left: 10px; /* Odsazení od ikony */
+    margin-left: 10px;
 }
 
 #MainNav .navbar-nav {
-    margin-top: 0 !important; /* Odstranění horního okraje */
-    margin-bottom: 0 !important; /* Odstranění spodního okraje */
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 #MainNav .navbar-nav .nav-item {
@@ -209,10 +206,6 @@ main img {
 .collapse {
     display: none;
 }
-
-
-
-
 /*Breadcrumb*/
 ol.breadcrumb {
     background-color: #6c757d;
@@ -266,9 +259,7 @@ ol.breadcrumb > li > a:hover {
     font-size: 0.8rem;
     border-radius: 5px;
     padding: 0 !important;
-
 }
-
 
 /* === NAVIGACE Style search === */
 #search-form-all {
@@ -281,20 +272,14 @@ ol.breadcrumb > li > a:hover {
 .search-wrapper {
     width: 50%;
     z-index: 1100;
-    max-width: 500px; /* Maximální šířka vyhledávacího pole */
+    max-width: 500px;
     padding: 0.5rem;
 }
-
-
 
 .input-group {
     display: flex;
     flex-wrap: nowrap;
 }
-
-
-
-
 
 main li h3 {
     list-style: none;
@@ -333,11 +318,10 @@ h3 {
 
 /* === style icon === */
 .icon-size {
-    width: 1.5em; /* Nastavení stejné šířky */
-    height: 1em; /* Nastavení stejné výšky */
+    width: 1.5em;
+    height: 1em;
     display: inline-block;
-    vertical-align: middle; /* Zarovnání na střed s textem */
-
+    vertical-align: middle;
 }
 
 .alert-container {
@@ -346,25 +330,25 @@ h3 {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    margin-top: 1.3rem; /* Odstup od horního okraje */
-    margin-bottom: 0.8rem; /* Odstup od obsahu */
+    margin-top: 1.3rem;
+    margin-bottom: 0.8rem;
     position: fixed; /* Překryv nad stránkou */
     top: 70px; /* Vzdálenost od horního okraje */
     transform: translateX(-50%); /* Zarovnání středu elementu */
-    z-index: 1200; /* Zajištění, že se zobrazí nad obsahem stránky */
-    width: auto; /* Přizpůsobení šířky obsahu */
+    z-index: 1200;
+    width: auto;
     white-space: nowrap;
-    max-width: 90%; /* Maximální šířka pro menší obrazovky */
-    padding: 0.8rem; /* Vnitřní odsazení */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Jemný stín */
+    max-width: 90%;
+    padding: 0.8rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Alerty */
 .alert {
-    width: 90%; /* Zabírá většinu šířky stránky */
-    max-width: 500px; /* Maximální šířka */
-    margin-bottom: 10px; /* Odstup mezi jednotlivými alerty */
-    border-radius: 8px; /* Jemné zaoblení rohů */
+    width: 90%;
+    max-width: 500px;
+    margin-bottom: 10px;
+    border-radius: 8px;
     text-align: center;
     transition: opacity 0.15s linear;
     border: 1px #555;
@@ -390,7 +374,6 @@ h3 {
     background-color: lightyellow;
     color: #ff9800;
 }
-
 
 /* === Footer === */
 footer {
@@ -444,21 +427,21 @@ textarea {
 }
 input[type="number"] {
     width: 60px; /* Menší šířka vhodná pro zadávání čísel */
-    text-align: left; /* Zarovnání textu na střed */
-    box-sizing: border-box; /* Zahrnutí paddingu do celkové šířky */
+    text-align: left;
+    box-sizing: border-box;
 }
 main .start-order a:hover {
     color:white;
 }
 #cart-wrapper {
     top: 0;
-    display: flex; /* Flexbox pro správné zarovnání obsahu */
-    align-items: center; /* Zarovná obsah vertikálně na střed */
-    justify-content: flex-end; /* Zarovná obsah horizontálně */
-    background-color: transparent; /* Průhledné pozadí */
-    padding: 0; /* Malé odsazení kolem */
-    z-index: 1100; /* Zajistí, že bude nad ostatními elementy */
-    width: auto; /* Dynamická šířka */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    background-color: transparent;
+    padding: 0;
+    z-index: 1100;
+    width: auto;
     transform: translateX(-50%);
     margin-right: 15px;
     order: 2; /* Košík se zobrazí za uživatelským menu */
@@ -491,23 +474,21 @@ main .start-order a:hover {
     padding: 5px 10px;
     transform: translateY(-40%); /* Vertikální zarovnání na střed ikony */
     color: darkred;
-     /* Vnitřní odsazení */
-    font-size: 0.9rem; /* Velikost textu */
-    border-radius: 5px; /* Zaoblení rohů */
+     font-size: 0.9rem;
+    border-radius: 5px;
     white-space: nowrap; /* Zabrání zalomení textu */
 }
 
-
 .add-to-cart a {
     display: inline-block; /* Zajistí vzhled tlačítka */
-    background-color: #6c757d; /* Šedé pozadí */
-    color: white; /* Bílé písmo */
-    text-decoration: none; /* Odstraní podtržení odkazu */
-    padding: 5px 5px 5px 0; /* Vnitřní odsazení pro větší klikací oblast */
-    border-radius: 5px; /* Zaoblené rohy */
-    font-size: 0.6rem; /* Velikost písma */
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+    padding: 5px 5px 5px 0;
+    border-radius: 5px;
+    font-size: 0.6rem;
     font-weight: normal;
-    transition: background-color 0.3s ease, color 0.3s ease; /* Plynulý efekt při najetí */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .add-to-cart a:hover {
@@ -523,8 +504,8 @@ main .start-order a:hover {
 
 .add-to-cart[data-product-id]::before {
     content: '🛒'; /* Unicode symbol pro košík */
-    margin-right: 0.3rem; /* Mezera mezi ikonou a textem */
-    font-size: 1rem; /* Velikost ikony */
+    margin-right: 0.3rem;
+    font-size: 1rem;
 }
 
 .admin-dashboard-link {
@@ -533,7 +514,6 @@ main .start-order a:hover {
     margin-left: 10px;
     text-decoration: none !important;
 }
-
 
 .admin-dashboard-link:hover {
     background-color: yellow !important;
@@ -552,18 +532,15 @@ main .start-order a:hover {
     justify-content: center;
 }
 
-
 .redbutton {
     text-align: center;
     margin-top: 2rem;
     color: red;
 }
 
-
 .trainer {
     display: block;
     text-align: center;
-
     width: 100%;
     margin-bottom: 0.5rem;
     padding: 0.5rem;
@@ -573,7 +550,6 @@ main .start-order a:hover {
 #trainer {
     display: block;
     text-align: center;
-
     width: 100%;
     margin-bottom: 0.5rem;
     padding: 0.5rem;
@@ -605,14 +581,12 @@ textarea #comment {
     font-size: 1rem;
 }
 
-
 p {
-    font-size: 1rem; /* Velikost písma */
-    line-height: 1.6; /* Výška řádku pro lepší čitelnost */
+    font-size: 1rem;
+    line-height: 1.6;
     text-align: justify; /* Zarovnání do bloku */
-    color: #333; /* Barva textu */
+    color: #333;
 }
-
 
 .trainer-image {
     max-width: 450px;
@@ -623,7 +597,6 @@ p {
 .trainer-reviews p{
     text-align: center;
     margin-top: 1rem;
-
 }
 
 .profile-picture {
@@ -651,6 +624,7 @@ p {
     margin-bottom: 20px;
     border: 1px solid #ccc;
 }
+
 thead{
     border-bottom: 1px solid #212529;
 
@@ -658,9 +632,7 @@ thead{
 th {
     padding: 20px;
 }
-table {
-    border-bottom: 2px solid #212529;
-}
+
 .home {
     padding: 10px 20px;
     font-size: 1.2em;
@@ -678,27 +650,15 @@ table {
      padding: 10px 20px;
     font-size: 1.2em;
 }
-/*
-.cart_ {
-    padding: 10px 20px;
-    font-size: 1.2em;
-}
-*/
+
 .total {
     margin: 20px auto;
     text-align: right;
     width: 80%;
 }
 
-
 .stars {
     color: #f5b301;
-}
-
-.icon-size {
-    width: 2em; /* Zvýšená šířka ikony */
-    height: 2em; /* Zvýšená výška ikony */
-    vertical-align: middle; /* Zarovnání na střed s textem */
 }
 
 .navbar-end {
@@ -709,19 +669,18 @@ table {
     position: relative; /* Umístění relativně k rodiči */
 }
 
-
 /* Univerzální styl pro formuláře */
 form {
-    max-width: 500px; /* Maximální šířka formuláře */
-    margin: 0 auto; /* Vycentrování formuláře */
-    background-color: #f7f7f7; /* Světle šedé pozadí */
-    border: 1px solid #ccc; /* Tenký rámeček */
-    border-radius: 8px; /* Zaoblené rohy */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Jemný stín */
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
-    margin-bottom: 15px; /* Mezera mezi prvky formuláře */
+    margin-bottom: 1rem;
 }
 
 
@@ -731,32 +690,32 @@ form {
 
 /* Styl pro formulář s množstvím */
 form.quantity-form {
-    padding: 0; /* Odstranění paddingu */
-    margin: 0; /* Odstranění marginu */
+    padding: 0;
+    margin: 0;
     display: inline-block; /* Zajistí, že formulář nezabírá celou šířku */
-    background: none; /* Odstranění pozadí */
-    border: none; /* Odstranění rámečku */
-    box-shadow: none; /* Odstranění stínu */
+    background: none;
+    border: none;
+    box-shadow: none;
 }
 
 /* Formulář pro schvalování služeb */
 form.approve-service-form {
-    padding: 0; /* Odstranění paddingu */
-    margin: 0; /* Odstranění marginu */
-    background: none; /* Žádné pozadí */
-    border: none; /* Bez rámečku */
+    padding: 0;
+    margin: 0;
+    background: none;
+    border: none;
     display: inline; /* Zajistí, že formulář nezabírá celou šířku */
-    box-shadow: none; /* Odstranění stínů */
+    box-shadow: none;
 }
 
 /* Styl tlačítka "Schválit" */
 button.approve-button {
     margin-bottom: 0.1rem;
     font-size: 1rem;
-    background-color: #28a745; /* Zelené pozadí */
-    color: white; /* Bílé písmo */
-    border: none; /* Bez rámečku */
-    border-radius: 5px; /* Zaoblené rohy */
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
     cursor: default;
     transition: background-color 0.3s; /* Plynulý přechod */
 }
@@ -764,10 +723,10 @@ button.approve-button {
 button.reject-button {
     margin-bottom: 0.1rem;
     font-size: 1rem;
-    background-color: #dc3545; /* Červené pozadí */
-    color: white; /* Bílé písmo */
-    border: none; /* Bez rámečku */
-    border-radius: 5px; /* Zaoblené rohy */
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
     cursor: default;
     transition: background-color 0.3s; /* Plynulý přechod */
 }
@@ -775,9 +734,6 @@ button.reject-button {
 .stars {
     color: #f5b301;
 }
-
-
-
 
 button:disabled {
     background-color: #ccc;
@@ -909,7 +865,7 @@ label div.rating {
 .category-image img {
     max-width: 100%;
     height: auto;
-    border-radius: 8px; /* Zaoblené rohy obrázku, pokud chceš */
+    border-radius: 8px;
 }
 
 .category-description {

@@ -170,7 +170,6 @@ main img {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin: 0;
     z-index: 1;
-
 }
 
 .content-container ul {
@@ -178,13 +177,10 @@ main img {
     padding: 0;
 }
 
-
-
 .container-fluid {
     padding: 5px 15px 0 0;
     margin: 0 !important;
 }
-
 
 /* Responsivní navbar */
 #MainNav .navbar-toggler {
@@ -217,7 +213,6 @@ ol.breadcrumb {
     align-self: flex-start;
     display: flex;
     list-style: none;
-
 }
 
 ol.breadcrumb-item.active {
@@ -318,8 +313,8 @@ h3 {
 
 /* === style icon === */
 .icon-size {
-    width: 1.5em;
-    height: 1em;
+    width: 1.5rem;
+    height: 1.5rem;
     display: inline-block;
     vertical-align: middle;
 }

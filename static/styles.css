@@ -869,12 +869,11 @@ label div.rating {
     align-items: center; /* Vertikální zarovnání obsahu */
 }
 .manage{
-    padding:0 0 1.5rem 0;
-
+    padding:0 0 2rem 0;
 }
 
 .manage h2{
-    margin-top:1.5rem;
+    margin-top:2rem;
 }
 .center-button {
     position: absolute;

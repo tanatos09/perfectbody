@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Upravit profil</h2>
+
+<!-- Trenérské údaje -->
+{% if is_trainer %}
+{% if trainer_form %}
+<form method="post">
+    {% csrf_token %}
+    <h3>Informace o trenérovi</h3>
+
+    <!-- Obrázek -->
+    <div class="trainer-image">
+        {% if user.profile_picture %}
+            <img src="{{ user.profile_picture }}" alt="Profilová fotka">
+        {% else %}
+            <p class="text-muted">Žádný obrázek není aktuálně nastaven.</p>
+        {% endif %}
+    </div>
+    <div>
+        <label for="id_pending_profile_picture">URL nového obrázku</label>
+        {{ trainer_form.pending_profile_picture }}
+    </div>
+
+    <!-- Krátký popis -->
+    <div>
+        <label for="id_pending_trainer_short_description">Krátký popis trenéra</label>
+        {{ trainer_form.pending_trainer_short_description }}
+    </div>
+
+    <!-- Dlouhý popis -->
+    <div>
+        <label for="id_pending_trainer_long_description">Dlouhý popis trenéra</label>
+        {{ trainer_form.pending_trainer_long_description }}
+    </div>
+
+    <button type="submit" name="form_type" value="trainer_form" class="btn btn-danger">Uložit informace o trenérovi</button>
+</form>
+{% endif %}
+
+<!-- Popisky služeb -->
+{% if service_form %}
+<form method="post">
+    {% csrf_token %}
+    <h3>Popisky nabízených služeb</h3>
+    {{ service_form.as_p }}
+    <button type="submit" name="form_type" value="service_form" class="btn btn-danger">Uložit popisky služeb</button>
+</form>
+{% endif %}
+
+<a href="{% url 'profile' %}" class="btn btn-secondary mt-3">Zpět na profil</a>
+{% endif %}
+
+<!-- Osobní údaje -->
+<form method="post">
+    {% csrf_token %}
+    <h3>Osobní údaje</h3>
+    {{ user_form.as_p }}
+    <button type="submit" name="form_type" value="user_form" class="btn btn-danger">Uložit osobní údaje</button>
+</form>
+
+<!-- Doručovací adresa -->
+<form method="post">
+    {% csrf_token %}
+    <h3>Doručovací adresa</h3>
+    {{ shipping_form.as_p }}
+    <button type="submit" name="form_type" value="shipping_form" class="btn btn-danger">Uložit doručovací adresu</button>
+</form>
+
+<a href="{% url 'profile' %}" class="btn btn-secondary mt-3">Zpět na profil</a>
+{% endblock %}

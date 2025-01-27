@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="manage">
+<h1>Smazat produkt: {{ product.product_name }}</h1>
+<p>Opravdu chcete smazat produkt <strong>{{ product.product_name }}</strong>?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Ano, smazat</button>
+</form>
+<a href="{% url 'product' product.pk %}" class="btn btn-secondary">Zpět</a>
+</div>
+{% endblock %}

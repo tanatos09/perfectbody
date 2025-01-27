@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Váš košík</h1>
+
+    {% if cart %}
+        <table>
+            <thead>
+            <tr>
+                <th>Produkt</th>
+                <th>Množství</th>
+                <th>Cena za kus</th>
+                <th>Celkem</th>
+                <th>Poznámka</th>
+                <th>Akce</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product_id, item in cart.items %}
+                <tr>
+                    <td>
+                        {% if item.product_type == 'service' %}
+                            <a href="{% url 'service' pk=product_id %}">
+                                {{ item.product_name }}
+                            </a>
+                        {% else %}
+                            <a href="{% url 'product' pk=product_id %}">
+                                {{ item.product_name }}
+                            </a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <form class="quantity-form" data-product-id="{{ product_id }}">
+                            {% csrf_token %}
+                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                        </form>
+                    </td>
+                    <td>{{ item.price }} Kč</td>
+                    <td id="total-{{ product_id }}">{{ item.total }} Kč</td>
+                    <td>
+            <textarea name="note" class="note-input" data-product-id="{{ product_id }}">{{ item.note|default_if_none:'' }}</textarea>
+                    </td>
+                    <td>
+                        <a href="{% url 'remove_from_cart' product_id=product_id %}" >
+                            Odstranit
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+
+        <div class="total">
+        <p><strong>Celková cena:</strong> <span id="cart-total">{{ total }} Kč</span></p>
+        <div class="cart_a">
+            <button class="btn-success">
+                <a href="{% url 'start_order' %}" class="start-order bila" style="color:#f7f7f7">
+                    Pokračovat k objednávce
+                </a>
+            </button>
+            <ul>
+                <li><a href="{% url 'products' %}">Prohlédnout další produkty</a></li>
+                <li><a href="{% url 'services' %}">Prohlédnout další služby</a></li>
+            </ul>
+        </div>
+        </div>
+    {% else %}
+        <p>Váš košík je prázdný. <a href="{% url 'products' %}">Pokračovat
+            v nákupu.</a></p>
+    {% endif %}
+
+<!-- JavaScript -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const initializeQuantityListeners = () => {
+            document.querySelectorAll('input[name="quantity"]').forEach(input => {
+                input.addEventListener('change', function () {
+                    const productId = this.closest('form').dataset.productId;
+                    const quantity = this.value;
+
+                    fetch(`/cart/update/${productId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}',
+                            'X-Requested-With': 'XMLHttpRequest',
+                        },
+                        body: JSON.stringify({quantity})
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Aktualizace celkové ceny položky a košíku
+                                document.querySelector(`#total-${productId}`).textContent = `${data.item_total} Kč`;
+                                document.querySelector('#cart-total').textContent = `${data.cart_total} Kč`;
+                            } else {
+                                // Zobrazení chybové zprávy a reset hodnoty na původní množství
+                                alert(data.error || 'Aktualizace selhala!');
+                                this.value = this.defaultValue; // Reset na původní hodnotu
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Chyba:', error);
+                            alert('Nastala chyba při komunikaci se serverem.');
+                            this.value = this.defaultValue; // Reset na původní hodnotu
+                        });
+                });
+            });
+        };
+
+        initializeQuantityListeners();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Odesílání poznámek
+        document.querySelectorAll('.note-input').forEach(noteInput => {
+            noteInput.addEventListener('change', function () {
+                const productId = this.dataset.productId;
+                const note = this.value;
+
+                fetch(`/cart/update_note/${productId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: `note=${encodeURIComponent(note)}`
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.success) {
+                            alert(data.error || 'Nepodařilo se uložit poznámku.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Chyba:', error);
+                        alert('Nastala chyba při ukládání poznámky.');
+                    });
+            });
+        });
+    });
+
+    document.querySelectorAll('.update-cart').forEach(button => {
+        button.addEventListener('click', () => {
+            // Aktualizace na backendu přes AJAX
+            fetch(button.dataset.url, {
+                method: 'POST',
+                headers: {'X-Requested-With': 'XMLHttpRequest'},
+                body: JSON.stringify({quantity: button.dataset.quantity}),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Aktualizace obsahu stránky `cart.html`
+                    document.getElementById('cart-items-container').innerHTML = data.html;
+
+                    // Vyvolání události pro aktualizaci dropdownu
+                    const event = new Event('cartUpdated');
+                    document.dispatchEvent(event);
+                })
+                .catch(error => console.error('Chyba při aktualizaci košíku:', error));
+        });
+    });
+
+</script>
+
+{% endblock %}

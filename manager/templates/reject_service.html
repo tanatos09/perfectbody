@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="text-align: center;" class="manage">
+    <h1>Zamítnutí služeb</h1>
+
+    {% if pending_services %}
+        <table style="margin: 0 auto; border-collapse: collapse; width: 80%;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Trenér</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Služba</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Popis</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Podrobnosti</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Akce</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for service in pending_services %}
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ service.trainer.full_name }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ service.service.product_name }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ service.trainers_service_description }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">
+                        <a href="{% url 'service_details' service.id %}" class="btn btn-info">Detail</a>
+                    </td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">
+                        <!-- Zamítnutí -->
+                        <form method="post" action="{% url 'reject_service' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="service_id" value="{{ service.id }}">
+                            <button class="btn btn-danger" type="submit">Zamítnout</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Žádné služby k zamítnutí nejsou k dispozici.</p>
+    {% endif %}
+
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary" style="margin-top: 2rem;">Zpět na Dashboard</a>
+</div>
+{% endblock %}

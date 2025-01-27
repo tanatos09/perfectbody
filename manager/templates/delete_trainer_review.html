@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="manage" style="margin-top: 2rem; text-align: center;" >
+    <h1>Smazat hodnocení</h1>
+    <p>Opravdu chcete smazat toto hodnocení?</p>
+
+    <!-- Zobrazit informace o hodnocení -->
+    <div class="review" style="margin: 1rem auto; max-width: 600px; padding: 1rem; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9;">
+        <p><strong>Trenér:</strong> {{ review.product.product_name }}</p>
+        <p><strong>Hodnocení:</strong>
+            {% for i in "12345" %}
+                {% if forloop.counter <= review.rating %}
+                    <span style="color: #f5b301;">★</span>
+                {% else %}
+                    <span style="color: #ccc;">★</span>
+                {% endif %}
+            {% endfor %}
+        </p>
+        <p><strong>Komentář:</strong> {{ review.comment }}</p>
+    </div>
+
+    <!-- Formulář pro potvrzení -->
+    <form method="post" action="{% url 'delete_trainer_review' review.id %}" class="delete-button">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Opravdu chcete smazat toto hodnocení?');">
+        Smazat hodnocení
+    </button>
+</form>
+</div>
+{% endblock %}

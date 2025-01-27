@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="manage">
+<h1>Přidat novou službu</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Přidat službu</button>
+</form>
+    <br>
+
+
+<a href="{% url 'dashboard' %}" class="btn btn-secondary">Zpět na dashboard</a>
+    </div>
+{% endblock %}

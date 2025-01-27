@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div  class="manage">
+<h1>Úprava uživatele</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    {% if not request.user.is_superuser %}
+        <script>
+            document.querySelector("[name='is_staff']").closest("p").style.display = "none";
+            document.querySelector("[name='is_superuser']").closest("p").style.display = "none";
+        </script>
+    {% endif %}
+
+    <button type="submit" class="btn btn-primary">Uložit změny</button>
+    <a href="{% url 'manage_users' %}" class="btn btn-secondary">Zpět</a>
+</form>
+</div>
+{% endblock %}

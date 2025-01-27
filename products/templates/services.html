@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <!-- Breadcrumbs navigace -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <!-- Domů -->
+            <li class="breadcrumb-item">
+                <a href="{% url 'home' %}">Domů</a>
+            </li>
+
+            <!-- Oddělovač -->
+            <li class="breadcrumb-item">&#187;</li>
+
+            <!-- Hlavní kategorie služeb -->
+            {% if category %}
+                <li class="breadcrumb-item">
+                    <a href="{% url 'services' %}">Kategorie služeb</a>
+                </li>
+            {% else %}
+                <li class="breadcrumb-item active" aria-current="page">Kategorie služeb</li>
+            {% endif %}
+
+            <!-- Rodičovská kategorie, pokud existuje -->
+            {% if category and category.category_parent %}
+                <li class="breadcrumb-item">&#187;</li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'services' category.category_parent.pk %}">{{ category.category_parent.category_name }}</a>
+                </li>
+            {% endif %}
+
+            <!-- Aktuální kategorie -->
+            {% if category %}
+                <li class="breadcrumb-item">&#187;</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ category.category_name }}</li>
+            {% endif %}
+        </ol>
+    </nav>
+
+    {% if category is None %}
+        <!-- Zobrazení hlavních kategorií -->
+        <h1>Kategorie služeb</h1>
+        <ul>
+            {% for category in main_categories %}
+                <li>
+                    <a href="{% url 'services' category.pk %}">{{ category.category_name }}</a>
+
+                    {% if user.is_staff %}
+                        <!-- Tlačítka pro úpravu a mazání hlavní kategorie -->
+                        <a href="{% url 'edit_category' category.pk %}" class="btn btn-sm btn-warning">Upravit</a>
+                        <form method="post" action="{% url 'delete_category' category.pk %}" class="delete-button">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Opravdu chcete smazat tuto kategorii?');">Smazat
+                            </button>
+                        </form>
+                    {% endif %}
+                </li>
+            {% empty %}
+                <li>Žádné kategorie nejsou k dispozici.</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <!-- Zobrazení aktuální kategorie -->
+        <h1>{{ category.category_name }}</h1>
+
+        <!-- Obrázek kategorie -->
+        <div class="category-header">
+        {% if category.category_view %}
+            <div class="category-image">
+                <img src="{{ category.category_view }}" alt="Obrázek kategorie {{ category.category_name }}">
+            </div>
+        {% endif %}
+        <div class="category-description">
+        <p>{{ category.category_description }}</p>
+        </div>
+        </div>
+        {% if user.is_staff %}
+            <!-- Tlačítka pro úpravu a mazání aktuální kategorie -->
+            <a href="{% url 'edit_category' category.pk %}" class="btn btn-sm btn-warning">Upravit</a>
+            <form method="post" action="{% url 'delete_category' category.pk %}" class="delete-button">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-danger"
+                        onclick="return confirm('Opravdu chcete smazat tuto kategorii?');">Smazat
+                </button>
+            </form>
+        {% endif %}
+
+        <!-- Podkategorie -->
+        {% if subcategories %}
+            <h2>Podkategorie</h2>
+            <ul>
+                {% for subcategory in subcategories %}
+                    <li>
+                        <a href="{% url 'services' subcategory.pk %}">{{ subcategory.category_name }}</a>
+
+                        {% if user.is_staff %}
+                            <!-- Tlačítka pro úpravu a mazání podkategorie -->
+                            <a href="{% url 'edit_category' subcategory.pk %}"
+                               class="btn btn-sm btn-warning">Upravit</a>
+                            <form method="post" action="{% url 'delete_category' subcategory.pk %}" class="delete-button">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Opravdu chcete smazat tuto podkategorii?');">Smazat
+                                </button>
+                            </form>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <!-- Služby -->
+        {% if services %}
+            <h2>Služby</h2>
+
+            <!-- Tlačítka pro třídění -->
+            <div>
+                <strong>Seřadit:</strong>
+                <a href="?sort_by=name">Abecedně</a> |
+                <a href="?sort_by=price_asc">Od nejlevnějšího</a> |
+                <a href="?sort_by=price_desc">Od nejdražšího</a>
+            </div>
+
+            <ul>
+                {% for service in services %}
+                    <li>
+                        <a href="{% url 'service' service.pk %}">
+                            <h3>{{ service.product_name }}</h3>
+                        </a> - {{ service.price }} Kč
+                        <p>{{ service.product_short_description }}</p>
+
+                        <div>
+                            {% if service.has_approved_trainers %}
+                                <form method="post" action="{% url 'add_to_cart' service.pk %}" class="add-to-cart">
+                                    {% csrf_token %}
+                                    <button type="button"
+                                            class="add-to-cart-btn"
+                                            data-product-id="{{ service.id }}">
+                                        Přidat do košíku
+                                    </button>
+                                </form>
+                            {% else %}
+                                <p class="red">Nelze objednat</p>
+                            {% endif %}
+                        </div>
+
+                        {% if user.is_staff %}
+                            <!-- Tlačítka pro úpravu a mazání služby -->
+                            <a href="{% url 'edit_service' service.pk %}" class="btn btn-sm btn-warning">Upravit</a>
+                            <form method="post" action="{% url 'delete_service' service.pk %}" class="delete-button">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Opravdu chcete smazat tuto službu?');">Smazat
+                                </button>
+                            </form>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+<br>
+        {% if category.category_parent %}
+            <p>
+                <strong>Zpět na předchozí kategorii:</strong>
+                <a href="{% url 'services' category.category_parent.pk %}">
+                    {{ category.category_parent.category_name }}
+                </a>
+            </p>
+        {% endif %}
+
+        <!-- Navigace stránkování -->
+        {% if services %}
+            <div class="pagination">
+        <span class="step-links">
+            {% if services.has_previous %}
+                <a href="?page=1{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">&laquo; První</a>
+                <a href="?page={{ services.previous_page_number }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Předchozí</a>
+            {% endif %}
+
+            <span class="current">
+                Stránka {{ services.number }} z {{ services.paginator.num_pages }}
+            </span>
+
+            {% if services.has_next %}
+                <a href="?page=
+                        {{ services.next_page_number }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Další</a>
+                <a href="?page={{ services.paginator.num_pages }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Poslední &#187;&#187;</a>
+            {% endif %}
+        </span>
+            </div>
+        {% endif %}
+
+        {% if not subcategories and not services %}
+            <p class="red">Žádné podkategorie ani služby nejsou k dispozici.</p>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}

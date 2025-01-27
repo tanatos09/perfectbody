@@ -1,0 +1,314 @@
+[
+    {
+        "model": "products.productreview",
+        "pk": 1,
+        "fields": {
+            "product": 1,
+            "reviewer": 100,
+            "rating": 5,
+            "comment": "Skvělý produkt! Naprosto splnil má očekávání.",
+            "review_creation_datetime": "2024-01-01T10:00:00",
+            "review_updated_datetime": "2024-01-01T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 2,
+        "fields": {
+            "product": 1,
+            "reviewer": 101,
+            "rating": 4,
+            "comment": "Produkt je dobrý, ale mohlo by to být lepší.",
+            "review_creation_datetime": "2024-01-02T10:00:00",
+            "review_updated_datetime": "2024-01-02T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 3,
+        "fields": {
+            "product": 1,
+            "reviewer": 102,
+            "rating": 3,
+            "comment": "Je to průměrné, splňuje základní očekávání.",
+            "review_creation_datetime": "2024-01-03T10:00:00",
+            "review_updated_datetime": "2024-01-03T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 4,
+        "fields": {
+            "product": 1,
+            "reviewer": 103,
+            "rating": 2,
+            "comment": "Produkt má dost nedostatků, nejsem spokojený.",
+            "review_creation_datetime": "2024-01-04T10:00:00",
+            "review_updated_datetime": "2024-01-04T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 5,
+        "fields": {
+            "product": 1,
+            "reviewer": 104,
+            "rating": 1,
+            "comment": "Jsem zklamaný, přestal fungovat po týdnu používání.",
+            "review_creation_datetime": "2024-01-05T10:00:00",
+            "review_updated_datetime": "2024-01-05T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 6,
+        "fields": {
+            "product": 1,
+            "reviewer": 105,
+            "rating": 4,
+            "comment": "Většina věcí je skvělá, ale pár detailů bych zlepšil.",
+            "review_creation_datetime": "2024-01-06T10:00:00",
+            "review_updated_datetime": "2024-01-06T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 7,
+        "fields": {
+            "product": 2,
+            "reviewer": 106,
+            "rating": 5,
+            "comment": "Skvělý produkt! Naprosto splnil má očekávání.",
+            "review_creation_datetime": "2024-01-07T10:00:00",
+            "review_updated_datetime": "2024-01-07T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 8,
+        "fields": {
+            "product": 2,
+            "reviewer": 107,
+            "rating": 3,
+            "comment": "Je to průměrné, funguje jak má, ale nic extra.",
+            "review_creation_datetime": "2024-01-08T10:00:00",
+            "review_updated_datetime": "2024-01-08T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 9,
+        "fields": {
+            "product": 2,
+            "reviewer": 108,
+            "rating": 2,
+            "comment": "Produkt má dost nedostatků, nejsem spokojený.",
+            "review_creation_datetime": "2024-01-09T10:00:00",
+            "review_updated_datetime": "2024-01-09T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 10,
+        "fields": {
+            "product": 2,
+            "reviewer": 109,
+            "rating": 1,
+            "comment": "Jsem zklamaný, přestal fungovat po týdnu používání.",
+            "review_creation_datetime": "2024-01-10T10:00:00",
+            "review_updated_datetime": "2024-01-10T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 11,
+        "fields": {
+            "product": 6,
+            "reviewer": 100,
+            "rating": 5,
+            "comment": "Skvělý produkt! Naprosto splnil má očekávání.",
+            "review_creation_datetime": "2024-01-01T10:00:00",
+            "review_updated_datetime": "2024-01-01T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 12,
+        "fields": {
+            "product": 6,
+            "reviewer": 101,
+            "rating": 4,
+            "comment": "Produkt je dobrý, ale mohlo by to být lepší.",
+            "review_creation_datetime": "2024-01-02T10:00:00",
+            "review_updated_datetime": "2024-01-02T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 13,
+        "fields": {
+            "product": 6,
+            "reviewer": 102,
+            "rating": 3,
+            "comment": "Je to průměrné, splňuje základní očekávání.",
+            "review_creation_datetime": "2024-01-03T10:00:00",
+            "review_updated_datetime": "2024-01-03T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 14,
+        "fields": {
+            "product": 6,
+            "reviewer": 103,
+            "rating": 2,
+            "comment": "Produkt má dost nedostatků, nejsem spokojený.",
+            "review_creation_datetime": "2024-01-04T10:00:00",
+            "review_updated_datetime": "2024-01-04T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 15,
+        "fields": {
+            "product": 6,
+            "reviewer": 104,
+            "rating": 1,
+            "comment": "Jsem zklamaný, přestal fungovat po týdnu používání.",
+            "review_creation_datetime": "2024-01-05T10:00:00",
+            "review_updated_datetime": "2024-01-05T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 16,
+        "fields": {
+            "product": 6,
+            "reviewer": 105,
+            "rating": 4,
+            "comment": "Většina věcí je skvělá, ale pár detailů bych zlepšil.",
+            "review_creation_datetime": "2024-01-06T10:00:00",
+            "review_updated_datetime": "2024-01-06T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 17,
+        "fields": {
+            "product": 7,
+            "reviewer": 106,
+            "rating": 5,
+            "comment": "Skvělý produkt! Naprosto splnil má očekávání.",
+            "review_creation_datetime": "2024-01-07T10:00:00",
+            "review_updated_datetime": "2024-01-07T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 18,
+        "fields": {
+            "product": 7,
+            "reviewer": 107,
+            "rating": 3,
+            "comment": "Je to průměrné, funguje jak má, ale nic extra.",
+            "review_creation_datetime": "2024-01-08T10:00:00",
+            "review_updated_datetime": "2024-01-08T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 19,
+        "fields": {
+            "product": 7,
+            "reviewer": 108,
+            "rating": 2,
+            "comment": "Produkt má dost nedostatků, nejsem spokojený.",
+            "review_creation_datetime": "2024-01-09T10:00:00",
+            "review_updated_datetime": "2024-01-09T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 20,
+        "fields": {
+            "product": 7,
+            "reviewer": 109,
+            "rating": 1,
+            "comment": "Jsem zklamaný, přestal fungovat po týdnu používání.",
+            "review_creation_datetime": "2024-01-10T10:00:00",
+            "review_updated_datetime": "2024-01-10T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 21,
+        "fields": {
+            "product": 10,
+            "reviewer": 100,
+            "rating": 5,
+            "comment": "Skvělá služba, trenér byl velmi profesionální a vše mi vysvětlil. (Tato služba byla poskytnuta trenérem: Zdeněk Zahrádka)",
+            "review_creation_datetime": "2024-01-01T10:00:00",
+            "review_updated_datetime": "2024-01-01T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 22,
+        "fields": {
+            "product": 10,
+            "reviewer": 101,
+            "rating": 4,
+            "comment": "Služba byla dobrá, trenér odvedl kvalitní práci, ale mohlo to být lépe přizpůsobeno mým potřebám. (Tato služba byla poskytnuta trenérem: Vítězslav Petrželka)",
+            "review_creation_datetime": "2024-01-02T10:00:00",
+            "review_updated_datetime": "2024-01-02T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 23,
+        "fields": {
+            "product": 10,
+            "reviewer": 102,
+            "rating": 3,
+            "comment": "Služba splnila základní očekávání, ale nic extra. (Tato služba byla poskytnuta trenérem: Zdeněk Zahrádka)",
+            "review_creation_datetime": "2024-01-03T10:00:00",
+            "review_updated_datetime": "2024-01-03T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 24,
+        "fields": {
+            "product": 10,
+            "reviewer": 103,
+            "rating": 2,
+            "comment": "Trenér nebyl příliš ochotný a služba byla podprůměrná. (Tato služba byla poskytnuta trenérem: Vítězslav Petrželka)",
+            "review_creation_datetime": "2024-01-04T10:00:00",
+            "review_updated_datetime": "2024-01-04T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 25,
+        "fields": {
+            "product": 10,
+            "reviewer": 104,
+            "rating": 1,
+            "comment": "Byl jsem velmi zklamaný, služba nesplnila mé očekávání. (Tato služba byla poskytnuta trenérem: Zdeněk Zahrádka)",
+            "review_creation_datetime": "2024-01-05T10:00:00",
+            "review_updated_datetime": "2024-01-05T10:00:00"
+        }
+    },
+    {
+        "model": "products.productreview",
+        "pk": 26,
+        "fields": {
+            "product": 10,
+            "reviewer": 105,
+            "rating": 4,
+            "comment": "Služba byla dobrá a trenér se snažil, ale mohlo to být preciznější. (Tato služba byla poskytnuta trenérem: Vítězslav Petrželka)",
+            "review_creation_datetime": "2024-01-06T10:00:00",
+            "review_updated_datetime": "2024-01-06T10:00:00"
+        }
+    }
+]

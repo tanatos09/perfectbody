@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Zadat údaje pro doručení</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    <h3>Doručovací adresa</h3>
+
+    {% if user.is_authenticated %}
+        {{ shipping_address_form.as_p }}
+    {% else %}
+        <div>
+            <label for="shipping_first_name">Jméno:</label>
+            <input type="text" name="shipping-first_name" id="shipping_first_name" value="{{ shipping_address_form.first_name.value|default:'' }}" required>
+        </div>
+
+        <div>
+            <label for="shipping_last_name">Příjmení:</label>
+            <input type="text" name="shipping-last_name" id="shipping_last_name" value="{{ shipping_address_form.last_name.value|default:'' }}" required>
+        </div>
+
+        <div>
+            <label for="shipping_street">Ulice:</label>
+            <input type="text" name="shipping-street" id="shipping_street" value="{{ shipping_address_form.street.value|default:'' }}" required>
+        </div>
+
+        <div>
+            <label for="shipping_street_number">Číslo domu:</label>
+            <input type="text" name="shipping-street_number" id="shipping_street_number" value="{{ shipping_address_form.street_number.value|default:'' }}" required>
+        </div>
+
+        <div>
+            <label for="shipping_city">Město:</label>
+            <input type="text" name="shipping-city" id="shipping_city" value="{{ shipping_address_form.city.value|default:'' }}" required>
+        </div>
+
+        <div>
+            <label for="shipping_postal_code">PSČ:</label>
+            <input type="text" name="shipping-postal_code" id="shipping_postal_code" value="{{ shipping_address_form.postal_code.value|default:'' }}" required>
+        </div>
+
+        <div>
+            <label for="shipping_country">Země:</label>
+            <input type="text" name="shipping-country" id="shipping_country" value="{{ shipping_address_form.country.value|default:'' }}" required>
+        </div>
+
+        <!-- Skryté pole pro e-mail -->
+        <input type="hidden" name="shipping-email" id="shipping_email" value="{{ guest_email|default:'' }}">
+
+        <!-- Pole pro zadání emailu hostujícího uživatele -->
+        <div>
+            <label for="guest_email">E-mail:</label>
+            <input type="email" name="guest_email" id="guest_email" value="{{ guest_email }}" required>
+        </div>
+    {% endif %}
+
+    <label>
+        <input type="checkbox" id="differentBilling" name="different_billing">
+        Fakturační adresa je jiná než doručovací
+    </label>
+
+    <div id="billingForm">
+        <h3>Fakturační adresa</h3>
+        {{ billing_address_form.as_p }}
+    </div>
+
+    <hr>
+
+    <button type="submit" class="btn btn-success">Pokračovat</button>
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const guestEmailField = document.getElementById('guest_email');
+    const shippingEmailField = document.querySelector('[name="shipping-email"]');
+    const differentBillingCheckbox = document.getElementById('differentBilling');
+    const billingForm = document.getElementById('billingForm');
+    const shippingFields = document.querySelectorAll('[name^="shipping-"]');
+    const billingFields = document.querySelectorAll('[name^="billing-"]');
+
+     if (!differentBillingCheckbox || !billingForm || !shippingFields.length || !billingFields.length) {
+        console.error("Některé prvky formuláře nebyly nalezeny!");
+        return;
+    }
+
+    // Funkce pro kopírování doručovacích hodnot do fakturačních
+    function copyShippingToBilling() {
+        shippingFields.forEach((field) => {
+            const billingField = document.querySelector(
+                `[name="billing-${field.name.split('shipping-')[1]}"]`
+            );
+            if (billingField) {
+                billingField.value = field.value || '';
+            }
+        });
+    }
+
+    function toggleBillingForm() {
+    if (differentBillingCheckbox.checked) {
+        billingForm.style.display = 'block';
+        billingFields.forEach((field) => {
+            field.setAttribute('required', 'required');
+        });
+    } else {
+        billingForm.style.display = 'none';
+        billingFields.forEach((field) => {
+            field.removeAttribute('required');
+        });
+        copyShippingToBilling();
+    }
+}
+
+
+    // Funkce pro synchronizaci e-mailu do skrytého pole
+    function syncEmailField() {
+        if (guestEmailField && shippingEmailField) {
+            shippingEmailField.value = guestEmailField.value || '';
+        }
+    }
+
+    // Inicializace formuláře při načtení stránky
+    function initializeForm() {
+        syncEmailField();
+        toggleBillingForm();
+
+        if (!differentBillingCheckbox.checked) {
+            copyShippingToBilling();
+        }
+    }
+
+    // Události
+    if (guestEmailField) {
+        guestEmailField.addEventListener('input', syncEmailField);
+    }
+
+    differentBillingCheckbox.addEventListener('change', toggleBillingForm);
+
+    shippingFields.forEach((field) => {
+    field.addEventListener('input', () => {
+        if (!differentBillingCheckbox.checked) {
+            const billingField = document.querySelector(
+                `[name="billing-${field.name.split('shipping-')[1]}"]`
+            );
+            if (billingField) {
+                billingField.value = field.value;
+            }
+        }
+    });
+});
+
+
+    initializeForm();
+});
+</script>
+
+
+{% endblock %}

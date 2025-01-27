@@ -1,0 +1,71 @@
+
+
+/* Obrázek a popis vedle sebe */
+.product-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 10px;
+}
+
+/* Obrázek produktu */
+.product-image img {
+    max-width: 300px;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Popis produktu */
+.product-details {
+    flex: 1;
+}
+
+.details-header {
+    background-color: #6c757d;
+    color: white;
+    font-size: 1.2rem;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.details-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 10px 0;
+    text-align: justify;
+}
+
+/* Tlačítka */
+.product-actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.add-to-cart-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #218838;
+}
+
+/* Admin akce */
+.admin-actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+ a .bila {
+    color:white;
+}
+main .start-order a {
+    color:white;
+}

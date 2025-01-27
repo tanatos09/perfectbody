@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Výsledky hledání pro "{{ query }}"</h1>
+
+<h2>Produkty</h2>
+{% if products %}
+    <ul>
+        {% for product in products %}
+            <li>
+                <a href="{{ product.url }}">
+                    {{ product.name }}
+                </a>
+                - {{ product.description }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Žádné produkty nebyly nalezeny.</p>
+{% endif %}
+
+<h2>Služby</h2>
+{% if services %}
+    <ul>
+        {% for service in services %}
+            <li>
+                <a href="{{ service.url }}">
+                    {{ service.name }}
+                </a>
+                - {{ service.description }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Žádné služby nebyly nalezeny.</p>
+{% endif %}
+
+<h2>Trenéři</h2>
+{% if trainers %}
+    <ul>
+        {% for trainer in trainers %}
+            <li>
+    <a href="{{ trainer.url }}">
+        {{ trainer.username }}
+    </a>
+                - <a href="{{ trainer.url }}">{{ trainer.name }}</a>
+    - {{ trainer.description }}
+</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Žádní trenéři nebyli nalezeni.</p>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="manage">
+<h1>Správa uživatelů</h1>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Jméno</th>
+            <th>Uživatelské jméno</th>
+            <th>Email</th>
+            <th>Typ účtu</th>
+            <th>Akce</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.full_name }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    {% if user.is_superuser %}
+                        Superadmin
+                    {% elif user.is_staff %}
+                        Admin
+                    {% elif user.trainer_short_description %}
+                        Trenér
+                    {% else %}
+                        Uživatel
+                    {% endif %}
+                </td>
+               <td>
+    {% if request.user.is_superuser %}
+        <a href="{% url 'edit_user' user.id %}" class="btn btn-sm btn-warning">Upravit</a>
+        <form method="post" action="{% url 'delete_user' user.id %}" class="delete-button">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-danger"
+                    onclick="return confirm('Opravdu chcete smazat tohoto uživatele?');">Smazat</button>
+        </form>
+    {% elif request.user.is_staff and not user.is_superuser and not user.is_staff %}
+        <a href="{% url 'edit_user' user.id %}" class="btn btn-sm btn-warning">Upravit</a>
+        <form method="post" action="{% url 'delete_user' user.id %}" class="delete-button">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-danger"
+                    onclick="return confirm('Opravdu chcete smazat tohoto uživatele?');">Smazat</button>
+        </form>
+    {% else %}
+        <span class="text-muted">Nelze upravit</span>
+    {% endif %}
+</td>
+
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+    <div">
+<a href="{% url 'dashboard' %}" class="btn btn-secondary">Zpět na Dashboard</a>
+</div>
+{% endblock %}

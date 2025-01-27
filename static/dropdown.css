@@ -1,0 +1,82 @@
+/* Dropdown menu */
+.dropdown-menu {
+    font-size: 0.9rem;
+    padding: 0;
+    max-width: 100%;
+    max-height: 300px;
+    overflow-y: auto; /* Povolení posouvání, pokud je obsah vyšší než 350px */
+    background-color: white; /* Bílé pozadí pro celé menu */
+    border: 1px solid #ccc; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+/* Kategorie (hlavní položky v dropdownu) */
+.dropdown-menu > li > a {
+    background-color: #6c757d; 
+    color: white;
+    font-weight: bold; 
+    padding: 1rem 1.5rem;
+    display: block; 
+    border-bottom: 1px solid #ddd; /* Spodní čára mezi kategoriemi */
+}
+.dropdown-menu > h5 {
+    background-color: #6c757d;
+    color: white;
+    font-weight: bold;
+    display: block; 
+    border-bottom: 1px solid #ddd; /* Spodní čára mezi kategoriemi */
+}
+/* Hover efekt pro kategorie */
+.dropdown-menu > li > a:hover {
+    background-color: #5a6268;
+    color: white;
+}
+
+ /* Odstranění odrážek z dropdownu */
+.dropdown-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0; /
+}
+/* Čára nad dalšími položkami */
+.dropdown-divider {
+    border-top: 1px solid #ddd;
+    margin: 10px 0;
+}
+/* Styl pro položky menu */
+.dropdown-item {
+    padding: 1rem 1.5rem;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-item:hover {
+    color: darkred;
+}
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+.dropdown-submenu {
+    position: relative;
+    padding-left: 15px;
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    margin-top: 0;
+    z-index: 1050;
+}
+
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+#cart-wrapper:hover #navbar-cart-dropdown,
+#cart-wrapper.active #navbar-cart-dropdown {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}

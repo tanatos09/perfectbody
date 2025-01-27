@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>{{ trainer.full_name }}</h1>
+
+    <!-- Profilový obrázek trenéra -->
+    {% if trainer.profile_picture %}
+        <div class="trainer-image">
+            <img src="{{ trainer.profile_picture }}" alt="Obrázek trenéra {{ trainer.full_name }}">
+        </div>
+    {% endif %}
+
+    <!-- Kontaktní údaje -->
+    <div>
+        <h2>Kontakty</h2>
+        <p><strong>E-mail:</strong> {{ trainer.email }}<br>
+            <strong>Telefon:</strong> {{ trainer.phone }}</p>
+    </div>
+
+    <!-- Popis trenéra -->
+    <div>
+        <h2>O mně</h2>
+        <p>{{ trainer.trainer_long_description }}</p>
+    </div>
+
+    <!-- Služby trenéra -->
+    <div>
+        {% if approved_services %}
+            <h2>Nabízené služby
+                <span id="services-links">
+                    {% for service in approved_services %}
+                        <a href="{% url 'service' service.service.id %}">{{ service.service.product_name }}</a>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </span></h2>
+        {% else %}
+            <p>Trenér zatím nemá schválené služby.</p>
+        {% endif %}
+
+        {% if approved_services %}
+            <ul class="services-list">
+                {% for service in approved_services %}
+                    <li>
+                        <h3><a href="{% url 'service' service.service.id %}">{{ service.service.product_name }}</a></h3>
+                        <p>{{ service.trainers_service_description }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+
+    <!-- Průměrné hodnocení -->
+    <div class="average-rating">
+        <h2>Průměrné hodnocení</h2>
+        {% if average_rating > 0 %}
+            <p style="text-align: center"><strong>{{ average_rating }} / 5</strong></p>
+            <div class="rating-stars">
+                {% for state in star_states %}
+                    <span class="{{ state }}">★</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Zatím žádné hodnocení</p>
+        {% endif %}
+    </div>
+
+    <!-- Formulář pro přidání hodnocení -->
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'add_trainer_review' trainer.id %}">
+            {% csrf_token %}
+            <label for="rating">Hodnocení:</label>
+            <div class="rating">
+                <input type="radio" id="star5" name="rating" value="5">
+                <label for="star5" title="5 hvězdiček">★</label>
+                <input type="radio" id="star4" name="rating" value="4">
+                <label for="star4" title="4 hvězdičky">★</label>
+                <input type="radio" id="star3" name="rating" value="3">
+                <label for="star3" title="3 hvězdičky">★</label>
+                <input type="radio" id="star2" name="rating" value="2">
+                <label for="star2" title="2 hvězdičky">★</label>
+                <input type="radio" id="star1" name="rating" value="1">
+                <label for="star1" title="1 hvězdička">★</label>
+            </div>
+
+
+            <label for="comment">Komentář:</label>
+            <textarea id="comment" name="comment" required></textarea>
+
+            <button type="submit">Přidat hodnocení</button>
+        </form>
+    {% else %}
+        <p style="text-align: center;">Pro přidání hodnocení se musíte přihlásit.</p>
+    {% endif %}
+
+    <!-- Zobrazení hodnocení -->
+    <div class="trainer-reviews">
+        <h2>Hodnocení</h2>
+        {% if page_reviews %}
+            {% for review in page_reviews %}
+                <div class="review">
+                    <p><strong>Hodnotil:</strong> {{ review.reviewer.username }}</p>
+                    <p>
+                        {% for i in "12345" %}
+                            {% if forloop.counter <= review.rating %}
+                                <span style="color: #f5b301;">★</span>
+                            {% else %}
+                                <span style="color: #ccc;">★</span>
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                    <p>{{ review.comment }}</p>
+                </div>
+            {% endfor %}
+
+            <!-- Navigace stránkování -->
+            <div class="pagination">
+            <span class="step-links">
+                {% if page_reviews.has_previous %}
+                    <a href="?page=1">&laquo; První</a>
+                    <a href="?page={{ page_reviews.previous_page_number }}">Předchozí</a>
+                {% endif %}
+
+                <span>Stránka {{ page_reviews.number }} z {{ page_reviews.paginator.num_pages }}</span>
+
+                {% if page_reviews.has_next %}
+                    <a href="?page={{ page_reviews.next_page_number }}">Další</a>
+                    <a href="?page={{ page_reviews.paginator.num_pages }}">Poslední &#187;</a>
+                {% endif %}
+            </span>
+            </div>
+        {% else %}
+            <p>Zatím zde nejsou žádná hodnocení.</p>
+        {% endif %}
+    </div>
+{% endblock %}

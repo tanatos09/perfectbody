@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Moje objednávky</h2>
+
+{% if orders %}
+    <ul>
+        {% for order in orders %}
+            <li>
+    <a href="{% url 'order_detail' order.id %}">
+        {% with order.id|stringformat:"08d" as formatted_id %}
+            Objednávka #{{ formatted_id }} ({{ order.get_order_state_display }})
+        {% endwith %}
+    </a>
+    - <strong>Celková cena:</strong> {{ order.total_price }} Kč
+    - <strong>Datum vytvoření:</strong> {{ order.order_creation_datetime|date:"d.m.Y H:i" }}
+
+    {% if order.order_state == 'PENDING' %}
+        <form method="post" action="{% url 'cancel_order' order.id %}" class="delete-button">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Opravdu chcete zrušit tuto objednávku?');">
+                Zrušit objednávku
+            </button>
+        </form>
+    {% else %}
+        - <span class="text-muted">Nelze zrušit</span>
+    {% endif %}
+</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Nemáte žádné objednávky.</p>
+{% endif %}
+    <a href="{% url 'profile' %}" class="btn btn-secondary">Zpět na profil</a>
+{% endblock %}

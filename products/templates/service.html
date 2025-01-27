@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+{% block content %}
+
+    <!-- Breadcrumbs navigace -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <!-- Domů -->
+            <li class="breadcrumb-item">
+                <a href="{% url 'home' %}">Domů</a>
+            </li>
+
+            <!-- Oddělovač -->
+            <li class="breadcrumb-item">&#187;</li>
+
+            <!-- Hlavní kategorie služeb -->
+            {% if service.category %}
+                <li class="breadcrumb-item">
+                    <a href="{% url 'services' %}">Kategorie služeb</a>
+                </li>
+            {% else %}
+                <li class="breadcrumb-item active" aria-current="page">Kategorie služeb</li>
+            {% endif %}
+
+            <!-- Rodičovská kategorie, pokud existuje -->
+            {% if service.category and service.category.category_parent %}
+                <li class="breadcrumb-item">&#187;</li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'services' service.category.category_parent.pk %}">
+                        {{ service.category.category_parent.category_name }}
+                    </a>
+                </li>
+            {% endif %}
+
+            <!-- Aktuální kategorie -->
+            {% if service.category %}
+                <li class="breadcrumb-item">&#187;</li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'services' service.category.pk %}">
+                        {{ service.category.category_name }}
+                    </a>
+                </li>
+            {% endif %}
+
+            <!-- Název služby -->
+            <li class="breadcrumb-item">&#187;</li>
+            <li class="breadcrumb-item active" aria-current="page">
+                {{ service.product_name }}
+            </li>
+        </ol>
+    </nav>
+    <div class="product-section">
+        <h1>{{ service.product_name }}</h1>
+        <div class="product-content">
+            <!-- Obrázek služby -->
+            <div class="product-image">
+                {% if service.product_view %}
+                    <div>
+                        <img src="{{ service.product_view }}" alt="Obrázek služby {{ service.product_name }}">
+                    </div>
+                {% else %}
+                    <p>Obrázek služby není k dispozici.</p>
+                {% endif %}
+            </div>
+            <!-- Popis služby -->
+            <div class="product-details">
+                <h2 class="details-header">Popis služby</h2>
+                <p class="details-description">{{ service.product_long_description }}</p>
+
+
+                <!-- Kategorie a cena -->
+
+                <p><strong>Kategorie:</strong> <a
+                        href="{% url 'services' service.category.pk %}">{{ service.category }}</a></p>
+
+                <!-- Dostupní trenéři -->
+                {% if approved_trainers_services %}
+                    <p>
+                        <strong>Trenéři:</strong>
+                        {% for trainer_service in approved_trainers_services %}
+                            <a href="{% url 'trainer' trainer_service.trainer.id %}">{{ trainer_service.trainer.full_name }}</a>{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                {% else %}
+                    <p class="red">Žádní schválení trenéři nejsou k dispozici pro tuto službu.</p>
+                {% endif %}
+
+                <p><strong>Cena:</strong> {{ service.price }} Kč</p>
+
+            </div>
+        </div>
+        <!-- Tlačítko pro přidání do košíku -->
+        <div class="product-actions">
+            {% if approved_trainers_services %}
+                <form method="post" action="{% url 'add_to_cart' service.id %}" class="add-to-cart">
+                    {% csrf_token %}
+                    <button type="submit" class="add-to-cart-btn" data-product-id="{{ service.id }}">Přidat do košíku
+                    </button>
+                    </button>
+                </form>
+            {% else %}
+                <p class="product-actions red">
+                    Tuto službu nelze objednat. Žádný schválený trenér tuto službu nenabízí.
+                </p>
+            {% endif %}
+
+            <!-- Možnosti pro administrátora: Upravit a Smazat službu -->
+            {% if user.is_staff %}
+                <div>
+                    <a href="{% url 'edit_service' service.id %}" class="btn btn-sm btn-warning">
+                        Upravit službu
+                    </a>
+                    <form method="post" action="{% url 'delete_service' service.id %}" class="delete-button">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger"
+                                onclick="return confirm('Opravdu chcete smazat tuto službu?');">
+                            Smazat službu
+                        </button>
+                    </form>
+                </div>
+            {% endif %}
+            <!-- Průměrné hodnocení -->
+            <div class="average-rating">
+                <h2>Průměrné hodnocení</h2>
+                {% if average_rating > 0 %}
+                    <p>
+                        <strong>{{ average_rating }} / 5</strong>
+                    </p>
+                    <div class="rating-stars">
+                        {% for state in star_states %}
+                            <span class="{{ state }}">★</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>Zatím žádné hodnocení</p>
+                {% endif %}
+            </div>
+
+            <!-- Formulář pro přidání hodnocení -->
+            {% if user.is_authenticated %}
+                <div class="add-review">
+                    <h2>Hodnocení</h2>
+                    <form method="post" action="{% url 'add_service_review' service.id %}">
+                        {% csrf_token %}
+
+                        <!-- Hvězdičky pro hodnocení -->
+                        <label for="rating">Hodnocení:</label>
+                        <div class="rating">
+                            {% for i in "54321" %}
+                                <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}">
+                                <label for="star{{ i }}" title="{{ i }} hvězdiček">★</label>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Výběr trenéra -->
+                        <label for="trainer" class="trainer">Trenér:</label>
+                        <select id="trainer" name="trainer" required>
+                            {% for trainer_service in approved_trainers_services %}
+                                <option value="{{ trainer_service.trainer.id }}">{{ trainer_service.trainer.full_name }}</option>
+                            {% empty %}
+                                <option disabled>Žádný trenér není dostupný.</option>
+                            {% endfor %}
+                        </select>
+
+                        <!-- Komentář -->
+                        <label for="comment">Komentář:</label>
+                        <textarea id="comment" name="comment" required
+                                  placeholder="Napište svůj komentář..."></textarea>
+
+                        <!-- Tlačítko -->
+                        <div>
+                            <button type="submit">
+                                Přidat hodnocení
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            {% else %}
+                <p style="text-align: center;">Pro přidání hodnocení se musíte přihlásit.</p>
+            {% endif %}
+
+
+            <!-- Zobrazení hodnocení -->
+            <div>
+                <h2>Hodnocení</h2>
+                {% if page_reviews %}
+                    {% for review in page_reviews %}
+                        <div class="review">
+                            <p><strong>Hodnotil:</strong> {{ review.reviewer.username }}</p>
+                            <p>
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= review.rating %}
+                                        <span style="color: #f5b301;">★</span>
+                                    {% else %}
+                                        <span style="color: #ccc;">★</span>
+                                    {% endif %}
+                                {% endfor %}
+                            </p>
+                            <p>{{ review.comment }}</p>
+
+                            <!-- Tlačítko pro mazání hodnocení pro administrátory -->
+                            {% if user.is_staff %}
+                                <form method="post" action="{% url 'delete_service_review' review.id %}"
+                                      class="delete-button">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-danger"
+                                            onclick="return confirm('Opravdu chcete smazat toto hodnocení?');">
+                                        Smazat hodnocení
+                                    </button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+
+                    <!-- Navigace stránkování -->
+                    <div class="pagination">
+        <span class="step-links">
+            {% if page_reviews.has_previous %}
+                <a href="?page=1">&laquo; První</a>
+                <a href="?page={{ page_reviews.previous_page_number }}">Předchozí</a>
+            {% endif %}
+
+            <span>Stránka {{ page_reviews.number }} z {{ page_reviews.paginator.num_pages }}</span>
+
+            {% if page_reviews.has_next %}
+                <a href="?page={{ page_reviews.next_page_number }}">Další</a>
+                <a href="?page={{ page_reviews.paginator.num_pages }}">Poslední &#187;</a>
+            {% endif %}
+        </span>
+                    </div>
+                {% else %}
+                    <p>Zatím zde nejsou žádná hodnocení.</p>
+                {% endif %}
+            </div>
+
+{% endblock %}

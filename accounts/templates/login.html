@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+
+<title>Přihlášení uživatele</title>
+
+{% block content %}
+
+<h1>Přihlášení</h1>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Přihlásit se</button>
+    </form>
+
+    <div>
+        <h3><a class="dropdown-item redbutton" href="{% url 'register' %}"><b>Pokud nemáte účet, registrujte se <u>zde</u></b></a></h3>
+    </div>
+
+{% endblock %}

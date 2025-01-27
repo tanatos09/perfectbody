@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Registrace dokončena!</h1>
+    <p>Vaše registrace byla úspěšně dokončena. Každý trenér musí být schválen administrátorem. Pokusíme se jej schválit co nejdříve</p>
+    <a href="{% url 'login' %}">Přejít na přihlášení</a>
+{% endblock %}

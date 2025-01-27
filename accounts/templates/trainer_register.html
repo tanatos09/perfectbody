@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+<title>Registrace trenéra - Krok {{ wizard.steps.current|add:1 }} z {{ wizard.steps.count }}</title>
+
+{% block content %}
+    <h1>Registrace trenéra - Krok {{ wizard.steps.current|add:1 }} z {{ wizard.steps.count }}</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ wizard.management_form }}
+
+        {% if wizard.steps.current == "0" %}
+            {% include "step_1.html" %}
+        {% elif wizard.steps.current == "1" %}
+            {% include "step_2.html" %}
+        {% elif wizard.steps.current == "2" %}
+            {% include "step_3.html" %}
+        {% elif wizard.steps.current == "3" %}
+            {% include "step_4.html" %}
+        {% elif wizard.steps.current == "4" %}
+                {% include "step_5.html" %}
+        {% endif %}
+
+        <!-- Zobrazení obecných chyb formuláře -->
+        {% if form.non_field_errors %}
+            <div class="form-errors">
+                {% for error in form.non_field_errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <!-- Navigační tlačítka -->
+        <div class="form-navigation">
+            {% if wizard.steps.prev %}
+                <button type="submit" name="wizard_goto_step" value="{{ wizard.steps.prev }}">Zpět</button>
+            {% endif %}
+            <button type="submit">{% if wizard.steps.last %}Dokončit{% else %}Další{% endif %}</button>
+        </div>
+    </form>
+{% endblock %}

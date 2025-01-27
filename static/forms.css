@@ -1,0 +1,158 @@
+/* Univerzální styl pro formuláře */
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+form label {
+    display: block;
+    text-align: left;
+    margin: 0.5rem;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+    width: 100%;
+    padding: 3px 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin: 4px;
+    transition: border-color 0.3s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #28a745;
+    outline: none;
+    box-shadow: 0 0 4px rgb(108, 117, 125);
+}
+
+button {
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 4px;
+    cursor: default;
+    transition: background-color 0.3s;
+}
+button a {
+    color:white;
+}
+button:hover {
+    background-color: #218838;
+    color: #fff;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.hidden {
+    display: none; /* Skrytí prvku */
+}
+
+/* Specifické stylování pro formulář s tlačítkem "Přidat do košíku" */
+form.add-to-cart {
+    display: inline; /* Nastaví inline, aby formulář nezabíral celý řádek */
+    padding: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+
+/* Styl tlačítka v "add-to-cart" formuláři */
+form.add-to-cart button{
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    cursor: default;
+}
+form button .add-to-cart {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: default;
+}
+form.delete-button {
+    display: inline;
+    padding: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+
+form.add-to-cart button:hover {
+    background-color: #218838;
+}
+form.add-to-cart button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+/* Styl pro formulář s množstvím */
+form.quantity-form {
+    padding: 0;
+    margin: 0;
+    display: inline-block; /* Zajistí, že formulář nezabírá celou šířku */
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+/* Formulář pro schvalování služeb */
+form.approve-service-form {
+    padding: 0;
+    margin: 0;
+    background: none;
+    border: none;
+    display: inline; /* Zajistí, že formulář nezabírá celou šířku */
+    box-shadow: none;
+}
+/* Styl tlačítka "Schválit" */
+button.approve-button {
+    margin-bottom: 0.1rem;
+    font-size: 1rem;
+    background-color: #28a745; /* Zelené pozadí */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+button.reject-button {
+    margin-bottom: 0.1rem;
+    font-size: 1rem;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}

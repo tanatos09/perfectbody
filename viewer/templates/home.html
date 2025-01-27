@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <!-- weather + nameday -->
+    <div class="weather d-flex justify-content-between align-items-center mb-4 border p-2 d-none d-md-block" id="weather-section"
+         style="display: none;">
+        <div class="nameday">
+            <p class="m-0">Dnes má svátek: <strong>{{ name_day }}</strong></p>
+        </div>
+        <div>
+            {% if weather_data %}
+                <p class="m-0">
+                    <strong>Aktuálně:</strong>
+                    {% for weather in weather_data %}
+                        {{ weather.city|default:"Neznámé město" }}:
+                        {{ weather.temperature }}°C,
+                        {{ weather.description|default:"Neznámý popis" }}
+                    {% endfor %}
+                </p>
+            {% else %}
+                <p class="m-0">Počasí není dostupné.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Hlavní obsah -->
+
+    <h1 class="text-center mb-4" id="home">Vítejte v <span class="highlight">PerfectBody</span>!</h1>
+    <p class="lead text-center">Jsme váš spolehlivý partner na cestě ke zdravému a aktivnímu životnímu stylu.<br> Jsme
+        mnohem víc než jen obchod.</p>
+    <div class="bg-light rounded p-4 mb-3 shadow" id="home" >
+        <p>Jsme vaší inspirací a průvodcem na cestě ke zdravějšímu a spokojenějšímu životu. U nás najdete vše, co
+            potřebujete pro tělo i mysl:</p>
+        <ul class="custom-list">
+            <li><strong>Kvalitní pomůcky na cvičení, které vás budou motivovat k pohybu.</strong></li>
+            <li><strong>Zdravé potraviny, které podpoří vaše tělo zevníř i zevnitř.</strong></li>
+        </ul>
+        <p>
+            Naše produkty vybíráme s důkazem na kvalitu a udržitelnost, protože věříme, že zdravý život začíná správnými
+            volbami.
+            Nejsme však jen e-shop. Nabízíme vám možnost pracovat na sobě komplexně – s podporou našich zkušených koučů,
+            kteří vám pomohou najít rovnováhu mezi tělem a myslí. Věříme, že cesta ke zdraví není jen o cvičení a jídle,
+            ale i o pozitivním přístupu k sobě samým a životu jako takovému.
+        </p>
+    </div>
+    <div class="bg-light rounded mb-3 p-2 shadow" id="home"><p class="lead text-center">Začněte svou cestu ke zdraví
+        právě teď. Jsme tu pro vás.</p>
+    </div>
+    <div class="bg-light p-4 rounded shadow home">
+        <h2>Co u nás najdete?</h2>
+        <ul class="custom-list">
+            <li><strong>Fitness náčiní:</strong> Kvalitní vybavení pro domácí i profesionální tréninky.</li>
+            <li><strong>Stylové oblečení:</strong> Pohodlné a funkční oblečení, které podpoří váš výkon.</li>
+            <li><strong>Zdravé potraviny a doplňky:</strong> Výběr zdravých potravin a suplementů.</li>
+            <li><strong>Výukové tréninky:</strong> Profesionální plány a videa pro všechny úrovně pokročilosti.</li>
+        </ul>
+        <br><br>
+    </div>
+
+{% endblock %}

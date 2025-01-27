@@ -1,0 +1,17 @@
+<div>
+    <h2>Vyberte služby</h2>
+    {% for field in form %}
+        <div class="form-row>
+            {{ field.label_tag }}
+            <br>
+            {{ field }}
+            {% if field.errors %}
+                <div class="error">
+                    {% for error in field.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>

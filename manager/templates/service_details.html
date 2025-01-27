@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container" style="margin-top: 2rem; margin-bottom: 2rem; text-align: center;">
+    <h1>Detail služby</h1>
+    <h2>{{ service.service.product_name }}</h2>
+
+    <p><strong>Trenér:</strong> {{ service.trainer.full_name }}</p>
+    <p><strong>Popis služby trenéra:</strong> {{ service.trainers_service_description }}</p>
+    <p><strong>Popis služby:</strong> {{ service.service.product_long_description }}</p>
+
+    <a href="{% url 'approve_service' %}" class="btn btn-secondary" style="margin-top: 2rem;">Zpět na seznam služeb</a>
+</div>
+{% endblock %}

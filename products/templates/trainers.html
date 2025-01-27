@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<div class="manage">
     <h1>Naši trenéři</h1>
 
     {% if approved_trainers %}
@@ -26,32 +26,6 @@
     {% else %}
         <p>Trenéři nejsou k dispozici.</p>
     {% endif %}
- <!-- Navigace stránkování -->
-        <div class="pagination">
-            {% if products %}
-                <span class="step-links">
-                    {% if products.has_previous %}
-                        <a href="?page=1{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">&raquo První</a>
-                        <a href="?page={{ products.previous_page_number }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Předchozí</a>
-                    {% endif %}
 
-                    <span class="current">
-                        Stránka {{ products.number }} z {{ products.paginator.num_pages }}
-                    </span>
-
-                    {% if products.has_next %}
-                        <a href="?page=
-                            {{ products.next_page_number }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Další</a>
-                        <a href="?page=
-                                {{ products.paginator.num_pages }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Poslední &#187;</a>
-                    {% endif %}
-                </span>
-            </div>
-        {% endif %}
-
-        {% if not subcategories and not products %}
-            <p>Žádné podkategorie ani produkty nejsou k dispozici.</p>
-        {% endif %}
-
-
+</div>
 {% endblock %}

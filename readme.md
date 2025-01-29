@@ -192,7 +192,7 @@ Below is a list of important libraries used in the project:
 ### Steps to Run the Project
 First, clone the project repository to your computer using the command:
 ```bash
-git clone https://github.com/Galdrakona/perfectbody
+git clone https://github.com/tanatos09/perfectbody
 ```
 If the project contains multiple branches, switch to the desired branch:
 ```bash

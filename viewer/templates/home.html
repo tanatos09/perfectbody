@@ -1,9 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <!-- weather + nameday -->
-    <div class="weather d-flex justify-content-between align-items-center mb-4 border p-2 d-none d-md-block" id="weather-section"
-         style="display: none;">
+    <!-- Počasí a svátek -->
+    <div class="weather d-flex justify-content-between align-items-center mb-4 border p-2 d-none d-md-block" id="weather-section" style="display: none;">
         <div class="nameday">
             <p class="m-0">Dnes má svátek: <strong>{{ name_day }}</strong></p>
         </div>
@@ -23,38 +22,46 @@
         </div>
     </div>
 
-    <!-- Hlavní obsah -->
-
+    <!-- Hlavní nadpis -->
     <h1 class="text-center mb-4" id="home">Vítejte v <span class="highlight">PerfectBody</span>!</h1>
-    <p class="lead text-center">Jsme váš spolehlivý partner na cestě ke zdravému a aktivnímu životnímu stylu.<br> Jsme
-        mnohem víc než jen obchod.</p>
-    <div class="bg-light rounded p-4 mb-3 shadow" id="home" >
-        <p>Jsme vaší inspirací a průvodcem na cestě ke zdravějšímu a spokojenějšímu životu. U nás najdete vše, co
-            potřebujete pro tělo i mysl:</p>
-        <ul class="custom-list">
-            <li><strong>Kvalitní pomůcky na cvičení, které vás budou motivovat k pohybu.</strong></li>
-            <li><strong>Zdravé potraviny, které podpoří vaše tělo zevníř i zevnitř.</strong></li>
-        </ul>
-        <p>
-            Naše produkty vybíráme s důkazem na kvalitu a udržitelnost, protože věříme, že zdravý život začíná správnými
-            volbami.
-            Nejsme však jen e-shop. Nabízíme vám možnost pracovat na sobě komplexně – s podporou našich zkušených koučů,
-            kteří vám pomohou najít rovnováhu mezi tělem a myslí. Věříme, že cesta ke zdraví není jen o cvičení a jídle,
-            ale i o pozitivním přístupu k sobě samým a životu jako takovému.
-        </p>
-    </div>
-    <div class="bg-light rounded mb-3 p-2 shadow" id="home"><p class="lead text-center">Začněte svou cestu ke zdraví
-        právě teď. Jsme tu pro vás.</p>
-    </div>
-    <div class="bg-light p-4 rounded shadow home">
-        <h2>Co u nás najdete?</h2>
-        <ul class="custom-list">
-            <li><strong>Fitness náčiní:</strong> Kvalitní vybavení pro domácí i profesionální tréninky.</li>
-            <li><strong>Stylové oblečení:</strong> Pohodlné a funkční oblečení, které podpoří váš výkon.</li>
-            <li><strong>Zdravé potraviny a doplňky:</strong> Výběr zdravých potravin a suplementů.</li>
-            <li><strong>Výukové tréninky:</strong> Profesionální plány a videa pro všechny úrovně pokročilosti.</li>
-        </ul>
-        <br><br>
-    </div>
+    <p class="lead text-center"><strong>E-shop vytvořen v rámci závěrečného projektu k obhajobě kurzu<br>
+        Záměrně znemožněna platba pomocí QR kódu a nebyla přidána platební brána</strong></p>
 
+    <!-- Karty s obsahem -->
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-light p-4 rounded shadow home">
+                <h2>Představení</h2>
+                <p>Projekt PerfectBody je moderní e-commerce platforma zaměřená na fitness a zdravý životní styl. Kromě prodeje zboží, poskytuje prostor pro trenéry. Ti se mohou registrovat, prezentovat své služby a propojit se s klienty. Registrace trenérů je doplněna schvalovacím procesem spravovaným administrátorem, což umožňuje kontrolu nad kvalitou nabízených služeb. Systém zahrnuje uživatelsky přívětivé funkce, jako je pokročilé filtrování, registrace zákazníka, dynamická správa košíku, zákaznické hodnocení zboží a trenérů, a plnohodnotné administrátorské rozhraní pro správu obsahu a uživatelů.</p>
+                <p><a href="https://github.com/tanatos09/perfectbody" title="GitHub">Kompletní popis projektu a kód zde</a></p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="bg-light p-4 rounded shadow home h-100">
+                <h2>Vyzkoušejte si webovou aplikaci</h2>
+                <p>Porozhlédněte se zde a vyzkoušejte si <a href="https://github.com/tanatos09/perfectbody/blob/master/readme.md#funkcionality-cz" title="kompletní popis funkcionalit zobrazíte kliknutím">funkcionality</a>.</p>
+                <p>Pokud si chcete vyzkoušet administrátorské rozhraní a jeho práva, přihlašte se jako admin a zkuste další funkce, které jsou běžným uživatelům zakázány (schvalování služeb trenérů, přidávání administračních práv, vytváření produktů...).</p>
+                <p>Databáze se bude každý den obnovovat, takže pokud se vám něco nebude líbit, nebojte se to smazat. Všechny funkce jsou dostupné v administraci a můžete si je vyzkoušet.</p>
+                <p>V případě, že se budete registrovat jako trenér, nebudete se zobrazovat v seznamu trenéru dokud nebudete schválen - nutno se přihlásit jako admin a schválit se.</p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="bg-light p-4 rounded shadow home h-100">
+                <h2>Přihlašovací údaje</h2>
+                <div class="mb-4">
+                    <h5>Admin:</h5>
+                    <ul class="list-unstyled">
+                        <li><strong>Uživatelské jméno: </strong>admin</li>
+                        <li><strong>Heslo: </strong>admin</li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Trenéři:</h5>
+                    <p>Všichni trenéři mají heslo: <strong>PythonRemoteCZ24</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

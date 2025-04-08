@@ -281,7 +281,8 @@ def thank_you(request, order_id):
 
     formatted_order_id = str(order.id).zfill(8)
 
-    bank_account = '123456789/0123'
+    iban = 'CZ123456789012345678901234'
+    bank_account = 'NEUVEDENO'
     total_price = order.total_price
     variable_symbol = formatted_order_id
 
@@ -292,7 +293,7 @@ def thank_you(request, order_id):
     }
 
     # QR kód
-    qr_data = f"SPD*1.0*ACC:{bank_account}*AM:{total_price:.2f}*CC:CZK*X-VS:{variable_symbol}"
+    qr_data = f"SPD*1.0*ACC:{iban}*AM:{total_price:.2f}*CC:CZK*X-VS:{variable_symbol}"
     qr_code_img = qrcode.make(qr_data)
 
     buffer = BytesIO()

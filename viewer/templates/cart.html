@@ -3,6 +3,7 @@
 {% block content %}
     <h1>Váš košík</h1>
 
+    <div class="bg-light rounded p-4 mb-3 shadow">
     {% if cart %}
         <table>
             <thead>
@@ -70,6 +71,7 @@
         <p>Váš košík je prázdný. <a href="{% url 'products' %}">Pokračovat
             v nákupu.</a></p>
     {% endif %}
+    </div>
 
 <!-- JavaScript -->
 <script>

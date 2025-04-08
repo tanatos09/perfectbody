@@ -1,6 +1,7 @@
 /.idea/*
 /db.sqlite3
 /.env
+/.venv
 /viewer/migrations/
 /accounts/migrations/
 /products/migrations/

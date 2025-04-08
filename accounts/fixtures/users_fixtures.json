@@ -115,6 +115,33 @@
     "user_permissions": []
   }
 },
+  {
+  "model": "accounts.userprofile",
+  "pk": 999,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$NvrFA5SN89YexTtrr8e3uS$ErmphFUetzsiSN15WV1syyrZErQR6KUYlw33JZFodWI=",
+    "last_login": null,
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "Admin",
+    "last_name": "Superhero",
+    "email": "admin@perfectbody.cz",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-01-01T10:00:00Z",
+    "avatar": null,
+    "phone": "123456789",
+    "preferred_channel": "EMAIL",
+    "profile_picture": null,
+    "trainer_short_description": null,
+    "trainer_long_description": null,
+    "date_of_birth": null,
+    "created_at": "2025-01-01T10:00:00Z",
+    "account_type": "registered",
+    "groups": [],
+    "user_permissions": []
+  }
+},
 {
   "model": "accounts.userprofile",
   "pk": 5,

@@ -2,12 +2,13 @@
 
 {% block content %}
     <h2>Děkujeme za vaši objednávku!</h2>
-    <div class="ps-3 pe-3">
+    <div class="bg-light rounded p-4 mb-3 shadow">
         <p>Vaše objednávka byla úspěšně dokončena. Detaily objednávky naleznete níže.</p>
 
         <!-- Detaily objednávky -->
+    <div class="text-center">
         <h3>Objednávka #{{ formatted_order_id }}</h3>
-        <table>
+        <table class="mx-auto">
             <tr>
                 <td><strong>Celková cena:</strong></td>
                 <td>{{ order.total_price }} Kč</td>
@@ -17,6 +18,7 @@
                 <td>{{ order.get_order_state_display }}</td>
             </tr>
         </table>
+    </div>
 
         <!-- Obsah objednávky -->
 
@@ -46,22 +48,24 @@
 
 
         <!-- Pokyny pro platbu -->
-
+<div class="text-center">
         <h3>Pokyny pro platbu převodem</h3>
-        <p>Pro dokončení objednávky prosím proveďte platbu na níže uvedené údaje:</p>
+        Pro dokončení objednávky prosím proveďte platbu na níže uvedené údaje:<br>
         <ul>
             <li><strong>Číslo účtu:</strong> {{ payment_details.bank_account }}</li>
             <li><strong>Variabilní symbol:</strong> {{ payment_details.variable_symbol }}</li>
             <li><strong>Částka k úhradě:</strong> {{ payment_details.total_price }} Kč</li>
-        </ul>
-        <p>Po přijetí platby bude vaše objednávka zpracována. Děkujeme za pochopení!</p>
+        </ul><br>
+        Po přijetí platby bude vaše objednávka zpracována. Děkujeme za pochopení!
 
         <!-- QR kód -->
         <div class="text-center ps-3 pe-3 d-flex flex-column align-items-center">
             <h4>QR kód pro platbu</h4>
+            <h3>(QR kód je záměrně neplatný, nutno zmněnit IBAN)</h3>
             <img src="data:image/png;base64,{{ qr_code_base64 }}" alt="QR kód pro platbu">
             <!-- Tlačítko zpět -->
             <a href="{% url 'home' %}" class="btn btn-secondary home">Zpět na úvodní stránku</a>
         </div>
+    </div>
     </div>
 {% endblock %}

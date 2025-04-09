@@ -1,0 +1,6 @@
+startup:
+  web:
+    cmd: cd /srv/app && gunicorn perfectbody.wsgi:application --bind 0.0.0.0:8000
+
+cron:
+  - "0 0 * * * cd /srv/app && python manage.py setup_database >> /srv/app/logs/db_reset.log 2>&1"
